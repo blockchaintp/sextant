@@ -9,6 +9,9 @@ import { connect } from 'react-redux'
   
 */
 import Dashboard from './pages/Dashboard'
+import ClusterList from './pages/ClusterList'
+import ClusterAddNew from './pages/ClusterAddNew'
+import ClusterAddExisting from './pages/ClusterAddExisting'
 
 /*
 
@@ -16,6 +19,7 @@ import Dashboard from './pages/Dashboard'
   
 */
 import MainLayout from './layouts/Main'
+import AddClusterLayout from './layouts/AddCluster'
 
 /*
 
@@ -30,6 +34,20 @@ export const routes = {
   'PAGE_HOME': {
     path: '/',
     component: Dashboard,
+  },
+  'PAGE_CLUSTER_LIST': {
+    path: '/clusters',
+    component: ClusterList,
+  },
+  'PAGE_CLUSTER_ADD_NEW': {
+    path: '/clusters/add/new',
+    component: ClusterAddNew,
+    pageLayout: AddClusterLayout,
+  },
+  'PAGE_CLUSTER_ADD_EXISTING': {
+    path: '/clusters/add/existing',
+    component: ClusterAddExisting,
+    pageLayout: AddClusterLayout,
   },
 }
 

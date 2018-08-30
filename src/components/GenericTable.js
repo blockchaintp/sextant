@@ -187,15 +187,20 @@ class GenericTable extends React.Component {
     )
   }
 
-  getActions(ids, toolbar) {
+  getAddButton() {
     const { classes } = this.props
-
-    const addButton = this.props.getAddButton ? this.props.getAddButton() : (
+    return this.props.getAddButton ? this.props.getAddButton() : (
       <Button className={classes.button} variant="raised" color="secondary" aria-label="Add" onClick={ () => this.props.onAdd() }>
         { this.props.addTitle || 'Add' }
         <AddIcon className={classes.rightIcon} />
       </Button>
     )
+  }
+
+  getActions(ids, toolbar) {
+    const { classes } = this.props
+
+    const addButton = this.getAddButton()
 
     const icons = this.props.icons || {}
 
@@ -255,7 +260,13 @@ class GenericTable extends React.Component {
             )}
           </div>
           <div className={classes.spacer} />
-          { this.props.noSelect ? null : this.getActions(selected, true) }
+          { 
+            this.props.noSelect ? (
+              <div className={classes.actions}>
+                { this.getAddButton() }
+              </div>
+            ) : 
+            this.getActions(selected, true) }
         </Toolbar>
 
 

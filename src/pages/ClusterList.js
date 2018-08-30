@@ -7,9 +7,7 @@ import { lighten } from '@material-ui/core/styles/colorManipulator'
 
 import settings from '../settings'
 import store from '../store'
-import siteModule from '../store/site'
-import fileModule from '../store/file'
-import userModule from '../store/user'
+import clusterModule from '../store/cluster'
 
 import withRouter from '../utils/withRouter'
 
@@ -17,68 +15,47 @@ import GenericTable from '../components/GenericTable'
 
 const styles = theme => {
   return {
-    folderLink: {
-      color: theme.palette.primary.main,
-      fontWeight: 'bold',
-      cursor: 'pointer',
-    },
+    
   }
 
 }
 
 @connectStore({
-  site: siteModule,
-  file: fileModule,
-  user: userModule,
+  cluster: clusterModule,
 })
-@withRouter()
 class ClusterList extends React.Component {
   
   componentDidMount(){
-    this.props.site.loadList()
-    this.props.site.setSelected([])
+    this.props.cluster.loadList()
   }
 
   render() {
-    const { classes, site, user, file } = this.props
+    const { classes, cluster } = this.props
   
     const fields =[{
+      title: 'Id',
+      name: 'id',
+    },{
       title: 'Name',
       name: 'name',
-    },{
-      title: 'URL',
-      name: 'url',
-    },{
-      title: 'Drive Folder',
-      name: 'folderid',
     }]
 
-    const data = site.listData.map(website => {
+    const data = cluster.list.map(clusterData => {
       return {
-        id: website.id,
-        name: website.name,
-        url: website.meta.url,
-        folderid: (
-          <a 
-            className={ classes.folderLink } 
-            onClick={ () => file.openDriveFile(website.meta.folderId, 'folder') }
-          >
-            { website.meta.folderId }
-          </a>
-        )
+        id: clusterData.id,
+        name: clusterData.name,
       }
     })
 
     return (
       <GenericTable
-        title="Website"
+        title="Cluster"
+        noSelect
         data={ data }
         fields={ fields }
-        selected={ site.selected }
-        setSelected={ site.setSelected }
-        onAdd={ site.add }
-        onEdit={ site.edit }
-        onDelete={ site.delete }
+        onAdd={ cluster.add }
+        onEdit={ () => null }
+        onDelete={ () => null }
         getOptions={ () => null }
       /> 
     )
