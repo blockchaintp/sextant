@@ -21,6 +21,7 @@ const TextField = ({
   name,
   classes,
   inputProps,
+  description,
   meta: { touched, error, warning }
 }) => {
   return (
@@ -44,6 +45,13 @@ const TextField = ({
         touched && error ? (
           <FormHelperText id={ name + "-helper" }>
             { error }
+          </FormHelperText>
+        ) : null
+      }
+      {
+        description ? (
+          <FormHelperText error={ false } id={ name + "-description" }>
+            { description }
           </FormHelperText>
         ) : null
       }

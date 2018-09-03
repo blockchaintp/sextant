@@ -23,6 +23,7 @@ const SelectInput = ({
   name,
   classes,
   inputProps,
+  description,
   meta: { touched, error, warning },
   options,
 }) => {
@@ -61,6 +62,13 @@ const SelectInput = ({
         touched && error ? (
           <FormHelperText id={ name + "-helper" }>
             { error }
+          </FormHelperText>
+        ) : null
+      }
+      {
+        description ? (
+          <FormHelperText error={ false } id={ name + "-description" }>
+            { description }
           </FormHelperText>
         ) : null
       }
