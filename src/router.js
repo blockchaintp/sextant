@@ -42,13 +42,15 @@ export const routes = {
   'PAGE_CLUSTER_ADD_NEW': {
     path: '/clusters/add/new',
     component: ClusterAddNew,
-    pageLayout: AddClusterLayout,
+    //pageLayout: AddClusterLayout,
   },
+  /*
   'PAGE_CLUSTER_ADD_EXISTING': {
     path: '/clusters/add/existing',
     component: ClusterAddExisting,
     pageLayout: AddClusterLayout,
   },
+  */
 }
 
 const NotFound = () => (

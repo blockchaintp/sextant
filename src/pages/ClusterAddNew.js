@@ -4,6 +4,8 @@ import { connectStore } from 'redux-box'
 import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import { lighten } from '@material-ui/core/styles/colorManipulator'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 
 import settings from '../settings'
 import store from '../store'
@@ -27,9 +29,18 @@ class ClusterAddNew extends React.Component {
     const { classes, cluster } = this.props
 
     return (
-      <div>
-        Add new
-      </div>
+      <Grid
+        container
+      >
+        <Grid
+          item
+        >
+          <Paper>
+            Form2
+          </Paper>
+
+        </Grid>
+      </Grid>
     )
   }
 }
