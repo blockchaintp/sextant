@@ -9,7 +9,7 @@ const router = {
 
 const aws = {
   // array of region data
-  regions: (state) => state.config.values.awsRegions || [],
+  regions: (state) => state.config.aws.regions || [],
   // a single region based on the given id
   region: (state, id) => aws.regions(state).filter(region => region.code == id)[0],
   // zones for a given region code
@@ -20,9 +20,31 @@ const aws = {
   },
 }
 
+const form = {
+  data: (state, formName) => state.form[formName] || {},
+  fieldNames: (state, formName) => {
+    const formData = form.data(state, formName)
+    const allFields = formData.registeredFields || {}
+    return Object.keys(allFields)
+  },
+  values: (state, formName) => {
+    const formData = form.data(state, formName)
+    return formData.values || {}
+  },
+  errors: (state, formName) => {
+    const formData = form.data(state, formName)
+    return formData.syncErrors || {}
+  },
+  hasError: (state, formName) => {
+    const errors = form.errors(state, formName)
+    return Object.keys(errors).length > 0
+  },
+}
+
 const module = {
   router,
   aws,
+  form,
 }
 
 export default module

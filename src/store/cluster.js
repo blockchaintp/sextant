@@ -1,9 +1,11 @@
 import { createSagas } from 'redux-box'
 import { call, put, select } from 'redux-saga/effects'
+import { touch, initialize } from 'redux-form'
 
 import sagaErrorWrapper from '../utils/sagaErrorWrapper'
 import clusterApi from '../api/cluster'
 import snackbar from './snackbar'
+import selectors from './selectors'
 
 const state = {
   list: [],
@@ -53,6 +55,14 @@ const SAGAS = sagaErrorWrapper({
     }
   },
   CLUSTER_SUBMIT_ADD_FORM: function* () {
+    const formFields = yield select(state => selectors.form.fieldNames(state, 'clusterForm'))
+    const hasError = yield select(state => selectors.form.hasError(state, 'clusterForm'))
+
+    if(hasError) {
+      yield put(touch.apply(null, ['clusterForm'].concat(formFields)))
+      return  
+    }
+
     yield put(actions.setSubmitting(true))
   }
 })

@@ -132,7 +132,7 @@ class ClusterForm extends React.Component {
               name="master_size"
               component={ Select }
               options={ masterSizeOptions }
-              label="Master Nodes"
+              label="Masters"
               description="The number of k8s masters in the cluster"
               validate={ validators.required }
               disabled={ this.props.submitting }
@@ -148,7 +148,7 @@ class ClusterForm extends React.Component {
               name="worker_size"
               type="number"
               component={ TextField }
-              label="Worker Nodes"
+              label="Nodes"
               description="The number of k8s nodes in the cluster"
               validate={ validateWorkerNodes }
               disabled={ this.props.submitting }
@@ -179,6 +179,7 @@ class ClusterForm extends React.Component {
               component={ Select }
               options={ regionOptions }
               label="AWS Region"
+              validate={ validators.required }
               disabled={ this.props.submitting }
             />
           </Grid>
