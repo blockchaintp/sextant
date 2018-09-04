@@ -35,6 +35,12 @@ const form = {
     const formData = form.data(state, formName)
     return formData.syncErrors || {}
   },
+  errorMessages: (state, formName) => {
+    const errors = form.errors(state, formName)
+    return Object.keys(errors).map(key => {
+      return `${key}: ${errors[key]}`
+    })
+  },
   hasError: (state, formName) => {
     const errors = form.errors(state, formName)
     return Object.keys(errors).length > 0

@@ -9,6 +9,11 @@ import selectors from './selectors'
 
 const state = {
   list: [],
+  // the single error message back from the server upon form submit
+  asyncFormError: null,
+  // used to show all sync errors at the bottom of the form once they click submit
+  showSyncFormErrors: false,
+  // are we in the process of submitting the form? used to disable form elements
   submitting: false,
 }
 
@@ -33,6 +38,14 @@ const actions = {
     type: 'CLUSTER_SET_SUBMITTING',
     value,
   }),
+  setAsyncFormError: (value) => ({
+    type: 'CLUSTER_SET_ASYNC_FORM_ERROR',
+    value,
+  }),
+  setShowSyncFormErrors: (value) => ({
+    type: 'CLUSTER_SET_SHOW_SYNC_FORM_ERRORS',
+    value,
+  }),
   regionChanged: () => ({
     type: 'CLUSTER_REGION_CHANGED',
   })
@@ -44,6 +57,12 @@ const mutations = {
   },
   CLUSTER_SET_SUBMITTING: (state, action) => {
     state.submitting = action.value
+  },
+  CLUSTER_SET_ASYNC_FORM_ERROR: (state, action) => {
+    state.asyncFormError = action.value
+  },
+  CLUSTER_SET_SHOW_SYNC_FORM_ERRORS: (state, action) => {
+    state.showSyncFormErrors = action.value
   },
 }
 
@@ -57,23 +76,33 @@ const SAGAS = sagaErrorWrapper({
       yield put(snackbar.actions.setError(err))
     }
   },
-  CLUSTER_SUBMIT_ADD_FORM: function* () {
-    const formFields = yield select(state => selectors.form.fieldNames(state, 'clusterForm'))
-    const hasError = yield select(state => selectors.form.hasError(state, 'clusterForm'))
-
-    if(hasError) {
-      yield put(touch.apply(null, ['clusterForm'].concat(formFields)))
-      return  
-    }
-
-    yield put(actions.setSubmitting(true))
-  },
   // when the region changes - clear the values for the {master,node}_zones
   // in the cluster form
   CLUSTER_REGION_CHANGED: function* () {
     yield put(change('clusterForm', 'master_zones', []))
     yield put(change('clusterForm', 'node_zones', []))
-  }
+  },
+
+  CLUSTER_SUBMIT_ADD_FORM: function* () {
+    const formFields = yield select(state => selectors.form.fieldNames(state, 'clusterForm'))
+    const formValues = yield select(state => selectors.form.values(state, 'clusterForm'))
+    const hasError = yield select(state => selectors.form.hasError(state, 'clusterForm'))
+
+    if(hasError) {
+      yield put(actions.setShowSyncFormErrors(true))
+      yield put(touch.apply(null, ['clusterForm'].concat(formFields)))
+      return  
+    }
+
+    yield put(actions.setShowSyncFormErrors(false))
+    yield put(actions.setAsyncFormError(null))
+
+    console.log('-------------------------------------------');
+    console.log('-------------------------------------------');
+    console.dir(formValues)
+    //yield put(actions.setSubmitting(true))
+  },
+  
 })
 
 const sagas = createSagas(SAGAS)

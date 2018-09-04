@@ -30,7 +30,7 @@ const styles = theme => {
     },
     paper: {
       padding: theme.spacing.unit * 2,
-    }
+    },
   }
 }
 
@@ -52,10 +52,12 @@ const styles = theme => {
   (state, ownProps) => {
 
     const formValues = selectors.form.values(state, 'clusterForm')
+    const formErrors = selectors.form.errorMessages(state, 'clusterForm')
     const awsZones = selectors.aws.zones(state, formValues.region)
 
     return {
       formValues,
+      syncFormErrors: formErrors,
       awsZones,
     }
   },
@@ -68,8 +70,10 @@ const styles = theme => {
 class ClusterAddNew extends React.Component {
   
   componentDidMount(){
-    const { config } = this.props
+    const { config, cluster } = this.props
     config.loadAws()
+    cluster.setAsyncFormError(null)
+    cluster.setShowSyncFormErrors(false)
   }
 
   getRequireDomain() {
@@ -108,7 +112,10 @@ class ClusterAddNew extends React.Component {
     const awsConfig = config.aws
     const awsZones = this.props.awsZones
     const formValues = this.props.formValues
-    
+    const syncFormErrors = this.props.syncFormErrors
+    const showSyncFormErrors = cluster.showSyncFormErrors
+    const asyncFormError = cluster.asyncFormError
+
     return (
       <div>
         <Typography
@@ -122,6 +129,10 @@ class ClusterAddNew extends React.Component {
           formValues={ formValues }
           saveTitle='Create Cluster'
           submitting={ cluster.submitting }
+          error={ cluster.formError }
+          syncFormErrors={ syncFormErrors }
+          showSyncFormErrors={ showSyncFormErrors }
+          asyncFormError={ asyncFormError }
           onSubmit={ () => cluster.submitAddForm() }
           onCancel={ () => cluster.viewList() }
           onRegionChange={ () => cluster.regionChanged() }
