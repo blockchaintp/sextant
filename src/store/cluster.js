@@ -1,6 +1,6 @@
 import { createSagas } from 'redux-box'
 import { call, put, select } from 'redux-saga/effects'
-import { touch, initialize } from 'redux-form'
+import { touch, change, initialize } from 'redux-form'
 
 import sagaErrorWrapper from '../utils/sagaErrorWrapper'
 import clusterApi from '../api/cluster'
@@ -32,6 +32,9 @@ const actions = {
   setSubmitting: (value) => ({
     type: 'CLUSTER_SET_SUBMITTING',
     value,
+  }),
+  regionChanged: () => ({
+    type: 'CLUSTER_REGION_CHANGED',
   })
 }
 
@@ -64,6 +67,12 @@ const SAGAS = sagaErrorWrapper({
     }
 
     yield put(actions.setSubmitting(true))
+  },
+  // when the region changes - clear the values for the {master,node}_zones
+  // in the cluster form
+  CLUSTER_REGION_CHANGED: function* () {
+    yield put(change('clusterForm', 'master_zones', []))
+    yield put(change('clusterForm', 'node_zones', []))
   }
 })
 

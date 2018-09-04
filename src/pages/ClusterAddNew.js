@@ -37,7 +37,8 @@ const styles = theme => {
 @reduxForm({
   form: 'clusterForm',
   initialValues: {
-    
+    master_zones: [],
+    node_zones: [],
   }
 })
 @connectStore({
@@ -103,6 +104,8 @@ class ClusterAddNew extends React.Component {
     const { config, cluster } = this.props
     const awsConfig = config.aws
     const awsZones = this.props.awsZones
+    const formValues = this.props.formValues
+    
     return (
       <div>
         <Typography
@@ -113,10 +116,12 @@ class ClusterAddNew extends React.Component {
         <ClusterForm
           awsConfig={ awsConfig }
           awsZones={ awsZones }
+          formValues={ formValues }
           saveTitle='Create Cluster'
           submitting={ cluster.submitting }
           onSubmit={ () => cluster.submitAddForm() }
           onCancel={ () => cluster.viewList() }
+          onRegionChange={ () => cluster.regionChanged() }
         />
       </div>
     )

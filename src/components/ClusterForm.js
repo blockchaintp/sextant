@@ -29,6 +29,20 @@ const validateWorkerNodes = validators.wrapper([
   validators.maxValue(128),
 ])
 
+const masterSizeZoneValidators = [1,3,5].reduce((all, size) => {
+  all[size] = validators.wrapper([
+    validators.required,
+    validators.minLength(1, 'items'),
+    validators.maxLength(size, 'items'),
+  ])
+  return all
+}, {})
+
+const nodeZoneValidator = validators.wrapper([
+  validators.required,
+  validators.minLength(1, 'items'),
+])
+
 const styles = theme => ({
   root: {
     marginTop: '10px',
@@ -46,12 +60,13 @@ const styles = theme => ({
 class ClusterForm extends React.Component {
 
   render() {
-    const { classes, awsConfig } = this.props
+    const { classes, awsConfig, onRegionChange } = this.props
 
     const awsInstances = awsConfig.instances || []
     const awsRegions = awsConfig.regions || []
     const awsDomains = (awsConfig.domains || {}).HostedZones || []
     const awsZones = this.props.awsZones || []
+    const masterSize = this.props.formValues.master_size || 1
 
     const regionOptions = awsRegions.map(awsRegion => ({
       title: awsUtils.getRegionTitle(awsRegion),
@@ -243,6 +258,7 @@ class ClusterForm extends React.Component {
               description="The EC2 region your cluster will be deployed to"
               validate={ validators.required }
               disabled={ this.props.submitting }
+              onChange={ onRegionChange }
             />
           </Grid>
 
@@ -279,8 +295,8 @@ class ClusterForm extends React.Component {
               component={ MultipleCheckbox }
               options={ zoneOptions }
               label="Master Zones"
-              description="The EC2 zones your masters will be deployed to"
-              validate={ validators.required }
+              description={`The EC2 zones your nodes will be deployed to (min 1, max ${masterSize})`}
+              validate={ masterSizeZoneValidators[masterSize] }
               disabled={ this.props.submitting }
             />
             
@@ -298,8 +314,8 @@ class ClusterForm extends React.Component {
               component={ MultipleCheckbox }
               options={ zoneOptions }
               label="Node Zones"
-              description="The EC2 zones your nodes will be deployed to"
-              validate={ validators.required }
+              description={`The EC2 zones your nodes will be deployed to (min 1)`}
+              validate={ nodeZoneValidator }
               disabled={ this.props.submitting }
             />
             

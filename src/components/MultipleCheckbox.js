@@ -48,7 +48,7 @@ class MultipleCheckbox extends React.Component {
     return (
       <FormControl 
         required
-        error={ touched && error }
+        error={ touched && error ? true : false }
         component="fieldset"
         className={classes.formControl}
       >

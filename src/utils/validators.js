@@ -1,8 +1,8 @@
 const required = value => (value ? undefined : 'Required')
-const maxLength = max => value =>
-  value && value.length > max ? `Must be ${max} or less characters` : undefined
-const minLength = min => value =>
-  value && value.length < min ? `Must be ${min} or more characters` : undefined
+const maxLength = (max, countType = 'characters') => value =>
+  value && value.length > max ? `Must be ${max} or less ${countType}` : undefined
+const minLength = (min, countType = 'characters') => value =>
+  value && value.length < min ? `Must be ${min} or more ${countType}` : undefined
 const number = value =>
   value && isNaN(Number(value)) ? 'Must be a number' : undefined
 const minValue = min => value =>

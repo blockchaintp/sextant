@@ -16,65 +16,78 @@ const styles = theme => ({
   },
 })
 
-const SelectInput = ({
-  input,
-  label,
-  type,
-  name,
-  classes,
-  inputProps,
-  description,
-  disabled,
-  meta: { touched, error, warning },
-  options,
-}) => {
-  return (
-    <FormControl
-      fullWidth
-      className={classes.margin}
-      aria-describedby={ name + "-helper" }
-      error={ touched && error ? true : false }
-    >
-      <InputLabel 
-        htmlFor={ name }>{ label }</InputLabel>
-      <Select
-        id={ name }
-        key={ name }
-        value={ input.value }
-        onChange={ input.onChange }
-        disabled={ disabled }
-        inputProps={{
-          name,
-          id: name,
-        }}
+class SelectInput extends React.Component {
+
+  handleChange(event) {
+    const { input } = this.props
+    if(this.props.onChange) {
+      this.props.onChange(event)
+    }
+    input.onChange(event)
+  }
+
+  render() {
+    const {
+      input,
+      label,
+      type,
+      name,
+      classes,
+      inputProps,
+      description,
+      disabled,
+      meta: { touched, error, warning },
+      options,
+    } = this.props
+
+    return (
+      <FormControl
+        fullWidth
+        className={classes.margin}
+        aria-describedby={ name + "-helper" }
+        error={ touched && error ? true : false }
       >
+        <InputLabel 
+          htmlFor={ name }>{ label }</InputLabel>
+        <Select
+          id={ name }
+          key={ name }
+          value={ input.value }
+          onChange={ this.handleChange.bind(this) }
+          disabled={ disabled }
+          inputProps={{
+            name,
+            id: name,
+          }}
+        >
+          {
+            options.map((option, i) => (
+              <MenuItem
+                key={ i }
+                value={option.value}
+              >
+                { option.title }
+              </MenuItem>
+            ))
+          }
+        </Select>
         {
-          options.map((option, i) => (
-            <MenuItem
-              key={ i }
-              value={option.value}
-            >
-              { option.title }
-            </MenuItem>
-          ))
+          touched && error ? (
+            <FormHelperText id={ name + "-helper" }>
+              { error }
+            </FormHelperText>
+          ) : null
         }
-      </Select>
-      {
-        touched && error ? (
-          <FormHelperText id={ name + "-helper" }>
-            { error }
-          </FormHelperText>
-        ) : null
-      }
-      {
-        description ? (
-          <FormHelperText error={ false } id={ name + "-description" }>
-            { description }
-          </FormHelperText>
-        ) : null
-      }
-    </FormControl>
-  )
+        {
+          description ? (
+            <FormHelperText error={ false } id={ name + "-description" }>
+              { description }
+            </FormHelperText>
+          ) : null
+        }
+      </FormControl>
+    )
+  }
 }
 
 export default withStyles(styles)(SelectInput)
