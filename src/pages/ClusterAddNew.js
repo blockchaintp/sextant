@@ -17,6 +17,7 @@ import clusterModule from '../store/cluster'
 
 import withRouter from '../utils/withRouter'
 
+import Loading from '../components/Loading'
 import ClusterForm from '../components/ClusterForm'
 
 const styles = theme => {
@@ -55,9 +56,21 @@ const styles = theme => {
 )
 class ClusterAddNew extends React.Component {
   
+  componentDidMount(){
+    this.props.config.loadAws()
+  }
+
   render() {
     const { classes, cluster, config } = this.props
-    const awsRegions = config.values.awsRegions || []
+
+    const awsLoading = config.awsLoading
+    const awsRegions = config.aws.regions || []
+
+    if(awsLoading) {
+      return (
+        <Loading />
+      )
+    }
 
     return (
       <Grid

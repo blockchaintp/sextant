@@ -21,4 +21,12 @@ export default {
     })
   },
 
+  getAws() {
+    return new Promise(function(resolve, reject){
+      axios.get(url('/aws'))
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
 }

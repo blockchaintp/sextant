@@ -8,6 +8,8 @@ import snackbar from './snackbar'
 const state = {
   values: {},
   loaded: false,
+  aws: {},
+  awsLoading: false,
 }
 
 const actions = {
@@ -18,12 +20,29 @@ const actions = {
     type: 'CONFIG_SET_VALUES',
     data,
   }),
+  loadAws: () => ({
+    type: 'CONFIG_LOAD_AWS',
+  }),
+  setAws: (data) => ({
+    type: 'CONFIG_SET_AWS',
+    data,
+  }),
+  setAwsLoading: (value) => ({
+    type: 'CONFIG_SET_AWS_LOADING',
+    value,
+  })
 }
 
 const mutations = {
   CONFIG_SET_VALUES: (state, action) => {
     state.values = action.data
     state.loaded = true
+  },
+  CONFIG_SET_AWS: (state, action) => {
+    state.aws = action.data 
+  },
+  CONFIG_SET_AWS_LOADING: (state, action) => {
+    state.awsLoading = action.value 
   },
 }
 
@@ -32,6 +51,17 @@ const SAGAS = sagaErrorWrapper({
     try{
       const response = yield call(configApi.getValues)
       yield put(actions.setValues(response.data))
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
+  },
+  CONFIG_LOAD_AWS: function* (){
+    yield put(actions.setAwsLoading(true))
+    try{
+      const response = yield call(configApi.getAws)
+      yield put(actions.setAws(response.data))
+      yield put(actions.setAwsLoading(false))
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
