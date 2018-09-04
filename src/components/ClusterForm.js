@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button'
 
 import TextField from './TextField'
 import Select from './Select'
+import MultipleCheckbox from './MultipleCheckbox'
 
 import validators from '../utils/validators'
 import awsUtils from '../utils/aws'
@@ -50,6 +51,7 @@ class ClusterForm extends React.Component {
     const awsInstances = awsConfig.instances || []
     const awsRegions = awsConfig.regions || []
     const awsDomains = (awsConfig.domains || {}).HostedZones || []
+    const awsZones = this.props.awsZones || []
 
     const regionOptions = awsRegions.map(awsRegion => ({
       title: awsUtils.getRegionTitle(awsRegion),
@@ -69,6 +71,11 @@ class ClusterForm extends React.Component {
     const masterSizeOptions = [1,3,5].map(count => ({
       title: count,
       value: count,
+    }))
+
+    const zoneOptions = awsZones.map(zone => ({
+      title: zone,
+      value: zone,
     }))
 
     return (
@@ -216,7 +223,7 @@ class ClusterForm extends React.Component {
         <Typography
           variant='subheading'
         >
-          Location
+          Region
         </Typography>
 
         <Grid
@@ -233,6 +240,7 @@ class ClusterForm extends React.Component {
               component={ Select }
               options={ regionOptions }
               label="AWS Region"
+              description="The EC2 region your cluster will be deployed to"
               validate={ validators.required }
               disabled={ this.props.submitting }
             />
@@ -243,6 +251,57 @@ class ClusterForm extends React.Component {
             xs={12}
             md={6}
           >
+            
+          </Grid>
+
+        </Grid>
+
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          Zones
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+
+            <Field
+              name="master_zones"
+              component={ MultipleCheckbox }
+              options={ zoneOptions }
+              label="Master Zones"
+              description="The EC2 zones your masters will be deployed to"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
+            
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+
+            
+            <Field
+              name="node_zones"
+              component={ MultipleCheckbox }
+              options={ zoneOptions }
+              label="Node Zones"
+              description="The EC2 zones your nodes will be deployed to"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
             
           </Grid>
 

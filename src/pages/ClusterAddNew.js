@@ -15,6 +15,7 @@ import settings from '../settings'
 import store from '../store'
 import configModule from '../store/config'
 import clusterModule from '../store/cluster'
+import selectors from '../store/selectors'
 
 import withRouter from '../utils/withRouter'
 
@@ -45,8 +46,13 @@ const styles = theme => {
 })
 @connect(
   (state, ownProps) => {
+
+    const formValues = selectors.form.values(state, 'clusterForm')
+    const awsZones = selectors.aws.zones(state, formValues.region)
+
     return {
-      formValues: (state.form.clusterForm || {}).values || {},
+      formValues,
+      awsZones,
     }
   },
   (dispatch) => {
@@ -96,6 +102,7 @@ class ClusterAddNew extends React.Component {
   getAWSForm() {
     const { config, cluster } = this.props
     const awsConfig = config.aws
+    const awsZones = this.props.awsZones
     return (
       <div>
         <Typography
@@ -105,6 +112,7 @@ class ClusterAddNew extends React.Component {
         </Typography>
         <ClusterForm
           awsConfig={ awsConfig }
+          awsZones={ awsZones }
           saveTitle='Create Cluster'
           submitting={ cluster.submitting }
           onSubmit={ () => cluster.submitAddForm() }
