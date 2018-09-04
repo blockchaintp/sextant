@@ -39,6 +39,9 @@ const styles = theme => {
   initialValues: {
     master_zones: [],
     node_zones: [],
+    topology: 'public',
+    master_size: 1,
+    node_size: 3,
   }
 })
 @connectStore({

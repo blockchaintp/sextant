@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button'
 import TextField from './TextField'
 import Select from './Select'
 import MultipleCheckbox from './MultipleCheckbox'
+import Radio from './Radio'
 
 import validators from '../utils/validators'
 import awsUtils from '../utils/aws'
@@ -91,6 +92,11 @@ class ClusterForm extends React.Component {
     const zoneOptions = awsZones.map(zone => ({
       title: zone,
       value: zone,
+    }))
+
+    const topologyOptions = ['public', 'private'].map(topology => ({
+      title: topology,
+      value: topology,
     }))
 
     return (
@@ -175,7 +181,7 @@ class ClusterForm extends React.Component {
             md={6}
           >
             <Field
-              name="worker_size"
+              name="node_size"
               type="number"
               component={ TextField }
               label="Nodes"
@@ -294,7 +300,7 @@ class ClusterForm extends React.Component {
               name="master_zones"
               component={ MultipleCheckbox }
               options={ zoneOptions }
-              label="Master Zones"
+              label="Masters"
               description={`The EC2 zones your nodes will be deployed to (min 1, max ${masterSize})`}
               validate={ masterSizeZoneValidators[masterSize] }
               disabled={ this.props.submitting }
@@ -313,9 +319,40 @@ class ClusterForm extends React.Component {
               name="node_zones"
               component={ MultipleCheckbox }
               options={ zoneOptions }
-              label="Node Zones"
+              label="Nodes"
               description={`The EC2 zones your nodes will be deployed to (min 1)`}
               validate={ nodeZoneValidator }
+              disabled={ this.props.submitting }
+            />
+            
+          </Grid>
+
+        </Grid>
+
+         <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          Topology
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+          >
+
+            
+            <Field
+              name="topology"
+              component={ Radio }
+              options={ topologyOptions }
+              label="Cluster Topology"
+              description={`Choose whether your nodes are publically accesible or not - a bastion node will be created for private clusters`}
               disabled={ this.props.submitting }
             />
             

@@ -7,7 +7,8 @@ import FormControl from '@material-ui/core/FormControl'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
-import Checkbox from '@material-ui/core/Checkbox'
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
 
 const styles = theme => ({
   margin: {
@@ -16,18 +17,12 @@ const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit * 3,
   },
+  group: {
+    margin: `${theme.spacing.unit}px 0`,
+  },
 })
 
-class MultipleCheckbox extends React.Component {
-
-  handleChange = name => event => {
-    const value = this.props.input.value || []
-    const stripped = value.filter(v => v != name)
-    if(event.target.checked) {
-      stripped.push(name)
-    }
-    this.props.input.onChange(stripped)
-  }
+class RadioField extends React.Component {
 
   render() {
     const {
@@ -47,30 +42,32 @@ class MultipleCheckbox extends React.Component {
 
     return (
       <FormControl 
-        required
-        error={ touched && error ? true : false }
         component="fieldset"
         className={classes.formControl}
       >
         <FormLabel component="legend">{ label }</FormLabel>
-        <FormGroup>
+        <RadioGroup
+          aria-label={ label }
+          name={ name }
+          className={ classes.group }
+          value={ input.value }
+          onChange={ input.onChange }
+        >
           {
             options.map((option, i) => (
-              <FormControlLabel
+              <FormControlLabel 
                 key={ i }
+                value={ option.value }
                 control={
-                  <Checkbox
-                    checked={ value.indexOf(option.value) >= 0 }
-                    onChange={ this.handleChange(option.value) }
-                    value={ option.value }
-                    disabled={ this.props.disabled }
+                  <Radio 
+                    disabled={ this.props.disabled } 
                   />
                 }
                 label={ option.title }
               />
             ))
           }
-        </FormGroup>
+        </RadioGroup>
         {
           touched && error ? (
             <FormHelperText id={ name + "-helper" }>
@@ -90,4 +87,4 @@ class MultipleCheckbox extends React.Component {
   }
 }
 
-export default withStyles(styles)(MultipleCheckbox)
+export default withStyles(styles)(RadioField)
