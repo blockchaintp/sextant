@@ -23,11 +23,16 @@ class ClusterForm extends React.Component {
 
     const awsInstances = awsConfig.instances || []
     const awsRegions = awsConfig.regions || []
-    const awsDomains = awsConfig.domains || []
+    const awsDomains = (awsConfig.domains || {}).HostedZones || []
 
     const regionOptions = awsRegions.map(awsRegion => ({
       title: `${ awsRegion.name } - ${ awsRegion.code }`,
       value: awsRegion.code,
+    }))
+
+    const domainOptions = awsDomains.map(awsDomain => ({
+      title: awsDomain.Name,
+      value: awsDomain.Name,
     }))
 
     return (
@@ -59,12 +64,12 @@ class ClusterForm extends React.Component {
           >
             <Field
               name="domain"
-              type="text"
-              component={ TextField }
-              label="Cluster Subdomain"
+              component={ Select }
+              options={ domainOptions }
+              label="Route53 Domain"
               description="Choose a domain under Route53 management"
-              validate={ validators.required }
             />
+
           </Grid>
 
         </Grid>
