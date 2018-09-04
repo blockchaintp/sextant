@@ -5,9 +5,7 @@
   "description": "frontend for the sextant cluster creation service",
   "scripts": {
     "develop": "webpack-dev-server --mode development --config config/webpack.base.config.js --hot --history-api-fallback --host 0.0.0.0 --disable-host-check",
-    "build": "webpack --mode production --config config/webpack.prod.config.js --env.NODE_ENV=production --progress",
-    "watchold": "parcel src/index.html --log-level 3 --hmr-port 8080 --no-autoinstall",
-    "buildold": "parcel build src/index.html --public-url ./"
+    "build": "webpack --mode production --config config/webpack.prod.config.js --env.NODE_ENV=production --progress"
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
