@@ -19,7 +19,11 @@ const styles = theme => ({
 class ClusterForm extends React.Component {
 
   render() {
-    const { classes, awsRegions } = this.props
+    const { classes, awsConfig } = this.props
+
+    const awsInstances = awsConfig.instances || []
+    const awsRegions = awsConfig.regions || []
+    const awsDomains = awsConfig.domains || []
 
     const regionOptions = awsRegions.map(awsRegion => ({
       title: `${ awsRegion.name } - ${ awsRegion.code }`,
@@ -100,7 +104,7 @@ class ClusterForm extends React.Component {
 
 ClusterForm.propTypes = {
   classes: PropTypes.object.isRequired,
-  awsRegions: PropTypes.array.isRequired,
+  awsConfig: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(ClusterForm)

@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { lighten } from '@material-ui/core/styles/colorManipulator'
 import { reduxForm, Field } from 'redux-form'
 import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 
@@ -45,7 +46,7 @@ const styles = theme => {
 @connect(
   (state, ownProps) => {
     return {
-      formValues: state.form.clusterForm.values,
+      formValues: (state.form.clusterForm || {}).values || {},
     }
   },
   (dispatch) => {
@@ -57,20 +58,78 @@ const styles = theme => {
 class ClusterAddNew extends React.Component {
   
   componentDidMount(){
-    this.props.config.loadAws()
+    const { config } = this.props
+    config.loadAws()
+  }
+
+  getRequireDomain() {
+    const { config } = this.props
+    return (
+      <div>
+        <Typography
+          variant='title'
+        >
+          Route53 Domain Needed
+        </Typography>
+        <Typography
+          variant='body1'
+        >
+          <br />
+
+          To create a new cluster, you need to create a domain managed by Route53. <br /><br />
+
+          Click <strong><a href="https://console.aws.amazon.com/route53/home" target="_blank">here</a></strong> or open the AWS console and create a Route53 domain to proceed.<br /><br />
+
+          Once you have created a domain - click the button below to reload this page. <br /><br />
+        </Typography>
+        <Button
+          color="primary"
+          variant="outlined"
+          onClick={ () => config.loadAws() }
+        >
+          Reload Page
+        </Button>
+      </div>
+    )
+  }
+
+  getAWSForm() {
+    const { config } = this.props
+    const awsConfig = config.aws
+    return (
+      <div>
+        <Typography
+          variant='title'
+        >
+          New Cluster
+        </Typography>
+        <ClusterForm
+          awsConfig={ awsConfig }
+        />
+      </div>
+    )
+  }
+
+  getLoading() {
+    return (
+      <Loading />
+    )
+  }
+
+  getContent() {
+    const { config } = this.props
+
+    const awsLoading = config.awsLoading
+    const awsConfig = config.aws
+    const awsDomains = awsConfig.domains || []
+
+    if(awsLoading) return this.getLoading()
+    if(awsDomains.length <= 0) return this.getRequireDomain()
+    return this.getAWSForm()
   }
 
   render() {
-    const { classes, cluster, config } = this.props
-
-    const awsLoading = config.awsLoading
-    const awsRegions = config.aws.regions || []
-
-    if(awsLoading) {
-      return (
-        <Loading />
-      )
-    }
+    const { classes } = this.props
 
     return (
       <Grid
@@ -87,14 +146,7 @@ class ClusterAddNew extends React.Component {
           <Paper
             className={ classes.paper }
           >
-            <Typography
-              variant='title'
-            >
-              New Cluster
-            </Typography>
-            <ClusterForm
-              awsRegions={ awsRegions }
-            />
+            { this.getContent() }
           </Paper>
 
         </Grid>
