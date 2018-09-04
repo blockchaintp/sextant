@@ -15,6 +15,10 @@ const state = {
   showSyncFormErrors: false,
   // are we in the process of submitting the form? used to disable form elements
   submitting: false,
+
+  // create keypair values
+  keypairWindowOpen: false,
+  keypairPrivateKey: null,
 }
 
 const actions = {
@@ -48,7 +52,21 @@ const actions = {
   }),
   regionChanged: () => ({
     type: 'CLUSTER_REGION_CHANGED',
-  })
+  }),
+  createKeypair: () => ({
+    type: 'CLUSTER_CREATE_KEYPAIR',
+  }),
+  closeKeypairWindow: () => ({
+    type: 'CLUSTER_CLOSE_KEYPAIR_WINDOW',
+  }),
+  openKeypairWindow: (privateKey) => ({
+    type: 'CLUSTER_OPEN_KEYPAIR_WINDOW',
+    privateKey,
+  }),
+  privateKeyCopied: () => snackbar.actions.setMessage('private key copied to clipboard'),
+  resetForm: () => ({
+    type: 'CLUSTER_RESET_FORM',
+  }),
 }
 
 const mutations = {
@@ -63,6 +81,14 @@ const mutations = {
   },
   CLUSTER_SET_SHOW_SYNC_FORM_ERRORS: (state, action) => {
     state.showSyncFormErrors = action.value
+  },
+  CLUSTER_OPEN_KEYPAIR_WINDOW: (state, action) => {
+    state.keypairWindowOpen = true
+    state.keypairPrivateKey = action.privateKey
+  },
+  CLUSTER_CLOSE_KEYPAIR_WINDOW: (state, action) => {
+    state.keypairWindowOpen = false
+    state.keypairPrivateKey = null
   },
 }
 
@@ -83,6 +109,28 @@ const SAGAS = sagaErrorWrapper({
     yield put(change('clusterForm', 'node_zones', []))
   },
 
+  CLUSTER_RESET_FORM: function* () {
+    yield put(actions.setAsyncFormError(null))
+    yield put(actions.setShowSyncFormErrors(false))
+    yield put(actions.closeKeypairWindow())
+  },
+
+  CLUSTER_CREATE_KEYPAIR: function* () {
+    yield put(actions.setSubmitting(true))
+
+    try{
+      const response = yield call(clusterApi.createKeypair, {})
+      const { privateKey, publicKey } = response.data
+      yield put(change('clusterForm', 'public_key', publicKey))
+      yield put(actions.openKeypairWindow(privateKey))
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
+
+    yield put(actions.setSubmitting(false))
+  },  
+
   CLUSTER_SUBMIT_ADD_FORM: function* () {
     const formFields = yield select(state => selectors.form.fieldNames(state, 'clusterForm'))
     const formValues = yield select(state => selectors.form.values(state, 'clusterForm'))
@@ -100,9 +148,7 @@ const SAGAS = sagaErrorWrapper({
 
     try{
       const response = yield call(clusterApi.create, formValues)
-      console.log('-------------------------------------------');
-      console.log('-------------------------------------------');
-      console.dir(response.data)
+      
     }
     catch(err){
       yield put(snackbar.actions.setError(err))

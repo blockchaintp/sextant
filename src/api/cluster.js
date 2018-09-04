@@ -29,4 +29,12 @@ export default {
     })
   },
 
+  createKeypair(data) {
+    return new Promise(function(resolve, reject){
+      axios.post(url(`/keypair/create`), data)
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
 }

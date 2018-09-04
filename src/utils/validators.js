@@ -30,6 +30,11 @@ const domain = value =>
     ? 'Only alphanumeric characters or full stops'
     : undefined
 
+const publicKey = value => 
+  value && !/^ssh-rsa AAAA/.test(value)
+    ? 'Must be an RSA public key'
+    : undefined
+  
 const wrapper = (validators) => (value, allValues, props) => {
   // return the first of any errors
   return validators
@@ -57,6 +62,7 @@ const validators = {
   numeric,
   integer,
   domain,
+  publicKey,
   unsigned,
   wrapper,
   optionalWrapper

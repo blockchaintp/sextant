@@ -87,8 +87,7 @@ class ClusterAddNew extends React.Component {
   componentDidMount(){
     const { config, cluster } = this.props
     config.loadAws()
-    cluster.setAsyncFormError(null)
-    cluster.setShowSyncFormErrors(false)
+    cluster.resetForm()
   }
 
   getRequireDomain() {
@@ -151,6 +150,11 @@ class ClusterAddNew extends React.Component {
           onSubmit={ () => cluster.submitAddForm() }
           onCancel={ () => cluster.viewList() }
           onRegionChange={ () => cluster.regionChanged() }
+          privateKeyWindowOpen={ cluster.keypairWindowOpen }
+          privateKeyValue={ cluster.keypairPrivateKey }
+          onCreatePrivateKeypair={ () => cluster.createKeypair() }
+          onPrivateKeyCopied={ () => cluster.privateKeyCopied() }
+          onPrivateKeyWindowClosed={ () => cluster.closeKeypairWindow() }
         />
       </div>
     )

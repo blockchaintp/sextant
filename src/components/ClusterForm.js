@@ -13,6 +13,7 @@ import TextField from './TextField'
 import Select from './Select'
 import MultipleCheckbox from './MultipleCheckbox'
 import Radio from './Radio'
+import PrivateKeyDialog from './PrivateKeyDialog'
 
 import validators from '../utils/validators'
 import awsUtils from '../utils/aws'
@@ -45,6 +46,11 @@ const nodeZoneValidator = validators.wrapper([
   validators.minLength(1, 'items'),
 ])
 
+const publicKeyValidator = validators.wrapper([
+  validators.required,
+  validators.publicKey,
+])
+
 const styles = theme => ({
   root: {
     marginTop: '10px',
@@ -59,6 +65,12 @@ const styles = theme => ({
   },
   errorList: {
     color: '#f44336'
+  },
+  margin: {
+    margin: theme.spacing.unit,
+  },
+  smallText: {
+    fontSize: '0.7em'
   },
 })
 
@@ -106,6 +118,13 @@ class ClusterForm extends React.Component {
     return (
       <div className={classes.root}>
 
+        <PrivateKeyDialog
+          open={ this.props.privateKeyWindowOpen }
+          value={ this.props.privateKeyValue }
+          onCopy={ this.props.onPrivateKeyCopied }
+          onClose={ this.props.onPrivateKeyWindowClosed }
+        />
+        
         <Typography
           variant='subheading'
         >
@@ -333,7 +352,7 @@ class ClusterForm extends React.Component {
 
         </Grid>
 
-         <Divider className={ classes.divider } />
+        <Divider className={ classes.divider } />
 
         <Typography
           variant='subheading'
@@ -359,6 +378,53 @@ class ClusterForm extends React.Component {
               description={`Choose whether your nodes are publically accesible or not - a bastion node will be created for private clusters`}
               disabled={ this.props.submitting }
             />
+            
+          </Grid>
+
+        </Grid>
+
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          Access Credentials
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+          >
+
+            
+            <Field
+              name="public_key"
+              type="text"
+              component={ TextField }
+              inputProps={{
+                multiline: true,
+                rows: 5,
+                className: classes.smallText,
+              }}
+              label="Public Key"
+              description="An RSA public key that will be added to nodes in the cluster - you can create a new public/private keypair by clicking the button below"
+              validate={ publicKeyValidator }
+              disabled={ this.props.submitting }
+            />
+
+            <Button
+              variant="raised"
+              size="small"
+              className={ classes.button }
+              onClick={ () => this.props.onCreatePrivateKeypair() }
+              disabled={ this.props.submitting }
+            >
+              Generate Keypair
+            </Button>
             
           </Grid>
 
