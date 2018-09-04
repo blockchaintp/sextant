@@ -24,6 +24,8 @@ const validateWorkerNodes = validators.wrapper([
   validators.numeric,
   validators.integer,
   validators.unsigned,
+  validators.minValue(2),
+  validators.maxValue(128),
 ])
 
 const styles = theme => ({
