@@ -72,6 +72,9 @@ const styles = theme => ({
   smallText: {
     fontSize: '0.7em'
   },
+  alignRight: {
+    textAlign: 'right',
+  },
 })
 
 class ClusterForm extends React.Component {
@@ -411,20 +414,23 @@ class ClusterForm extends React.Component {
                 className: classes.smallText,
               }}
               label="Public Key"
-              description="An RSA public key that will be added to nodes in the cluster - you can create a new public/private keypair by clicking the button below"
+              description="An RSA public key that will be added to nodes in the cluster - paste an existing public key or create a new public/private keypair by clicking the button below"
               validate={ publicKeyValidator }
               disabled={ this.props.submitting }
             />
 
-            <Button
-              variant="raised"
-              size="small"
-              className={ classes.button }
-              onClick={ () => this.props.onCreatePrivateKeypair() }
-              disabled={ this.props.submitting }
-            >
-              Generate Keypair
-            </Button>
+            <div className={ classes.alignRight }>
+
+              <Button
+                variant="raised"
+                size="small"
+                className={ classes.button }
+                onClick={ () => this.props.onCreatePrivateKeypair() }
+                disabled={ this.props.submitting }
+              >
+                Generate Keypair
+              </Button>
+            </div>
             
           </Grid>
 
