@@ -12,6 +12,7 @@ import TextField from './TextField'
 import Select from './Select'
 
 import validators from '../utils/validators'
+import awsUtils from '../utils/aws'
 
 const validateClusterName = validators.wrapper([
   validators.required,
@@ -49,13 +50,18 @@ class ClusterForm extends React.Component {
     const awsDomains = (awsConfig.domains || {}).HostedZones || []
 
     const regionOptions = awsRegions.map(awsRegion => ({
-      title: `${ awsRegion.name } - ${ awsRegion.code }`,
+      title: awsUtils.getRegionTitle(awsRegion),
       value: awsRegion.code,
     }))
 
-    const domainOptions = awsDomains.map(awsDomain => ({
-      title: awsDomain.Name,
-      value: awsDomain.Name,
+    const instanceOptions = awsInstances.map(awsInstance => ({
+      title: awsUtils.getInstanceTitle(awsInstance),
+      value: awsInstance.apiName,
+    }))
+
+    const domainOptions = awsUtils.getRoute53Domains(awsConfig.domains).map(domain => ({
+      title: domain,
+      value: domain,
     }))
 
     const masterSizeOptions = [1,3,5].map(count => ({
@@ -116,7 +122,7 @@ class ClusterForm extends React.Component {
         <Typography
           variant='subheading'
         >
-          Size
+          Cluster Size
         </Typography>
 
         <Grid
@@ -151,6 +157,52 @@ class ClusterForm extends React.Component {
               label="Nodes"
               description="The number of k8s nodes in the cluster"
               validate={ validateWorkerNodes }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+        </Grid>
+
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          Instance Types
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              name="master_type"
+              component={ Select }
+              options={ instanceOptions }
+              label="Master Instance Type"
+              description="The EC2 instance type for the master"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              name="node_type"
+              component={ Select }
+              options={ instanceOptions }
+              label="Node Instance Type"
+              description="The EC2 instance type for the nodes"
+              validate={ validators.required }
               disabled={ this.props.submitting }
             />
           </Grid>
