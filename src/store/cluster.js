@@ -7,6 +7,7 @@ import snackbar from './snackbar'
 
 const state = {
   list: [],
+  submitting: false,
 }
 
 const actions = {
@@ -19,6 +20,16 @@ const actions = {
   }),
   add: () => ({
     type: 'PAGE_CLUSTER_ADD_NEW',
+  }),
+  viewList: () => ({
+    type: 'PAGE_CLUSTER_LIST',
+  }),
+  submitAddForm: () => ({
+    type: 'CLUSTER_SUBMIT_ADD_FORM',
+  }),
+  setSubmitting: (value) => ({
+    type: 'CLUSTER_SET_SUBMITTING',
+    value,
   })
 }
 
@@ -26,10 +37,13 @@ const mutations = {
   CLUSTER_SET_LIST: (state, action) => {
     state.list = action.data
   },
+  CLUSTER_SET_SUBMITTING: (state, action) => {
+    state.submitting = action.value
+  },
 }
 
 const SAGAS = sagaErrorWrapper({
-  CLUSTER_LOAD_LIST: function* (){
+  CLUSTER_LOAD_LIST: function* () {
     try{
       const response = yield call(clusterApi.list)
       yield put(actions.setList(response.data))
@@ -38,6 +52,9 @@ const SAGAS = sagaErrorWrapper({
       yield put(snackbar.actions.setError(err))
     }
   },
+  CLUSTER_SUBMIT_ADD_FORM: function* () {
+    yield put(actions.setSubmitting(true))
+  }
 })
 
 const sagas = createSagas(SAGAS)

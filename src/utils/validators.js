@@ -25,6 +25,11 @@ const numeric = value => isNaN(parseFloat(value)) ? 'Must be a numeric value' : 
 const integer = value => value % 1 != 0 ? 'Must be an integer' : undefined
 const unsigned = value => value < 0 ? 'Must be a positive value' : undefined
 
+const domain = value =>
+  value && /[^a-zA-Z0-9\.]/i.test(value)
+    ? 'Only alphanumeric characters or full stops'
+    : undefined
+
 const wrapper = (validators) => (value, allValues, props) => {
   // return the first of any errors
   return validators
@@ -51,6 +56,7 @@ const validators = {
   phone,
   numeric,
   integer,
+  domain,
   unsigned,
   wrapper,
   optionalWrapper

@@ -94,7 +94,7 @@ class ClusterAddNew extends React.Component {
   }
 
   getAWSForm() {
-    const { config } = this.props
+    const { config, cluster } = this.props
     const awsConfig = config.aws
     return (
       <div>
@@ -105,6 +105,10 @@ class ClusterAddNew extends React.Component {
         </Typography>
         <ClusterForm
           awsConfig={ awsConfig }
+          saveTitle='Create Cluster'
+          submitting={ cluster.submitting }
+          onSubmit={ () => cluster.submitAddForm() }
+          onCancel={ () => cluster.viewList() }
         />
       </div>
     )

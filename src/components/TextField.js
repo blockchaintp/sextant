@@ -22,6 +22,7 @@ const TextField = ({
   classes,
   inputProps,
   description,
+  disabled,
   meta: { touched, error, warning }
 }) => {
   return (
@@ -37,6 +38,7 @@ const TextField = ({
         id={ name }
         key={ name }
         type={ type }
+        disabled={ disabled }
         error={ touched && error ? true : false }
         {...input}
         {...inputProps}

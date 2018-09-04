@@ -24,10 +24,10 @@ const SelectInput = ({
   classes,
   inputProps,
   description,
+  disabled,
   meta: { touched, error, warning },
   options,
 }) => {
-
   return (
     <FormControl
       fullWidth
@@ -42,6 +42,7 @@ const SelectInput = ({
         key={ name }
         value={ input.value }
         onChange={ input.onChange }
+        disabled={ disabled }
         inputProps={{
           name,
           id: name,
