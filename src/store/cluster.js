@@ -96,11 +96,19 @@ const SAGAS = sagaErrorWrapper({
 
     yield put(actions.setShowSyncFormErrors(false))
     yield put(actions.setAsyncFormError(null))
+    yield put(actions.setSubmitting(true))
 
-    console.log('-------------------------------------------');
-    console.log('-------------------------------------------');
-    console.dir(formValues)
-    //yield put(actions.setSubmitting(true))
+    try{
+      const response = yield call(clusterApi.create, formValues)
+      console.log('-------------------------------------------');
+      console.log('-------------------------------------------');
+      console.dir(response.data)
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
+
+    yield put(actions.setSubmitting(false))
   },
   
 })
