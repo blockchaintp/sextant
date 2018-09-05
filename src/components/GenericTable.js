@@ -136,7 +136,15 @@ class GenericTable extends React.Component {
   isSelected = id => this.props.selected.indexOf(id) !== -1
 
   onDelete(ids) {
-    this.props.setSelected(ids)
+    if(!this.props.noSelect) {
+      this.props.setSelected(ids)
+    }
+    else {
+      this.setState({
+        deleteIds: ids
+      })
+    }
+    
     this.setState({
       deleteOpen: true,
     })
@@ -150,17 +158,25 @@ class GenericTable extends React.Component {
   }
 
   confirmOnDelete() {
-    this.props.onDelete(this.props.selected)
+
+    const submitIds = this.props.noSelect ?
+      this.state.deleteIds :
+      this.props.selected
+
+    this.props.onDelete(submitIds)
     this.setState({
       deleteOpen: false,
+      deleteIds: [],
     })
   }
 
 
   deleteConfirmDialog() {
-    const { classes, selected, title } = this.props
+    const { classes, title } = this.props
 
-    if(this.props.noSelect) return null
+    const selected = this.props.noSelect ?
+      this.state.deleteIds :
+      this.props.selected
     
     return (
       <Dialog
