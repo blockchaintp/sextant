@@ -35,6 +35,9 @@ const styles = theme => {
     progress: {
       margin: theme.spacing.unit * 2,
     },
+    errorText: {
+      color: 'red',
+    },
   }
 
 }
@@ -50,16 +53,16 @@ class ClusterView extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.cluster.stopWaitUntilCreated()
+    this.props.cluster.stopClusterCreatingLoop()
   }
 
   getClusterCreating() {
     const { classes } = this.props
 
     return (
-      <div className={ classes.progressContainer }>
+      <div>
         <Typography
-          variant='body2'
+          variant='subheading'
         >
           Creating
         </Typography>
@@ -71,6 +74,29 @@ class ClusterView extends React.Component {
     )
   }
 
+  getClusterError() {
+    const { cluster, classes } = this.props
+    const { currentClusterData } = cluster
+    const { settings, status } = currentClusterData
+
+    return (
+      <div>
+        <Typography
+          variant='subheading'
+          className={ classes.errorText }
+        >
+          Error
+        </Typography>
+        <Typography
+          variant='body2'
+          className={ classes.errorText }
+        >
+          { status.error }
+        </Typography>
+      </div>
+    )
+  }
+
   getClusterStatus() {
     const { cluster, classes } = this.props
     const { currentClusterData } = cluster
@@ -78,6 +104,9 @@ class ClusterView extends React.Component {
 
     if(status.phase == 'creating') {
       return this.getClusterCreating()
+    }
+    else if(status.phase == 'error') {
+      return this.getClusterError()
     }
     else {
       return (

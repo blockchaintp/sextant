@@ -86,12 +86,11 @@ const actions = {
     type: 'CLUSTER_SET_DATA',
     data,
   }),
-  waitUntilCreated: (id) => ({
-    type: 'CLUSTER_WAIT_UNTIL_CREATED',
-    id,
+  clusterCreatingLoop: () => ({
+    type: 'CLUSTER_CREATING_LOOP',
   }),
-  stopWaitUntilCreated: () => ({
-    type: 'CLUSTER_STOP_WAIT_UNTIL_CREATED',
+  stopClusterCreatingLoop: () => ({
+    type: 'CLUSTER_STOP_CREATING_LOOP',
   }),
 }
 
@@ -121,13 +120,13 @@ const mutations = {
   },
 }
 
-function* checkHasCreatedLoop(id) {
+function* clusterCreatingLoop(id) {
   try {
     while (true) {
       try{
         const response = yield call(clusterApi.status, id)
         const { phase } = response.data
-        if(phase == 'created') {
+        if(phase != 'creating') {
           yield put(actions.loadClusterData())
           yield put(actions.stopWaitUntilCreated())
         }
@@ -136,7 +135,7 @@ function* checkHasCreatedLoop(id) {
         yield put(snackbar.actions.setError(err))
         yield put(actions.stopWaitUntilCreated())
       }
-      yield call(delay, settings.loopDelays.clusterWaitCreated)
+      yield call(delay, settings.loopDelays.clusterCreating)
     }
   } finally {
     
@@ -217,12 +216,8 @@ const SAGAS = sagaErrorWrapper({
     try{
       const response = yield call(clusterApi.get, clusterName)
       const { settings, status } = response.data
-
-      console.log('-------------------------------------------');
-      console.log('-------------------------------------------');
-      console.dir(status)
       if(status.phase == 'creating') {
-        yield put(actions.waitUntilCreated(clusterName))
+        yield put(actions.clusterCreatingLoop())
       }
       yield put(actions.setClusterData(response.data))
     }
@@ -231,12 +226,12 @@ const SAGAS = sagaErrorWrapper({
     }
   },
 
-  CLUSTER_WAIT_UNTIL_CREATED: function* () {
+  CLUSTER_CREATING_LOOP: function* () {
     const payload = yield select(selectors.router.payload)
     const clusterName = payload.name
-    const checkCreatedLoop = yield fork(checkHasCreatedLoop, clusterName)
-    yield take(action => action.type == 'CLUSTER_STOP_WAIT_UNTIL_CREATED')
-    yield cancel(checkCreatedLoop)
+    const clusterCreatingLoopTask = yield fork(clusterCreatingLoop, clusterName)
+    yield take(action => action.type == 'CLUSTER_STOP_CREATING_LOOP')
+    yield cancel(clusterCreatingLoopTask)
   },
   
 })
