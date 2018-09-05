@@ -33,17 +33,30 @@ class ClusterList extends React.Component {
     const { classes, cluster } = this.props
   
     const fields =[{
-      title: 'Id',
-      name: 'id',
-    },{
       title: 'Name',
       name: 'name',
+    },{
+      title: 'Region',
+      name: 'region',
+    },{
+      title: 'Size',
+      name: 'size',
+    },{
+      title: 'Topology',
+      name: 'topology',
+    },{
+      title: 'Status',
+      name: 'status',
     }]
 
     const data = cluster.list.map(clusterData => {
+      const { settings, status } = clusterData
       return {
-        id: clusterData.id,
-        name: clusterData.name,
+        name: `${settings.name}.${settings.domain}`,
+        region: `${settings.region}`,
+        size: `masters: ${settings.master_size}, nodes: ${settings.node_size}`,
+        topology: `${settings.topology}`,
+        status: `${status.phase}`,
       }
     })
 

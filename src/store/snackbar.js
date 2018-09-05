@@ -1,5 +1,6 @@
 import { createSagas } from 'redux-box'
 
+import apiUtils from '../utils/api'
 import sagaErrorWrapper from '../utils/sagaErrorWrapper'
 
 const state = {
@@ -22,25 +23,10 @@ const actions = {
   })
 }
 
-const getError = (data) => {
-  if(!data) {
-    return 'no error found'
-    return
-  }
-  if(typeof(data) == 'string') return data
-  if(data.response && data.response.data) {
-    const body = data.response.data
-    return  (body.error || body).toString()
-  }
-  else {
-    return  (data.error || data).toString()  
-  }
-}
-
 const mutations = {
   SNACKBAR_MESSAGE: (state, action) => {
     state.isOpen = true
-    state.message = getError(action.message)
+    state.message = apiUtils.getError(action.message)
     if(action.error) {
       console.error(`[ERROR] ${state.message}`)
     }

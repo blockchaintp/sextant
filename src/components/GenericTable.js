@@ -308,17 +308,18 @@ class GenericTable extends React.Component {
 
 
             <TableBody>
-              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(dataRow => {
+              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((dataRow, i) => {
                 const isSelected = this.props.noSelect ? false : this.isSelected(dataRow.id)
                 return (
                   <TableRow
                     hover
-                    onClick={event => this.handleClick(event, dataRow.id)}
+                    key={ i }
+                    onClick={ event => this.handleClick(event, dataRow.id) }
                     role="checkbox"
-                    aria-checked={isSelected}
-                    tabIndex={-1}
-                    key={dataRow.id}
-                    selected={isSelected}
+                    aria-checked={ isSelected }
+                    tabIndex={ -1 }
+                    
+                    selected={ isSelected }
                   >
                     {
                       this.props.noSelect ? null : (

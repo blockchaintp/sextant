@@ -26,8 +26,8 @@ const integer = value => value % 1 != 0 ? 'Must be an integer' : undefined
 const unsigned = value => value < 0 ? 'Must be a positive value' : undefined
 
 const domain = value =>
-  value && /[^a-zA-Z0-9\.]/i.test(value)
-    ? 'Only alphanumeric characters or full stops'
+  value && /[^a-zA-Z0-9\.-]/i.test(value)
+    ? 'Only alphanumeric characters, dashes or full stops'
     : undefined
 
 const publicKey = value => 
