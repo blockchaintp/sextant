@@ -49,6 +49,10 @@ class ClusterView extends React.Component {
     this.props.cluster.loadClusterData()
   }
 
+  componentWillUnmount() {
+    this.props.cluster.stopWaitUntilCreated()
+  }
+
   getClusterCreating() {
     const { classes } = this.props
 

@@ -1,10 +1,12 @@
 import { createSagas } from 'redux-box'
-import { call, put, select } from 'redux-saga/effects'
+import { call, put, select, fork, take, cancel } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
 import { touch, change, initialize } from 'redux-form'
 
 import apiUtils from '../utils/api'
 import sagaErrorWrapper from '../utils/sagaErrorWrapper'
 import clusterApi from '../api/cluster'
+import settings from '../settings'
 import snackbar from './snackbar'
 import selectors from './selectors'
 
@@ -83,7 +85,14 @@ const actions = {
   setClusterData: (data) => ({
     type: 'CLUSTER_SET_DATA',
     data,
-  })
+  }),
+  waitUntilCreated: (id) => ({
+    type: 'CLUSTER_WAIT_UNTIL_CREATED',
+    id,
+  }),
+  stopWaitUntilCreated: () => ({
+    type: 'CLUSTER_STOP_WAIT_UNTIL_CREATED',
+  }),
 }
 
 const mutations = {
@@ -110,6 +119,28 @@ const mutations = {
   CLUSTER_SET_DATA: (state, action) => {
     state.currentClusterData = action.data
   },
+}
+
+function* checkHasCreatedLoop(id) {
+  try {
+    while (true) {
+      try{
+        const response = yield call(clusterApi.status, id)
+        const { phase } = response.data
+        if(phase == 'created') {
+          yield put(actions.loadClusterData())
+          yield put(actions.stopWaitUntilCreated())
+        }
+      }
+      catch(err){
+        yield put(snackbar.actions.setError(err))
+        yield put(actions.stopWaitUntilCreated())
+      }
+      yield call(delay, settings.loopDelays.clusterWaitCreated)
+    }
+  } finally {
+    
+  }
 }
 
 const SAGAS = sagaErrorWrapper({
@@ -185,11 +216,27 @@ const SAGAS = sagaErrorWrapper({
 
     try{
       const response = yield call(clusterApi.get, clusterName)
+      const { settings, status } = response.data
+
+      console.log('-------------------------------------------');
+      console.log('-------------------------------------------');
+      console.dir(status)
+      if(status.phase == 'creating') {
+        yield put(actions.waitUntilCreated(clusterName))
+      }
       yield put(actions.setClusterData(response.data))
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
     }
+  },
+
+  CLUSTER_WAIT_UNTIL_CREATED: function* () {
+    const payload = yield select(selectors.router.payload)
+    const clusterName = payload.name
+    const checkCreatedLoop = yield fork(checkHasCreatedLoop, clusterName)
+    yield take(action => action.type == 'CLUSTER_STOP_WAIT_UNTIL_CREATED')
+    yield cancel(checkCreatedLoop)
   },
   
 })
