@@ -5,6 +5,8 @@ import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import { lighten } from '@material-ui/core/styles/colorManipulator'
 
+import OpenIcon from '@material-ui/icons/OpenInNew'
+
 import settings from '../settings'
 import store from '../store'
 import clusterModule from '../store/cluster'
@@ -36,6 +38,9 @@ class ClusterList extends React.Component {
       title: 'Name',
       name: 'name',
     },{
+      title: 'Domain',
+      name: 'domain',
+    },{
       title: 'Region',
       name: 'region',
     },{
@@ -52,7 +57,8 @@ class ClusterList extends React.Component {
     const data = cluster.list.map(clusterData => {
       const { settings, status } = clusterData
       return {
-        name: `${settings.name}.${settings.domain}`,
+        name: `${settings.name}`,
+        domain: `${settings.domain}`,
         region: `${settings.region}`,
         size: `masters: ${settings.master_size}, nodes: ${settings.node_size}`,
         topology: `${settings.topology}`,
@@ -67,6 +73,12 @@ class ClusterList extends React.Component {
         data={ data }
         fields={ fields }
         onAdd={ cluster.add }
+        icons={{
+          edit: OpenIcon
+        }}
+        tooltips={{
+          edit: 'View'
+        }}
         onEdit={ () => null }
         onDelete={ () => null }
         getOptions={ () => null }

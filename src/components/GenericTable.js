@@ -219,24 +219,28 @@ class GenericTable extends React.Component {
     const addButton = this.getAddButton()
 
     const icons = this.props.icons || {}
+    const tooltips = this.props.tooltips || {}
 
     const UseDeleteIcon = icons.delete || DeleteIcon
     const UseEditIcon = icons.edit || EditIcon
+
+    const useDeleteTooltip = tooltips.delete || 'Delete'
+    const useEditTooltip = tooltips.edit || 'Edit'
 
     return (
       <div className={classes.actions}>
         {ids.length > 0 ? [
           this.props.noDelete ? null : (
-            <Tooltip disableFocusListener key="delete" title="Delete">
-              <IconButton aria-label="Delete" onClick={ () => this.onDelete(ids) }>
+            <Tooltip disableFocusListener key="delete" title={ useDeleteTooltip }>
+              <IconButton aria-label={ useDeleteTooltip } onClick={ () => this.onDelete(ids) }>
                 <UseDeleteIcon />
               </IconButton>
             </Tooltip>
           ),
           (ids.length  == 1 ? (
             this.props.noEdit ? null : (
-              <Tooltip key="edit" title="Edit">
-                <IconButton aria-label="Edit" onClick={ () => this.props.onEdit(ids[0]) }>
+              <Tooltip key="edit" title={ useEditTooltip }>
+                <IconButton aria-label={ useEditTooltip } onClick={ () => this.props.onEdit(ids[0]) }>
                   <UseEditIcon />
                 </IconButton>
               </Tooltip>
