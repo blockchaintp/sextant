@@ -32,19 +32,19 @@ class ClusterDetails extends React.Component {
       value: settings.topology,
     },{
       title: 'Masters:',
-      value: settings.master_size,
+      value: settings.master_count,
     },{
       title: 'Master Type:',
-      value: settings.master_type,
+      value: settings.master_size,
     },{
       title: 'Master Zones:',
       value: settings.master_zones.join(', '),
     },{
       title: 'Nodes:',
-      value: settings.master_size,
+      value: settings.master_count,
     },{
       title: 'Node Type:',
-      value: settings.node_type,
+      value: settings.node_size,
     },{
       title: 'Node Zones:',
       value: settings.node_zones.join(', '),

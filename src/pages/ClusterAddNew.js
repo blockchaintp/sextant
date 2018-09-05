@@ -35,12 +35,12 @@ const styles = theme => {
 
 const TEST_DATA = {
   domain: "dev.catenasys.com.",
-  master_size: 1,
-  master_type: "m1.medium",
+  master_count: 1,
+  master_size: "m1.medium",
   master_zones: ["eu-west-2a"],
   name: "apples",
-  node_size: 3,
-  node_type: "m1.medium",
+  node_count: 3,
+  node_size: "m1.medium",
   node_zones: ["eu-west-2a"],
   region: "eu-west-2",
   topology: "public",
@@ -51,8 +51,8 @@ const DEFAULT_DATA = {
   master_zones: [],
   node_zones: [],
   topology: 'public',
-  master_size: 1,
-  node_size: 3,
+  master_count: 1,
+  node_count: 3,
 }
 
 @reduxForm({

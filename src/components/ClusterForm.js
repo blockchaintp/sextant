@@ -32,11 +32,11 @@ const validateWorkerNodes = validators.wrapper([
   validators.maxValue(128),
 ])
 
-const masterSizeZoneValidators = [1,3,5].reduce((all, size) => {
-  all[size] = validators.wrapper([
+const masterCountZoneValidators = [1,3,5].reduce((all, count) => {
+  all[count] = validators.wrapper([
     validators.required,
     validators.minLength(1, 'items'),
-    validators.maxLength(size, 'items'),
+    validators.maxLength(count, 'items'),
   ])
   return all
 }, {})
@@ -86,7 +86,7 @@ class ClusterForm extends React.Component {
     const awsRegions = awsConfig.regions || []
     const awsDomains = (awsConfig.domains || {}).HostedZones || []
     const awsZones = this.props.awsZones || []
-    const masterSize = this.props.formValues.master_size || 1
+    const masterCount = this.props.formValues.master_count || 1
 
     const regionOptions = awsRegions.map(awsRegion => ({
       title: awsUtils.getRegionTitle(awsRegion),
@@ -103,7 +103,7 @@ class ClusterForm extends React.Component {
       value: domain,
     }))
 
-    const masterSizeOptions = [1,3,5].map(count => ({
+    const masterCountOptions = [1,3,5].map(count => ({
       title: count,
       value: count,
     }))
@@ -191,9 +191,9 @@ class ClusterForm extends React.Component {
             md={6}
           >
             <Field
-              name="master_size"
+              name="master_count"
               component={ Select }
-              options={ masterSizeOptions }
+              options={ masterCountOptions }
               label="Masters"
               description="The number of k8s masters in the cluster"
               validate={ validators.required }
@@ -207,7 +207,7 @@ class ClusterForm extends React.Component {
             md={6}
           >
             <Field
-              name="node_size"
+              name="node_count"
               type="number"
               component={ TextField }
               label="Nodes"
@@ -237,10 +237,10 @@ class ClusterForm extends React.Component {
             md={6}
           >
             <Field
-              name="master_type"
+              name="master_size"
               component={ Select }
               options={ instanceOptions }
-              label="Master Instance Type"
+              label="Master Instance Size"
               description="The EC2 instance type for the master"
               validate={ validators.required }
               disabled={ this.props.submitting }
@@ -253,10 +253,10 @@ class ClusterForm extends React.Component {
             md={6}
           >
             <Field
-              name="node_type"
+              name="node_size"
               component={ Select }
               options={ instanceOptions }
-              label="Node Instance Type"
+              label="Node Instance Size"
               description="The EC2 instance type for the nodes"
               validate={ validators.required }
               disabled={ this.props.submitting }
@@ -327,8 +327,8 @@ class ClusterForm extends React.Component {
               component={ MultipleCheckbox }
               options={ zoneOptions }
               label="Masters"
-              description={`The EC2 zones your nodes will be deployed to (min 1, max ${masterSize})`}
-              validate={ masterSizeZoneValidators[masterSize] }
+              description={`The EC2 zones your nodes will be deployed to (min 1, max ${masterCount})`}
+              validate={ masterCountZoneValidators[masterCount] }
               disabled={ this.props.submitting }
             />
             
