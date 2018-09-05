@@ -2,10 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
-import Grid from '@material-ui/core/Grid'
-import Divider from '@material-ui/core/Divider'
-import Typography from '@material-ui/core/Typography'
-
+import InfoPanel from './InfoPanel'
 
 const styles = theme => {
   return {
@@ -53,43 +50,10 @@ class ClusterDetails extends React.Component {
       value: settings.node_zones.join(', '),
     }]
 
-    const parts = data.reduce((all, row, i) => {
-      return all.concat([
-        <Grid
-          key={ `title-${i}` }
-          item
-          xs={3}
-        >
-          <Typography
-            variant='body2'
-          >
-            { row.title }
-          </Typography>
-        </Grid>,
-        <Grid
-          key={ `value-${i}` }
-          item
-          xs={9}
-        >
-          <Typography
-            variant='body1'
-          >
-            { row.value }
-          </Typography>
-        </Grid>
-      ])
-    }, [])
-
     return (
-      <Grid
-        container
-        direction='row'
-        className={ classes.container }
-      >
-
-      { parts }
-
-      </Grid>
+      <InfoPanel
+        data={ data }
+      />
     )
   }
 }
