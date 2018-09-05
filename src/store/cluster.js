@@ -20,6 +20,9 @@ const state = {
   // create keypair values
   keypairWindowOpen: false,
   keypairPrivateKey: null,
+
+  // the data for the current cluster being viewed
+  currentClusterData: null,
 }
 
 const actions = {
@@ -68,6 +71,19 @@ const actions = {
   resetForm: () => ({
     type: 'CLUSTER_RESET_FORM',
   }),
+  viewCluster: (name) => ({
+    type: 'PAGE_CLUSTER_VIEW',
+    payload: {
+      name,
+    }
+  }),
+  loadClusterData: () => ({
+    type: 'CLUSTER_LOAD_DATA',
+  }),
+  setClusterData: (data) => ({
+    type: 'CLUSTER_SET_DATA',
+    data,
+  })
 }
 
 const mutations = {
@@ -90,6 +106,9 @@ const mutations = {
   CLUSTER_CLOSE_KEYPAIR_WINDOW: (state, action) => {
     state.keypairWindowOpen = false
     state.keypairPrivateKey = null
+  },
+  CLUSTER_SET_DATA: (state, action) => {
+    state.currentClusterData = action.data
   },
 }
 
@@ -149,7 +168,8 @@ const SAGAS = sagaErrorWrapper({
 
     try{
       const response = yield call(clusterApi.create, formValues)
-      
+
+      yield put(actions.viewCluster(formValues.name))
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
@@ -157,6 +177,19 @@ const SAGAS = sagaErrorWrapper({
     }
 
     yield put(actions.setSubmitting(false))
+  },
+
+  CLUSTER_LOAD_DATA: function* () {
+    const payload = yield select(selectors.router.payload)
+    const clusterName = payload.name
+
+    try{
+      const response = yield call(clusterApi.get, clusterName)
+      yield put(actions.setClusterData(response.data))
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
   },
   
 })

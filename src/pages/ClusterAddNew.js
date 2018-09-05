@@ -12,7 +12,6 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 
 import settings from '../settings'
-import store from '../store'
 import configModule from '../store/config'
 import clusterModule from '../store/cluster'
 import selectors from '../store/selectors'

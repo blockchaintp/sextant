@@ -5,10 +5,10 @@ import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import { lighten } from '@material-ui/core/styles/colorManipulator'
 
+import CircularProgress from '@material-ui/core/CircularProgress'
 import OpenIcon from '@material-ui/icons/OpenInNew'
 
 import settings from '../settings'
-import store from '../store'
 import clusterModule from '../store/cluster'
 
 import withRouter from '../utils/withRouter'
@@ -17,7 +17,13 @@ import GenericTable from '../components/GenericTable'
 
 const styles = theme => {
   return {
-    
+    progressContainer: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    progress: {
+      margin: theme.spacing.unit * 2,
+    },
   }
 
 }
@@ -29,6 +35,26 @@ class ClusterList extends React.Component {
   
   componentDidMount(){
     this.props.cluster.loadList()
+  }
+
+  getStatusCell(phase) {
+
+    const { classes } = this.props
+
+    if(phase == 'creating') {
+      return (
+        <div className={ classes.progressContainer }>
+          { phase }
+          <CircularProgress
+            className={ classes.progress }
+            size={ 20 }
+          />
+        </div>
+      )
+    }
+    else {
+      return phase
+    }
   }
 
   render() {
@@ -57,12 +83,13 @@ class ClusterList extends React.Component {
     const data = cluster.list.map(clusterData => {
       const { settings, status } = clusterData
       return {
+        id: `${settings.name}`,
         name: `${settings.name}`,
         domain: `${settings.domain}`,
         region: `${settings.region}`,
         size: `masters: ${settings.master_size}, nodes: ${settings.node_size}`,
         topology: `${settings.topology}`,
-        status: `${status.phase}`,
+        status: this.getStatusCell(status.phase),
       }
     })
 
@@ -79,7 +106,7 @@ class ClusterList extends React.Component {
         tooltips={{
           edit: 'View'
         }}
-        onEdit={ () => null }
+        onEdit={ (id) => cluster.viewCluster(id) }
         onDelete={ () => null }
         getOptions={ () => null }
       /> 

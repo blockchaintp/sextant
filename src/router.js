@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 */
 import Dashboard from './pages/Dashboard'
 import ClusterList from './pages/ClusterList'
+import ClusterView from './pages/ClusterView'
 import ClusterAddNew from './pages/ClusterAddNew'
 import ClusterAddExisting from './pages/ClusterAddExisting'
 
@@ -38,6 +39,10 @@ export const routes = {
   'PAGE_CLUSTER_LIST': {
     path: '/clusters',
     component: ClusterList,
+  },
+  'PAGE_CLUSTER_VIEW': {
+    path: '/clusters/view/:name',
+    component: ClusterView,
   },
   'PAGE_CLUSTER_ADD_NEW': {
     path: '/clusters/add/new',

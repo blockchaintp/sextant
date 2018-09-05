@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core/styles'
 import { lighten } from '@material-ui/core/styles/colorManipulator'
 
 import settings from '../settings'
-import store from '../store'
 import clusterModule from '../store/cluster'
 
 const styles = theme => {
