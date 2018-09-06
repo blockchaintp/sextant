@@ -112,22 +112,8 @@ class ClusterView extends React.Component {
               onCleanupCluster={ () => cluster.cleanupCluster(currentClusterData.settings.name) }
             />
           </Paper>
+
           
-          <Paper
-            className={ classes.paper }
-          >
-            <Typography
-              variant='title'
-              className={ classes.title }
-            >
-              Cluster Settings
-            </Typography>
-            <ClusterDetails
-              cluster={ currentClusterData }
-            />
-          </Paper>
-
-
           {
             clusterUtils.kubectlReady(currentClusterData.status.phase) ? (
               <Paper
@@ -165,6 +151,22 @@ class ClusterView extends React.Component {
               </Paper>
             ) : null
           }
+          
+          <Paper
+            className={ classes.paper }
+          >
+            <Typography
+              variant='title'
+              className={ classes.title }
+            >
+              Cluster Settings
+            </Typography>
+            <ClusterDetails
+              cluster={ currentClusterData }
+            />
+          </Paper>
+
+
         </Grid>
 
       </Grid>
