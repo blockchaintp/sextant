@@ -87,6 +87,15 @@ class ClusterView extends React.Component {
           sm={12}
           md={8}
         >
+          
+
+        </Grid>
+
+        <Grid
+          item
+          sm={12}
+          md={4}
+        >
           <Paper
             className={ classes.paper }
           >
@@ -103,14 +112,7 @@ class ClusterView extends React.Component {
               onCleanupCluster={ () => cluster.cleanupCluster(currentClusterData.settings.name) }
             />
           </Paper>
-
-        </Grid>
-
-        <Grid
-          item
-          sm={12}
-          md={4}
-        >
+          
           <Paper
             className={ classes.paper }
           >
