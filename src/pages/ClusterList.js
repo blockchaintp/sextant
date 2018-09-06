@@ -10,18 +10,13 @@ import OpenIcon from '@material-ui/icons/OpenInNew'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 
-import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import FormControl from '@material-ui/core/FormControl'
-import FormHelperText from '@material-ui/core/FormHelperText'
-
 import settings from '../settings'
 import clusterModule from '../store/cluster'
 
 import withRouter from '../utils/withRouter'
 
 import GenericTable from '../components/GenericTable'
+import ConfirmDeleteClusterDialog from '../components/ConfirmDeleteClusterDialog'
 
 const styles = theme => {
   return {
@@ -45,7 +40,7 @@ const styles = theme => {
 class ClusterList extends React.Component {
   
   state = {
-    deleteClusterName: ''
+    deleteCluster: null,
   }
 
   componentDidMount(){
@@ -72,67 +67,25 @@ class ClusterList extends React.Component {
     }
   }
 
-  onDeleteClick() {
+  onDeleteClick(ids) {
+    const { cluster } = this.props
+    const id = ids[0]
+    const deleteCluster = cluster.list.filter(c => c.settings.name == id)[0]
     this.setState({
-      deleteClusterName: ''
+      deleteCluster,
     })
   }
 
-  getDeleteOKDisabled(ids) {
-    const { classes, cluster } = this.props
-
-    const id = ids[0]
-    const deletingCluster = cluster.list.filter(c => c.settings.name == id)[0]
-
-    if(!deletingCluster) return true
-    if(deletingCluster.status.phase == 'deleted') return false
-
-    return this.state.deleteClusterName != deletingCluster.settings.name
+  onDeleteClose() {
+    this.setState({
+      deleteCluster: null,
+    })
   }
 
-  getDeleteDialogContent(ids) {
-
-    const { classes, cluster } = this.props
-
-    const id = ids[0]
-    const deletingCluster = cluster.list.filter(c => c.settings.name == id)[0]
-
-    if(!deletingCluster) return null
-
-    if(deletingCluster.status.phase == 'deleted') {
-      return (
-        <DialogContent>
-          <DialogContentText>
-            This cluster is deleted - clicking the <strong>delete</strong> button below will cleanup and remove it from the system.
-          </DialogContentText>
-        </DialogContent>
-      )
-    }
-
-    return (
-      <DialogContent>
-        <DialogContentText>
-          Are you <strong>absolutely</strong> sure you want to delete the <strong>{ deletingCluster.settings.name }</strong> cluster?<br />
-          To confirm - please type the name of the cluster (<strong>{ deletingCluster.settings.name }</strong>) into the textbox below:
-        </DialogContentText>
-        <FormControl
-          fullWidth
-        >
-          <InputLabel 
-            htmlFor='confirm-cluster-name'
-          >
-            enter the cluster name
-          </InputLabel>
-          <Input
-            name='confirm-cluster-name'
-            value={ this.state.deleteClusterName }
-            onChange={ (e) => this.setState({
-              deleteClusterName: e.target.value
-            })}
-          />
-        </FormControl>
-      </DialogContent>
-    )
+  onDeleteConfirm() {
+    const { cluster } = this.props
+    cluster.deleteCluster(this.state.deleteCluster.settings.name)
+    this.onDeleteClose()
   }
 
   render() {
@@ -172,25 +125,29 @@ class ClusterList extends React.Component {
     })
 
     return (
-      <GenericTable
-        title="Cluster"
-        noSelect
-        data={ data }
-        fields={ fields }
-        onAdd={ cluster.add }
-        icons={{
-          edit: OpenIcon
-        }}
-        tooltips={{
-          edit: 'View'
-        }}
-        onEdit={ (id) => cluster.viewCluster(id) }
-        onDelete={ (ids) => cluster.deleteCluster(ids[0]) }
-        getOptions={ () => null }
-        getDeleteDialogContent={ this.getDeleteDialogContent.bind(this) }
-        getDeleteOKDisabled={ this.getDeleteOKDisabled.bind(this) }
-        onDeleteClick={ this.onDeleteClick.bind(this) }
-      /> 
+      <div>
+        <ConfirmDeleteClusterDialog
+          cluster={ this.state.deleteCluster }
+          onClose={ this.onDeleteClose.bind(this) }
+          onConfirm={ this.onDeleteConfirm.bind(this) }
+        />
+        <GenericTable
+          title="Cluster"
+          noSelect
+          data={ data }
+          fields={ fields }
+          onAdd={ cluster.add }
+          icons={{
+            edit: OpenIcon
+          }}
+          tooltips={{
+            edit: 'View'
+          }}
+          onEdit={ (id) => cluster.viewCluster(id) }
+          getOptions={ () => null }
+          onDeleteClick={ this.onDeleteClick.bind(this) }
+        />
+      </div>
     )
   }
 }

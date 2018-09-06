@@ -136,7 +136,10 @@ class GenericTable extends React.Component {
   isSelected = id => this.props.selected.indexOf(id) !== -1
 
   onDelete(ids) {
-    if(this.props.onDeleteClick) this.props.onDeleteClick()
+    if(this.props.onDeleteClick) {
+      this.props.onDeleteClick(ids)
+      return
+    }
     if(!this.props.noSelect) {
       this.props.setSelected(ids)
     }
