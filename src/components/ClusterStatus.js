@@ -10,6 +10,7 @@ const styles = theme => {
   return {
     errorText: {
       color: 'red',
+      marginBottom: '10px',
     },
   }
 }
@@ -89,6 +90,14 @@ class ClusterStatus extends React.Component {
         >
           { status.error }
         </Typography>
+        <Button 
+          color="primary" 
+          variant="raised"
+          autoFocus
+          onClick={ () => this.props.onDeleteCluster() }
+        >
+          Delete Cluster
+        </Button>
       </div>
     )
   }

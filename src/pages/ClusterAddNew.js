@@ -53,6 +53,8 @@ const DEFAULT_DATA = {
   topology: 'public',
   master_count: 1,
   node_count: 3,
+  master_size: "m4.large",
+  node_size: "m4.large",
 }
 
 @reduxForm({

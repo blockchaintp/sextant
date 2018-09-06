@@ -103,7 +103,13 @@ const actions = {
   cleanupCluster: (id) => ({
     type: 'CLUSTER_CLEANUP',
     id,
-  })
+  }),
+  downloadKubeConfig: () => ({
+    type: 'CLUSTER_DOWNLOAD_KUBE_CONFIG',
+  }),
+  downloadKopsConfig: () => ({
+    type: 'CLUSTER_DOWNLOAD_KOPS_CONFIG',
+  }),
 }
 
 const mutations = {
@@ -267,6 +273,7 @@ const SAGAS = sagaErrorWrapper({
     try{
       const response = yield call(clusterApi.delete, clusterId)
       yield put(actions.viewCluster(clusterId))
+      yield put(actions.loadClusterData())
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
@@ -287,6 +294,20 @@ const SAGAS = sagaErrorWrapper({
     catch(err){
       yield put(snackbar.actions.setError(err))
     }
+  },
+
+  CLUSTER_DOWNLOAD_KUBE_CONFIG: function* (action) {
+    const payload = yield select(selectors.router.payload)
+    const clusterId = payload.name
+    const url = clusterApi.url(`/kubeconfig/${clusterId}`)
+    window.open(url)
+  },
+
+  CLUSTER_DOWNLOAD_KOPS_CONFIG: function* (action) {
+    const payload = yield select(selectors.router.payload)
+    const clusterId = payload.name
+    const url = clusterApi.url(`/kopsconfig/${clusterId}`)
+    window.open(url)
   },
   
 })
