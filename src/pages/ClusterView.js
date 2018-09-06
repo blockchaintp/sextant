@@ -12,6 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Loading from '../components/Loading'
 import ClusterDetails from '../components/ClusterDetails'
+import ClusterStatus from '../components/ClusterStatus'
 
 import settings from '../settings'
 import clusterModule from '../store/cluster'
@@ -56,72 +57,6 @@ class ClusterView extends React.Component {
     this.props.cluster.stopClusterCreatingLoop()
   }
 
-  getClusterCreating() {
-    const { classes } = this.props
-
-    return (
-      <div>
-        <Typography
-          variant='subheading'
-        >
-          Creating
-        </Typography>
-        <CircularProgress
-          className={ classes.progress }
-          size={ 20 }
-        />
-      </div>
-    )
-  }
-
-  getClusterError() {
-    const { cluster, classes } = this.props
-    const { currentClusterData } = cluster
-    const { settings, status } = currentClusterData
-
-    return (
-      <div>
-        <Typography
-          variant='subheading'
-          className={ classes.errorText }
-        >
-          Error
-        </Typography>
-        <Typography
-          variant='body2'
-          className={ classes.errorText }
-        >
-          { status.error }
-        </Typography>
-      </div>
-    )
-  }
-
-  getClusterStatus() {
-    const { cluster, classes } = this.props
-    const { currentClusterData } = cluster
-    const { settings, status } = currentClusterData
-
-    if(status.phase == 'creating') {
-      return this.getClusterCreating()
-    }
-    else if(status.phase == 'error') {
-      return this.getClusterError()
-    }
-    else {
-      return (
-        <div>
-          <Typography
-            variant='subheading'
-          >
-            Unknown Status: { status.phase }
-          </Typography>
-        </div>
-      )
-    }
-    
-  }
-
   render() {
 
     const { cluster, classes } = this.props
@@ -155,7 +90,9 @@ class ClusterView extends React.Component {
               Cluster Status
             </Typography>
 
-            { this.getClusterStatus() }
+            <ClusterStatus
+              cluster={ currentClusterData }
+            />
           </Paper>
         </Grid>
 

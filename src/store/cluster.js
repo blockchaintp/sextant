@@ -128,12 +128,12 @@ function* clusterCreatingLoop(id) {
         const { phase } = response.data
         if(phase != 'creating') {
           yield put(actions.loadClusterData())
-          yield put(actions.stopWaitUntilCreated())
+          yield put(actions.stopClusterCreatingLoop())
         }
       }
       catch(err){
         yield put(snackbar.actions.setError(err))
-        yield put(actions.stopWaitUntilCreated())
+        yield put(actions.stopClusterCreatingLoop())
       }
       yield call(delay, settings.loopDelays.clusterCreating)
     }

@@ -36,11 +36,11 @@ const styles = theme => {
 const TEST_DATA = {
   domain: "dev.catenasys.com.",
   master_count: 1,
-  master_size: "m1.medium",
+  master_size: "m4.large",
   master_zones: ["eu-west-2a"],
   name: "apples",
   node_count: 3,
-  node_size: "m1.medium",
+  node_size: "m4.large",
   node_zones: ["eu-west-2a"],
   region: "eu-west-2",
   topology: "public",
