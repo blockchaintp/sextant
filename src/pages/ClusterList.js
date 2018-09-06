@@ -56,7 +56,7 @@ class ClusterList extends React.Component {
 
     const { classes } = this.props
 
-    if(phase == 'creating') {
+    if(phase == 'creating' || phase == 'deleting') {
       return (
         <div className={ classes.progressContainer }>
           { phase }
@@ -85,6 +85,7 @@ class ClusterList extends React.Component {
     const deletingCluster = cluster.list.filter(c => c.settings.name == id)[0]
 
     if(!deletingCluster) return true
+    if(deletingCluster.status.phase == 'deleted') return false
 
     return this.state.deleteClusterName != deletingCluster.settings.name
   }
@@ -97,6 +98,16 @@ class ClusterList extends React.Component {
     const deletingCluster = cluster.list.filter(c => c.settings.name == id)[0]
 
     if(!deletingCluster) return null
+
+    if(deletingCluster.status.phase == 'deleted') {
+      return (
+        <DialogContent>
+          <DialogContentText>
+            This cluster is deleted - clicking the <strong>delete</strong> button below will cleanup and remove it from the system.
+          </DialogContentText>
+        </DialogContent>
+      )
+    }
 
     return (
       <DialogContent>

@@ -35,6 +35,9 @@ const actions = {
     type: 'CLUSTER_SET_LIST',
     data,
   }),
+  viewList: () => ({
+    type: 'PAGE_CLUSTER_LIST',
+  }),
   add: () => ({
     type: 'PAGE_CLUSTER_ADD_NEW',
   }),
@@ -95,6 +98,10 @@ const actions = {
   }),
   deleteCluster: (id) => ({
     type: 'CLUSTER_DELETE',
+    id,
+  }),
+  cleanupCluster: (id) => ({
+    type: 'CLUSTER_CLEANUP',
     id,
   })
 }
@@ -249,10 +256,37 @@ const SAGAS = sagaErrorWrapper({
 
   CLUSTER_DELETE: function* (action) {
     const clusterId = action.id
+    const clusters = yield select(state => state.cluster.list)
+    const cluster = clusters.filter(c => c.settings.name == clusterId)[0]
 
-    console.log('-------------------------------------------');
-    console.log('-------------------------------------------');
-    console.dir(clusterId)
+    if(cluster.status.phase == "deleted") {
+      yield put(actions.cleanupCluster(clusterId))
+      return
+    }
+
+    try{
+      const response = yield call(clusterApi.delete, clusterId)
+      yield put(actions.viewCluster(clusterId))
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
+  },
+
+  CLUSTER_CLEANUP: function* (action) {
+    const clusterId = action.id
+
+    try{
+      const response = yield call(clusterApi.cleanup, clusterId)
+      // call load list again in case we are already on the list page
+      yield put(actions.loadList())
+      yield put(actions.viewList())
+
+      yield put(snackbar.actions.setMessage(`${clusterId} cluster has been removed`))
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
   },
   
 })

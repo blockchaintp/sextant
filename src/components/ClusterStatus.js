@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Button from '@material-ui/core/Button'
 
 const styles = theme => {
   return {
@@ -28,6 +29,44 @@ class ClusterStatus extends React.Component {
           className={ classes.progress }
           size={ 20 }
         />
+      </div>
+    )
+  }
+
+  getClusterDeleting() {
+    const { classes } = this.props
+    return (
+      <div>
+        <Typography
+          variant='subheading'
+        >
+          Deleting...
+        </Typography>
+        <CircularProgress
+          className={ classes.progress }
+          size={ 20 }
+        />
+      </div>
+    )
+  }
+
+  getClusterDeleted() {
+    const { classes } = this.props
+    return (
+      <div>
+        <Typography
+          variant='subheading'
+        >
+          Deleted
+        </Typography>
+        <Button 
+          color="primary" 
+          variant="raised"
+          autoFocus
+          onClick={ () => this.props.onCleanupCluster() }
+        >
+          Clean Up
+        </Button>
       </div>
     )
   }
@@ -60,6 +99,12 @@ class ClusterStatus extends React.Component {
 
     if(status.phase == 'creating') {
       return this.getClusterCreating()
+    }
+    else if(status.phase == 'deleting') {
+      return this.getClusterDeleting()
+    }
+    else if(status.phase == 'deleted') {
+      return this.getClusterDeleted()
     }
     else if(status.phase == 'error') {
       return this.getClusterError()

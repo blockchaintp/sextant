@@ -54,7 +54,7 @@ class ClusterView extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.cluster.stopClusterCreatingLoop()
+    this.props.cluster.stopClusterStatusLoop()
   }
 
   render() {
@@ -92,6 +92,7 @@ class ClusterView extends React.Component {
 
             <ClusterStatus
               cluster={ currentClusterData }
+              onCleanupCluster={ () => cluster.cleanupCluster(currentClusterData.settings.name) }
             />
           </Paper>
         </Grid>

@@ -21,6 +21,22 @@ export default {
     })
   },
 
+  delete(id) {
+    return new Promise(function(resolve, reject){
+      axios.delete(url(`/${id}`))
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
+  cleanup(id) {
+    return new Promise(function(resolve, reject){
+      axios.put(url(`/cleanup/${id}`))
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
   status(id) {
     return new Promise(function(resolve, reject){
       axios.get(url(`/status/${id}`))
