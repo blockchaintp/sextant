@@ -22,7 +22,7 @@ class ClusterStatus extends React.Component {
         <Typography
           variant='subheading'
         >
-          Creating
+          Creating (this can take between 5 and 10 minutes)...
         </Typography>
         <CircularProgress
           className={ classes.progress }

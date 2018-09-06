@@ -86,11 +86,12 @@ const actions = {
     type: 'CLUSTER_SET_DATA',
     data,
   }),
-  clusterCreatingLoop: () => ({
-    type: 'CLUSTER_CREATING_LOOP',
+  clusterStatusLoop: (loopWhileInPhase) => ({
+    type: 'CLUSTER_STATUS_LOOP',
+    loopWhileInPhase,
   }),
-  stopClusterCreatingLoop: () => ({
-    type: 'CLUSTER_STOP_CREATING_LOOP',
+  stopClusterStatusLoop: () => ({
+    type: 'CLUSTER_STOP_STATUS_LOOP',
   }),
 }
 
@@ -120,20 +121,23 @@ const mutations = {
   },
 }
 
-function* clusterCreatingLoop(id) {
+// keep looping while the cluster status.phase is in the given phase
+// as soon as it's not in that phase - cancel the loop and re-load the
+// cluster data to update the UI
+function* clusterStatusLoop(clusterId, loopWhileInPhase) {
   try {
     while (true) {
       try{
-        const response = yield call(clusterApi.status, id)
+        const response = yield call(clusterApi.status, clusterId)
         const { phase } = response.data
-        if(phase != 'creating') {
+        if(phase != loopWhileInPhase) {
           yield put(actions.loadClusterData())
-          yield put(actions.stopClusterCreatingLoop())
+          yield put(actions.stopClusterStatusLoop())
         }
       }
       catch(err){
         yield put(snackbar.actions.setError(err))
-        yield put(actions.stopClusterCreatingLoop())
+        yield put(actions.stopClusterStatusLoop())
       }
       yield call(delay, settings.loopDelays.clusterCreating)
     }
@@ -216,22 +220,27 @@ const SAGAS = sagaErrorWrapper({
     try{
       const response = yield call(clusterApi.get, clusterName)
       const { settings, status } = response.data
-      if(status.phase == 'creating') {
-        yield put(actions.clusterCreatingLoop())
-      }
+
       yield put(actions.setClusterData(response.data))
+
+      if(status.phase == 'creating') {
+        yield put(actions.clusterStatusLoop('creating'))
+      }
+      else if(status.phase == 'deleting') {
+        yield put(actions.clusterStatusLoop('deleting')) 
+      }
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
     }
   },
 
-  CLUSTER_CREATING_LOOP: function* () {
+  CLUSTER_STATUS_LOOP: function* (action) {
     const payload = yield select(selectors.router.payload)
-    const clusterName = payload.name
-    const clusterCreatingLoopTask = yield fork(clusterCreatingLoop, clusterName)
-    yield take(action => action.type == 'CLUSTER_STOP_CREATING_LOOP')
-    yield cancel(clusterCreatingLoopTask)
+    const clusterId = payload.name
+    const clusterStatusLoopTask = yield fork(clusterStatusLoop, clusterId, action.loopWhileInPhase)
+    yield take(action => action.type == 'CLUSTER_STOP_STATUS_LOOP')
+    yield cancel(clusterStatusLoopTask)
   },
   
 })
