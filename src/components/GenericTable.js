@@ -136,6 +136,7 @@ class GenericTable extends React.Component {
   isSelected = id => this.props.selected.indexOf(id) !== -1
 
   onDelete(ids) {
+    if(this.props.onDeleteClick) this.props.onDeleteClick()
     if(!this.props.noSelect) {
       this.props.setSelected(ids)
     }
@@ -177,6 +178,20 @@ class GenericTable extends React.Component {
     const selected = this.props.noSelect ?
       this.state.deleteIds :
       this.props.selected
+
+    const dialogContent = this.props.getDeleteDialogContent ?
+      this.props.getDeleteDialogContent(selected) :
+      (
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Do you want to delete { selected.length } { title }{selected.length==1 ? '' : 's'}?
+          </DialogContentText>
+        </DialogContent>
+      )
+
+    const deleteOkDisabled = this.props.getDeleteOKDisabled ?
+      this.props.getDeleteOKDisabled(selected) :
+      false
     
     return (
       <Dialog
@@ -184,19 +199,26 @@ class GenericTable extends React.Component {
         onClose={() => this.cancelOnDelete()}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        fullWidth
+        maxWidth="sm"
       >
         <DialogTitle id="alert-dialog-title">Delete { title }{selected.length==1 ? '' : 's'}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Do you want to delete { selected.length } { title }{selected.length==1 ? '' : 's'}?
-          </DialogContentText>
-        </DialogContent>
+          { dialogContent }
         <DialogActions>
-          <Button onClick={ () => this.cancelOnDelete() } color="primary">
+          <Button 
+            color="primary"
+            onClick={ () => this.cancelOnDelete() }
+          >
             Cancel
           </Button>
-          <Button onClick={ () => this.confirmOnDelete() } color="primary" autoFocus>
-            OK
+          <Button 
+            color="primary" 
+            variant="raised"
+            autoFocus
+            disabled={ deleteOkDisabled }
+            onClick={ () => this.confirmOnDelete() }
+          >
+            Delete
           </Button>
         </DialogActions>
       </Dialog>

@@ -7,6 +7,14 @@ import { lighten } from '@material-ui/core/styles/colorManipulator'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
 import OpenIcon from '@material-ui/icons/OpenInNew'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import FormControl from '@material-ui/core/FormControl'
+import FormHelperText from '@material-ui/core/FormHelperText'
 
 import settings from '../settings'
 import clusterModule from '../store/cluster'
@@ -24,6 +32,9 @@ const styles = theme => {
     progress: {
       margin: theme.spacing.unit * 2,
     },
+    deleteConfirmTextBox: {
+      width: '100%'
+    }
   }
 
 }
@@ -33,6 +44,10 @@ const styles = theme => {
 })
 class ClusterList extends React.Component {
   
+  state = {
+    deleteClusterName: ''
+  }
+
   componentDidMount(){
     this.props.cluster.loadList()
   }
@@ -55,6 +70,58 @@ class ClusterList extends React.Component {
     else {
       return phase
     }
+  }
+
+  onDeleteClick() {
+    this.setState({
+      deleteClusterName: ''
+    })
+  }
+
+  getDeleteOKDisabled(ids) {
+    const { classes, cluster } = this.props
+
+    const id = ids[0]
+    const deletingCluster = cluster.list.filter(c => c.settings.name == id)[0]
+
+    if(!deletingCluster) return true
+
+    return this.state.deleteClusterName != deletingCluster.settings.name
+  }
+
+  getDeleteDialogContent(ids) {
+
+    const { classes, cluster } = this.props
+
+    const id = ids[0]
+    const deletingCluster = cluster.list.filter(c => c.settings.name == id)[0]
+
+    if(!deletingCluster) return null
+
+    return (
+      <DialogContent>
+        <DialogContentText>
+          Are you <strong>absolutely</strong> sure you want to delete the <strong>{ deletingCluster.settings.name }</strong> cluster?<br />
+          To confirm - please type the name of the cluster (<strong>{ deletingCluster.settings.name }</strong>) into the textbox below:
+        </DialogContentText>
+        <FormControl
+          fullWidth
+        >
+          <InputLabel 
+            htmlFor='confirm-cluster-name'
+          >
+            enter the cluster name
+          </InputLabel>
+          <Input
+            name='confirm-cluster-name'
+            value={ this.state.deleteClusterName }
+            onChange={ (e) => this.setState({
+              deleteClusterName: e.target.value
+            })}
+          />
+        </FormControl>
+      </DialogContent>
+    )
   }
 
   render() {
@@ -107,8 +174,11 @@ class ClusterList extends React.Component {
           edit: 'View'
         }}
         onEdit={ (id) => cluster.viewCluster(id) }
-        onDelete={ () => null }
+        onDelete={ (ids) => cluster.deleteCluster(ids[0]) }
         getOptions={ () => null }
+        getDeleteDialogContent={ this.getDeleteDialogContent.bind(this) }
+        getDeleteOKDisabled={ this.getDeleteOKDisabled.bind(this) }
+        onDeleteClick={ this.onDeleteClick.bind(this) }
       /> 
     )
   }

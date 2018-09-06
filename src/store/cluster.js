@@ -93,6 +93,10 @@ const actions = {
   stopClusterStatusLoop: () => ({
     type: 'CLUSTER_STOP_STATUS_LOOP',
   }),
+  deleteCluster: (id) => ({
+    type: 'CLUSTER_DELETE',
+    id,
+  })
 }
 
 const mutations = {
@@ -241,6 +245,14 @@ const SAGAS = sagaErrorWrapper({
     const clusterStatusLoopTask = yield fork(clusterStatusLoop, clusterId, action.loopWhileInPhase)
     yield take(action => action.type == 'CLUSTER_STOP_STATUS_LOOP')
     yield cancel(clusterStatusLoopTask)
+  },
+
+  CLUSTER_DELETE: function* (action) {
+    const clusterId = action.id
+
+    console.log('-------------------------------------------');
+    console.log('-------------------------------------------');
+    console.dir(clusterId)
   },
   
 })
