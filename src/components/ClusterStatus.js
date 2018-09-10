@@ -17,6 +17,9 @@ const styles = theme => {
     statusText: {
       marginBottom: '10px',
     },
+    button: {
+      margin: theme.spacing.unit,
+    },
   }
 }
 
@@ -79,8 +82,20 @@ class ClusterStatus extends React.Component {
           Created
         </Typography>
         <Button 
+          className={ classes.button }
+          color="primary" 
+          variant="raised"
+          size="small"
+          autoFocus
+          onClick={ () => this.props.onDeployCluster() }
+        >
+          Deploy Sawtooth Manifests
+        </Button>
+        <Button 
+          className={ classes.button }
           color="secondary" 
           variant="raised"
+          size="small"
           autoFocus
           onClick={ () => this.onDeleteClick() }
         >
@@ -119,8 +134,10 @@ class ClusterStatus extends React.Component {
           Deleted
         </Typography>
         <Button 
+          className={ classes.button }
           color="secondary" 
           variant="raised"
+          size="small"
           autoFocus
           onClick={ () => this.props.onCleanupCluster() }
         >
@@ -149,8 +166,10 @@ class ClusterStatus extends React.Component {
           { status.error }
         </Typography>
         <Button 
+          className={ classes.button }
           color="secondary" 
           variant="raised"
+          size="small"
           autoFocus
           onClick={ () => this.props.onDeleteCluster() }
         >

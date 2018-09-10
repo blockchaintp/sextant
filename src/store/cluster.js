@@ -110,6 +110,9 @@ const actions = {
   downloadKopsConfig: () => ({
     type: 'CLUSTER_DOWNLOAD_KOPS_CONFIG',
   }),
+  deployCluster: () => ({
+    type: 'CLUSTER_DEPLOY',
+  })
 }
 
 const mutations = {
@@ -313,6 +316,19 @@ const SAGAS = sagaErrorWrapper({
     const clusterId = payload.name
     const url = clusterApi.url(`/kopsconfig/${clusterId}`)
     window.open(url)
+  },
+
+  CLUSTER_DEPLOY: function* () {
+    const payload = yield select(selectors.router.payload)
+    const clusterId = payload.name
+
+    try{
+      const response = yield call(clusterApi.deploy, clusterId)
+      yield put(snackbar.actions.setMessage(`${clusterId} is deploying`))
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
   },
   
 })

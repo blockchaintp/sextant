@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button'
 import Loading from '../components/Loading'
 import ClusterDetails from '../components/ClusterDetails'
 import ClusterStatus from '../components/ClusterStatus'
+import ClusterAccess from '../components/ClusterAccess'
 
 import settings from '../settings'
 import clusterModule from '../store/cluster'
@@ -110,6 +111,7 @@ class ClusterView extends React.Component {
               cluster={ currentClusterData }
               onDeleteCluster={ () => cluster.deleteCluster(currentClusterData.settings.name) }
               onCleanupCluster={ () => cluster.cleanupCluster(currentClusterData.settings.name) }
+              onDeployCluster={ () => cluster.deployCluster() }
             />
           </Paper>
 
@@ -126,28 +128,11 @@ class ClusterView extends React.Component {
                   Cluster Access
                 </Typography>
 
-                <div>
-                  <Button 
-                    className={ classes.button }
-                    color="primary" 
-                    variant="raised"
-                    size="small"
-                    autoFocus
-                    onClick={ () => cluster.downloadKubeConfig() }
-                  >
-                    Download Kube Config
-                  </Button>
-                  <Button 
-                    className={ classes.button }
-                    color="primary" 
-                    variant="raised"
-                    size="small"
-                    autoFocus
-                    onClick={ () => cluster.downloadKopsConfig() }
-                  >
-                    Download Kops Config
-                  </Button>
-                </div>
+                <ClusterAccess
+                  downloadKubeConfig={ () => cluster.downloadKubeConfig() }
+                  downloadKopsConfig={ () => cluster.downloadKopsConfig() }
+                />
+
               </Paper>
             ) : null
           }

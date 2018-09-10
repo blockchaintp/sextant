@@ -61,6 +61,14 @@ export default {
     })
   },
 
+  deploy(id) {
+    return new Promise(function(resolve, reject){
+      axios.put(url(`/deploy/${id}`))
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
   url,
 
 }
