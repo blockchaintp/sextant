@@ -3,6 +3,7 @@ const settings = {
   baseApi: '/api/v1',
   loopDelays: {
     clusterCreating: 5000,
+    clusterInfo: 5000,
   },
 }
 

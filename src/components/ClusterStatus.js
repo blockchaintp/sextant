@@ -83,16 +83,6 @@ class ClusterStatus extends React.Component {
         </Typography>
         <Button 
           className={ classes.button }
-          color="primary" 
-          variant="raised"
-          size="small"
-          autoFocus
-          onClick={ () => this.props.onDeployCluster() }
-        >
-          Deploy Sawtooth Manifests
-        </Button>
-        <Button 
-          className={ classes.button }
           color="secondary" 
           variant="raised"
           size="small"

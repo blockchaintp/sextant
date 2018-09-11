@@ -45,6 +45,14 @@ export default {
     })
   },
 
+  info(id) {
+    return new Promise(function(resolve, reject){
+      axios.get(url(`/info/${id}`))
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
   create(data) {
     return new Promise(function(resolve, reject){
       axios.post(url(), data)

@@ -25,6 +25,9 @@ const state = {
 
   // the data for the current cluster being viewed
   currentClusterData: null,
+
+  // the current info for the cluster
+  clusterInfo: null,
 }
 
 const actions = {
@@ -96,6 +99,16 @@ const actions = {
   stopClusterStatusLoop: () => ({
     type: 'CLUSTER_STOP_STATUS_LOOP',
   }),
+  clusterInfoLoop: () => ({
+    type: 'CLUSTER_INFO_LOOP',
+  }),
+  stopClusterInfoLoop: () => ({
+    type: 'CLUSTER_STOP_INFO_LOOP',
+  }),
+  setClusterInfo: (data) => ({
+    type: 'CLUSTER_SET_INFO',
+    data,
+  }),
   deleteCluster: (id) => ({
     type: 'CLUSTER_DELETE',
     id,
@@ -110,9 +123,12 @@ const actions = {
   downloadKopsConfig: () => ({
     type: 'CLUSTER_DOWNLOAD_KOPS_CONFIG',
   }),
-  deployCluster: () => ({
-    type: 'CLUSTER_DEPLOY',
-  })
+  openDashboard: () => ({
+    type: 'CLUSTER_OPEN_DASHBOARD',
+  }),
+  openMonitoring: () => ({
+    type: 'CLUSTER_OPEN_MONITORING',
+  }),
 }
 
 const mutations = {
@@ -139,6 +155,9 @@ const mutations = {
   CLUSTER_SET_DATA: (state, action) => {
     state.currentClusterData = action.data
   },
+  CLUSTER_SET_INFO: (state, action) => {
+    state.clusterInfo = action.data
+  },
 }
 
 // keep looping while the cluster status.phase is in the given phase
@@ -160,6 +179,26 @@ function* clusterStatusLoop(clusterId, loopWhileInPhase) {
         yield put(actions.stopClusterStatusLoop())
       }
       yield call(delay, settings.loopDelays.clusterCreating)
+    }
+  } finally {
+    
+  }
+}
+
+
+// keep looping to get the cluster info
+function* clusterInfoLoop(clusterId) {
+  try {
+    while (true) {
+      try{
+        const response = yield call(clusterApi.info, clusterId)
+        yield put(actions.setClusterInfo(response.data))
+      }
+      catch(err){
+        yield put(snackbar.actions.setError(err))
+        yield put(actions.stopClusterInfoLoop())
+      }
+      yield call(delay, settings.loopDelays.clusterInfo)
     }
   } finally {
     
@@ -249,6 +288,9 @@ const SAGAS = sagaErrorWrapper({
       else if(status.phase == 'deleting') {
         yield put(actions.clusterStatusLoop('deleting')) 
       }
+      else if(status.phase == 'created') {
+        yield put(actions.clusterInfoLoop())
+      }
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
@@ -261,6 +303,14 @@ const SAGAS = sagaErrorWrapper({
     const clusterStatusLoopTask = yield fork(clusterStatusLoop, clusterId, action.loopWhileInPhase)
     yield take(action => action.type == 'CLUSTER_STOP_STATUS_LOOP')
     yield cancel(clusterStatusLoopTask)
+  },
+
+  CLUSTER_INFO_LOOP: function* (action) {
+    const payload = yield select(selectors.router.payload)
+    const clusterId = payload.name
+    const clusterInfoLoopTask = yield fork(clusterInfoLoop, clusterId)
+    yield take(action => action.type == 'CLUSTER_STOP_INFO_LOOP')
+    yield cancel(clusterInfoLoopTask)
   },
 
   CLUSTER_DELETE: function* (action) {
@@ -318,17 +368,20 @@ const SAGAS = sagaErrorWrapper({
     window.open(url)
   },
 
-  CLUSTER_DEPLOY: function* () {
+  CLUSTER_OPEN_DASHBOARD: function* (action) {
     const payload = yield select(selectors.router.payload)
     const clusterId = payload.name
+    const url = `/proxy/${clusterId}/kube-system/kubernetes-dashboard/`
+    window.open(url)
+  },
 
-    try{
-      const response = yield call(clusterApi.deploy, clusterId)
-      yield put(snackbar.actions.setMessage(`${clusterId} is deploying`))
-    }
-    catch(err){
-      yield put(snackbar.actions.setError(err))
-    }
+  CLUSTER_OPEN_MONITORING: function* (action) {
+    const clusterInfo = yield select(state => state.cluster.clusterInfo)
+    if(!clusterInfo.grafana) return
+    if(!clusterInfo.grafana.status.loadBalancer) return
+    if(!clusterInfo.grafana.status.loadBalancer.ingress) return
+    const url = clusterInfo.grafana.status.loadBalancer.ingress[0].hostname
+    window.open(`http://${url}`)
   },
   
 })

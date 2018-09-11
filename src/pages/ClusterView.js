@@ -15,6 +15,7 @@ import Loading from '../components/Loading'
 import ClusterDetails from '../components/ClusterDetails'
 import ClusterStatus from '../components/ClusterStatus'
 import ClusterAccess from '../components/ClusterAccess'
+import ClusterResources from '../components/ClusterResources'
 
 import settings from '../settings'
 import clusterModule from '../store/cluster'
@@ -63,12 +64,20 @@ class ClusterView extends React.Component {
 
   componentWillUnmount() {
     this.props.cluster.stopClusterStatusLoop()
+    this.props.cluster.stopClusterInfoLoop()
   }
 
   render() {
 
     const { cluster, classes } = this.props
-    const { currentClusterData } = cluster
+    const { currentClusterData, clusterInfo } = cluster
+
+    let status = {phase:'none'}
+
+    if(currentClusterData) {
+      status = currentClusterData.status
+    }
+
     if(!currentClusterData) {
       return (
         <Loading />
@@ -88,8 +97,28 @@ class ClusterView extends React.Component {
           sm={12}
           md={8}
         >
-          
+          {
+            status.phase == 'created' ? (
+              <Paper
+                className={ classes.paper }
+              >
+                <Typography
+                  variant='title'
+                  className={ classes.title }
+                >
+                  Resources
+                </Typography>
 
+                <ClusterResources
+                  info={ clusterInfo }
+                  onOpenDashboard={ () => cluster.openDashboard() }
+                  onOpenMonitoring={ () => cluster.openMonitoring() }
+                />
+              </Paper>
+
+            ) : null
+          }
+          
         </Grid>
 
         <Grid
