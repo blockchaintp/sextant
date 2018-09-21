@@ -360,37 +360,6 @@ class ClusterForm extends React.Component {
         <Typography
           variant='subheading'
         >
-          Topology
-        </Typography>
-
-        <Grid
-          container
-          spacing={ 24 }
-        >
-          <Grid
-            item
-            xs={12}
-          >
-
-            
-            <Field
-              name="topology"
-              component={ Radio }
-              options={ topologyOptions }
-              label="Cluster Topology"
-              description={`Choose whether your nodes are publically accesible or not - a bastion node will be created for private clusters`}
-              disabled={ this.props.submitting }
-            />
-            
-          </Grid>
-
-        </Grid>
-
-        <Divider className={ classes.divider } />
-
-        <Typography
-          variant='subheading'
-        >
           Access Credentials
         </Typography>
 
@@ -506,3 +475,40 @@ ClusterForm.propTypes = {
 }
 
 export default withStyles(styles)(ClusterForm)
+
+// for when we want to put topology back as a user option
+// for now we fix to public
+/*
+  
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          Topology
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+          >
+
+            
+            <Field
+              name="topology"
+              component={ Radio }
+              options={ topologyOptions }
+              label="Cluster Topology"
+              description={`Choose whether your nodes are publically accesible or not - a bastion node will be created for private clusters`}
+              disabled={ this.props.submitting }
+            />
+            
+          </Grid>
+
+        </Grid>
+  
+*/
