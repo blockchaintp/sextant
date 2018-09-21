@@ -55,9 +55,6 @@ class SideMenu extends React.Component {
 
   getMenu() {
     return [
-      <ListItem button key='dashboard' onClick={ () => this.openPage('PAGE_HOME') }>
-        <ListItemText primary="Dashboard" />
-      </ListItem>,
       <ListItem button key='clusters' onClick={ () => this.openPage('PAGE_CLUSTER_LIST') }>
         <ListItemText primary="Clusters" />
       </ListItem>

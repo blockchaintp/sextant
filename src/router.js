@@ -34,7 +34,7 @@ import withRouter from './utils/withRouter'
 export const routes = {
   'PAGE_HOME': {
     path: '/',
-    component: Dashboard,
+    component: ClusterList,
   },
   'PAGE_CLUSTER_LIST': {
     path: '/clusters',

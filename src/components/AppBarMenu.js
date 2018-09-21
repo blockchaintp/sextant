@@ -40,7 +40,6 @@ class AppBarMenu extends React.Component {
 
   getMenu() {
     return [
-      <MenuItem key='dashboard' onClick={ () => this.openPage('PAGE_HOME') }>Dashboard</MenuItem>,
       <MenuItem key='clusters' onClick={ () => this.openPage('PAGE_CLUSTER_LIST') }>Clusters</MenuItem>,
     ]
   }
