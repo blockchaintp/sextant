@@ -207,6 +207,104 @@ class DeploymentForm extends React.Component {
 
         </Grid>
 
+        
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          XO Transaction Processor
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              row
+              compact
+              name="xo_enabled"
+              component={ Radio }
+              options={ activatedOptions }
+              description="Should the XO transaction processor be deployed?"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+        </Grid>
+
+
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          Smallbank Transaction Processor
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              row
+              compact
+              name="smallbank_enabled"
+              component={ Radio }
+              options={ activatedOptions }
+              description="Should the Smallbank transaction processor be deployed?"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+        </Grid>
+
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          Simple Transaction Processor
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              row
+              compact
+              name="simple_enabled"
+              component={ Radio }
+              options={ activatedOptions }
+              description="Should the Simple transaction processor be deployed?"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+        </Grid>
+
+
+
+
         {
           this.props.showSyncFormErrors && this.props.syncFormErrors.length > 0 ? (
             <div>
