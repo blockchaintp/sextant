@@ -50,6 +50,9 @@ const actions = {
   submitAddForm: () => ({
     type: 'CLUSTER_SUBMIT_ADD_FORM',
   }),
+  submitDeployForm: () => ({
+    type: 'CLUSTER_SUBMIT_DEPLOY_FORM',
+  }),
   setSubmitting: (value) => ({
     type: 'CLUSTER_SET_SUBMITTING',
     value,
@@ -271,6 +274,37 @@ const SAGAS = sagaErrorWrapper({
       const response = yield call(clusterApi.create, formValues)
 
       yield put(actions.viewCluster(formValues.name))
+      yield put(snackbar.actions.setMessage(`cluster ${formValues.name} is creating`))
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+      yield put(actions.setAsyncFormError(apiUtils.getError(err)))
+    }
+
+    yield put(actions.setSubmitting(false))
+  },
+
+  CLUSTER_SUBMIT_DEPLOY_FORM: function* () {
+    const payload = yield select(selectors.router.payload)
+    const clusterId = payload.name
+    const formFields = yield select(state => selectors.form.fieldNames(state, 'deploymentForm'))
+    const formValues = yield select(state => selectors.form.values(state, 'deploymentForm'))
+    const hasError = yield select(state => selectors.form.hasError(state, 'deploymentForm'))
+
+    if(hasError) {
+      yield put(actions.setShowSyncFormErrors(true))
+      yield put(touch.apply(null, ['deploymentForm'].concat(formFields)))
+      return  
+    }
+
+    yield put(actions.setShowSyncFormErrors(false))
+    yield put(actions.setAsyncFormError(null))
+    yield put(actions.setSubmitting(true))
+
+    try{
+      const response = yield call(clusterApi.deploy, clusterId, formValues)
+      yield put(snackbar.actions.setMessage(`cluster ${clusterId} is deploying`))
+      yield put(actions.loadClusterData())
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
@@ -297,8 +331,13 @@ const SAGAS = sagaErrorWrapper({
         yield put(actions.clusterStatusLoop('deleting')) 
       }
       else if(status.phase == 'created') {
-        // we will do the info loop after the manifests have been deployed
-        //yield put(actions.clusterInfoLoop())
+        
+      }
+      else if(status.phase == 'deploying') {
+        yield put(actions.clusterStatusLoop('deploying')) 
+      }
+      else if(status.phase == 'deployed') {
+        yield put(actions.clusterInfoLoop())
       }
     }
     catch(err){

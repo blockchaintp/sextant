@@ -105,7 +105,7 @@ class DeploymentSettings extends React.Component {
         syncFormErrors={ syncFormErrors }
         showSyncFormErrors={ showSyncFormErrors }
         asyncFormError={ asyncFormError }
-        onSubmit={ () => cluster.submitDeploymentForm() }
+        onSubmit={ () => cluster.submitDeployForm() }
         onCancel={ () => cluster.viewList() }
       />
     )
