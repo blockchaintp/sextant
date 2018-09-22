@@ -16,6 +16,7 @@ import ClusterDetails from '../components/ClusterDetails'
 import ClusterStatus from '../components/ClusterStatus'
 import ClusterAccess from '../components/ClusterAccess'
 import ClusterResources from '../components/ClusterResources'
+import DeploymentSettings from './DeploymentSettings'
 
 import settings from '../settings'
 import clusterModule from '../store/cluster'
@@ -143,6 +144,10 @@ class ClusterView extends React.Component {
               >
                 Deployment
               </Typography>
+
+              <DeploymentSettings
+
+              />
 
               
             </Paper>

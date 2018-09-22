@@ -14,9 +14,9 @@ const state = {
   list: [],
   // the single error message back from the server upon form submit
   asyncFormError: null,
-  // used to show all sync errors at the bottom of the form once they click submit
+  // used to show all sync errors at the bottom of a form once they click submit
   showSyncFormErrors: false,
-  // are we in the process of submitting the form? used to disable form elements
+  // are we in the process of submitting a form? used to disable form elements
   submitting: false,
 
   // create keypair values
@@ -78,6 +78,9 @@ const actions = {
   privateKeyCopied: () => snackbar.actions.setMessage('private key copied to clipboard'),
   resetForm: () => ({
     type: 'CLUSTER_RESET_FORM',
+  }),
+  resetDeploymentForm: () => ({
+    type: 'CLUSTER_RESET_DEPLOYMENT_FORM',
   }),
   viewCluster: (name) => ({
     type: 'PAGE_CLUSTER_VIEW',
@@ -226,6 +229,11 @@ const SAGAS = sagaErrorWrapper({
     yield put(actions.setAsyncFormError(null))
     yield put(actions.setShowSyncFormErrors(false))
     yield put(actions.closeKeypairWindow())
+  },
+
+  CLUSTER_RESET_DEPLOYMENT_FORM: function* () {
+    yield put(actions.setAsyncFormError(null))
+    yield put(actions.setShowSyncFormErrors(false))
   },
 
   CLUSTER_CREATE_KEYPAIR: function* () {

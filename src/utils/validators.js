@@ -30,6 +30,11 @@ const domain = value =>
     ? 'Only alphanumeric characters, dashes or full stops'
     : undefined
 
+const networkname = value =>
+  value && /[^a-zA-Z0-9]/i.test(value)
+    ? 'Only alphanumeric characters'
+    : undefined
+
 const cidr = value =>
   value && /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{2}$/i.test(value)
     ? undefined
@@ -106,6 +111,18 @@ const cluster = {
     publicKey
   ]),
 }
+
+const deployment = {
+  all: (values) => {
+    const errors = {}
+    return errors
+  },
+  name: wrapper([
+    required,
+    networkname,
+  ]),
+}
+
 const validators = {
   required,
   maxLength,
@@ -124,6 +141,7 @@ const validators = {
   wrapper,
   optionalWrapper,
   cluster,
+  deployment,
 }
 
 module.exports = validators

@@ -20,6 +20,14 @@ const styles = theme => ({
   group: {
     margin: `${theme.spacing.unit}px 0`,
   },
+  formControlCompact: {
+    margin: '0px',
+    marginLeft: theme.spacing.unit
+  },
+  groupCompact: {
+    margin: '0px',
+    marginLeft: theme.spacing.unit * 3
+  }
 })
 
 class RadioField extends React.Component {
@@ -36,6 +44,8 @@ class RadioField extends React.Component {
       disabled,
       meta: { touched, error, warning },
       options,
+      row,
+      compact,
     } = this.props
 
     const value = input.value || []
@@ -43,13 +53,18 @@ class RadioField extends React.Component {
     return (
       <FormControl 
         component="fieldset"
-        className={classes.formControl}
+        className={ compact ? classes.formControlCompact : classes.formControl }
       >
-        <FormLabel component="legend">{ label }</FormLabel>
+        {
+          label ? (
+            <FormLabel component="legend">{ label }</FormLabel>
+          ) : null
+        }
         <RadioGroup
+          row={ row }
           aria-label={ label }
           name={ name }
-          className={ classes.group }
+          className={ compact ? classes.groupCompact : classes.group }
           value={ input.value }
           onChange={ input.onChange }
         >
