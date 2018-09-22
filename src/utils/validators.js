@@ -63,6 +63,10 @@ const cluster = {
     if(values.node_zones.length > values.node_count) {
       errors.node_zones = `Must be ${values.node_count} or less zones`
     }
+    const networkCidrMask = parseInt(values.network_cidr.split('/')[1])
+    if(values.subnet_mask <= networkCidrMask) {
+      errors.subnet_mask = `The subnet mask cannot be less than or equal to the overal network mask`
+    }
     return errors
   },
   name: wrapper([
@@ -90,6 +94,12 @@ const cluster = {
   network_cidr: wrapper([
     required,
     cidr,
+  ]),
+  subnet_mask: wrapper([
+    required,
+    integer,
+    minValue(1),
+    maxValue(32),
   ]),
   public_key: wrapper([
     required,

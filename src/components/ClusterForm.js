@@ -358,6 +358,23 @@ class ClusterForm extends React.Component {
             />
           </Grid>
 
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              name="subnet_mask"
+              type="number"
+              parse={value => isNaN(parseInt(value)) ? value : parseInt(value)}
+              component={ TextField }
+              label="Subnet Mask"
+              description="The subnet mask for each zone within the cluster"
+              validate={ validators.cluster.subnet_mask }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
         </Grid>
 
         <Divider className={ classes.divider } />

@@ -46,6 +46,7 @@ const TEST_DATA = {
   region: "eu-west-2",
   topology: "public",
   network_cidr: "172.20.0.0/16",
+  subnet_mask: 19,
   public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDuH98uo8PkAhfRqcozlSqZ9AFKyW7YGOQ2yIo4XaQcFQDjWzJ/qPYcq3n0pKdXixtldavZJqDHhdtZ4rdbP02YQKO6PGPkvO7roOekSAu472b6xt+eT9Phgf8mGUrV14DME18zeOHZdm8qax33L86zpgsmfYwUh0Fm4z4F31791xhIXHgWnU/oOtDKn8YNyOGrrp1usibMS6KYslW7KK0aIHH0ww54aen08GkL9Lxhc+W5rLbJy77J7CttW3mPO03KAmuy1INcjKvnvPLO1rhOiAKNObd/z4FVExadGGfeNffvo+oeMeZcDvPVh3G/xLAi2oPgcsnlozPMNWhigZdf root@47b105f7d6df"
 }
 
@@ -56,6 +57,7 @@ const DEFAULT_DATA = {
   master_count: 1,
   node_count: 3,
   network_cidr: "172.20.0.0/16",
+  subnet_mask: 19,
   master_size: "m4.large",
   node_size: "m4.large",
 }
