@@ -48,6 +48,12 @@ class ClusterDetails extends React.Component {
     },{
       title: 'Node Zones:',
       value: settings.node_zones.join(', '),
+    },{
+      title: 'Network CIDR:',
+      value: settings.network_cidr,
+    },{
+      title: 'Subnet Mask:',
+      value: settings.subnet_mask,
     }]
 
     return (
