@@ -44,7 +44,22 @@ const publicKey = value =>
   value && !/^ssh-rsa AAAA/.test(value)
     ? 'Must be an RSA public key'
     : undefined
+
+const rbac_secret_key = value => 
+  value && /^[a-zA-Z0-9]{20}$/i.test(value)
+    ? undefined
+    : 'Must be a 20 character alphanumeric value'
   
+const rbac_aes_key = value => 
+  value && /^[0-9a-fA-F]{32}$/i.test(value)
+    ? undefined
+    : 'Must be a 32 character hexadecimal value'
+
+const rbac_batcher_key = value => 
+  value && /^[0-9a-fA-F]{64}$/i.test(value)
+    ? undefined
+    : 'Must be a 64 character hexadecimal value'
+
 const wrapper = (validators) => (value, allValues, props) => {
   // return the first of any errors
   return validators
@@ -120,6 +135,18 @@ const deployment = {
   name: wrapper([
     required,
     networkname,
+  ]),
+  rbac_secret_key: wrapper([
+    required,
+    rbac_secret_key,
+  ]),
+  rbac_aes_key: wrapper([
+    required,
+    rbac_aes_key,
+  ]),
+  rbac_batcher_key: wrapper([
+    required,
+    rbac_batcher_key,
   ]),
 }
 

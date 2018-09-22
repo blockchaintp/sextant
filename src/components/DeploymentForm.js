@@ -10,12 +10,13 @@ import Button from '@material-ui/core/Button'
 import FormHelperText from '@material-ui/core/FormHelperText'
 
 import TextField from './TextField'
+import GenerateTextField from './GenerateTextField'
 import Select from './Select'
 import MultipleCheckbox from './MultipleCheckbox'
 import Radio from './Radio'
 
 import validators from '../utils/validators'
-import awsUtils from '../utils/aws'
+import randomValues from '../utils/randomValues'
 
 const styles = theme => ({
   root: {
@@ -112,6 +113,94 @@ class DeploymentForm extends React.Component {
               options={ activatedOptions }
               description="Should the POET consensus protocol be active on this network?"
               validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+        </Grid>
+
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          RBAC
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              row
+              compact
+              name="rbac_enabled"
+              component={ Radio }
+              options={ activatedOptions }
+              description="Should the RBAC transaction processor be deployed?"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              name="rbac_secret_key"
+              type="text"
+              component={ GenerateTextField }
+              generateValue={ randomValues.rbacSecretKey }
+              label="Secret Key"
+              description="The RBAC secret key (20 chars, alphanumeric)"
+              validate={ validators.deployment.rbac_secret_key }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+        </Grid>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              name="rbac_aes_key"
+              type="text"
+              component={ GenerateTextField }
+              generateValue={ randomValues.rbacAesKey }
+              label="Secret Key"
+              description="The RBAC AES key (32 chars, hexadecimal)"
+              validate={ validators.deployment.rbac_aes_key }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              name="rbac_batcher_key"
+              type="text"
+              component={ GenerateTextField }
+              generateValue={ randomValues.rbacBatcherKey }
+              label="Secret Key"
+              description="The RBAC batcher key (64 chars, hexadecimal)"
+              validate={ validators.deployment.rbac_batcher_key }
               disabled={ this.props.submitting }
             />
           </Grid>
