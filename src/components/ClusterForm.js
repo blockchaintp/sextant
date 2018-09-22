@@ -54,6 +54,7 @@ class ClusterForm extends React.Component {
     const awsDomains = (awsConfig.domains || {}).HostedZones || []
     const awsZones = this.props.awsZones || []
     const masterCount = this.props.formValues.master_count || 1
+    const nodeCount = this.props.formValues.node_count || 1
 
     const regionOptions = awsRegions.map(awsRegion => ({
       title: awsUtils.getRegionTitle(awsRegion),
@@ -84,6 +85,11 @@ class ClusterForm extends React.Component {
       title: topology,
       value: topology,
     }))
+
+    const masterZoneValidateMessage = `(min 1, max ${masterCount})`
+    const nodeZoneValidateMessage = nodeCount < zoneOptions.length ? 
+      `(min 1, max ${nodeCount})` :
+      `(min 1)`
 
     return (
       <div className={classes.root}>
@@ -176,7 +182,7 @@ class ClusterForm extends React.Component {
             <Field
               name="node_count"
               type="number"
-              parse={value => Number(value)}
+              parse={value => isNaN(parseInt(value)) ? value : parseInt(value)}
               component={ TextField }
               label="Nodes"
               description="The number of k8s nodes in the cluster"
@@ -295,7 +301,7 @@ class ClusterForm extends React.Component {
               component={ MultipleCheckbox }
               options={ zoneOptions }
               label="Masters"
-              description={`The EC2 zones your nodes will be deployed to (min 1, max ${masterCount})`}
+              description={`The EC2 zones your nodes will be deployed to ${masterZoneValidateMessage}`}
               validate={ validators.cluster.master_zones }
               disabled={ this.props.submitting }
             />
@@ -314,7 +320,7 @@ class ClusterForm extends React.Component {
               component={ MultipleCheckbox }
               options={ zoneOptions }
               label="Nodes"
-              description={`The EC2 zones your nodes will be deployed to (min 1)`}
+              description={`The EC2 zones your nodes will be deployed to ${nodeZoneValidateMessage}`}
               validate={ validators.cluster.node_zones }
               disabled={ this.props.submitting }
             />

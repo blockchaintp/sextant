@@ -57,8 +57,12 @@ const optionalWrapper = (validators) => (value, allValues, props) => {
 const cluster = {
   all: (values) => {
     const errors = {}
-    console.log('-------------------------------------------');
-    console.dir(values)
+    if(values.master_zones.length > values.master_count) {
+      errors.master_zones = `Must be ${values.master_count} or less zones`
+    }
+    if(values.node_zones.length > values.node_count) {
+      errors.node_zones = `Must be ${values.node_count} or less zones`
+    }
     return errors
   },
   name: wrapper([
