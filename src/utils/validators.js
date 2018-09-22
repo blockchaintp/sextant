@@ -30,6 +30,11 @@ const domain = value =>
     ? 'Only alphanumeric characters, dashes or full stops'
     : undefined
 
+const cidr = value =>
+  value && /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{2}$/i.test(value)
+    ? undefined
+    : 'Invalid CIDR range (e.g. 172.20.0.0/16)'
+
 const publicKey = value => 
   value && !/^ssh-rsa AAAA/.test(value)
     ? 'Must be an RSA public key'
@@ -49,6 +54,44 @@ const optionalWrapper = (validators) => (value, allValues, props) => {
   return wrapper(validators)(value, allValues, props)
 }
 
+const cluster = {
+  all: (values) => {
+    const errors = {}
+    console.log('-------------------------------------------');
+    console.dir(values)
+    return errors
+  },
+  name: wrapper([
+    required,
+    domain,
+  ]),
+  node_count: wrapper([
+    required,
+    numeric,
+    integer,
+    unsigned,
+    minValue(2),
+    maxValue(128),
+  ]),
+  master_zones: wrapper([
+    required,
+    minLength(1, 'items'),
+    // need max length based on master count
+  ]),
+  node_zones: wrapper([
+    required,
+    minLength(1, 'items'),
+    // need max length based on worker count
+  ]),
+  network_cidr: wrapper([
+    required,
+    cidr,
+  ]),
+  public_key: wrapper([
+    required,
+    publicKey
+  ]),
+}
 const validators = {
   required,
   maxLength,
@@ -65,7 +108,8 @@ const validators = {
   publicKey,
   unsigned,
   wrapper,
-  optionalWrapper
+  optionalWrapper,
+  cluster,
 }
 
 module.exports = validators

@@ -18,39 +18,6 @@ import PrivateKeyDialog from './PrivateKeyDialog'
 import validators from '../utils/validators'
 import awsUtils from '../utils/aws'
 
-const validateClusterName = validators.wrapper([
-  validators.required,
-  validators.domain,
-])
-
-const validateWorkerNodes = validators.wrapper([
-  validators.required,
-  validators.numeric,
-  validators.integer,
-  validators.unsigned,
-  validators.minValue(2),
-  validators.maxValue(128),
-])
-
-const masterCountZoneValidators = [1,3,5].reduce((all, count) => {
-  all[count] = validators.wrapper([
-    validators.required,
-    validators.minLength(1, 'items'),
-    validators.maxLength(count, 'items'),
-  ])
-  return all
-}, {})
-
-const nodeZoneValidator = validators.wrapper([
-  validators.required,
-  validators.minLength(1, 'items'),
-])
-
-const publicKeyValidator = validators.wrapper([
-  validators.required,
-  validators.publicKey,
-])
-
 const styles = theme => ({
   root: {
     marginTop: '10px',
@@ -149,7 +116,7 @@ class ClusterForm extends React.Component {
               component={ TextField }
               label="Cluster Name"
               description="Used as a subdomain for the cluster"
-              validate={ validateClusterName }
+              validate={ validators.cluster.name }
               disabled={ this.props.submitting }
             />
           </Grid>
@@ -209,10 +176,11 @@ class ClusterForm extends React.Component {
             <Field
               name="node_count"
               type="number"
+              parse={value => Number(value)}
               component={ TextField }
               label="Nodes"
               description="The number of k8s nodes in the cluster"
-              validate={ validateWorkerNodes }
+              validate={ validators.cluster.node_count }
               disabled={ this.props.submitting }
             />
           </Grid>
@@ -328,7 +296,7 @@ class ClusterForm extends React.Component {
               options={ zoneOptions }
               label="Masters"
               description={`The EC2 zones your nodes will be deployed to (min 1, max ${masterCount})`}
-              validate={ masterCountZoneValidators[masterCount] }
+              validate={ validators.cluster.master_zones }
               disabled={ this.props.submitting }
             />
             
@@ -347,10 +315,41 @@ class ClusterForm extends React.Component {
               options={ zoneOptions }
               label="Nodes"
               description={`The EC2 zones your nodes will be deployed to (min 1)`}
-              validate={ nodeZoneValidator }
+              validate={ validators.cluster.node_zones }
               disabled={ this.props.submitting }
             />
             
+          </Grid>
+
+        </Grid>
+
+
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          Networking
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              name="network_cidr"
+              type="text"
+              component={ TextField }
+              label="Network CIDR"
+              description="The network CIDR range for the cluster"
+              validate={ validators.cluster.network_cidr }
+              disabled={ this.props.submitting }
+            />
           </Grid>
 
         </Grid>
@@ -384,7 +383,7 @@ class ClusterForm extends React.Component {
               }}
               label="Public Key"
               description="An RSA public key that will be added to nodes in the cluster - paste an existing public key or create a new public/private keypair by clicking the button below"
-              validate={ publicKeyValidator }
+              validate={ validators.cluster.public_key }
               disabled={ this.props.submitting }
             />
 
