@@ -289,7 +289,8 @@ const SAGAS = sagaErrorWrapper({
         yield put(actions.clusterStatusLoop('deleting')) 
       }
       else if(status.phase == 'created') {
-        yield put(actions.clusterInfoLoop())
+        // we will do the info loop after the manifests have been deployed
+        //yield put(actions.clusterInfoLoop())
       }
     }
     catch(err){
