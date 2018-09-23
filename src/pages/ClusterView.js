@@ -87,7 +87,7 @@ class ClusterView extends React.Component {
 
     // show the status full width in creating phase so errors show up
     // full screen
-    const infoGridWidth = status.phase == 'creating' || status.phase == 'deploying' ? 12 : 4
+    const infoGridWidth = status.phase == 'error' ? 12 : 4
 
     return (
       <Grid
@@ -151,6 +151,20 @@ class ClusterView extends React.Component {
 
               
             </Paper>
+            
+          </Grid>
+
+        ) : null
+      }
+
+      {
+        status.phase != 'error' && status.phase != 'deployed' && status.phase != 'created' ? (
+          <Grid
+            item
+            sm={12}
+            md={8}
+          >
+        
             
           </Grid>
 

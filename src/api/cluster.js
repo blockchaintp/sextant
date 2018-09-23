@@ -71,7 +71,7 @@ export default {
 
   deploy(id, data) {
     return new Promise(function(resolve, reject){
-      axios.put(url(`/deploy/${id}`), data)
+      axios.post(url(`/deploy/${id}`), data)
         .then(res => resolve(res))
         .catch(err => reject(err))
     })

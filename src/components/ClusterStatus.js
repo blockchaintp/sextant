@@ -66,6 +66,24 @@ class ClusterStatus extends React.Component {
     )
   }
 
+  getClusterDeploying() {
+    const { classes } = this.props
+    return (
+      <div>
+        <Typography
+          variant='subheading'
+          className={ classes.statusText }
+        >
+          Deploying
+        </Typography>
+        <CircularProgress
+          className={ classes.progress }
+          size={ 20 }
+        />
+      </div>
+    )
+  }
+
   getClusterCreated() {
     const { classes } = this.props
     return (
@@ -80,6 +98,35 @@ class ClusterStatus extends React.Component {
           className={ classes.statusText }
         >
           Created
+        </Typography>
+        <Button 
+          className={ classes.button }
+          color="secondary" 
+          variant="raised"
+          size="small"
+          autoFocus
+          onClick={ () => this.onDeleteClick() }
+        >
+          Delete Cluster
+        </Button>
+      </div>
+    )
+  }
+
+  getClusterDeployed() {
+    const { classes } = this.props
+    return (
+      <div>
+        <ConfirmDeleteClusterDialog
+          cluster={ this.state.deleteCluster }
+          onClose={ this.onDeleteClose.bind(this) }
+          onConfirm={ this.onDeleteConfirm.bind(this) }
+        />
+        <Typography
+          variant='subheading'
+          className={ classes.statusText }
+        >
+          Deployed
         </Typography>
         <Button 
           className={ classes.button }
@@ -178,6 +225,12 @@ class ClusterStatus extends React.Component {
     }
     else if(status.phase == 'created') {
       return this.getClusterCreated()
+    }
+    else if(status.phase == 'deploying') {
+      return this.getClusterDeploying()
+    }
+    else if(status.phase == 'deployed') {
+      return this.getClusterDeployed()
     }
     else if(status.phase == 'deleting') {
       return this.getClusterDeleting()

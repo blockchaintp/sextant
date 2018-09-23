@@ -13,6 +13,7 @@ const styles = theme => {
       padding: theme.spacing.unit * 2,
       backgroundColor: '#f5f5f5',
       border: '1px dashed #ccc',
+      overflow: 'auto',
     }
   }
 }
