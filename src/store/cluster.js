@@ -367,6 +367,7 @@ const SAGAS = sagaErrorWrapper({
     // load the cluster list so we have the cluster data in the case the delete
     // button is clicked from the view page
     yield put(actions.loadList())
+    yield put(actions.stopClusterInfoLoop())
     yield take('CLUSTER_SET_LIST')
     const clusters = yield select(state => state.cluster.list)
     const cluster = clusters.filter(c => c.settings.name == clusterId)[0]
