@@ -22,7 +22,6 @@ const styles = {
   },
   logo: {
     height: '50px',
-    border: '1px solid #000',
     marginRight: '20px',
     flex: 0,
   }
@@ -37,7 +36,7 @@ class AppBarComponent extends React.Component {
         <AppBar position="static">
           <Toolbar>
             <SideMenu />
-            <img src="/logo.png" className={ classes.logo } />
+            <img src="/white-outline-logo.png" className={ classes.logo } />
             <Typography variant="title" color="inherit" className={classes.flex}>
               { this.props.title }
             </Typography>

@@ -1,5 +1,5 @@
 const settings = {
-  title: 'Sextant',
+  title: 'BTP Sextant',
   baseApi: '/api/v1',
   loopDelays: {
     clusterCreating: 5000,
