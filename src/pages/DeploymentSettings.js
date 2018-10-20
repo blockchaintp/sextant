@@ -30,6 +30,7 @@ const styles = theme => {
 
 const TEST_DATA = {
   network_name: 'sawtooth',
+  dynamic_peering: 'true',
   poet_enabled: 'false',
   rbac_enabled: 'true',
   rbac_secret_key: 'g7op0ioXPdw7jFTf4aY2',
@@ -42,6 +43,7 @@ const TEST_DATA = {
 
 const DEFAULT_DATA = {
   network_name: 'sawtooth',
+  dynamic_peering: 'true',
   poet_enabled: 'true',
   rbac_enabled: 'true',
   rbac_secret_key: '',

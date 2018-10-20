@@ -52,6 +52,14 @@ const activatedOptions = [{
   title: 'Disabled'
 }]
 
+const peeringOptions = [{
+  value: 'true',
+  title: 'Dynamic'
+},{
+  value: 'false',
+  title: 'Static'
+}]
+
 class DeploymentForm extends React.Component {
 
   render() {
@@ -85,6 +93,24 @@ class DeploymentForm extends React.Component {
               label="Network Name"
               description="The name of the sawtooth network"
               validate={ validators.cluster.name }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              row
+              compact
+              name="dynamic_peering"
+              component={ Radio }
+              label="Peering Type"
+              options={ peeringOptions }
+              description="Determine peering type for the validator:"
+              validate={ validators.required }
               disabled={ this.props.submitting }
             />
           </Grid>
