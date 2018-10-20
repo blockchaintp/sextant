@@ -268,7 +268,6 @@ class ClusterResources extends React.Component {
 
     if(!info) return null
 
-    console.dir(info)
     return (
       <div>
         { this.getServiceButtons() }

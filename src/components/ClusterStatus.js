@@ -244,6 +244,16 @@ class ClusterStatus extends React.Component {
 
     return (
       <div>
+        <ConfirmDeleteClusterDialog
+          cluster={ this.state.deleteCluster }
+          onClose={ this.onDeleteClose.bind(this) }
+          onConfirm={ this.onDeleteConfirm.bind(this) }
+        />
+        <ConfirmUndeployClusterDialog
+          cluster={ this.state.undeployCluster }
+          onClose={ this.onUndeployClose.bind(this) }
+          onConfirm={ this.onUndeployConfirm.bind(this) }
+        />
         <Typography
           variant='subheading'
           className={ classes.errorText }
@@ -256,6 +266,21 @@ class ClusterStatus extends React.Component {
         >
           { status.error }
         </Typography>
+        {
+          status.errorPhase == 'deploy' ? (
+            <Button 
+              className={ classes.button }
+              color="secondary" 
+              variant="contained"
+              size="small"
+              autoFocus
+              onClick={ () => this.onUndeployClick() }
+            >
+              Undeploy Sawtooth
+            </Button>
+          ) : null
+        }
+        
         <Button 
           className={ classes.button }
           color="secondary" 

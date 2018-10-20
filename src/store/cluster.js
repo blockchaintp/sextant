@@ -332,8 +332,19 @@ const SAGAS = sagaErrorWrapper({
     const clusters = yield select(state => state.cluster.list)
     const cluster = clusters.filter(c => c.settings.name == clusterId)[0]
 
-    if(cluster.status.phase != "deployed") {
-      yield put(snackbar.actions.setError(`The ${clusterId} cluster is not currently deployed`))
+    let canUndeploy = false
+
+    if(cluster.status.phase == "deployed") {
+      canUndeploy = true
+    }
+    // you can undeploy if the state is error and the errorPhase is deploy
+    // this means the k8s manifests had some kind of problem so let's undeploy them
+    else if(cluster.status.phase == "error" && cluster.status.errorPhase == "deploy") {
+      canUndeploy = true
+    }
+
+    if(!canUndeploy) {
+      yield put(snackbar.actions.setError(`The ${clusterId} cluster cannot be undeployed`))
       return
     }
 

@@ -110,7 +110,7 @@ class ConfirmUndeployClusterDialog extends React.Component {
             disabled={ deleteOkDisabled }
             onClick={ () => this.props.onConfirm() }
           >
-            Delete
+            Undeploy
           </Button>
         </DialogActions>
       </Dialog>
