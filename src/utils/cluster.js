@@ -2,6 +2,11 @@
 const kubectlReadyPhases = {
   created: true,
   deployed: true,
+
+  // we mark error has having kubectl ready because we are exporting the
+  // kubeconfig and kops config files before waiting to validate the cluster
+  // and so in most cases these files will be ready to download
+  error: true,
 }
 
 // if an error happened at the following state then kubectl can be used
