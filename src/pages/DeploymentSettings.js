@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import { lighten } from '@material-ui/core/styles/colorManipulator'
-import { reduxForm, Field } from 'redux-form'
+import { reduxForm, Field, getFormSyncErrors } from 'redux-form'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
@@ -72,6 +72,7 @@ const DEFAULT_DATA = {
     return {
       formValues,
       syncFormErrors: formErrors,
+      rawFormErrors: getFormSyncErrors('deploymentForm')(state),
     }
   },
   (dispatch) => {
@@ -93,6 +94,7 @@ class DeploymentSettings extends React.Component {
       syncFormErrors,
       cluster,
       formValues,
+      rawFormErrors,
     } = this.props
 
     const showSyncFormErrors = cluster.showSyncFormErrors
@@ -106,6 +108,7 @@ class DeploymentSettings extends React.Component {
         error={ cluster.formError }
         syncFormErrors={ syncFormErrors }
         showSyncFormErrors={ showSyncFormErrors }
+        rawFormErrors={ rawFormErrors }
         asyncFormError={ asyncFormError }
         onSubmit={ () => cluster.submitDeployForm() }
         onCancel={ () => cluster.viewList() }

@@ -60,6 +60,14 @@ const rbac_batcher_key = value =>
     ? undefined
     : 'Must be a 64 character hexadecimal value'
 
+const seedAddress = value => {  
+  if(!value) return undefined
+  if(!value.match(/^[\w\.]+:\d+$/)) return 'Bad seed address, must be of form hostname:port or ip:port'
+  const [ host, port ] = value.split(':')
+  if(host.match(/^[\.\d]+$/) && !host.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/)) return 'Bad seed ip address, must be of form 1.2.3.4'
+  return undefined
+}
+
 const wrapper = (validators) => (value, allValues, props) => {
   // return the first of any errors
   return validators
@@ -164,6 +172,7 @@ const validators = {
   integer,
   domain,
   publicKey,
+  seedAddress,
   unsigned,
   wrapper,
   optionalWrapper,

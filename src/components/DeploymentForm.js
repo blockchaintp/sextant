@@ -11,6 +11,7 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 
 import TextField from './TextField'
 import GenerateTextField from './GenerateTextField'
+import ButtonTextField from './ButtonTextField'
 import Select from './Select'
 import MultipleCheckbox from './MultipleCheckbox'
 import Radio from './Radio'
@@ -63,9 +64,10 @@ const peeringOptions = [{
 class DeploymentForm extends React.Component {
 
   render() {
-    const { 
+    const {
       classes,
       formValues,
+      rawFormErrors,
     } = this.props
 
     return (
@@ -92,7 +94,7 @@ class DeploymentForm extends React.Component {
               component={ TextField }
               label="Network Name"
               description="The name of the sawtooth network"
-              validate={ validators.cluster.name }
+              validate={ validators.deployment.name }
               disabled={ this.props.submitting }
             />
           </Grid>
@@ -113,6 +115,46 @@ class DeploymentForm extends React.Component {
               validate={ validators.required }
               disabled={ this.props.submitting }
             />
+          </Grid>
+
+        </Grid>
+
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          External Seeds
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              name="new_seed"
+              type="text"
+              component={ ButtonTextField }
+              label="Seed address"
+              description="Type the address of a new external seed (hostname:port or ip:port)"
+              buttonTitle="Add"
+              validate={ validators.seedAddress }
+              disabled={ this.props.submitting }
+              buttonDisabled={ !formValues.new_seed || rawFormErrors.new_seed ? true : false }
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            table of seeds here
           </Grid>
 
         </Grid>
