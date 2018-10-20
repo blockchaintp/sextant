@@ -20,26 +20,36 @@ class ClusterAccess extends React.Component {
 
     return (
       <div>
-        <Button 
-          className={ classes.button }
-          color="primary" 
-          variant="contained"
-          size="small"
-          autoFocus
-          onClick={ this.props.downloadKubeConfig }
-        >
-          Download Kube Config
-        </Button>
-        <Button 
-          className={ classes.button }
-          color="primary" 
-          variant="contained"
-          size="small"
-          autoFocus
-          onClick={ this.props.downloadKopsConfig }
-        >
-          Download Kops Config
-        </Button>
+        {
+          this.props.kubeConfigExists ? (
+            <Button 
+              className={ classes.button }
+              color="primary" 
+              variant="contained"
+              size="small"
+              autoFocus
+              onClick={ this.props.downloadKubeConfig }
+            >
+              Download Kube Config
+            </Button>
+          ) : null
+        }
+        
+        {
+          this.props.kopsConfigExists ? (
+            <Button 
+              className={ classes.button }
+              color="primary" 
+              variant="contained"
+              size="small"
+              autoFocus
+              onClick={ this.props.downloadKopsConfig }
+            >
+              Download Kops Config
+            </Button>
+          ) : null
+        }
+        
       </div>
     )
   }
