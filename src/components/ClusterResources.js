@@ -5,7 +5,7 @@ import timeago from 'timeago.js'
 
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-
+import Divider from '@material-ui/core/Divider'
 import GenericTableSimple from './GenericTableSimple'
 
 const styles = theme => {
@@ -23,6 +23,10 @@ const styles = theme => {
       overflow: 'auto',
     },
     title: {
+      marginBottom: theme.spacing.unit * 2,
+    },
+    divider: {
+      marginTop: theme.spacing.unit * 2,
       marginBottom: theme.spacing.unit * 2,
     },
   }
@@ -91,14 +95,14 @@ class ClusterResources extends React.Component {
       title: 'Name',
       name: 'name',
     },{
+      title: 'Age',
+      name: 'age',
+    },{
       title: 'Ready',
       name: 'ready',
     },{
       title: 'Status',
       name: 'status',
-    },{
-      title: 'Age',
-      name: 'age',
     },{
       title: 'IP',
       name: 'ip',
@@ -138,16 +142,86 @@ class ClusterResources extends React.Component {
     )
   }
 
+
+  getServiceTable() {
+
+    const { info, classes } = this.props
+
+    const fields =[{
+      title: 'Name',
+      name: 'name',
+    },{
+      title: 'Age',
+      name: 'age',
+    },{
+      title: 'Type',
+      name: 'type',
+    },{
+      title: 'Ports',
+      name: 'ports',
+    },{
+      title: 'ClusterIP',
+      name: 'clusterIp',
+    },{
+      title: 'ExternalIP',
+      name: 'externalIp',
+    }]
+
+    const services = info.serviceJson ? info.serviceJson.items : []
+
+    const data = services
+      .map(service => {
+
+        const externalIp = service.status.loadBalancer && service.status.loadBalancer.ingress ? (
+          <a target="_blank" href={ service.status.loadBalancer.ingress[0].hostname }>
+            { service.status.loadBalancer.ingress[0].hostname }
+          </a>
+        ) : '<none>'
+        return {
+          name: service.metadata.name,
+          age: timeago().format(service.metadata.creationTimestamp).replace(' ago', ''),
+          type: service.spec.type,
+          ports: service.spec.ports.map(port => `${ port.port == port.targetPort ? port.port : port.port + ':' + port.targetPort }/${port.protocol}`).join(', '),
+          clusterIp: service.spec.clusterIP,
+          externalIp,
+        }
+      })
+
+    return (
+      <div>
+        <Typography
+          variant='h6'          
+        >
+          Services
+        </Typography>
+
+        <GenericTableSimple
+          fields={ fields }
+          data={ data }
+          padding='dense'
+        />
+      </div>
+    )
+  }
+
   render() {
 
     const { classes, info, phase } = this.props
 
     if(!info) return null
+
+    console.dir(info)
     return (
       <div>
         { this.getServiceButtons() }
 
+        <Divider className={ classes.divider } />
+
         { this.getPodTable() }
+
+        <Divider className={ classes.divider } />
+        
+        { this.getServiceTable() }
 
         <pre className={ classes.resources }>
           <code>
