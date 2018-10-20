@@ -25,7 +25,7 @@ const styles = theme => {
     title: {
       marginBottom: theme.spacing.unit * 2,
     },
-    divider: {
+    tableHeader: {
       marginTop: theme.spacing.unit * 2,
       marginBottom: theme.spacing.unit * 2,
     },
@@ -128,7 +128,8 @@ class ClusterResources extends React.Component {
     return (
       <div>
         <Typography
-          variant='h6'          
+          variant='h6'    
+          className={ classes.tableHeader }
         >
           Pods
         </Typography>
@@ -190,9 +191,66 @@ class ClusterResources extends React.Component {
     return (
       <div>
         <Typography
-          variant='h6'          
+          variant='h6'  
+          className={ classes.tableHeader }        
         >
           Services
+        </Typography>
+
+        <GenericTableSimple
+          fields={ fields }
+          data={ data }
+          padding='dense'
+        />
+      </div>
+    )
+  }
+
+  getPersistentVolumeTable() {
+
+    const { info, classes } = this.props
+
+    const fields =[{
+      title: 'Name',
+      name: 'name',
+    },{
+      title: 'Age',
+      name: 'age',
+    },{
+      title: 'Capacity',
+      name: 'capacity',
+    },{
+      title: 'Status',
+      name: 'status',
+    },{
+      title: 'StorageClass',
+      name: 'storageClass',
+    },{
+      title: 'Claim',
+      name: 'claim',
+    }]
+
+    const volumes = info.pvJson ? info.pvJson.items : []
+
+    const data = volumes
+      .map(volume => {
+        return {
+          name: volume.metadata.name,
+          age: timeago().format(volume.metadata.creationTimestamp).replace(' ago', ''),
+          capacity: volume.spec.capacity.storage,
+          status: volume.status.phase,
+          storageClass: volume.spec.storageClassName,
+          claim: volume.spec.claimRef.name,
+        }
+      })
+
+    return (
+      <div>
+        <Typography
+          variant='h6'  
+          className={ classes.tableHeader }        
+        >
+          Volumes
         </Typography>
 
         <GenericTableSimple
@@ -215,20 +273,12 @@ class ClusterResources extends React.Component {
       <div>
         { this.getServiceButtons() }
 
-        <Divider className={ classes.divider } />
-
         { this.getPodTable() }
 
-        <Divider className={ classes.divider } />
-        
         { this.getServiceTable() }
 
-        <pre className={ classes.resources }>
-          <code>
-            { info.pods }
-          </code>
-        </pre>
-        
+        { this.getPersistentVolumeTable() }
+
       </div>
     )
   }
