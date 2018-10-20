@@ -119,9 +119,8 @@ const actions = {
     type: 'CLUSTER_DELETE',
     id,
   }),
-  undeployCluster: (id) => ({
+  undeployCluster: () => ({
     type: 'CLUSTER_UNDEPLOY',
-    id,
   }),
   cleanupCluster: (id) => ({
     type: 'CLUSTER_CLEANUP',
@@ -321,6 +320,33 @@ const SAGAS = sagaErrorWrapper({
     yield put(actions.setSubmitting(false))
   },
 
+  CLUSTER_UNDEPLOY: function* (action) {
+
+    const payload = yield select(selectors.router.payload)
+    const clusterId = payload.name
+
+    // load the cluster list so we have the cluster data in the case the delete
+    // button is clicked from the view page
+    yield put(actions.loadList())
+    yield take('CLUSTER_SET_LIST')
+    const clusters = yield select(state => state.cluster.list)
+    const cluster = clusters.filter(c => c.settings.name == clusterId)[0]
+
+    if(cluster.status.phase != "deployed") {
+      yield put(snackbar.actions.setError(`The ${clusterId} cluster is not currently deployed`))
+      return
+    }
+
+    try{
+      const response = yield call(clusterApi.undeploy, clusterId)
+      yield put(snackbar.actions.setMessage(`cluster ${clusterId} is undeploying`))
+      yield put(actions.loadClusterData())
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
+  },
+
   CLUSTER_LOAD_DATA: function* () {
     const payload = yield select(selectors.router.payload)
     const clusterName = payload.name
@@ -342,6 +368,10 @@ const SAGAS = sagaErrorWrapper({
       }
       else if(status.phase == 'deploying') {
         yield put(actions.clusterStatusLoop('deploying')) 
+      }
+      else if(status.phase == 'undeploying') {
+        yield put(actions.clusterStatusLoop('undeploying'))
+        yield put(actions.clusterInfoLoop())
       }
       else if(status.phase == 'deployed') {
         yield put(actions.clusterInfoLoop())
@@ -388,30 +418,6 @@ const SAGAS = sagaErrorWrapper({
       const response = yield call(clusterApi.delete, clusterId)
       yield put(actions.viewCluster(clusterId))
       yield put(actions.loadClusterData())
-    }
-    catch(err){
-      yield put(snackbar.actions.setError(err))
-    }
-  },
-
-
-  CLUSTER_UNDEPLOY: function* (action) {
-    const clusterId = action.id
-
-    // load the cluster list so we have the cluster data in the case the delete
-    // button is clicked from the view page
-    yield put(actions.loadList())
-    yield take('CLUSTER_SET_LIST')
-    const clusters = yield select(state => state.cluster.list)
-    const cluster = clusters.filter(c => c.settings.name == clusterId)[0]
-
-    if(cluster.status.phase != "deployed") {
-      yield put(snackbar.actions.setError(`The ${clusterId} cluster is not currently deployed`))
-      return
-    }
-
-    try{
-      const response = yield call(clusterApi.undeploy, clusterId)
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
