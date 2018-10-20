@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
 
 import ConfirmDeleteClusterDialog from './ConfirmDeleteClusterDialog'
+import ConfirmUndeployClusterDialog from './ConfirmUndeployClusterDialog'
 
 const styles = theme => {
   return {
@@ -27,6 +28,7 @@ class ClusterStatus extends React.Component {
 
   state = {
     deleteCluster: null,
+    undeployCluster: null,
   }
 
   onDeleteClick() {
@@ -46,6 +48,25 @@ class ClusterStatus extends React.Component {
     const { cluster } = this.props
     this.props.onDeleteCluster()
     this.onDeleteClose()
+  }
+
+  onUndeployClick() {
+    const { cluster } = this.props
+    this.setState({
+      undeployCluster: cluster,
+    })
+  }
+
+  onUndeployClose() {
+    this.setState({
+      undeployCluster: null,
+    })
+  }
+
+  onUndeployConfirm() {
+    const { cluster } = this.props
+    this.props.onUndeployCluster()
+    this.onUndeployClose()
   }
 
   getClusterCreating() {
@@ -122,12 +143,27 @@ class ClusterStatus extends React.Component {
           onClose={ this.onDeleteClose.bind(this) }
           onConfirm={ this.onDeleteConfirm.bind(this) }
         />
+        <ConfirmUndeployClusterDialog
+          cluster={ this.state.undeployCluster }
+          onClose={ this.onUndeployClose.bind(this) }
+          onConfirm={ this.onUndeployConfirm.bind(this) }
+        />
         <Typography
           variant='subheading'
           className={ classes.statusText }
         >
           Deployed
         </Typography>
+        <Button 
+          className={ classes.button }
+          color="secondary" 
+          variant="raised"
+          size="small"
+          autoFocus
+          onClick={ () => this.onUndeployClick() }
+        >
+          Remove Sawtooth
+        </Button>
         <Button 
           className={ classes.button }
           color="secondary" 

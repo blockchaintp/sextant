@@ -191,6 +191,7 @@ class ClusterView extends React.Component {
             <ClusterStatus
               cluster={ currentClusterData }
               onDeleteCluster={ () => cluster.deleteCluster(currentClusterData.settings.name) }
+              onUndeployCluster={ () => cluster.undeployCluster(currentClusterData.settings.name) }
               onCleanupCluster={ () => cluster.cleanupCluster(currentClusterData.settings.name) }
               onDeployCluster={ () => cluster.deployCluster() }
             />
