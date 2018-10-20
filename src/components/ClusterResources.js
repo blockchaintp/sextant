@@ -20,6 +20,14 @@ const styles = theme => {
 
 class ClusterResources extends React.Component {
 
+  hasXoDemo() {
+    const { info } = this.props
+    if(!info.xodemo) return false
+    if(!info.xodemo.status.loadBalancer) return false
+    if(!info.xodemo.status.loadBalancer.ingress) return false
+    return true
+  }
+
   render() {
 
     const { classes, info } = this.props
@@ -52,6 +60,20 @@ class ClusterResources extends React.Component {
         >
           Open Monitoring
         </Button>
+        {
+          this.hasXoDemo() ? (
+            <Button 
+              className={ classes.button }
+              color="primary" 
+              variant="raised"
+              size="small"
+              autoFocus
+              onClick={ () => this.props.onOpenXoDemo() }
+            >
+              Open XO Demo
+            </Button>
+          ) : null
+        }
       </div>
     )
   }

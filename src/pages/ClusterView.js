@@ -119,6 +119,7 @@ class ClusterView extends React.Component {
                 info={ clusterInfo }
                 onOpenDashboard={ () => cluster.openDashboard() }
                 onOpenMonitoring={ () => cluster.openMonitoring() }
+                onOpenXoDemo={ () => cluster.openXoDemo() }
               />
             </Paper>
             

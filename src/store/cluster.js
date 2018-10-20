@@ -135,6 +135,9 @@ const actions = {
   openMonitoring: () => ({
     type: 'CLUSTER_OPEN_MONITORING',
   }),
+  openXoDemo: () => ({
+    type: 'CLUSTER_OPEN_XO_DEMO',
+  }),
 }
 
 const mutations = {
@@ -430,6 +433,15 @@ const SAGAS = sagaErrorWrapper({
     if(!clusterInfo.grafana.status.loadBalancer) return
     if(!clusterInfo.grafana.status.loadBalancer.ingress) return
     const url = clusterInfo.grafana.status.loadBalancer.ingress[0].hostname
+    window.open(`http://${url}`)
+  },
+
+  CLUSTER_OPEN_XO_DEMO: function* (action) {
+    const clusterInfo = yield select(state => state.cluster.clusterInfo)
+    if(!clusterInfo.xodemo) return
+    if(!clusterInfo.xodemo.status.loadBalancer) return
+    if(!clusterInfo.xodemo.status.loadBalancer.ingress) return
+    const url = clusterInfo.xodemo.status.loadBalancer.ingress[0].hostname
     window.open(`http://${url}`)
   },
   
