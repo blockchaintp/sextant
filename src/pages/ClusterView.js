@@ -215,7 +215,7 @@ class ClusterView extends React.Component {
 
           
           {
-            clusterUtils.kubectlReady(currentClusterData.status.phase) ? (
+            clusterUtils.kubectlReady(currentClusterData.status) ? (
               <Paper
                 className={ classes.paper }
               >
