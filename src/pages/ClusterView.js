@@ -53,6 +53,14 @@ const styles = theme => {
 
 }
 
+// phases where we want some kind of content as the main block on the page
+const SHOW_CONTENT_PHASES = {
+  error: true,
+  created: true,
+  deployed: true,
+  undeploying: true,
+}
+
 @connectStore({
   cluster: clusterModule,
 })
@@ -98,7 +106,7 @@ class ClusterView extends React.Component {
       >
 
       {
-        status.phase == 'deployed' ? (
+        status.phase == 'deployed' || status.phase == 'undeploying' ? (
           <Grid
             item
             sm={12}
@@ -117,6 +125,7 @@ class ClusterView extends React.Component {
 
               <ClusterResources
                 info={ clusterInfo }
+                phase={ status.phase }
                 onOpenDashboard={ () => cluster.openDashboard() }
                 onOpenMonitoring={ () => cluster.openMonitoring() }
                 onOpenXoDemo={ () => cluster.openXoDemo() }
@@ -159,7 +168,7 @@ class ClusterView extends React.Component {
       }
 
       {
-        status.phase != 'error' && status.phase != 'deployed' && status.phase != 'created' ? (
+        SHOW_CONTENT_PHASES[status.phase] ? null : (
           <Grid
             item
             sm={12}
@@ -168,8 +177,7 @@ class ClusterView extends React.Component {
         
             
           </Grid>
-
-        ) : null
+        )
       }
 
 

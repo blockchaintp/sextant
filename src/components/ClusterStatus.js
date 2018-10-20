@@ -105,6 +105,24 @@ class ClusterStatus extends React.Component {
     )
   }
 
+  getClusterUndeploying() {
+    const { classes } = this.props
+    return (
+      <div>
+        <Typography
+          variant='subheading'
+          className={ classes.statusText }
+        >
+          Undeploying
+        </Typography>
+        <CircularProgress
+          className={ classes.progress }
+          size={ 20 }
+        />
+      </div>
+    )
+  }
+
   getClusterCreated() {
     const { classes } = this.props
     return (
@@ -162,7 +180,7 @@ class ClusterStatus extends React.Component {
           autoFocus
           onClick={ () => this.onUndeployClick() }
         >
-          Remove Sawtooth
+          Undeploy Sawtooth
         </Button>
         <Button 
           className={ classes.button }
@@ -264,6 +282,9 @@ class ClusterStatus extends React.Component {
     }
     else if(status.phase == 'deploying') {
       return this.getClusterDeploying()
+    }
+    else if(status.phase == 'undeploying') {
+      return this.getClusterUndeploying()
     }
     else if(status.phase == 'deployed') {
       return this.getClusterDeployed()
