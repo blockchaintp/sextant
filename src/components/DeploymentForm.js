@@ -55,7 +55,10 @@ const activatedOptions = [{
 class DeploymentForm extends React.Component {
 
   render() {
-    const { classes } = this.props
+    const { 
+      classes,
+      formValues,
+    } = this.props
 
     return (
       <div className={classes.root}>
@@ -148,64 +151,73 @@ class DeploymentForm extends React.Component {
             />
           </Grid>
 
-          <Grid
-            item
-            xs={12}
-            md={6}
-          >
-            <Field
-              name="rbac_secret_key"
-              type="text"
-              component={ GenerateTextField }
-              generateValue={ randomValues.rbacSecretKey }
-              label="Secret Key"
-              description="The RBAC secret key (20 chars, alphanumeric)"
-              validate={ validators.deployment.rbac_secret_key }
-              disabled={ this.props.submitting }
-            />
-          </Grid>
+          {
+            formValues.rbac_enabled == 'true' ? (
+              <Grid
+                item
+                xs={12}
+                md={6}
+              >
+                <Field
+                  name="rbac_secret_key"
+                  type="text"
+                  component={ GenerateTextField }
+                  generateValue={ randomValues.rbacSecretKey }
+                  label="Secret Key"
+                  description="The RBAC secret key (20 chars, alphanumeric)"
+                  validate={ validators.deployment.rbac_secret_key }
+                  disabled={ this.props.submitting }
+                />
+              </Grid>
+            ) : null
+          }
+          
 
         </Grid>
 
-        <Grid
-          container
-          spacing={ 24 }
-        >
-          <Grid
-            item
-            xs={12}
-            md={6}
-          >
-            <Field
-              name="rbac_aes_key"
-              type="text"
-              component={ GenerateTextField }
-              generateValue={ randomValues.rbacAesKey }
-              label="Secret Key"
-              description="The RBAC AES key (32 chars, hexadecimal)"
-              validate={ validators.deployment.rbac_aes_key }
-              disabled={ this.props.submitting }
-            />
-          </Grid>
+        {
+          formValues.rbac_enabled == 'true' ? (
+            <Grid
+              container
+              spacing={ 24 }
+            >
+              <Grid
+                item
+                xs={12}
+                md={6}
+              >
+                <Field
+                  name="rbac_aes_key"
+                  type="text"
+                  component={ GenerateTextField }
+                  generateValue={ randomValues.rbacAesKey }
+                  label="Secret Key"
+                  description="The RBAC AES key (32 chars, hexadecimal)"
+                  validate={ validators.deployment.rbac_aes_key }
+                  disabled={ this.props.submitting }
+                />
+              </Grid>
 
-          <Grid
-            item
-            xs={12}
-            md={6}
-          >
-            <Field
-              name="rbac_batcher_key"
-              type="text"
-              component={ GenerateTextField }
-              generateValue={ randomValues.rbacBatcherKey }
-              label="Secret Key"
-              description="The RBAC batcher key (64 chars, hexadecimal)"
-              validate={ validators.deployment.rbac_batcher_key }
-              disabled={ this.props.submitting }
-            />
-          </Grid>
+              <Grid
+                item
+                xs={12}
+                md={6}
+              >
+                <Field
+                  name="rbac_batcher_key"
+                  type="text"
+                  component={ GenerateTextField }
+                  generateValue={ randomValues.rbacBatcherKey }
+                  label="Secret Key"
+                  description="The RBAC batcher key (64 chars, hexadecimal)"
+                  validate={ validators.deployment.rbac_batcher_key }
+                  disabled={ this.props.submitting }
+                />
+              </Grid>
 
-        </Grid>
+            </Grid>
+          ) : null
+        }
 
         
         <Divider className={ classes.divider } />
