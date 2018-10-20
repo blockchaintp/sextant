@@ -58,6 +58,14 @@ const SHOW_CONTENT_PHASES = {
   error: true,
   created: true,
   deployed: true,
+  deploying: true,
+  undeploying: true,
+}
+
+// phases where we want to display the k8s resources in tables
+const SHOW_K8S_RESOURCES_PHASES = {
+  deployed: true,
+  deploying: true,
   undeploying: true,
 }
 
@@ -106,7 +114,7 @@ class ClusterView extends React.Component {
       >
 
       {
-        status.phase == 'deployed' || status.phase == 'undeploying' ? (
+        SHOW_K8S_RESOURCES_PHASES[status.phase] ? (
           <Grid
             item
             sm={12}

@@ -204,6 +204,10 @@ function* clusterInfoLoop(clusterId) {
     while (true) {
       try{
         const response = yield call(clusterApi.info, clusterId)
+        console.log('-------------------------------------------');
+        console.log('-------------------------------------------');
+        console.log('INFO')
+        console.log(response.data)
         yield put(actions.setClusterInfo(response.data))
       }
       catch(err){
@@ -368,6 +372,7 @@ const SAGAS = sagaErrorWrapper({
       }
       else if(status.phase == 'deploying') {
         yield put(actions.clusterStatusLoop('deploying')) 
+        yield put(actions.clusterInfoLoop())
       }
       else if(status.phase == 'undeploying') {
         yield put(actions.clusterStatusLoop('undeploying'))

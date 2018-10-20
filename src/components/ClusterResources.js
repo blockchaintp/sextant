@@ -28,18 +28,13 @@ class ClusterResources extends React.Component {
     return true
   }
 
-  render() {
+  getServiceButtons() {
+    const { classes, phase } = this.props
 
-    const { classes, info } = this.props
-
-    if(!info) return null
+    if(phase != 'deployed') return null
+      
     return (
       <div>
-        <pre className={ classes.resources }>
-          <code>
-            { info.pods }
-          </code>
-        </pre>
         <Button 
           className={ classes.button }
           color="primary" 
@@ -74,6 +69,23 @@ class ClusterResources extends React.Component {
             </Button>
           ) : null
         }
+      </div>
+    )
+  }
+
+  render() {
+
+    const { classes, info, phase } = this.props
+
+    if(!info) return null
+    return (
+      <div>
+        <pre className={ classes.resources }>
+          <code>
+            { info.pods }
+          </code>
+        </pre>
+        { this.getServiceButtons() }
       </div>
     )
   }
