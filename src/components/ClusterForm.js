@@ -413,7 +413,7 @@ class ClusterForm extends React.Component {
             <div className={ classes.alignRight }>
 
               <Button
-                variant="raised"
+                variant="contained"
                 size="small"
                 className={ classes.button }
                 onClick={ () => this.props.onCreatePrivateKeypair() }
@@ -468,7 +468,7 @@ class ClusterForm extends React.Component {
 
         <div>
           <Button
-            variant="raised"
+            variant="contained"
             className={ classes.button }
             onClick={ () => this.props.onCancel() }
             disabled={ this.props.submitting }
@@ -477,7 +477,7 @@ class ClusterForm extends React.Component {
           </Button>
           <Button
             color="primary"
-            variant="raised"
+            variant="contained"
             className={ classes.button }
             onClick={ () => this.props.onSubmit() }
             disabled={ this.props.submitting }

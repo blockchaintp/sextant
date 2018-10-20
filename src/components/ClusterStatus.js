@@ -141,7 +141,7 @@ class ClusterStatus extends React.Component {
         <Button 
           className={ classes.button }
           color="secondary" 
-          variant="raised"
+          variant="contained"
           size="small"
           autoFocus
           onClick={ () => this.onDeleteClick() }
@@ -175,7 +175,7 @@ class ClusterStatus extends React.Component {
         <Button 
           className={ classes.button }
           color="secondary" 
-          variant="raised"
+          variant="contained"
           size="small"
           autoFocus
           onClick={ () => this.onUndeployClick() }
@@ -185,7 +185,7 @@ class ClusterStatus extends React.Component {
         <Button 
           className={ classes.button }
           color="secondary" 
-          variant="raised"
+          variant="contained"
           size="small"
           autoFocus
           onClick={ () => this.onDeleteClick() }
@@ -227,7 +227,7 @@ class ClusterStatus extends React.Component {
         <Button 
           className={ classes.button }
           color="secondary" 
-          variant="raised"
+          variant="contained"
           size="small"
           autoFocus
           onClick={ () => this.props.onCleanupCluster() }
@@ -251,7 +251,7 @@ class ClusterStatus extends React.Component {
           Error
         </Typography>
         <Typography
-          variant='body2'
+          variant='body1'
           className={ classes.errorText }
         >
           { status.error }
@@ -259,7 +259,7 @@ class ClusterStatus extends React.Component {
         <Button 
           className={ classes.button }
           color="secondary" 
-          variant="raised"
+          variant="contained"
           size="small"
           autoFocus
           onClick={ () => this.props.onDeleteCluster() }

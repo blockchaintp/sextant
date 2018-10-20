@@ -125,7 +125,7 @@ class ClusterView extends React.Component {
               className={ classes.paper }
             >
               <Typography
-                variant='title'
+                variant='h6'
                 className={ classes.title }
               >
                 Resources
@@ -157,7 +157,7 @@ class ClusterView extends React.Component {
               className={ classes.paper }
             >
               <Typography
-                variant='title'
+                variant='h6'
                 className={ classes.title }
               >
                 Deployment
@@ -198,7 +198,7 @@ class ClusterView extends React.Component {
             className={ classes.paper }
           >
             <Typography
-              variant='title'
+              variant='h6'
               className={ classes.title }
             >
               Cluster Status
@@ -220,7 +220,7 @@ class ClusterView extends React.Component {
                 className={ classes.paper }
               >
                 <Typography
-                  variant='title'
+                  variant='h6'
                   className={ classes.title }
                 >
                   Cluster Access
@@ -239,7 +239,7 @@ class ClusterView extends React.Component {
             className={ classes.paper }
           >
             <Typography
-              variant='title'
+              variant='h6'
               className={ classes.title }
             >
               Cluster Settings

@@ -116,7 +116,7 @@ class ConfirmDeleteClusterDialog extends React.Component {
           </Button>
           <Button 
             color="primary" 
-            variant="raised"
+            variant="contained"
             autoFocus
             disabled={ deleteOkDisabled }
             onClick={ () => this.props.onConfirm() }

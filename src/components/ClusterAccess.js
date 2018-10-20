@@ -23,7 +23,7 @@ class ClusterAccess extends React.Component {
         <Button 
           className={ classes.button }
           color="primary" 
-          variant="raised"
+          variant="contained"
           size="small"
           autoFocus
           onClick={ this.props.downloadKubeConfig }
@@ -33,7 +33,7 @@ class ClusterAccess extends React.Component {
         <Button 
           className={ classes.button }
           color="primary" 
-          variant="raised"
+          variant="contained"
           size="small"
           autoFocus
           onClick={ this.props.downloadKopsConfig }

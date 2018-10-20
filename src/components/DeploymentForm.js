@@ -346,7 +346,7 @@ class DeploymentForm extends React.Component {
 
         <div>
           <Button
-            variant="raised"
+            variant="contained"
             className={ classes.button }
             onClick={ () => this.props.onCancel() }
             disabled={ this.props.submitting }
@@ -355,7 +355,7 @@ class DeploymentForm extends React.Component {
           </Button>
           <Button
             color="primary"
-            variant="raised"
+            variant="contained"
             className={ classes.button }
             onClick={ () => this.props.onSubmit() }
             disabled={ this.props.submitting }
