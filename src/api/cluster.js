@@ -29,6 +29,14 @@ export default {
     })
   },
 
+  undeploy(id) {
+    return new Promise(function(resolve, reject){
+      axios.put(url(`/undeploy/${id}`))
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
   cleanup(id) {
     return new Promise(function(resolve, reject){
       axios.put(url(`/cleanup/${id}`))
