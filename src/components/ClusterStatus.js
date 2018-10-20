@@ -280,17 +280,34 @@ class ClusterStatus extends React.Component {
             </Button>
           ) : null
         }
+
+        {
+          status.clusterExists ? (
+            <Button 
+              className={ classes.button }
+              color="secondary" 
+              variant="contained"
+              size="small"
+              autoFocus
+              onClick={ () => this.props.onDeleteCluster() }
+            >
+              Delete Cluster
+            </Button>
+          ) : (
+            <Button 
+              className={ classes.button }
+              color="secondary" 
+              variant="contained"
+              size="small"
+              autoFocus
+              onClick={ () => this.props.onCleanupCluster() }
+            >
+              Cleanup Cluster
+            </Button>
+          )
+        }
         
-        <Button 
-          className={ classes.button }
-          color="secondary" 
-          variant="contained"
-          size="small"
-          autoFocus
-          onClick={ () => this.props.onDeleteCluster() }
-        >
-          Delete Cluster
-        </Button>
+        
       </div>
     )
   }
