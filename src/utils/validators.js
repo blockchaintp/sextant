@@ -1,3 +1,17 @@
+const RESERVED_TP_NAMES = {
+  'smallbank-tp': true,
+  'settings-tp': true,
+  'identity-tp': true,
+  'block-info-tp': true,
+  'poet-validator-registry-tp': true,
+  'smallbank-tp': true,
+  'rbac-tp': true,
+  'xo-tp': true,
+  'xo-demo': true,
+  'simple-tp-python': true,
+  'rest-api': true,
+}
+
 const required = value => (value ? undefined : 'Required')
 const maxLength = (max, countType = 'characters') => value =>
   value && value.length > max ? `Must be ${max} or less ${countType}` : undefined
@@ -59,6 +73,18 @@ const rbac_batcher_key = value =>
   value && /^[0-9a-fA-F]{64}$/i.test(value)
     ? undefined
     : 'Must be a 64 character hexadecimal value'
+
+const custom_tp_name = value => {
+  if(!value) return undefined
+  if(RESERVED_TP_NAMES[value]) return `${value} is a reserved name`
+  return alphaNumeric(value)
+}
+
+const custom_tp_image = value => {
+  if(!value) return undefined
+  if(!value.match(/^[\w\/]+(:\w+)?$/)) return 'invalid image format'
+  return undefined
+}
 
 const seedAddress = value => {  
   if(!value) return undefined
@@ -178,6 +204,8 @@ const validators = {
   optionalWrapper,
   cluster,
   deployment,
+  custom_tp_name,
+  custom_tp_image,
 }
 
 module.exports = validators

@@ -5,6 +5,7 @@ import { touch, change, initialize, getFormValues } from 'redux-form'
 
 import apiUtils from '../utils/api'
 import sagaErrorWrapper from '../utils/sagaErrorWrapper'
+import customTpUtils from '../utils/customTp'
 import clusterApi from '../api/cluster'
 import settings from '../settings'
 import snackbar from './snackbar'
@@ -147,6 +148,13 @@ const actions = {
   externalSeedDelete: (seedAddress) => ({
     type: 'CLUSTER_EXTERNAL_SEED_DELETE',
     seedAddress,
+  }),
+  customTpAdd: () => ({
+    type: 'CLUSTER_CUSTOM_TP_ADD',
+  }),
+  customTpDelete: (name) => ({
+    type: 'CLUSTER_CUSTOM_TP_DELETE',
+    name,
   })
 }
 
@@ -517,7 +525,34 @@ const SAGAS = sagaErrorWrapper({
     const newSeeds = currentSeeds.filter(s => s != deleteSeed)
     yield put(change('deploymentForm', 'external_seeds', newSeeds))
   },
-  
+
+  CLUSTER_CUSTOM_TP_ADD: function* (action) {
+    const formValues = yield select(state => getFormValues('deploymentForm')(state))
+    const currentTps = formValues.custom_tps
+
+    const newTp = {
+      name: formValues.custom_tp_name,
+      image: formValues.custom_tp_image,
+      command: customTpUtils.splitCommand(formValues.custom_tp_command),
+      args: customTpUtils.splitCommand(formValues.custom_tp_args),
+    }
+    
+    const newTps = currentTps.filter(tp => tp.name != newTp.name).concat(newTp)
+    yield put(change('deploymentForm', 'custom_tps', newTps))
+    yield put(change('deploymentForm', 'custom_tp_name', ''))
+    yield put(change('deploymentForm', 'custom_tp_image', ''))
+    yield put(change('deploymentForm', 'custom_tp_command', ''))
+    yield put(change('deploymentForm', 'custom_tp_args', ''))
+  },
+
+  CLUSTER_CUSTOM_TP_DELETE: function* (action) {
+    const formValues = yield select(state => getFormValues('deploymentForm')(state))
+    const currentTps = formValues.custom_tps
+    const deleteTp = action.name
+    const newTps = currentTps.filter(tp => tp.name != deleteTp)
+    yield put(change('deploymentForm', 'custom_tps', newTps))
+  },
+
 })
 
 const sagas = createSagas(SAGAS)

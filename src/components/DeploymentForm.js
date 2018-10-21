@@ -41,6 +41,10 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit,
   },
+  tpAddButton: {
+    marginTop: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unit,
+  },
   smallText: {
     fontSize: '0.7em'
   },
@@ -82,6 +86,23 @@ class DeploymentForm extends React.Component {
       name: 'delete',
     }]
 
+    const customTpFields = [{
+      title: 'Name',
+      name: 'id',
+    },{
+      title: 'Image',
+      name: 'image',
+    },{
+      title: 'Command',
+      name: 'command',
+    },{
+      title: 'Args',
+      name: 'args',
+    },{
+      title: '',
+      name: 'delete',
+    }]
+
     const externalSeedData = formValues.external_seeds.map(seed => {
       return {
         id: seed,
@@ -96,6 +117,35 @@ class DeploymentForm extends React.Component {
         )
       }
     })
+
+    const customTpData = formValues.custom_tps.map(tp => {
+      return {
+        id: tp.name,
+        image: tp.image,
+        command: tp.command,
+        args: tp.args,
+        delete: (
+          <div className={ classes.alignRight }>
+            <Tooltip disableFocusListener key="delete" title='Delete'>
+              <IconButton onClick={ () => this.props.onCustomTpDelete(tp.name) }>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
+        )
+      }
+    })
+
+    let customTpButtonDisabled = true
+
+    if(
+      formValues.custom_tp_name &&
+      formValues.custom_tp_image &&
+      !rawFormErrors.custom_tp_name &&
+      !rawFormErrors.custom_tp_image
+    ) {
+      customTpButtonDisabled = false
+    }
 
     return (
       <div className={classes.root}>
@@ -409,6 +459,86 @@ class DeploymentForm extends React.Component {
               description="Should the Simple transaction processor be deployed?"
               validate={ validators.required }
               disabled={ this.props.submitting }
+            />
+          </Grid>
+
+        </Grid>
+
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+        >
+          Custom Transaction Processors
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={4}
+          >
+            <Field
+              name="custom_tp_name"
+              type="text"
+              component={ TextField }
+              label="Name"
+              description="The name of your transaction processor (alphanumeric)"
+              validate={ validators.custom_tp_name }
+              disabled={ this.props.submitting }
+            />
+
+            <Field
+              name="custom_tp_image"
+              type="text"
+              component={ TextField }
+              label="Image"
+              description="The docker image for your transaction processor"
+              validate={ validators.custom_tp_image }
+              disabled={ this.props.submitting }
+            />
+
+            <Field
+              name="custom_tp_command"
+              type="text"
+              component={ TextField }
+              label="Command"
+              description="The command for your transaction processor"
+              disabled={ this.props.submitting }
+            />
+
+            <Field
+              name="custom_tp_args"
+              type="text"
+              component={ TextField }
+              label="Arguments"
+              description="The arguments for your transaction processor"
+              disabled={ this.props.submitting }
+            />
+
+            <Button
+              className={ classes.tpAddButton }
+              color="primary"
+              size="small"
+              variant="outlined"
+              onClick={ () => this.props.onCustomTpAdd() }
+              disabled={ this.props.submitting || customTpButtonDisabled }
+            >
+              Add
+            </Button>
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={8}
+          >
+            <GenericTableSimple
+              fields={ customTpFields }
+              data={ customTpData }
             />
           </Grid>
 

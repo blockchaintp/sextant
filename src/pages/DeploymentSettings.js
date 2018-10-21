@@ -41,6 +41,11 @@ const TEST_DATA = {
   xo_enabled: 'true',
   smallbank_enabled: 'true',
   simple_enabled: 'true',
+  custom_tps: [],
+  custom_tp_name: '',
+  custom_tp_image: '',
+  custom_tp_command: '',
+  custom_tp_args: '',
 }
 
 const DEFAULT_DATA = {
@@ -56,6 +61,11 @@ const DEFAULT_DATA = {
   xo_enabled: 'true',
   smallbank_enabled: 'true',
   simple_enabled: 'true',
+  custom_tps: [],
+  custom_tp_name: '',
+  custom_tp_image: '',
+  custom_tp_command: '',
+  custom_tp_args: '',
 }
 
 @reduxForm({
@@ -118,6 +128,8 @@ class DeploymentSettings extends React.Component {
         onCancel={ () => cluster.viewList() }
         onSeedAdd={ () => cluster.externalSeedAdd() }
         onSeedDelete={ (address) => cluster.externalSeedDelete(address) }
+        onCustomTpAdd={ () => cluster.customTpAdd() }
+        onCustomTpDelete={ (name) => cluster.customTpDelete(name) }
       />
     )
   }
