@@ -504,6 +504,7 @@ const SAGAS = sagaErrorWrapper({
     const newSeed = formValues.new_seed
     const newSeeds = currentSeeds.filter(s => s != newSeed).concat(newSeed)
     yield put(change('deploymentForm', 'external_seeds', newSeeds))
+    yield put(change('deploymentForm', 'new_seed', ''))
   },
 
   CLUSTER_EXTERNAL_SEED_DELETE: function* (action) {
