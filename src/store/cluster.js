@@ -314,8 +314,11 @@ const SAGAS = sagaErrorWrapper({
     yield put(actions.setAsyncFormError(null))
     yield put(actions.setSubmitting(true))
 
+    const formPayload = Object.assign({}, formValues)
+    delete(formPayload.new_seed)
+
     try{
-      const response = yield call(clusterApi.deploy, clusterId, formValues)
+      const response = yield call(clusterApi.deploy, clusterId, formPayload)
       yield put(snackbar.actions.setMessage(`cluster ${clusterId} is deploying`))
       yield put(actions.loadClusterData())
     }
