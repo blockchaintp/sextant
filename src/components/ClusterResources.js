@@ -115,7 +115,8 @@ class ClusterResources extends React.Component {
 
         const containerStatuses = pod.status.containerStatuses
         const containerCount = containerStatuses.length
-        const containersReady = containerStatuses.reduce((all, status) => all + status.ready ? 1 : 0, 0)
+        const containersReady = containerStatuses.filter(status => status.ready).length
+
         return {
           name: pod.metadata.name,
           ready: `${containersReady}/${containerCount}`,
