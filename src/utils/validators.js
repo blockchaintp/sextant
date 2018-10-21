@@ -77,12 +77,13 @@ const rbac_batcher_key = value =>
 const custom_tp_name = value => {
   if(!value) return undefined
   if(RESERVED_TP_NAMES[value]) return `${value} is a reserved name`
-  return alphaNumeric(value)
+  if(!value.match(/^[\w-]+$/)) return 'Only alphanumeric characters'
+  return undefined
 }
 
 const custom_tp_image = value => {
   if(!value) return undefined
-  if(!value.match(/^[\w\/]+(:\w+)?$/)) return 'invalid image format'
+  if(!value.match(/^[\w\/]+(:\w+)?$/)) return 'Invalid image format'
   return undefined
 }
 
