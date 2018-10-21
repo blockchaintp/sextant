@@ -117,7 +117,14 @@ class ClusterResources extends React.Component {
         const containerCount = containerStatuses.length
         const containersReady = containerStatuses.filter(status => status.ready).length
         const containersTerminated = containerStatuses.filter(status => status.state.terminated).length
-        const status = containersTerminated > 0 ? 'Terminating' : pod.status.phase
+        const containersCrashLoopBackoff = containerStatuses.filter(status => {
+          return status.state.waiting && status.state.waiting.reason == 'CrashLoopBackOff'
+        }).length
+
+        let status = pod.status.phase
+
+        if(containersTerminated > 0) status = 'Terminating'
+        if(containersCrashLoopBackoff > 0) status = 'CrashLoopBackOff'
 
         return {
           name: pod.metadata.name,
