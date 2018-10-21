@@ -15,7 +15,10 @@
   
 */
 const splitCommand = (string) => {
-  return [string]
+  return string
+    .match(/"(?:\\"|\\\\|[^"])*"|\S+/g)
+    .map(s => s.replace(/^"/, ''))
+    .map(s => s.replace(/"$/, ''))
 }
 
 const utils = {

@@ -43,6 +43,7 @@ const styles = theme => ({
   },
   tpAddButton: {
     marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
     marginLeft: theme.spacing.unit,
   },
   smallText: {
@@ -122,8 +123,8 @@ class DeploymentForm extends React.Component {
       return {
         id: tp.name,
         image: tp.image,
-        command: tp.command,
-        args: tp.args,
+        command: JSON.stringify(tp.command),
+        args: JSON.stringify(tp.args),
         delete: (
           <div className={ classes.alignRight }>
             <Tooltip disableFocusListener key="delete" title='Delete'>
@@ -518,6 +519,10 @@ class DeploymentForm extends React.Component {
               description="The arguments for your transaction processor"
               disabled={ this.props.submitting }
             />
+
+            <Typography className={ classes.tpAddButton }>
+              The address of the validator to connect your tp to is: <strong>tcp://localhost:4004</strong>
+            </Typography>
 
             <Button
               className={ classes.tpAddButton }
