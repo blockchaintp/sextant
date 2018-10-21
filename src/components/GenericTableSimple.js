@@ -26,23 +26,28 @@ class GenericTableSimple extends React.Component {
       classes,
       fields,
       data,
+      noHeader,
     } = this.props
 
     return (
       <Table padding={ this.props.padding || 'default' }>
-        <TableHead>
-          <TableRow className={ classes.tableRow }>
-            {
-              fields.map((field, i) => {
-                return (
-                  <TableCell key={ i } className={ classes.tableCell }>
-                    { field.title }
-                  </TableCell>
-                )
-              })
-            }
-          </TableRow>
-        </TableHead>
+        {
+          noHeader ? null : (
+            <TableHead>
+              <TableRow className={ classes.tableRow }>
+                {
+                  fields.map((field, i) => {
+                    return (
+                      <TableCell key={ i } className={ classes.tableCell }>
+                        { field.title }
+                      </TableCell>
+                    )
+                  })
+                }
+              </TableRow>
+            </TableHead>
+          )
+        }
         <TableBody>
           {
             data.map((dataRow, i) => {

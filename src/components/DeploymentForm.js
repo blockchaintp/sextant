@@ -8,6 +8,9 @@ import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import FormHelperText from '@material-ui/core/FormHelperText'
+import DeleteIcon from '@material-ui/icons/Delete'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
 
 import TextField from './TextField'
 import GenerateTextField from './GenerateTextField'
@@ -15,6 +18,7 @@ import ButtonTextField from './ButtonTextField'
 import Select from './Select'
 import MultipleCheckbox from './MultipleCheckbox'
 import Radio from './Radio'
+import GenericTableSimple from './GenericTableSimple'
 
 import validators from '../utils/validators'
 import randomValues from '../utils/randomValues'
@@ -69,6 +73,29 @@ class DeploymentForm extends React.Component {
       formValues,
       rawFormErrors,
     } = this.props
+
+    const externalSeedFields = [{
+      title: 'Address',
+      name: 'id',
+    },{
+      title: 'Delete',
+      name: 'delete',
+    }]
+
+    const externalSeedData = formValues.external_seeds.map(seed => {
+      return {
+        id: seed,
+        delete: (
+          <div className={ classes.alignRight }>
+            <Tooltip disableFocusListener key="delete" title='Delete'>
+              <IconButton onClick={ () => this.props.onSeedDelete(seed) }>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
+        )
+      }
+    })
 
     return (
       <div className={classes.root}>
@@ -146,6 +173,7 @@ class DeploymentForm extends React.Component {
               validate={ validators.seedAddress }
               disabled={ this.props.submitting }
               buttonDisabled={ !formValues.new_seed || rawFormErrors.new_seed ? true : false }
+              onButtonClick={ () => this.props.onSeedAdd() }
             />
           </Grid>
 
@@ -154,7 +182,11 @@ class DeploymentForm extends React.Component {
             xs={12}
             md={6}
           >
-            table of seeds here
+            <GenericTableSimple
+              noHeader
+              fields={ externalSeedFields }
+              data={ externalSeedData }
+            />
           </Grid>
 
         </Grid>

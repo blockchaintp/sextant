@@ -1,7 +1,7 @@
 import { createSagas } from 'redux-box'
 import { call, put, select, fork, take, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
-import { touch, change, initialize } from 'redux-form'
+import { touch, change, initialize, getFormValues } from 'redux-form'
 
 import apiUtils from '../utils/api'
 import sagaErrorWrapper from '../utils/sagaErrorWrapper'
@@ -141,6 +141,13 @@ const actions = {
   openXoDemo: () => ({
     type: 'CLUSTER_OPEN_XO_DEMO',
   }),
+  externalSeedAdd: () => ({
+    type: 'CLUSTER_EXTERNAL_SEED_ADD',
+  }),
+  externalSeedDelete: (seedAddress) => ({
+    type: 'CLUSTER_EXTERNAL_SEED_DELETE',
+    seedAddress,
+  })
 }
 
 const mutations = {
@@ -489,6 +496,22 @@ const SAGAS = sagaErrorWrapper({
     if(!clusterInfo.xodemo.status.loadBalancer.ingress) return
     const url = clusterInfo.xodemo.status.loadBalancer.ingress[0].hostname
     window.open(`http://${url}`)
+  },
+
+  CLUSTER_EXTERNAL_SEED_ADD: function* (action) {
+    const formValues = yield select(state => getFormValues('deploymentForm')(state))
+    const currentSeeds = formValues.external_seeds
+    const newSeed = formValues.new_seed
+    const newSeeds = currentSeeds.filter(s => s != newSeed).concat(newSeed)
+    yield put(change('deploymentForm', 'external_seeds', newSeeds))
+  },
+
+  CLUSTER_EXTERNAL_SEED_DELETE: function* (action) {
+    const formValues = yield select(state => getFormValues('deploymentForm')(state))
+    const currentSeeds = formValues.external_seeds
+    const deleteSeed = action.seedAddress
+    const newSeeds = currentSeeds.filter(s => s != deleteSeed)
+    yield put(change('deploymentForm', 'external_seeds', newSeeds))
   },
   
 })

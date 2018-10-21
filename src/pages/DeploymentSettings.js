@@ -31,6 +31,8 @@ const styles = theme => {
 const TEST_DATA = {
   network_name: 'sawtooth',
   dynamic_peering: 'true',
+  new_seed: '',
+  external_seeds: [],
   poet_enabled: 'false',
   rbac_enabled: 'true',
   rbac_secret_key: 'g7op0ioXPdw7jFTf4aY2',
@@ -44,6 +46,8 @@ const TEST_DATA = {
 const DEFAULT_DATA = {
   network_name: 'sawtooth',
   dynamic_peering: 'true',
+  new_seed: '',
+  external_seeds: [],
   poet_enabled: 'true',
   rbac_enabled: 'true',
   rbac_secret_key: '',
@@ -112,6 +116,8 @@ class DeploymentSettings extends React.Component {
         asyncFormError={ asyncFormError }
         onSubmit={ () => cluster.submitDeployForm() }
         onCancel={ () => cluster.viewList() }
+        onSeedAdd={ () => cluster.externalSeedAdd() }
+        onSeedDelete={ (address) => cluster.externalSeedDelete(address) }
       />
     )
   }
