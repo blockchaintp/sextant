@@ -318,12 +318,16 @@ const SAGAS = sagaErrorWrapper({
       return  
     }
 
+    const formPayload = Object.assign({}, formValues)
+    delete(formPayload.new_seed)
+    delete(formPayload.custom_tp_name)
+    delete(formPayload.custom_tp_image)
+    delete(formPayload.custom_tp_command)
+    delete(formPayload.custom_tp_args)
+
     yield put(actions.setShowSyncFormErrors(false))
     yield put(actions.setAsyncFormError(null))
     yield put(actions.setSubmitting(true))
-
-    const formPayload = Object.assign({}, formValues)
-    delete(formPayload.new_seed)
 
     try{
       const response = yield call(clusterApi.deploy, clusterId, formPayload)
