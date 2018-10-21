@@ -116,11 +116,13 @@ class ClusterResources extends React.Component {
         const containerStatuses = pod.status.containerStatuses
         const containerCount = containerStatuses.length
         const containersReady = containerStatuses.filter(status => status.ready).length
+        const containersTerminated = containerStatuses.filter(status => status.state.terminated).length
+        const status = containersTerminated > 0 ? 'Terminating' : pod.status.phase
 
         return {
           name: pod.metadata.name,
           ready: `${containersReady}/${containerCount}`,
-          status: pod.status.phase,
+          status,
           age: timeago().format(pod.metadata.creationTimestamp).replace(' ago', ''),
           ip: pod.status.podIP,
         }
