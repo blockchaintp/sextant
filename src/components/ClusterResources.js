@@ -113,7 +113,7 @@ class ClusterResources extends React.Component {
     const data = pods
       .map(pod => {
 
-        const containerStatuses = pod.status.containerStatuses
+        const containerStatuses = pod.status.containerStatuses || []
         const containerCount = containerStatuses.length
         const containersReady = containerStatuses.filter(status => status.ready).length
         const containersCrashLoopBackoff = containerStatuses.filter(status => {
