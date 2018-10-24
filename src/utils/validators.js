@@ -1,3 +1,17 @@
+const RESERVED_TP_NAMES = {
+  'smallbank-tp': true,
+  'settings-tp': true,
+  'identity-tp': true,
+  'block-info-tp': true,
+  'poet-validator-registry-tp': true,
+  'smallbank-tp': true,
+  'rbac-tp': true,
+  'xo-tp': true,
+  'xo-demo': true,
+  'simple-tp-python': true,
+  'rest-api': true,
+}
+
 const required = value => (value ? undefined : 'Required')
 const maxLength = (max, countType = 'characters') => value =>
   value && value.length > max ? `Must be ${max} or less ${countType}` : undefined
@@ -59,6 +73,27 @@ const rbac_batcher_key = value =>
   value && /^[0-9a-fA-F]{64}$/i.test(value)
     ? undefined
     : 'Must be a 64 character hexadecimal value'
+
+const custom_tp_name = value => {
+  if(!value) return undefined
+  if(RESERVED_TP_NAMES[value]) return `${value} is a reserved name`
+  if(!value.match(/^[\w-]+$/)) return 'Only alphanumeric characters'
+  return undefined
+}
+
+const custom_tp_image = value => {
+  if(!value) return undefined
+  if(!value.match(/^[\w\/]+(:\w+)?$/)) return 'Invalid image format'
+  return undefined
+}
+
+const seedAddress = value => {  
+  if(!value) return undefined
+  if(!value.match(/^[\w\.]+:\d+$/)) return 'Bad seed address, must be of form hostname:port or ip:port'
+  const [ host, port ] = value.split(':')
+  if(host.match(/^[\.\d]+$/) && !host.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/)) return 'Bad seed ip address, must be of form 1.2.3.4'
+  return undefined
+}
 
 const wrapper = (validators) => (value, allValues, props) => {
   // return the first of any errors
@@ -164,11 +199,14 @@ const validators = {
   integer,
   domain,
   publicKey,
+  seedAddress,
   unsigned,
   wrapper,
   optionalWrapper,
   cluster,
   deployment,
+  custom_tp_name,
+  custom_tp_image,
 }
 
 module.exports = validators

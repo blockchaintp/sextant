@@ -25,35 +25,25 @@ const styles = theme => {
   }
 }
 
-class ConfirmDeleteClusterDialog extends React.Component {
+class ConfirmUndeployClusterDialog extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      deleteClusterName: ''
+      undeployClusterName: ''
     };
   }
 
-  getDeleteDialogContent() {
+  getUndeployDialogContent() {
 
     const { classes, cluster } = this.props
 
     if(!cluster) return null
 
-    if(cluster.status.phase == 'deleted') {
-      return (
-        <DialogContent>
-          <DialogContentText>
-            This cluster is deleted - clicking the <strong>delete</strong> button below will cleanup and remove it from the system.
-          </DialogContentText>
-        </DialogContent>
-      )
-    }
-
     return (
       <DialogContent>
         <DialogContentText>
-          Are you <strong>absolutely</strong> sure you want to delete the <strong>{ cluster.settings.name }</strong> cluster?<br />
+          Are you <strong>absolutely</strong> sure you want to remove sawtooth from the <strong>{ cluster.settings.name }</strong> cluster?<br />
           To confirm - please type the name of the cluster (<strong>{ cluster.settings.name }</strong>) into the textbox below:
         </DialogContentText>
         <FormControl
@@ -66,9 +56,9 @@ class ConfirmDeleteClusterDialog extends React.Component {
           </InputLabel>
           <Input
             name='confirm-cluster-name'
-            value={ this.state.deleteClusterName }
+            value={ this.state.undeployClusterName }
             onChange={ (e) => this.setState({
-              deleteClusterName: e.target.value
+              undeployClusterName: e.target.value
             })}
           />
         </FormControl>
@@ -76,16 +66,15 @@ class ConfirmDeleteClusterDialog extends React.Component {
     )
   }
 
-  getDeleteButtonDisabled() {
+  getUndeployButtonDisabled() {
     const { classes, cluster } = this.props 
     if(!cluster) return true
-    if(cluster.status.phase == 'deleted') return false
-    return this.state.deleteClusterName != cluster.settings.name
+    return this.state.undeployClusterName != cluster.settings.name
   }
 
   onClose() {
     this.setState({
-      deleteClusterName: ''
+      undeployClusterName: ''
     })
     this.props.onClose()
   }
@@ -93,8 +82,8 @@ class ConfirmDeleteClusterDialog extends React.Component {
   render() {
     const { classes, cluster } = this.props
 
-    const dialogContent = this.getDeleteDialogContent()
-    const deleteOkDisabled = this.getDeleteButtonDisabled()
+    const dialogContent = this.getUndeployDialogContent()
+    const deleteOkDisabled = this.getUndeployButtonDisabled()
     
     return (
       <Dialog
@@ -105,7 +94,7 @@ class ConfirmDeleteClusterDialog extends React.Component {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle id="alert-dialog-title">Delete Cluster?</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Remove Sawtooth from cluster?</DialogTitle>
           { dialogContent }
         <DialogActions>
           <Button 
@@ -121,7 +110,7 @@ class ConfirmDeleteClusterDialog extends React.Component {
             disabled={ deleteOkDisabled }
             onClick={ () => this.props.onConfirm() }
           >
-            Delete
+            Undeploy
           </Button>
         </DialogActions>
       </Dialog>
@@ -129,8 +118,8 @@ class ConfirmDeleteClusterDialog extends React.Component {
   }
 }
 
-ConfirmDeleteClusterDialog.propTypes = {
+ConfirmUndeployClusterDialog.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(ConfirmDeleteClusterDialog)
+export default withStyles(styles)(ConfirmUndeployClusterDialog)

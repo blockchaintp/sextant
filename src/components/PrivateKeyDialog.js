@@ -92,7 +92,7 @@ class PrivateKeyDialog extends React.Component {
             onCopy={ onCopy }
           >
             <Button
-              variant="raised"
+              variant="contained"
               size="small"
               color="secondary"
               className={ classes.button }

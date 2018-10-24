@@ -8,5 +8,5 @@ if [ -n "${MANUALRUN}" ]; then
   echo "entering manual run mode"
   sleep 10000000
 else
-  yarn run watch
+  yarn run develop
 fi

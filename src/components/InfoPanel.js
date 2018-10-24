@@ -27,7 +27,7 @@ class InfoPanel extends React.Component {
           xs={3}
         >
           <Typography
-            variant='body2'
+            variant='body1'
           >
             { row.title }
           </Typography>
@@ -37,9 +37,7 @@ class InfoPanel extends React.Component {
           item
           xs={9}
         >
-          <Typography
-            variant='body1'
-          >
+          <Typography>
             { row.value }
           </Typography>
         </Grid>

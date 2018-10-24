@@ -216,7 +216,7 @@ class GenericTable extends React.Component {
           </Button>
           <Button 
             color="primary" 
-            variant="raised"
+            variant="contained"
             autoFocus
             disabled={ deleteOkDisabled }
             onClick={ () => this.confirmOnDelete() }
@@ -231,7 +231,7 @@ class GenericTable extends React.Component {
   getAddButton() {
     const { classes } = this.props
     return this.props.getAddButton ? this.props.getAddButton() : (
-      <Button className={classes.button} variant="raised" color="secondary" aria-label="Add" onClick={ () => this.props.onAdd() }>
+      <Button className={classes.button} variant="contained" color="secondary" aria-label="Add" onClick={ () => this.props.onAdd() }>
         { this.props.addTitle || 'Add' }
         <AddIcon className={classes.rightIcon} />
       </Button>
@@ -297,11 +297,11 @@ class GenericTable extends React.Component {
         >
           <div className={classes.title}>
             {!this.props.noSelect && selected.length > 0 ? (
-              <Typography color="inherit" variant="subheading">
+              <Typography color="inherit" variant='subtitle1'>
                 {selected.length} selected
               </Typography>
             ) : (
-              <Typography variant="title">{ pageTitle || title + 's' }</Typography>
+              <Typography variant="h6">{ pageTitle || title + 's' }</Typography>
             )}
           </div>
           <div className={classes.spacer} />

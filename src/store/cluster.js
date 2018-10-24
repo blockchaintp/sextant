@@ -1,10 +1,11 @@
 import { createSagas } from 'redux-box'
 import { call, put, select, fork, take, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
-import { touch, change, initialize } from 'redux-form'
+import { touch, change, initialize, getFormValues } from 'redux-form'
 
 import apiUtils from '../utils/api'
 import sagaErrorWrapper from '../utils/sagaErrorWrapper'
+import customTpUtils from '../utils/customTp'
 import clusterApi from '../api/cluster'
 import settings from '../settings'
 import snackbar from './snackbar'
@@ -119,6 +120,9 @@ const actions = {
     type: 'CLUSTER_DELETE',
     id,
   }),
+  undeployCluster: () => ({
+    type: 'CLUSTER_UNDEPLOY',
+  }),
   cleanupCluster: (id) => ({
     type: 'CLUSTER_CLEANUP',
     id,
@@ -135,6 +139,23 @@ const actions = {
   openMonitoring: () => ({
     type: 'CLUSTER_OPEN_MONITORING',
   }),
+  openXoDemo: () => ({
+    type: 'CLUSTER_OPEN_XO_DEMO',
+  }),
+  externalSeedAdd: () => ({
+    type: 'CLUSTER_EXTERNAL_SEED_ADD',
+  }),
+  externalSeedDelete: (seedAddress) => ({
+    type: 'CLUSTER_EXTERNAL_SEED_DELETE',
+    seedAddress,
+  }),
+  customTpAdd: () => ({
+    type: 'CLUSTER_CUSTOM_TP_ADD',
+  }),
+  customTpDelete: (name) => ({
+    type: 'CLUSTER_CUSTOM_TP_DELETE',
+    name,
+  })
 }
 
 const mutations = {
@@ -297,12 +318,19 @@ const SAGAS = sagaErrorWrapper({
       return  
     }
 
+    const formPayload = Object.assign({}, formValues)
+    delete(formPayload.new_seed)
+    delete(formPayload.custom_tp_name)
+    delete(formPayload.custom_tp_image)
+    delete(formPayload.custom_tp_command)
+    delete(formPayload.custom_tp_args)
+
     yield put(actions.setShowSyncFormErrors(false))
     yield put(actions.setAsyncFormError(null))
     yield put(actions.setSubmitting(true))
 
     try{
-      const response = yield call(clusterApi.deploy, clusterId, formValues)
+      const response = yield call(clusterApi.deploy, clusterId, formPayload)
       yield put(snackbar.actions.setMessage(`cluster ${clusterId} is deploying`))
       yield put(actions.loadClusterData())
     }
@@ -312,6 +340,44 @@ const SAGAS = sagaErrorWrapper({
     }
 
     yield put(actions.setSubmitting(false))
+  },
+
+  CLUSTER_UNDEPLOY: function* (action) {
+
+    const payload = yield select(selectors.router.payload)
+    const clusterId = payload.name
+
+    // load the cluster list so we have the cluster data in the case the delete
+    // button is clicked from the view page
+    yield put(actions.loadList())
+    yield take('CLUSTER_SET_LIST')
+    const clusters = yield select(state => state.cluster.list)
+    const cluster = clusters.filter(c => c.settings.name == clusterId)[0]
+
+    let canUndeploy = false
+
+    if(cluster.status.phase == "deployed") {
+      canUndeploy = true
+    }
+    // you can undeploy if the state is error and the errorPhase is deploy
+    // this means the k8s manifests had some kind of problem so let's undeploy them
+    else if(cluster.status.phase == "error" && cluster.status.errorPhase == "deploy") {
+      canUndeploy = true
+    }
+
+    if(!canUndeploy) {
+      yield put(snackbar.actions.setError(`The ${clusterId} cluster cannot be undeployed`))
+      return
+    }
+
+    try{
+      const response = yield call(clusterApi.undeploy, clusterId)
+      yield put(snackbar.actions.setMessage(`cluster ${clusterId} is undeploying`))
+      yield put(actions.loadClusterData())
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
   },
 
   CLUSTER_LOAD_DATA: function* () {
@@ -335,6 +401,11 @@ const SAGAS = sagaErrorWrapper({
       }
       else if(status.phase == 'deploying') {
         yield put(actions.clusterStatusLoop('deploying')) 
+        yield put(actions.clusterInfoLoop())
+      }
+      else if(status.phase == 'undeploying') {
+        yield put(actions.clusterStatusLoop('undeploying'))
+        yield put(actions.clusterInfoLoop())
       }
       else if(status.phase == 'deployed') {
         yield put(actions.clusterInfoLoop())
@@ -432,7 +503,60 @@ const SAGAS = sagaErrorWrapper({
     const url = clusterInfo.grafana.status.loadBalancer.ingress[0].hostname
     window.open(`http://${url}`)
   },
-  
+
+  CLUSTER_OPEN_XO_DEMO: function* (action) {
+    const clusterInfo = yield select(state => state.cluster.clusterInfo)
+    if(!clusterInfo.xodemo) return
+    if(!clusterInfo.xodemo.status.loadBalancer) return
+    if(!clusterInfo.xodemo.status.loadBalancer.ingress) return
+    const url = clusterInfo.xodemo.status.loadBalancer.ingress[0].hostname
+    window.open(`http://${url}`)
+  },
+
+  CLUSTER_EXTERNAL_SEED_ADD: function* (action) {
+    const formValues = yield select(state => getFormValues('deploymentForm')(state))
+    const currentSeeds = formValues.external_seeds
+    const newSeed = formValues.new_seed
+    const newSeeds = currentSeeds.filter(s => s != newSeed).concat(newSeed)
+    yield put(change('deploymentForm', 'external_seeds', newSeeds))
+    yield put(change('deploymentForm', 'new_seed', ''))
+  },
+
+  CLUSTER_EXTERNAL_SEED_DELETE: function* (action) {
+    const formValues = yield select(state => getFormValues('deploymentForm')(state))
+    const currentSeeds = formValues.external_seeds
+    const deleteSeed = action.seedAddress
+    const newSeeds = currentSeeds.filter(s => s != deleteSeed)
+    yield put(change('deploymentForm', 'external_seeds', newSeeds))
+  },
+
+  CLUSTER_CUSTOM_TP_ADD: function* (action) {
+    const formValues = yield select(state => getFormValues('deploymentForm')(state))
+    const currentTps = formValues.custom_tps
+
+    const newTp = {
+      name: formValues.custom_tp_name,
+      image: formValues.custom_tp_image,
+      command: customTpUtils.splitCommand(formValues.custom_tp_command),
+      args: customTpUtils.splitCommand(formValues.custom_tp_args),
+    }
+    
+    const newTps = currentTps.filter(tp => tp.name != newTp.name).concat(newTp)
+    yield put(change('deploymentForm', 'custom_tps', newTps))
+    yield put(change('deploymentForm', 'custom_tp_name', ''))
+    yield put(change('deploymentForm', 'custom_tp_image', ''))
+    yield put(change('deploymentForm', 'custom_tp_command', ''))
+    yield put(change('deploymentForm', 'custom_tp_args', ''))
+  },
+
+  CLUSTER_CUSTOM_TP_DELETE: function* (action) {
+    const formValues = yield select(state => getFormValues('deploymentForm')(state))
+    const currentTps = formValues.custom_tps
+    const deleteTp = action.name
+    const newTps = currentTps.filter(tp => tp.name != deleteTp)
+    yield put(change('deploymentForm', 'custom_tps', newTps))
+  },
+
 })
 
 const sagas = createSagas(SAGAS)

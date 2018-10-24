@@ -37,7 +37,7 @@ class AppBarComponent extends React.Component {
           <Toolbar>
             <SideMenu />
             <img src="/white-outline-logo.png" className={ classes.logo } />
-            <Typography variant="title" color="inherit" className={classes.flex}>
+            <Typography variant="h6" color="inherit" className={classes.flex}>
               { this.props.title }
             </Typography>
             <AppBarMenu />

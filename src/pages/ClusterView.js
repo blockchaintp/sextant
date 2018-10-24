@@ -53,6 +53,22 @@ const styles = theme => {
 
 }
 
+// phases where we want some kind of content as the main block on the page
+const SHOW_CONTENT_PHASES = {
+  error: true,
+  created: true,
+  deployed: true,
+  deploying: true,
+  undeploying: true,
+}
+
+// phases where we want to display the k8s resources in tables
+const SHOW_K8S_RESOURCES_PHASES = {
+  deployed: true,
+  deploying: true,
+  undeploying: true,
+}
+
 @connectStore({
   cluster: clusterModule,
 })
@@ -98,7 +114,7 @@ class ClusterView extends React.Component {
       >
 
       {
-        status.phase == 'deployed' ? (
+        SHOW_K8S_RESOURCES_PHASES[status.phase] ? (
           <Grid
             item
             sm={12}
@@ -109,7 +125,7 @@ class ClusterView extends React.Component {
               className={ classes.paper }
             >
               <Typography
-                variant='title'
+                variant='h6'
                 className={ classes.title }
               >
                 Resources
@@ -117,8 +133,10 @@ class ClusterView extends React.Component {
 
               <ClusterResources
                 info={ clusterInfo }
+                phase={ status.phase }
                 onOpenDashboard={ () => cluster.openDashboard() }
                 onOpenMonitoring={ () => cluster.openMonitoring() }
+                onOpenXoDemo={ () => cluster.openXoDemo() }
               />
             </Paper>
             
@@ -139,7 +157,7 @@ class ClusterView extends React.Component {
               className={ classes.paper }
             >
               <Typography
-                variant='title'
+                variant='h6'
                 className={ classes.title }
               >
                 Deployment
@@ -158,7 +176,7 @@ class ClusterView extends React.Component {
       }
 
       {
-        status.phase != 'error' && status.phase != 'deployed' && status.phase != 'created' ? (
+        SHOW_CONTENT_PHASES[status.phase] ? null : (
           <Grid
             item
             sm={12}
@@ -167,8 +185,7 @@ class ClusterView extends React.Component {
         
             
           </Grid>
-
-        ) : null
+        )
       }
 
 
@@ -181,7 +198,7 @@ class ClusterView extends React.Component {
             className={ classes.paper }
           >
             <Typography
-              variant='title'
+              variant='h6'
               className={ classes.title }
             >
               Cluster Status
@@ -192,23 +209,26 @@ class ClusterView extends React.Component {
               onDeleteCluster={ () => cluster.deleteCluster(currentClusterData.settings.name) }
               onCleanupCluster={ () => cluster.cleanupCluster(currentClusterData.settings.name) }
               onDeployCluster={ () => cluster.deployCluster() }
+              onUndeployCluster={ () => cluster.undeployCluster() }
             />
           </Paper>
 
           
           {
-            clusterUtils.kubectlReady(currentClusterData.status.phase) ? (
+            status.kubeConfigExists || status.kopsConfigExists ? (
               <Paper
                 className={ classes.paper }
               >
                 <Typography
-                  variant='title'
+                  variant='h6'
                   className={ classes.title }
                 >
                   Cluster Access
                 </Typography>
 
                 <ClusterAccess
+                  kubeConfigExists={ status.kubeConfigExists }
+                  kopsConfigExists={ status.kopsConfigExists }
                   downloadKubeConfig={ () => cluster.downloadKubeConfig() }
                   downloadKopsConfig={ () => cluster.downloadKopsConfig() }
                 />
@@ -221,7 +241,7 @@ class ClusterView extends React.Component {
             className={ classes.paper }
           >
             <Typography
-              variant='title'
+              variant='h6'
               className={ classes.title }
             >
               Cluster Settings

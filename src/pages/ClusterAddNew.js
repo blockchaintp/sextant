@@ -103,7 +103,7 @@ class ClusterAddNew extends React.Component {
     return (
       <div>
         <Typography
-          variant='title'
+          variant='h6'
         >
           Route53 Domain Needed
         </Typography>
@@ -141,7 +141,7 @@ class ClusterAddNew extends React.Component {
     return (
       <div>
         <Typography
-          variant='title'
+          variant='h6'
         >
           New Cluster
         </Typography>
