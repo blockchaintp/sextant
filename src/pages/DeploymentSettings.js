@@ -31,6 +31,7 @@ const styles = theme => {
 const TEST_DATA = {
   network_name: 'sawtooth',
   poet_enabled: 'false',
+  genesis_enabled: 'true',
   rbac_enabled: 'true',
   rbac_secret_key: 'g7op0ioXPdw7jFTf4aY2',
   rbac_aes_key: '37960e8f0337b90131acfb30b8817d17',
@@ -43,6 +44,7 @@ const TEST_DATA = {
 const DEFAULT_DATA = {
   network_name: 'sawtooth',
   poet_enabled: 'true',
+  genesis_enabled: 'true',
   rbac_enabled: 'true',
   rbac_secret_key: '',
   rbac_aes_key: '',
