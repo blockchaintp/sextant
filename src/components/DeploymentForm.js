@@ -117,6 +117,21 @@ class DeploymentForm extends React.Component {
             />
           </Grid>
 
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              row
+              compact
+              name="genesis_enabled"
+              component={ Radio }
+              options={ activatedOptions }
+              description="Should this network create the genesis block?"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
         </Grid>
 
         <Divider className={ classes.divider } />
