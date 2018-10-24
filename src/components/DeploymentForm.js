@@ -210,6 +210,8 @@ class DeploymentForm extends React.Component {
               validate={ validators.required }
               disabled={ this.props.submitting }
             />
+	  </Grid>
+
         </Grid>
 
         <Divider className={ classes.divider } />
