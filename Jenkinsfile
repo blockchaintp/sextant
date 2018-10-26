@@ -6,18 +6,18 @@ pipeline {
 	    steps {
 		checkout scm
 		sh 'env'
+	    
+		// Set the ISOLATION_ID environment variable for the whole pipeline
+		if ( env.ISOLATION_ID ) {
+		    echo 'Using ISOLATION_ID=$ISOLATION_ID'
+		} else {
+		    env.ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
+		}
+	    
+	    
+		env.VERSION=sh(returnStdout: true, script: 'get describe |cut -c 2-').trim()
+		env.COMPOSE_PROJECT_NAME = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'|sha256sum | cut -c1-64').trim()
 	    }
-	    
-	    // Set the ISOLATION_ID environment variable for the whole pipeline
-	    if ( env.ISOLATION_ID ) {
-		echo 'Using ISOLATION_ID=$ISOLATION_ID'
-	    } else {
-		env.ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
-	    }
-	    
-	    
-	    env.VERSION=sh(returnStdout: true, script: 'get describe |cut -c 2-').trim()
-	    env.COMPOSE_PROJECT_NAME = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'|sha256sum | cut -c1-64').trim()
 	}
  	stage("Clean All Previous Images") {
 	    steps {
