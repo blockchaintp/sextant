@@ -37,7 +37,7 @@ node ('master') {
             env.COMPOSE_PROJECT_NAME = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'|sha256sum | cut -c1-64').trim()
 
  	    stage("Clean All Previous Images") {
-		sh "for img in `docker images |grep $ISOLATION_ID | awk '{ print \$1\":\"\$2}'`; do docker rmi $img:$ISOLATION_ID $ORGANIZATION/$img:$VERSION;docker rmi $ORGANIZATION/$img:$VERSION; done"
+		sh "for img in `docker images |grep $ISOLATION_ID | awk '{ print \$1\":\"\$2}'`; do docker rmi \$img:$ISOLATION_ID $ORGANIZATION/$img:$VERSION;docker rmi $ORGANIZATION/$img:$VERSION; done"
 	    } 
 			
             // Build 
