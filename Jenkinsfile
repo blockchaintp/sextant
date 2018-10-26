@@ -26,8 +26,6 @@ node ('master') {
         ws("workspace/${env.BUILD_TAG}") {
             stage("Clone Repo") {
                 checkout scm
-		sh 'env'
-                sh 'git fetch --tag'
             }
 
             // Set the ISOLATION_ID environment variable for the whole pipeline
