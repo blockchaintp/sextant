@@ -50,13 +50,13 @@ node ('master') {
 	    // Build docks
 
 	    // Push Docker images
-	    stage("Push images") {
+	    stage("Tag Push images") {
 		sh "docker login -u $DOCKER_USER --password=$DOCKER_PASSWD"
-		sh "for img in `docker images |grep $ISOLATION_ID | awk '{ print \$1\":\"\$2}'`; do docker tag $img:$ISOLATION_ID $ORGANIZATION/$img:$VERSION;docker push $ORGANIZATION/$img:$VERSION; done"
+		sh "build/tag_and_push_images ${ISOLATION_ID} ${ORGANIZATION} ${VERSION}"	
 	    } 
 
 	    stage("Cleanup") {
-		sh "for img in `docker images |grep $ISOLATION_ID | awk '{ print \$1\":\"\$2}'`; do docker rmi $img:$ISOLATION_ID $ORGANIZATION/$img:$VERSION;docker rmi $ORGANIZATION/$img:$VERSION; done"
+		sh "build/clean_images ${ISOLATION_ID}"
 	    } 
 
 	    // Archive Build artifacts
