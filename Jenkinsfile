@@ -48,7 +48,7 @@ node ('master') {
 
             // Run the tests
 
-	    // Build docks
+	    // Build docs
 
 	    // Push Docker images
 	    stage("Tag Push images") {
@@ -61,6 +61,16 @@ node ('master') {
 	    } 
 
 	    // Archive Build artifacts
+
+
         }
+	// Post Pipeline Cleanup
+	post {
+	     always {
+		sh "build/clean_images ${ISOLATION_ID}"
+	     }
+	}
+
+
     }
 }
