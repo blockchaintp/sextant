@@ -2,6 +2,13 @@
 pipeline {
     agent any
     stages {
+	when { expression { not { return env.ISOLATION_ID } } }
+	environment {
+	    ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
+	}
+	
+
+
 	stage("Clone Repo") {
 	    steps {
 		checkout scm
@@ -12,12 +19,6 @@ pipeline {
 		GIT_URL=echo scm.GIT_URL
 		ORGANIZATION=sh(returnStdout: true, script: 'basename `dirname $GIT_URL`').trim()
 	    }
-
-	    when { expression { not { return env.ISOLATION_ID } } }
-	    environment {
-		ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
-	    }
-
 
 	}
  	stage("Clean All Previous Images") {
