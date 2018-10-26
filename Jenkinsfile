@@ -2,9 +2,11 @@
 pipeline {
     agent any
     stages {
-	when { expression { not { return env.ISOLATION_ID } } }
-	environment {
-	    ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
+	stage ("Environment") {
+	    when { expression { not { return env.ISOLATION_ID } } }
+	    environment {
+		ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
+	    }
 	}
 	
 
