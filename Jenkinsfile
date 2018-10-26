@@ -21,9 +21,9 @@ properties([[$class: 'BuildDiscarderProperty', strategy:
               artifactNumToKeepStr: '', daysToKeepStr: '31', numToKeepStr: '']]]);
 
 node ('master') {
-    timestamps {
-        // Create a unique workspace so Jenkins doesn't reuse an existing one
-	stages {
+    stages {
+	timestamps {
+            // Create a unique workspace so Jenkins doesn't reuse an existing one
             ws("workspace/${env.BUILD_TAG}") {
 		stage("Clone Repo") {
                     checkout scm
