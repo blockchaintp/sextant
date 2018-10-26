@@ -34,7 +34,7 @@ node ('master') {
 	    } else {
             	env.ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
 	    }
-	    echo env.GIT_URL
+	    echo 'URL=$GIT_URL'
 	    
 	    env.VERSION=sh(returnStdout: true, script: 'get describe |cut -c 2-').trim()
 	    env.COMPOSE_PROJECT_NAME = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'|sha256sum | cut -c1-64').trim()
