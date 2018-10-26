@@ -4,16 +4,16 @@ pipeline {
     stages {
 	stage("Clone Repo") {
 	    steps {
-		def scmVars = checkout scm
+		checkout scm
 
 	    }
 	    environment {
 		VERSION=sh(returnStdout: true, script: 'get describe |cut -c 2-').trim()
-		GIT_URL=scm.GIT_URL
+		GIT_URL=echo scm.GIT_URL
 		ORGANIZATION=sh(returnStdout: true, script: 'basename `dirname $GIT_URL`').trim()
 	    }
 
-	    when { not expression { return env.ISOLATION_ID } } 
+	    when { expression { not { return env.ISOLATION_ID } } }
 	    environment {
 		ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
 	    }
