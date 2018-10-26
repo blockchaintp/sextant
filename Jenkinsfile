@@ -26,6 +26,7 @@ node ('master') {
         ws("workspace/${env.BUILD_TAG}") {
             stage("Clone Repo") {
                 checkout scm
+		sh 'env'
                 sh 'git fetch --tag'
             }
 
