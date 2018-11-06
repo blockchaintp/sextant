@@ -29,6 +29,7 @@ import AddClusterLayout from './layouts/AddCluster'
 */
 import Loading from './components/Loading'
 import configModule from './store/config'
+import userModule from './store/user'
 import withRouter from './utils/withRouter'
 
 export const routes = {
@@ -64,17 +65,19 @@ const NotFound = () => (
 
 @connectStore({
   config: configModule,
+  user: userModule,
 })
 @withRouter()
 class AppRouter extends React.Component {
 
   componentDidMount(){
     this.props.config.loadValues()
+    this.props.user.loadStatus()
   }
 
   render() {
 
-    const { config, router } = this.props
+    const { config, user, router } = this.props
     const pageName = router.type
     const routeInfo = routes[pageName]
     const Page = routeInfo ? routeInfo.component : NotFound
@@ -82,7 +85,7 @@ class AppRouter extends React.Component {
     const MainLayoutComponent = routeInfo && routeInfo.mainLayout ? routeInfo.mainLayout : MainLayout
     const PageLayout = routeInfo && routeInfo.pageLayout ? routeInfo.pageLayout : null
 
-    if(!config.loaded) {
+    if(!config.loaded || !user.loaded) {
       return (
         <MainLayoutComponent>
           <Loading />
