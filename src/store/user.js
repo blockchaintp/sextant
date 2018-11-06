@@ -1,9 +1,11 @@
 import { createSagas } from 'redux-box'
 import { call, put, select } from 'redux-saga/effects'
+import { touch, change, initialize, getFormValues } from 'redux-form'
 
 import sagaErrorWrapper from '../utils/sagaErrorWrapper'
 import userApi from '../api/user'
 import snackbar from './snackbar'
+import selectors from './selectors'
 
 const state = {
   count: null,
@@ -27,6 +29,21 @@ const actions = {
     userData,
     userCount,
   }),
+  submitInitialAddForm: () => ({
+    type: 'USER_SUBMIT_INITIAL_ADD_FORM'
+  }),
+  setSubmitting: (value) => ({
+    type: 'USER_SET_SUBMITTING',
+    value,
+  }),
+  setAsyncFormError: (value) => ({
+    type: 'USER_SET_ASYNC_FORM_ERROR',
+    value,
+  }),
+  setShowSyncFormErrors: (value) => ({
+    type: 'USER_SET_SHOW_SYNC_FORM_ERRORS',
+    value,
+  }),
 }
 
 const mutations = {
@@ -35,10 +52,19 @@ const mutations = {
     state.count = action.userCount
     state.loaded = true
   },
+  USER_SET_SUBMITTING: (state, action) => {
+    state.submitting = action.value
+  },
+  USER_SET_ASYNC_FORM_ERROR: (state, action) => {
+    state.asyncFormError = action.value
+  },
+  USER_SET_SHOW_SYNC_FORM_ERRORS: (state, action) => {
+    state.showSyncFormErrors = action.value
+  },
 }
 
 const SAGAS = sagaErrorWrapper({
-  USER_LOAD_STATUS: function* (){
+  USER_LOAD_STATUS: function* () {
     try{
       const response = yield call(userApi.status)
       const { data, count } = response.data
@@ -55,6 +81,25 @@ const SAGAS = sagaErrorWrapper({
       yield put(snackbar.actions.setError(err))
     }
   },
+  USER_SUBMIT_INITIAL_ADD_FORM: function* () {
+    const formFields = yield select(state => selectors.form.fieldNames(state, 'userForm'))
+    const formValues = yield select(state => selectors.form.values(state, 'userForm'))
+    const hasError = yield select(state => selectors.form.hasError(state, 'userForm'))
+
+    if(hasError) {
+      yield put(actions.setShowSyncFormErrors(true))
+      yield put(touch.apply(null, ['userForm'].concat(formFields)))
+      return  
+    }
+
+    yield put(actions.setShowSyncFormErrors(false))
+    yield put(actions.setAsyncFormError(null))
+    yield put(actions.setSubmitting(true))
+
+    console.log('-------------------------------------------');
+    console.log('-------------------------------------------');
+    console.dir(formValues)
+  }
 })
 
 const sagas = createSagas(SAGAS)

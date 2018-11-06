@@ -35,7 +35,7 @@ const styles = theme => {
 }
 
 const DEFAULT_DATA = {
-  username: '',
+  username: 'admin',
   password: '',
   confirm_password: '',
 }
@@ -43,7 +43,7 @@ const DEFAULT_DATA = {
 @reduxForm({
   form: 'userForm',
   initialValues: DEFAULT_DATA,
-  validate: validators.user.all,
+  validate: validators.user.allNew,
 })
 @connectStore({
   config: configModule,
@@ -110,8 +110,9 @@ class UserAddInitial extends React.Component {
                 syncFormErrors={ syncFormErrors }
                 showSyncFormErrors={ showSyncFormErrors }
                 asyncFormError={ asyncFormError }
-                onSubmit={ () => user.submitAddForm() }
+                onSubmit={ () => user.submitInitialAddForm() }
                 allowCancel={ false }
+                newUser={ true }
               />
             </div>
           </Paper>

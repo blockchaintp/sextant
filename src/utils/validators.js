@@ -186,16 +186,31 @@ const deployment = {
 }
 
 const user = {
-  all: (values) => {
+  allNew: (values) => {
     const errors = {}
+    if(values.password != values.confirm_password) {
+      errors.password = errors.confirm_password = `The two passwords do not match`
+    }
+    return errors
+  },
+  allExisting: (values) => {
+    const errors = {}
+    if((values.password || values.confirm_password) && (values.password != values.confirm_password)) {
+      errors.password = errors.confirm_password = `The two passwords do not match`
+    }
     return errors
   },
   username: wrapper([
     required,
+    minLength(4),
+    alphaNumeric,
+  ]),
+  optionalPassword: optionalWrapper([
+    required,
     minLength(6),
     alphaNumeric,
   ]),
-  password: wrapper([
+  requiredPassword: wrapper([
     required,
     minLength(6),
     alphaNumeric,

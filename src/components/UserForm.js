@@ -56,6 +56,34 @@ class UserForm extends React.Component {
           disabled={ this.props.submitting }
         />
 
+        <Field
+          name="password"
+          type="password"
+          component={ TextField }
+          label="Password"
+          description="The password for the user (min 6 chars - alphanumeric)"
+          validate={ 
+            this.props.newUser ? 
+              validators.user.requiredPassword :
+              validators.user.optionalPassword 
+          }
+          disabled={ this.props.submitting }
+        />
+
+        <Field
+          name="confirm_password"
+          type="password"
+          component={ TextField }
+          label="Confirm Password"
+          description="Confirm the password for the user"
+          validate={ 
+            this.props.newUser ? 
+              validators.user.requiredPassword :
+              validators.user.optionalPassword 
+          }
+          disabled={ this.props.submitting }
+        />
+
         {
           this.props.showSyncFormErrors && this.props.syncFormErrors.length > 0 ? (
             <div>
