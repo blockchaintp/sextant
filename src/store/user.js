@@ -29,8 +29,9 @@ const actions = {
     userData,
     userCount,
   }),
-  submitInitialAddForm: () => ({
-    type: 'USER_SUBMIT_INITIAL_ADD_FORM'
+  submitForm: (newUser) => ({
+    type: 'USER_SUBMIT_FORM',
+    newUser,
   }),
   setSubmitting: (value) => ({
     type: 'USER_SET_SUBMITTING',
@@ -81,7 +82,7 @@ const SAGAS = sagaErrorWrapper({
       yield put(snackbar.actions.setError(err))
     }
   },
-  USER_SUBMIT_INITIAL_ADD_FORM: function* () {
+  USER_SUBMIT_FORM: function* (action) {
     const formFields = yield select(state => selectors.form.fieldNames(state, 'userForm'))
     const formValues = yield select(state => selectors.form.values(state, 'userForm'))
     const hasError = yield select(state => selectors.form.hasError(state, 'userForm'))
@@ -92,13 +93,32 @@ const SAGAS = sagaErrorWrapper({
       return  
     }
 
+    if(formValues.password && (formValues.password != formValues.confirm_password)) {
+      yield put(actions.setAsyncFormError(`The passwords do not match`))
+      return
+    }
+
     yield put(actions.setShowSyncFormErrors(false))
     yield put(actions.setAsyncFormError(null))
     yield put(actions.setSubmitting(true))
 
-    console.log('-------------------------------------------');
-    console.log('-------------------------------------------');
-    console.dir(formValues)
+    const payload = {
+      username: formValues.username,
+      type: formValues.type,
+    }
+
+    if(formValues.password) {
+      payload.password = formValues.password
+    }
+
+    const apiMethod = action.newUser ? userApi.create : userApi.update
+
+    try{
+      const response = yield call(apiMethod, payload)
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
   }
 })
 

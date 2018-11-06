@@ -188,16 +188,10 @@ const deployment = {
 const user = {
   allNew: (values) => {
     const errors = {}
-    if(values.password != values.confirm_password) {
-      errors.password = errors.confirm_password = `The two passwords do not match`
-    }
     return errors
   },
   allExisting: (values) => {
     const errors = {}
-    if((values.password || values.confirm_password) && (values.password != values.confirm_password)) {
-      errors.password = errors.confirm_password = `The two passwords do not match`
-    }
     return errors
   },
   username: wrapper([

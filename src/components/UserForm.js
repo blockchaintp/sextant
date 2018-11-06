@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button'
 import FormHelperText from '@material-ui/core/FormHelperText'
 
 import TextField from './TextField'
+import Select from './Select'
 import validators from '../utils/validators'
 
 const styles = theme => ({
@@ -43,6 +44,11 @@ class UserForm extends React.Component {
   render() {
     const { classes } = this.props
 
+    const typeOptions = ['admin', 'normal'].map(type => ({
+      title: type,
+      value: type,
+    }))
+
     return (
       <div className={classes.root}>
 
@@ -54,6 +60,16 @@ class UserForm extends React.Component {
           description="The username for the user"
           validate={ validators.user.username }
           disabled={ this.props.submitting }
+        />
+
+        <Field
+          name="type"
+          component={ Select }
+          options={ typeOptions }
+          label="User type"
+          description="The type of user"
+          validate={ validators.required }
+          disabled={ this.props.submitting || this.props.initialUser }
         />
 
         <Field

@@ -13,6 +13,22 @@ export default {
     })
   },
 
+  create(payload) {
+    return new Promise(function(resolve, reject){
+      axios.post(url(), payload)
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
+  update(payload) {
+    return new Promise(function(resolve, reject){
+      axios.put(url(), payload)
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
   url,
 
 }

@@ -36,6 +36,7 @@ const styles = theme => {
 
 const DEFAULT_DATA = {
   username: 'admin',
+  type: 'admin',
   password: '',
   confirm_password: '',
 }
@@ -110,9 +111,10 @@ class UserAddInitial extends React.Component {
                 syncFormErrors={ syncFormErrors }
                 showSyncFormErrors={ showSyncFormErrors }
                 asyncFormError={ asyncFormError }
-                onSubmit={ () => user.submitInitialAddForm() }
+                onSubmit={ () => user.submitForm(true) }
                 allowCancel={ false }
                 newUser={ true }
+                initialUser={ true }
               />
             </div>
           </Paper>
