@@ -9,6 +9,13 @@ const state = {
   count: null,
   loaded: false,
   data: null,
+
+  // the single error message back from the server upon form submit
+  asyncFormError: null,
+  // used to show all sync errors at the bottom of a form once they click submit
+  showSyncFormErrors: false,
+  // are we in the process of submitting a form? used to disable form elements
+  submitting: false,
 }
 
 const actions = {
@@ -36,6 +43,13 @@ const SAGAS = sagaErrorWrapper({
       const response = yield call(userApi.status)
       const { data, count } = response.data
       yield put(actions.setStatus(data, count))
+
+      // redirect to the initial add user page if there are no users
+      if(count <= 0) {
+        yield put({
+          type: 'PAGE_USER_ADD_INITIAL'
+        })
+      }
     }
     catch(err){
       yield put(snackbar.actions.setError(err))

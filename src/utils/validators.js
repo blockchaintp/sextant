@@ -185,6 +185,23 @@ const deployment = {
   ]),
 }
 
+const user = {
+  all: (values) => {
+    const errors = {}
+    return errors
+  },
+  username: wrapper([
+    required,
+    minLength(6),
+    alphaNumeric,
+  ]),
+  password: wrapper([
+    required,
+    minLength(6),
+    alphaNumeric,
+  ]),
+}
+
 const validators = {
   required,
   maxLength,
@@ -205,6 +222,7 @@ const validators = {
   optionalWrapper,
   cluster,
   deployment,
+  user,
   custom_tp_name,
   custom_tp_image,
 }

@@ -13,6 +13,7 @@ import ClusterList from './pages/ClusterList'
 import ClusterView from './pages/ClusterView'
 import ClusterAddNew from './pages/ClusterAddNew'
 import ClusterAddExisting from './pages/ClusterAddExisting'
+import UserAddInitial from './pages/UserAddInitial'
 
 /*
 
@@ -50,6 +51,10 @@ export const routes = {
     component: ClusterAddNew,
     //pageLayout: AddClusterLayout,
   },
+  'PAGE_USER_ADD_INITIAL': {
+    path: '/users/initial',
+    component: UserAddInitial,
+  }
   /*
   'PAGE_CLUSTER_ADD_EXISTING': {
     path: '/clusters/add/existing',
