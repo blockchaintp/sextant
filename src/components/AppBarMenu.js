@@ -49,6 +49,10 @@ class AppBarMenu extends React.Component {
       )
     }
 
+    items.push(
+      <MenuItem key='logout' onClick={ () => this.props.onLogout() }>Logout</MenuItem>,
+    )
+
     return items
   }
 

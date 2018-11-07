@@ -24,6 +24,9 @@ const actions = {
   loadStatus: () => ({
     type: 'AUTH_LOAD_STATUS',
   }),
+  logout: () => ({
+    type: 'AUTH_LOGOUT',
+  }),
   setStatus: (userData, userCount) => ({
     type: 'AUTH_SET_STATUS',
     userCount,
@@ -114,7 +117,17 @@ const SAGAS = sagaErrorWrapper({
     catch(err){
       yield put(snackbar.actions.setError(err))
     }
-  }
+  },
+  AUTH_LOGOUT: function* () {
+    try{
+      const response = yield call(userApi.logout)
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
+
+    yield put(actions.loadStatus())
+  },
 })
 
 const sagas = createSagas(SAGAS)

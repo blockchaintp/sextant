@@ -40,6 +40,7 @@ class Layout extends React.Component {
         <AppBar 
           title={ settings.title }
           user={ auth.userData }
+          onLogout={ auth.logout }
         />
         <div className={ classes.content }>
           { this.props.children }

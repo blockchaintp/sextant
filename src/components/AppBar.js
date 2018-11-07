@@ -29,7 +29,11 @@ const styles = {
 
 class AppBarComponent extends React.Component {
   render() {
-    const { classes, user } = this.props
+    const { 
+      classes,
+      user,
+      onLogout,
+    } = this.props
 
     return (
       <div className={classes.root}>
@@ -37,6 +41,7 @@ class AppBarComponent extends React.Component {
           <Toolbar>
             <SideMenu 
               user={ user }
+              onLogout={ onLogout }
             />
             <img src="/white-outline-logo.png" className={ classes.logo } />
             <Typography variant="h6" color="inherit" className={classes.flex}>
@@ -44,6 +49,7 @@ class AppBarComponent extends React.Component {
             </Typography>
             <AppBarMenu 
               user={ user }
+              onLogout={ onLogout }
             />
           </Toolbar>
         </AppBar>
