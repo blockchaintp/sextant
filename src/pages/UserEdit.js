@@ -117,6 +117,7 @@ class UserEdit extends React.Component {
                 asyncFormError={ asyncFormError }
                 onSubmit={ () => user.submitForm(false, false) }
                 allowCancel={ true }
+                onCancel={ () => user.viewList() }
                 newUser={ false }
                 initialUser={ false }
               />

@@ -113,6 +113,7 @@ class UserAdd extends React.Component {
                 asyncFormError={ asyncFormError }
                 onSubmit={ () => user.submitForm(true, false) }
                 allowCancel={ true }
+                onCancel={ () => user.viewList() }
                 newUser={ true }
                 initialUser={ false }
               />
