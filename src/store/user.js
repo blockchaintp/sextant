@@ -43,6 +43,18 @@ const actions = {
     type: 'USER_SET_SHOW_SYNC_FORM_ERRORS',
     value,
   }),
+  add: () => ({
+    type: 'PAGE_USER_ADD',
+  }),
+  edit: (username) => ({
+    type: 'PAGE_USER_EDIT',
+    payload: {
+      username,
+    }
+  }),
+  loadEditData: () => ({
+    type: 'USER_LOAD_EDIT_DATA',
+  })
 }
 
 const mutations = {
@@ -115,7 +127,17 @@ const SAGAS = sagaErrorWrapper({
     }
 
     yield put(actions.setSubmitting(false))
-  }
+  },
+  USER_LOAD_EDIT_DATA: function* (action) {
+    const payload = yield select(selectors.router.payload)
+    try{
+      const response = yield call(userApi.get, payload.username)
+      yield put(initialize('userForm', response.data))
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
+  },
 })
 
 const sagas = createSagas(SAGAS)

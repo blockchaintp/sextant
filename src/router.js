@@ -15,6 +15,8 @@ import ClusterAddNew from './pages/ClusterAddNew'
 import ClusterAddExisting from './pages/ClusterAddExisting'
 import UserAddInitial from './pages/UserAddInitial'
 import UserList from './pages/UserList'
+import UserAdd from './pages/UserAdd'
+import UserEdit from './pages/UserEdit'
 import Login from './pages/Login'
 
 /*
@@ -62,6 +64,14 @@ export const routes = {
   'PAGE_USER_LIST': {
     path: '/users',
     component: UserList,
+  },
+  'PAGE_USER_ADD': {
+    path: '/users/new',
+    component: UserAdd,
+  },
+  'PAGE_USER_EDIT': {
+    path: '/users/edit/:username',
+    component: UserEdit,
   },
   /*
   'PAGE_CLUSTER_ADD_EXISTING': {

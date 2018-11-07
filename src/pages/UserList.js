@@ -119,7 +119,7 @@ class UserList extends React.Component {
           tooltips={{
             edit: 'View'
           }}
-          onEdit={ (id) => user.editUser(id) }
+          onEdit={ (id) => user.edit(id) }
           getOptions={ () => null }
           onDeleteClick={ this.onDeleteClick.bind(this) }
         />

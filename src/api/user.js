@@ -37,6 +37,14 @@ export default {
     })
   },
 
+  get(username) {
+    return new Promise(function(resolve, reject){
+      axios.get(url(`/${username}`))
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
   create(payload) {
     return new Promise(function(resolve, reject){
       axios.post(url(), payload)
