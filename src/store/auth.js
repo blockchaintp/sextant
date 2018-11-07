@@ -120,11 +120,7 @@ const SAGAS = sagaErrorWrapper({
 
     try{
       const response = yield call(userApi.login, formValues)
-
-      console.log('-------------------------------------------');
-      console.log('-------------------------------------------');
-      console.dir(response.statusCode)
-      console.dir(response.data)
+      yield put(actions.loadStatus())
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
