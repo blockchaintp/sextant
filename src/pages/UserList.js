@@ -96,10 +96,12 @@ class UserList extends React.Component {
       name: 'type',
     }]
 
+    const currentUserData = auth.userData || {}
+
     const data = user.list.map(userData => {
       return {
         id: `${userData.username}`,
-        type: `${userData.type} ${userData.username == auth.userData.username ? ' (you)' : ''}`,
+        type: `${userData.type} ${userData.username == currentUserData.username ? ' (you)' : ''}`,
       }
     })
 

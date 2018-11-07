@@ -46,6 +46,9 @@ const actions = {
   add: () => ({
     type: 'PAGE_USER_ADD',
   }),
+  viewList: () => ({
+    type: 'PAGE_USER_LIST',
+  }),
   edit: (username) => ({
     type: 'PAGE_USER_EDIT',
     payload: {
@@ -113,18 +116,29 @@ const SAGAS = sagaErrorWrapper({
 
     const apiMethod = action.newUser ? userApi.create : userApi.update
 
+    if(!action.newUser) {
+      const routerPayload = yield select(selectors.router.payload)
+      payload.existingUsername = routerPayload.username
+    }
+
     try{
       const response = yield call(apiMethod, payload)
+
+      // if it was the initial user we re-run load status so they are redirected 
+      // to the login form
+      if(action.initialUser) {
+        yield put(auth.actions.loadStatus())
+        yield put(snackbar.actions.setMessage('Initial user created'))
+      }
+      else {
+        yield put(snackbar.actions.setMessage(action.newUser ? 'User created' : 'User saved'))
+        yield put(actions.viewList())
+      }
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
     }
 
-    // if it was the initial user we re-run load status so they are redirected 
-    // to the login form
-    if(action.initialUser) {
-      yield put(auth.actions.loadStatus())
-    }
 
     yield put(actions.setSubmitting(false))
   },

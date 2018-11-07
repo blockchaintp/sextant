@@ -55,7 +55,7 @@ export default {
 
   update(payload) {
     return new Promise(function(resolve, reject){
-      axios.put(url(), payload)
+      axios.put(url(`/${payload.existingUsername}`), payload)
         .then(res => resolve(res))
         .catch(err => reject(err))
     })

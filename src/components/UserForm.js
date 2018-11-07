@@ -76,7 +76,7 @@ class UserForm extends React.Component {
           name="password"
           type="password"
           component={ TextField }
-          label="Password"
+          label={ this.props.newUser ? 'Password' : 'Update Password' }
           description="The password for the user (min 6 chars - alphanumeric)"
           validate={ 
             this.props.newUser ? 

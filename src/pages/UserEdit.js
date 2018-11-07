@@ -110,7 +110,7 @@ class UserEdit extends React.Component {
               </Typography>
               <UserForm
                 formValues={ formValues }
-                saveTitle='Edit User'
+                saveTitle='Save User'
                 submitting={ submitting }
                 syncFormErrors={ syncFormErrors }
                 showSyncFormErrors={ showSyncFormErrors }
