@@ -99,7 +99,7 @@ class Login extends React.Component {
               <Typography
                 variant='h6'
               >
-                Create Initial User Account
+                Login
               </Typography>
               <LoginForm
                 formValues={ formValues }

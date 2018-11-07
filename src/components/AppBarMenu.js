@@ -39,15 +39,25 @@ class AppBarMenu extends React.Component {
   }
 
   getMenu() {
-    return [
+    const items = [
       <MenuItem key='clusters' onClick={ () => this.openPage('PAGE_CLUSTER_LIST') }>Clusters</MenuItem>,
     ]
+
+    if(this.props.user.type == 'admin') {
+      items.push(
+        <MenuItem key='users' onClick={ () => this.openPage('PAGE_USER_LIST') }>Users</MenuItem>,
+      )
+    }
+
+    return items
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, user } = this.props
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
+
+    if(!user) return null
 
     return (
       <div className={classes.root}>

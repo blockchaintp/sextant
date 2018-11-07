@@ -14,6 +14,7 @@ import ClusterView from './pages/ClusterView'
 import ClusterAddNew from './pages/ClusterAddNew'
 import ClusterAddExisting from './pages/ClusterAddExisting'
 import UserAddInitial from './pages/UserAddInitial'
+import Login from './pages/Login'
 
 /*
 
@@ -36,7 +37,7 @@ import withRouter from './utils/withRouter'
 export const routes = {
   'PAGE_HOME': {
     path: '/',
-    component: ClusterList,
+    component: Login,
   },
   'PAGE_CLUSTER_LIST': {
     path: '/clusters',

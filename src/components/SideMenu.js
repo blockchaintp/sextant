@@ -54,16 +54,28 @@ class SideMenu extends React.Component {
   }
 
   getMenu() {
-    return [
+    const items = [
       <ListItem button key='clusters' onClick={ () => this.openPage('PAGE_CLUSTER_LIST') }>
         <ListItemText primary="Clusters" />
       </ListItem>
     ]
+
+    if(this.props.user.type == 'admin') {
+      items.push(
+        <ListItem button key='users' onClick={ () => this.openPage('PAGE_USER_LIST') }>
+          <ListItemText primary="Users" />
+        </ListItem>
+      )
+    }
+
+    return items
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, user } = this.props
     const { drawerOpen } = this.state
+
+    if(!user) return null
 
     return (
       <div>

@@ -11,6 +11,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 
 import store from '../store'
 import snackbarModule from '../store/snackbar'
+import authModule from '../store/auth'
 
 import AppBar from '../components/AppBar'
 
@@ -27,16 +28,18 @@ const styles = theme => ({
 
 @connectStore({
   snackbar: snackbarModule,
+  auth: authModule,
 })
 class Layout extends React.Component {
 
   render() {
-    const { classes, snackbar } = this.props
+    const { classes, snackbar, auth } = this.props
 
     return (
       <div className={ classes.fullHeight }>
         <AppBar 
           title={ settings.title }
+          user={ auth.userData }
         />
         <div className={ classes.content }>
           { this.props.children }

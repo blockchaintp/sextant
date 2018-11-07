@@ -35,12 +35,16 @@ class AppBarComponent extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <SideMenu />
+            <SideMenu 
+              user={ user }
+            />
             <img src="/white-outline-logo.png" className={ classes.logo } />
             <Typography variant="h6" color="inherit" className={classes.flex}>
               { this.props.title }
             </Typography>
-            <AppBarMenu />
+            <AppBarMenu 
+              user={ user }
+            />
           </Toolbar>
         </AppBar>
       </div>
