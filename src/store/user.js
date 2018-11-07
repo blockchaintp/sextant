@@ -9,6 +9,7 @@ import auth from './auth'
 import selectors from './selectors'
 
 const state = {
+  list: [],
   // the single error message back from the server upon form submit
   asyncFormError: null,
   // used to show all sync errors at the bottom of a form once they click submit
@@ -18,6 +19,13 @@ const state = {
 }
 
 const actions = {
+  loadList: () => ({
+    type: 'USER_LOAD_LIST',
+  }),
+  setList: (data) => ({
+    type: 'USER_SET_LIST',
+    data,
+  }),
   submitForm: (newUser, initialUser) => ({
     type: 'USER_SUBMIT_FORM',
     newUser,
@@ -38,6 +46,9 @@ const actions = {
 }
 
 const mutations = {
+  USER_SET_LIST: (state, action) => {
+    state.list = action.data
+  },
   USER_SET_SUBMITTING: (state, action) => {
     state.submitting = action.value
   },
@@ -50,6 +61,15 @@ const mutations = {
 }
 
 const SAGAS = sagaErrorWrapper({
+  USER_LOAD_LIST: function* () {
+    try{
+      const response = yield call(userApi.list)
+      yield put(actions.setList(response.data))
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
+  },
   USER_SUBMIT_FORM: function* (action) {
     const formFields = yield select(state => selectors.form.fieldNames(state, 'userForm'))
     const formValues = yield select(state => selectors.form.values(state, 'userForm'))

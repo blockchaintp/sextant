@@ -14,6 +14,7 @@ import ClusterView from './pages/ClusterView'
 import ClusterAddNew from './pages/ClusterAddNew'
 import ClusterAddExisting from './pages/ClusterAddExisting'
 import UserAddInitial from './pages/UserAddInitial'
+import UserList from './pages/UserList'
 import Login from './pages/Login'
 
 /*
@@ -57,7 +58,11 @@ export const routes = {
     path: '/users/initial',
     component: UserAddInitial,
     guestPage: true,
-  }
+  },
+  'PAGE_USER_LIST': {
+    path: '/users',
+    component: UserList,
+  },
   /*
   'PAGE_CLUSTER_ADD_EXISTING': {
     path: '/clusters/add/existing',
