@@ -69,7 +69,7 @@ class SideMenu extends React.Component {
     }
 
     items.push(
-      <ListItem button key='logout' onClick={ () => this.onLogout() }>
+      <ListItem button key='logout' onClick={ () => this.props.onLogout() }>
         <ListItemText primary="Logout" />
       </ListItem>
     )

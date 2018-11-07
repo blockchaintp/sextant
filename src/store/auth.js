@@ -25,9 +25,6 @@ const actions = {
   loadStatus: () => ({
     type: 'AUTH_LOAD_STATUS',
   }),
-  logout: () => ({
-    type: 'AUTH_LOGOUT',
-  }),
   setStatus: (userData, userCount) => ({
     type: 'AUTH_SET_STATUS',
     userCount,
@@ -35,6 +32,9 @@ const actions = {
   }),
   login: () => ({
     type: 'AUTH_LOGIN',
+  }),
+  logout: () => ({
+    type: 'AUTH_LOGOUT',
   }),
   setSubmitting: (value) => ({
     type: 'AUTH_SET_SUBMITTING',

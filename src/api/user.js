@@ -21,6 +21,14 @@ export default {
     })
   },
 
+  logout() {
+    return new Promise(function(resolve, reject){
+      axios.get(url(`/logout`))
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
   create(payload) {
     return new Promise(function(resolve, reject){
       axios.post(url(), payload)
