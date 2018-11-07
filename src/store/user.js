@@ -58,6 +58,10 @@ const actions = {
   }),
   loadEditData: () => ({
     type: 'USER_LOAD_EDIT_DATA',
+  }),
+  delete: (username) => ({
+    type: 'USER_DELETE',
+    username,
   })
 }
 
@@ -154,6 +158,16 @@ const SAGAS = sagaErrorWrapper({
       yield put(snackbar.actions.setError(err))
     }
   },
+  USER_DELETE: function* (action) {
+    try{
+      const response = yield call(userApi.delete, action.username)
+      yield put(actions.loadList())
+      yield put(snackbar.actions.setMessage(`User deleted`))
+    }
+    catch(err){
+      yield put(snackbar.actions.setError(err))
+    }
+  }
 })
 
 const sagas = createSagas(SAGAS)

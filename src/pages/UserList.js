@@ -77,7 +77,7 @@ class UserList extends React.Component {
     const { 
       user,
     } = this.props
-    user.deleteUser(this.state.deleteUser.username)
+    user.delete(this.state.deleteUser.username)
     this.onDeleteClose()
   }
 

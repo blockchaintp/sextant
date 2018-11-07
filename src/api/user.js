@@ -61,6 +61,14 @@ export default {
     })
   },
 
+  delete(username) {
+    return new Promise(function(resolve, reject){
+      axios.delete(url(`/${username}`))
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
   url,
 
 }
