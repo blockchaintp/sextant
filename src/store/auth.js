@@ -2,6 +2,7 @@ import { createSagas } from 'redux-box'
 import { call, put, select } from 'redux-saga/effects'
 import { touch, change, initialize, getFormValues } from 'redux-form'
 
+import apiUtils from '../utils/api'
 import sagaErrorWrapper from '../utils/sagaErrorWrapper'
 import userApi from '../api/user'
 import snackbar from './snackbar'
@@ -118,11 +119,19 @@ const SAGAS = sagaErrorWrapper({
     yield put(actions.setSubmitting(true))
 
     try{
-      const response = yield call(userApi.login, payload)
+      const response = yield call(userApi.login, formValues)
+
+      console.log('-------------------------------------------');
+      console.log('-------------------------------------------');
+      console.dir(response.statusCode)
+      console.dir(response.data)
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
+      yield put(actions.setAsyncFormError(apiUtils.getError(err)))
     }
+
+    yield put(actions.setSubmitting(false))
   },
   AUTH_LOGOUT: function* () {
     try{

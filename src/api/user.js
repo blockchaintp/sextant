@@ -13,9 +13,9 @@ export default {
     })
   },
 
-  login() {
+  login(payload) {
     return new Promise(function(resolve, reject){
-      axios.post(url(`/login`))
+      axios.post(url(`/login`), payload)
         .then(res => resolve(res))
         .catch(err => reject(err))
     })
