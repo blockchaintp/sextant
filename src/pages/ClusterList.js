@@ -44,7 +44,11 @@ class ClusterList extends React.Component {
   }
 
   componentDidMount(){
-    this.props.cluster.loadList()
+    this.props.cluster.clusterListLoop()
+  }
+
+  componentWillUnmount() {
+    this.props.cluster.stopClusterListLoop()
   }
 
   getStatusCell(phase) {

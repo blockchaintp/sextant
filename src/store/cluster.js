@@ -99,6 +99,12 @@ const actions = {
     type: 'CLUSTER_SET_DATA',
     data,
   }),
+  clusterListLoop: () => ({
+    type: 'CLUSTER_LIST_LOOP',
+  }),
+  stopClusterListLoop: () => ({
+    type: 'CLUSTER_LIST_LOOP_STOP',
+  }),
   clusterStatusLoop: (loopWhileInPhase) => ({
     type: 'CLUSTER_STATUS_LOOP',
     loopWhileInPhase,
@@ -187,6 +193,28 @@ const mutations = {
   },
 }
 
+
+// keep looping to list the clusters
+function* clusterListLoop() {
+  try {
+    while (true) {
+
+      try{
+        const response = yield call(clusterApi.list)
+        yield put(actions.setList(response.data))
+      }
+      catch(err){
+        yield put(snackbar.actions.setError(err))
+        yield put(actions.stopClusterListLoop())
+      }
+
+      yield call(delay, settings.loopDelays.clusterList)
+    }
+  } finally {
+    
+  }
+}
+
 // keep looping while the cluster status.phase is in the given phase
 // as soon as it's not in that phase - cancel the loop and re-load the
 // cluster data to update the UI
@@ -242,6 +270,13 @@ const SAGAS = sagaErrorWrapper({
       yield put(snackbar.actions.setError(err))
     }
   },
+
+  CLUSTER_LIST_LOOP: function* (action) {
+    const clusterListLoopTask = yield fork(clusterListLoop)
+    yield take(action => action.type == 'CLUSTER_LIST_LOOP_STOP')
+    yield cancel(clusterListLoopTask)
+  },
+
   // when the region changes - clear the values for the {master,node}_zones
   // in the cluster form
   CLUSTER_REGION_CHANGED: function* () {
