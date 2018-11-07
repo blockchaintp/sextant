@@ -51,7 +51,7 @@ class ClusterList extends React.Component {
 
     const { classes } = this.props
 
-    if(phase == 'creating' || phase == 'deleting') {
+    if(phase == 'creating' || phase == 'deleting' || phase == 'deploying') {
       return (
         <div className={ classes.progressContainer }>
           { phase }
