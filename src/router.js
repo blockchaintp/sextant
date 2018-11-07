@@ -30,7 +30,7 @@ import AddClusterLayout from './layouts/AddCluster'
 */
 import Loading from './components/Loading'
 import configModule from './store/config'
-import userModule from './store/user'
+import authModule from './store/auth'
 import withRouter from './utils/withRouter'
 
 export const routes = {
@@ -70,19 +70,19 @@ const NotFound = () => (
 
 @connectStore({
   config: configModule,
-  user: userModule,
+  auth: authModule,
 })
 @withRouter()
 class AppRouter extends React.Component {
 
   componentDidMount(){
     this.props.config.loadValues()
-    this.props.user.loadStatus()
+    this.props.auth.loadStatus()
   }
 
   render() {
 
-    const { config, user, router } = this.props
+    const { config, auth, router } = this.props
     const pageName = router.type
     const routeInfo = routes[pageName]
     const Page = routeInfo ? routeInfo.component : NotFound
@@ -90,7 +90,7 @@ class AppRouter extends React.Component {
     const MainLayoutComponent = routeInfo && routeInfo.mainLayout ? routeInfo.mainLayout : MainLayout
     const PageLayout = routeInfo && routeInfo.pageLayout ? routeInfo.pageLayout : null
 
-    if(!config.loaded || !user.loaded) {
+    if(!config.loaded || !auth.loaded) {
       return (
         <MainLayoutComponent>
           <Loading />

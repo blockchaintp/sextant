@@ -8,6 +8,7 @@ import { routes } from '../router'
 import configModule from './config'
 import clusterModule from './cluster'
 import userModule from './user'
+import authModule from './auth'
 import snackbarModule from './snackbar'
 
 const history = createHistory()
@@ -17,6 +18,7 @@ const modules = [
   configModule,
   clusterModule,
   userModule,
+  authModule,
   snackbarModule,
 ]
 
