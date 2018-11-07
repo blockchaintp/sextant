@@ -85,11 +85,17 @@ const SAGAS = sagaErrorWrapper({
           type: 'PAGE_LOGIN'
         })
       }
-      // otherwise if there is a logged in user - redirect to the clusters page
+      // otherwise if there is a logged in user - interrogate the current route
+      // to check if it's a non-logged in page and redirect to the cluster list
+      // if not - this means links to deep pages can be shared and we don't
+      // force a redirect to the cluster list each time
       else {
-        yield put({
-          type: 'PAGE_CLUSTER_LIST'
-        })
+        const currentRoute = yield select(selectors.router.currentRoute)
+        if(currentRoute.guestPage) {
+          yield put({
+            type: 'PAGE_CLUSTER_LIST'
+          })  
+        }
       }
     }
     catch(err){

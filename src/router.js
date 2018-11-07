@@ -38,6 +38,7 @@ export const routes = {
   'PAGE_LOGIN': {
     path: '/',
     component: Login,
+    guestPage: true,
   },
   'PAGE_CLUSTER_LIST': {
     path: '/clusters',
@@ -55,6 +56,7 @@ export const routes = {
   'PAGE_USER_ADD_INITIAL': {
     path: '/users/initial',
     component: UserAddInitial,
+    guestPage: true,
   }
   /*
   'PAGE_CLUSTER_ADD_EXISTING': {
