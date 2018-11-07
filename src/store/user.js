@@ -5,6 +5,7 @@ import { touch, change, initialize, getFormValues } from 'redux-form'
 import sagaErrorWrapper from '../utils/sagaErrorWrapper'
 import userApi from '../api/user'
 import snackbar from './snackbar'
+import auth from './auth'
 import selectors from './selectors'
 
 const state = {
@@ -17,9 +18,10 @@ const state = {
 }
 
 const actions = {
-  submitForm: (newUser) => ({
+  submitForm: (newUser, initialUser) => ({
     type: 'USER_SUBMIT_FORM',
     newUser,
+    initialUser,
   }),
   setSubmitting: (value) => ({
     type: 'USER_SET_SUBMITTING',
@@ -85,6 +87,14 @@ const SAGAS = sagaErrorWrapper({
     catch(err){
       yield put(snackbar.actions.setError(err))
     }
+
+    // if it was the initial user we re-run load status so they are redirected 
+    // to the login form
+    if(action.initialUser) {
+      yield put(auth.actions.loadStatus())
+    }
+
+    yield put(actions.setSubmitting(false))
   }
 })
 

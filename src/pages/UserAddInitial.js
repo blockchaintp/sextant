@@ -111,7 +111,7 @@ class UserAddInitial extends React.Component {
                 syncFormErrors={ syncFormErrors }
                 showSyncFormErrors={ showSyncFormErrors }
                 asyncFormError={ asyncFormError }
-                onSubmit={ () => user.submitForm(true) }
+                onSubmit={ () => user.submitForm(true, true) }
                 allowCancel={ false }
                 newUser={ true }
                 initialUser={ true }
