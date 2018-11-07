@@ -68,15 +68,24 @@ const SAGAS = sagaErrorWrapper({
     try{
       const response = yield call(userApi.status)
       const { data, count } = response.data
-      console.log('-------------------------------------------');
-      console.log('-------------------------------------------');
-      console.dir(response.data)
       yield put(actions.setStatus(data, count))
 
       // redirect to the initial add user page if there are no users
       if(count <= 0) {
         yield put({
           type: 'PAGE_USER_ADD_INITIAL'
+        })
+      }
+      // if there is no logged-in user - redirect to the login form
+      else if(!data) {
+        yield put({
+          type: 'PAGE_LOGIN'
+        })
+      }
+      // otherwise if there is a logged in user - redirect to the clusters page
+      else {
+        yield put({
+          type: 'PAGE_CLUSTER_LIST'
         })
       }
     }

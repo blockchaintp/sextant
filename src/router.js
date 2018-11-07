@@ -35,7 +35,7 @@ import authModule from './store/auth'
 import withRouter from './utils/withRouter'
 
 export const routes = {
-  'PAGE_HOME': {
+  'PAGE_LOGIN': {
     path: '/',
     component: Login,
   },
