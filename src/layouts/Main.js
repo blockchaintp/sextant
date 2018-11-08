@@ -14,6 +14,7 @@ import snackbarModule from '../store/snackbar'
 import authModule from '../store/auth'
 
 import AppBar from '../components/AppBar'
+import AppFooter from '../components/AppFooter'
 
 import settings from '../settings'
 
@@ -22,7 +23,10 @@ const styles = theme => ({
     height: '100%'
   },
   content: {
-    height: 'calc(100% - 64px)'
+    height: 'calc(100% - 64px)',
+  },
+  contentPaddingBottom: {
+    height: '60px',
   }
 })
 
@@ -44,7 +48,11 @@ class Layout extends React.Component {
         />
         <div className={ classes.content }>
           { this.props.children }
+          <div className={ classes.contentPaddingBottom }>
+
+          </div>
         </div>
+        <AppFooter />
         <div>
           <Snackbar
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
