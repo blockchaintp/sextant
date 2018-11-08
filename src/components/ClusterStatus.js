@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
+import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
@@ -15,8 +16,15 @@ const styles = theme => {
       color: 'red',
       marginBottom: '10px',
     },
+    paper: {
+      padding: theme.spacing.unit * 2,
+      marginBottom: '20px',
+    },
     statusText: {
       marginBottom: '10px',
+    },
+    title: {
+      marginBottom: theme.spacing.unit * 2,
     },
     button: {
       margin: theme.spacing.unit,
@@ -69,6 +77,78 @@ class ClusterStatus extends React.Component {
     this.onUndeployClose()
   }
 
+  getKubeConfigDownload() {
+    const { classes } = this.props
+    return this.props.kubeConfigExists ? (
+      <Button 
+        className={ classes.button }
+        color="primary" 
+        variant="contained"
+        size="small"
+        autoFocus
+        onClick={ this.props.downloadKubeConfig }
+      >
+        Download Kube Config
+      </Button>
+    ) : null
+  }
+
+  getDashboardButton() {
+    const { cluster, classes } = this.props
+    const { settings, status } = cluster
+
+    if(status.phase != 'deployed') return null
+
+    return (
+      <Button 
+        className={ classes.button }
+        color="primary" 
+        variant="contained"
+        size="small"
+        autoFocus
+        onClick={ () => this.props.onOpenDashboard() }
+      >
+        Open Dashboard
+      </Button>
+    )
+  }
+
+  getMonitoringButton() {
+    const { cluster, classes } = this.props
+    const { settings, status } = cluster
+
+    if(status.phase != 'deployed') return null
+
+    return (
+      <Button 
+        className={ classes.button }
+        color="primary" 
+        variant="contained"
+        size="small"
+        autoFocus
+        onClick={ () => this.props.onOpenMonitoring() }
+      >
+        Open Monitoring
+      </Button>
+    )
+  }
+
+  getUndeploySawtooth() {
+    const { classes } = this.props
+    return this.props.kubeConfigExists ? (
+      <Button 
+        className={ classes.button }
+        color="secondary" 
+        variant="contained"
+        size="small"
+        autoFocus
+        onClick={ () => this.onUndeployClick() }
+      >
+        Undeploy Sawtooth
+      </Button>
+    ) : null
+  }
+
   getClusterCreating() {
     const { classes } = this.props
     return (
@@ -83,6 +163,7 @@ class ClusterStatus extends React.Component {
           className={ classes.progress }
           size={ 20 }
         />
+        { this.getKubeConfigDownload() }
       </div>
     )
   }
@@ -101,16 +182,8 @@ class ClusterStatus extends React.Component {
           className={ classes.progress }
           size={ 20 }
         />
-        <Button 
-          className={ classes.button }
-          color="secondary" 
-          variant="contained"
-          size="small"
-          autoFocus
-          onClick={ () => this.onUndeployClick() }
-        >
-          Undeploy Sawtooth
-        </Button>
+        { this.getKubeConfigDownload() }
+      
         <Button 
           className={ classes.button }
           color="secondary" 
@@ -158,6 +231,9 @@ class ClusterStatus extends React.Component {
         >
           Created
         </Typography>
+
+        { this.getKubeConfigDownload() }
+
         <Button 
           className={ classes.button }
           color="secondary" 
@@ -192,16 +268,10 @@ class ClusterStatus extends React.Component {
         >
           Deployed
         </Typography>
-        <Button 
-          className={ classes.button }
-          color="secondary" 
-          variant="contained"
-          size="small"
-          autoFocus
-          onClick={ () => this.onUndeployClick() }
-        >
-          Undeploy Sawtooth
-        </Button>
+
+        { this.getKubeConfigDownload() }
+        { this.getDashboardButton() }
+
         <Button 
           className={ classes.button }
           color="secondary" 
@@ -286,20 +356,8 @@ class ClusterStatus extends React.Component {
         >
           { status.error }
         </Typography>
-        {
-          status.errorPhase == 'deploy' ? (
-            <Button 
-              className={ classes.button }
-              color="secondary" 
-              variant="contained"
-              size="small"
-              autoFocus
-              onClick={ () => this.onUndeployClick() }
-            >
-              Undeploy Sawtooth
-            </Button>
-          ) : null
-        }
+
+        { this.getKubeConfigDownload() }
 
         {
           status.clusterExists ? (
@@ -332,7 +390,7 @@ class ClusterStatus extends React.Component {
     )
   }
 
-  render() {
+  getKubernetesBlock() {
     const { cluster, classes } = this.props
     const { settings, status } = cluster
 
@@ -371,6 +429,66 @@ class ClusterStatus extends React.Component {
         </div>
       )
     }
+  }
+
+  getSawtoothBlock() {
+    const { cluster, classes } = this.props
+    const { settings, status } = cluster
+
+    const okPhases = {
+      deploying: true,
+      deployed: true,
+    }
+
+    const okErrorPhases = {
+      deploy: true, 
+    }
+
+    if(!okPhases[status.phase] && !okErrorPhases[status.errorPhase]) return null
+
+    return (
+      <Paper
+          className={ classes.paper }
+        >
+        <Typography
+          variant='h6'
+          className={ classes.title }
+        >
+          Sawtooth
+        </Typography>
+
+        { this.getMonitoringButton() }
+        { this.getUndeploySawtooth() }
+
+      </Paper>
+    )
+  }
+
+  render() {
+    const { cluster, classes } = this.props
+    const { settings, status } = cluster
+
+    return (
+      <div>
+        <Paper
+          className={ classes.paper }
+        >
+          <Typography
+            variant='h6'
+            className={ classes.title }
+          >
+            Kubernetes
+          </Typography>
+
+          { this.getKubernetesBlock() }
+
+        </Paper>
+
+        { this.getSawtoothBlock() }
+
+        
+      </div>
+    )
   }
 }
 

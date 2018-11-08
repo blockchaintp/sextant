@@ -124,12 +124,7 @@ class ClusterView extends React.Component {
             <Paper
               className={ classes.paper }
             >
-              <Typography
-                variant='h6'
-                className={ classes.title }
-              >
-                Resources
-              </Typography>
+              
 
               <ClusterResources
                 info={ clusterInfo }
@@ -194,46 +189,18 @@ class ClusterView extends React.Component {
           sm={12}
           md={infoGridWidth}
         >
-          <Paper
-            className={ classes.paper }
-          >
-            <Typography
-              variant='h6'
-              className={ classes.title }
-            >
-              Cluster Status
-            </Typography>
-
-            <ClusterStatus
-              cluster={ currentClusterData }
-              onDeleteCluster={ () => cluster.deleteCluster(currentClusterData.settings.name) }
-              onCleanupCluster={ () => cluster.cleanupCluster(currentClusterData.settings.name) }
-              onDeployCluster={ () => cluster.deployCluster() }
-              onUndeployCluster={ () => cluster.undeployCluster() }
-            />
-          </Paper>
-
-          
-          {
-            status.kubeConfigExists ? (
-              <Paper
-                className={ classes.paper }
-              >
-                <Typography
-                  variant='h6'
-                  className={ classes.title }
-                >
-                  Cluster Access
-                </Typography>
-
-                <ClusterAccess
-                  kubeConfigExists={ status.kubeConfigExists }
-                  downloadKubeConfig={ () => cluster.downloadKubeConfig() }
-                />
-
-              </Paper>
-            ) : null
-          }
+        
+          <ClusterStatus
+            cluster={ currentClusterData }
+            kubeConfigExists={ status.kubeConfigExists }
+            onDeleteCluster={ () => cluster.deleteCluster(currentClusterData.settings.name) }
+            onCleanupCluster={ () => cluster.cleanupCluster(currentClusterData.settings.name) }
+            onDeployCluster={ () => cluster.deployCluster() }
+            onUndeployCluster={ () => cluster.undeployCluster() }
+            downloadKubeConfig={ () => cluster.downloadKubeConfig() }
+            onOpenDashboard={ () => cluster.openDashboard() }
+            onOpenMonitoring={ () => cluster.openMonitoring() }
+          />
           
           <Paper
             className={ classes.paper }

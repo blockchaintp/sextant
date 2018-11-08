@@ -46,43 +46,32 @@ class ClusterResources extends React.Component {
     const { classes, phase } = this.props
 
     if(phase != 'deployed') return null
+    if(!this.hasXoDemo()) return null
       
     return (
-      <div className={ classes.buttonRow }>
-        <Button 
-          className={ classes.button }
-          color="primary" 
-          variant="contained"
-          size="small"
-          autoFocus
-          onClick={ () => this.props.onOpenDashboard() }
+      <div>
+        <Typography
+          variant='h6'
+          className={ classes.title }
         >
-          Open Dashboard
-        </Button>
-        <Button 
-          className={ classes.button }
-          color="primary" 
-          variant="contained"
-          size="small"
-          autoFocus
-          onClick={ () => this.props.onOpenMonitoring() }
-        >
-          Open Monitoring
-        </Button>
-        {
-          this.hasXoDemo() ? (
-            <Button 
-              className={ classes.button }
-              color="primary" 
-              variant="contained"
-              size="small"
-              autoFocus
-              onClick={ () => this.props.onOpenXoDemo() }
-            >
-              Open XO Demo
-            </Button>
-          ) : null
-        }
+          Applications
+        </Typography>
+        <div className={ classes.buttonRow }>
+          {
+            this.hasXoDemo() ? (
+              <Button 
+                className={ classes.button }
+                color="primary" 
+                variant="contained"
+                size="small"
+                autoFocus
+                onClick={ () => this.props.onOpenXoDemo() }
+              >
+                Open XO Demo
+              </Button>
+            ) : null
+          }
+        </div>
       </div>
     )
   }
