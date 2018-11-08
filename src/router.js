@@ -18,6 +18,7 @@ import UserList from './pages/UserList'
 import UserAdd from './pages/UserAdd'
 import UserEdit from './pages/UserEdit'
 import Login from './pages/Login'
+import RemoteSetup from './pages/RemoteSetup'
 
 /*
 
@@ -73,6 +74,11 @@ export const routes = {
     path: '/users/edit/:username',
     component: UserEdit,
   },
+  'PAGE_REMOTE_SETUP': {
+    path: '/remote_setup',
+    component: RemoteSetup,
+    displayWithNoAuth: true,
+  },
   /*
   'PAGE_CLUSTER_ADD_EXISTING': {
     path: '/clusters/add/existing',
@@ -95,7 +101,7 @@ class AppRouter extends React.Component {
 
   componentDidMount(){
     this.props.config.loadValues()
-    this.props.auth.loadStatus()
+    //this.props.auth.loadStatus()
   }
 
   render() {
@@ -108,7 +114,19 @@ class AppRouter extends React.Component {
     const MainLayoutComponent = routeInfo && routeInfo.mainLayout ? routeInfo.mainLayout : MainLayout
     const PageLayout = routeInfo && routeInfo.pageLayout ? routeInfo.pageLayout : null
 
-    if(!config.loaded || !auth.loaded) {
+    let displayLoading = true
+
+    if(config.loaded && auth.loaded) {
+      displayLoading = false
+    }
+    // in the case of remote setup - we can't load the user data yet
+    // because we have no remote setup
+    // display the remote setup page despite not having loaded auth status
+    else if(config.loaded && routeInfo.displayWithNoAuth) {
+      displayLoading = false
+    }
+
+    if(displayLoading) {
       return (
         <MainLayoutComponent>
           <Loading />

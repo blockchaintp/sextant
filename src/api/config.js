@@ -29,4 +29,12 @@ export default {
     })
   },
 
+  setupRemote(payload) {
+    return new Promise(function(resolve, reject){
+      axios.post(url('/setup_remote'), payload)
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
 }
