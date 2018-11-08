@@ -136,9 +136,7 @@ const SAGAS = sagaErrorWrapper({
 
     try{
       const response = yield call(configApi.setupRemote, payload)
-
-      console.log('-------------------------------------------');
-      console.log('remote is setup')
+      yield put(auth.actions.loadStatus())
     }
     catch(err){
       yield put(snackbar.actions.setError(err))
