@@ -86,7 +86,7 @@ class SideMenu extends React.Component {
         button 
         key='support'
         onClick={ () => {
-          window.open('https://blockchaintp.com/sextant/support')
+          window.open('https://blockchaintp.com/sextant/aws-marketplace/support')
         }}
       >
         <ListItemText primary="Support" />

@@ -313,103 +313,6 @@ class DeploymentForm extends React.Component {
 
         <Typography
           variant='subheading'
-        >
-          RBAC
-        </Typography>
-
-        <Grid
-          container
-          spacing={ 24 }
-        >
-          <Grid
-            item
-            xs={12}
-            md={6}
-          >
-            <Field
-              row
-              compact
-              name="rbac_enabled"
-              component={ Radio }
-              options={ activatedOptions }
-              description="Should the RBAC transaction processor be deployed?"
-              validate={ validators.required }
-              disabled={ this.props.submitting }
-            />
-          </Grid>
-
-          {
-            formValues.rbac_enabled == 'true' ? (
-              <Grid
-                item
-                xs={12}
-                md={6}
-              >
-                <Field
-                  name="rbac_secret_key"
-                  type="text"
-                  component={ GenerateTextField }
-                  generateValue={ randomValues.rbacSecretKey }
-                  label="Secret Key"
-                  description="The RBAC secret key (20 chars, alphanumeric)"
-                  validate={ validators.deployment.rbac_secret_key }
-                  disabled={ this.props.submitting }
-                />
-              </Grid>
-            ) : null
-          }
-          
-
-        </Grid>
-
-        {
-          formValues.rbac_enabled == 'true' ? (
-            <Grid
-              container
-              spacing={ 24 }
-            >
-              <Grid
-                item
-                xs={12}
-                md={6}
-              >
-                <Field
-                  name="rbac_aes_key"
-                  type="text"
-                  component={ GenerateTextField }
-                  generateValue={ randomValues.rbacAesKey }
-                  label="Secret Key"
-                  description="The RBAC AES key (32 chars, hexadecimal)"
-                  validate={ validators.deployment.rbac_aes_key }
-                  disabled={ this.props.submitting }
-                />
-              </Grid>
-
-              <Grid
-                item
-                xs={12}
-                md={6}
-              >
-                <Field
-                  name="rbac_batcher_key"
-                  type="text"
-                  component={ GenerateTextField }
-                  generateValue={ randomValues.rbacBatcherKey }
-                  label="Secret Key"
-                  description="The RBAC batcher key (64 chars, hexadecimal)"
-                  validate={ validators.deployment.rbac_batcher_key }
-                  disabled={ this.props.submitting }
-                />
-              </Grid>
-
-            </Grid>
-          ) : null
-        }
-
-        <Divider className={ classes.divider } />
-
-        <Typography
-          variant='subheading'
           className={ classes.marginBottom }
         >
           Custom Transaction Processors
@@ -497,8 +400,34 @@ class DeploymentForm extends React.Component {
           variant='subheading'
           className={ classes.marginBottom }
         >
-          Demo Transaction Processors
+          Additional Transaction Processors
         </Typography>
+
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              row
+              compact
+              name="rbac_enabled"
+              label="RBAC"
+              component={ Radio }
+              options={ activatedOptions }
+              description="Should the RBAC transaction processor be deployed?"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+        </Grid>
+
 
         <Grid
           container
@@ -644,3 +573,76 @@ DeploymentForm.propTypes = {
 }
 
 export default withStyles(styles)(DeploymentForm)
+
+
+/*
+
+  Here are the additional RBAC things
+  
+    {
+      formValues.rbac_enabled == 'true' ? (
+        <Grid
+          item
+          xs={12}
+          md={6}
+        >
+          <Field
+            name="rbac_secret_key"
+            type="text"
+            component={ GenerateTextField }
+            generateValue={ randomValues.rbacSecretKey }
+            label="Secret Key"
+            description="The RBAC secret key (20 chars, alphanumeric)"
+            validate={ validators.deployment.rbac_secret_key }
+            disabled={ this.props.submitting }
+          />
+        </Grid>
+      ) : null
+    }
+
+
+        {
+          formValues.rbac_enabled == 'true' ? (
+            <Grid
+              container
+              spacing={ 24 }
+            >
+              <Grid
+                item
+                xs={12}
+                md={6}
+              >
+                <Field
+                  name="rbac_aes_key"
+                  type="text"
+                  component={ GenerateTextField }
+                  generateValue={ randomValues.rbacAesKey }
+                  label="Secret Key"
+                  description="The RBAC AES key (32 chars, hexadecimal)"
+                  validate={ validators.deployment.rbac_aes_key }
+                  disabled={ this.props.submitting }
+                />
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                md={6}
+              >
+                <Field
+                  name="rbac_batcher_key"
+                  type="text"
+                  component={ GenerateTextField }
+                  generateValue={ randomValues.rbacBatcherKey }
+                  label="Secret Key"
+                  description="The RBAC batcher key (64 chars, hexadecimal)"
+                  validate={ validators.deployment.rbac_batcher_key }
+                  disabled={ this.props.submitting }
+                />
+              </Grid>
+
+            </Grid>
+          ) : null
+        }
+  
+*/

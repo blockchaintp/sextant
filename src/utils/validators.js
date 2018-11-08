@@ -116,8 +116,14 @@ const optionalWrapper = (validators) => (value, allValues, props) => {
 const cluster = {
   all: (values) => {
     const errors = {}
-    if(values.master_zones.length > values.master_count) {
-      errors.master_zones = `Must be ${values.master_count} or less zones`
+    if(values.master_zones.length != values.master_count) {
+      errors.master_zones = `The number of master zones must equal the number of masters (${values.master_count})`
+    }
+    if(values.node_count < 3) {
+      errors.node_count = `The number of nodes must be greater than or equal to 3`
+    }
+    if(values.node_zones.length < 3) {
+      errors.node_zones = `The number of node zones must be greater than or equal to 3`
     }
     if(values.node_zones.length > values.node_count) {
       errors.node_zones = `Must be ${values.node_count} or less zones`

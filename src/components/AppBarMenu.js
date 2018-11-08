@@ -65,7 +65,7 @@ class AppBarMenu extends React.Component {
       <MenuItem 
         key='support'
         onClick={ () => {
-          window.open('https://blockchaintp.com/sextant/support')
+          window.open('https://blockchaintp.com/sextant/aws-marketplace/support')
         }}
       >
         Support

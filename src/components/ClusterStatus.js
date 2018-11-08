@@ -101,6 +101,26 @@ class ClusterStatus extends React.Component {
           className={ classes.progress }
           size={ 20 }
         />
+        <Button 
+          className={ classes.button }
+          color="secondary" 
+          variant="contained"
+          size="small"
+          autoFocus
+          onClick={ () => this.onUndeployClick() }
+        >
+          Undeploy Sawtooth
+        </Button>
+        <Button 
+          className={ classes.button }
+          color="secondary" 
+          variant="contained"
+          size="small"
+          autoFocus
+          onClick={ () => this.onDeleteClick() }
+        >
+          Delete Cluster
+        </Button>
       </div>
     )
   }

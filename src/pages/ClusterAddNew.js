@@ -64,7 +64,7 @@ const DEFAULT_DATA = {
 
 @reduxForm({
   form: 'clusterForm',
-  initialValues: TEST_DATA,
+  initialValues: DEFAULT_DATA,
   validate: validators.cluster.all,
 })
 @connectStore({
