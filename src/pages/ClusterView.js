@@ -215,7 +215,7 @@ class ClusterView extends React.Component {
 
           
           {
-            status.kubeConfigExists || status.kopsConfigExists ? (
+            status.kubeConfigExists ? (
               <Paper
                 className={ classes.paper }
               >
@@ -228,9 +228,7 @@ class ClusterView extends React.Component {
 
                 <ClusterAccess
                   kubeConfigExists={ status.kubeConfigExists }
-                  kopsConfigExists={ status.kopsConfigExists }
                   downloadKubeConfig={ () => cluster.downloadKubeConfig() }
-                  downloadKopsConfig={ () => cluster.downloadKopsConfig() }
                 />
 
               </Paper>
