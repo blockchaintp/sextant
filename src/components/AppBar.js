@@ -43,7 +43,7 @@ class AppBarComponent extends React.Component {
               user={ user }
               onLogout={ onLogout }
             />
-            <img src="/white-outline-logo.png" className={ classes.logo } />
+            <img src="/sextant-logo-white.svg" className={ classes.logo } />
             <Typography variant="h6" color="inherit" className={classes.flex}>
               { this.props.title }
             </Typography>
