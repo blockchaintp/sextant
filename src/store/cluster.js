@@ -99,6 +99,10 @@ const actions = {
     type: 'CLUSTER_SET_DATA',
     data,
   }),
+  setClusterStatus: (data) => ({
+    type: 'CLUSTER_SET_STATUS',
+    data,
+  }),
   clusterListLoop: () => ({
     type: 'CLUSTER_LIST_LOOP',
   }),
@@ -188,6 +192,9 @@ const mutations = {
   CLUSTER_SET_DATA: (state, action) => {
     state.currentClusterData = action.data
   },
+  CLUSTER_SET_STATUS: (state, action) => {
+    state.currentClusterData.status = action.data
+  },
   CLUSTER_SET_INFO: (state, action) => {
     state.clusterInfo = action.data
   },
@@ -224,6 +231,7 @@ function* clusterStatusLoop(clusterId, loopWhileInPhase) {
       try{
         const response = yield call(clusterApi.status, clusterId)
         const { phase } = response.data
+        yield put(actions.setClusterStatus(response.data))
         if(phase != loopWhileInPhase) {
           yield put(actions.loadClusterData())
           yield put(actions.stopClusterStatusLoop())
