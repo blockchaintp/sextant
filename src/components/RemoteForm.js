@@ -39,6 +39,12 @@ const styles = theme => ({
   },
 })
 
+
+const bucketNameValidator = validators.wrapper([
+  validators.required,
+  validators.alphaNumericNoSpaces,
+])
+
 class RemoteForm extends React.Component {
 
   render() {
@@ -53,7 +59,7 @@ class RemoteForm extends React.Component {
           component={ TextField }
           label="Name"
           description="The name of the S3 bucket to use for sextant storage"
-          validate={ validators.required }
+          validate={ bucketNameValidator }
           disabled={ this.props.submitting }
         />
 

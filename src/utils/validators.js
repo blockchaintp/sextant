@@ -31,6 +31,10 @@ const alphaNumeric = value =>
   value && /[^a-zA-Z0-9 ]/i.test(value)
     ? 'Only alphanumeric characters'
     : undefined
+const alphaNumericNoSpaces = value =>
+  value && /[^a-zA-Z0-9-]/i.test(value)
+    ? 'Only alphanumeric characters'
+    : undefined
 const phone = value =>
   value && !/^(0|[1-9][0-9]{9})$/i.test(value)
     ? 'Invalid phone number, must be 10 digits'
@@ -220,6 +224,7 @@ const validators = {
   maxValue,
   email,
   alphaNumeric,
+  alphaNumericNoSpaces,
   phone,
   numeric,
   integer,
