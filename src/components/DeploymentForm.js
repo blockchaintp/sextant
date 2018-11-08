@@ -41,6 +41,9 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit,
   },
+  marginBottom: {
+    marginBottom: theme.spacing.unit * 2,
+  },
   tpAddButton: {
     marginTop: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 2,
@@ -60,6 +63,14 @@ const activatedOptions = [{
 },{
   value: 'false',
   title: 'Disabled'
+}]
+
+const consensusOptions = [{
+  value: 'true',
+  title: 'Poet'
+},{
+  value: 'false',
+  title: 'Dev Mode'
 }]
 
 const peeringOptions = [{
@@ -177,6 +188,13 @@ class DeploymentForm extends React.Component {
             />
           </Grid>
 
+        </Grid>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+
           <Grid
             item
             xs={12}
@@ -205,12 +223,13 @@ class DeploymentForm extends React.Component {
               compact
               name="genesis_enabled"
               component={ Radio }
+              label="Genesis Block"
               options={ activatedOptions }
               description="Should this network create the genesis block?"
               validate={ validators.required }
               disabled={ this.props.submitting }
             />
-	  </Grid>
+	        </Grid>
 
         </Grid>
 
@@ -264,7 +283,7 @@ class DeploymentForm extends React.Component {
         <Typography
           variant='subheading'
         >
-          Poet
+          Consensus Algorithm
         </Typography>
 
         <Grid
@@ -281,7 +300,7 @@ class DeploymentForm extends React.Component {
               compact
               name="poet_enabled"
               component={ Radio }
-              options={ activatedOptions }
+              options={ consensusOptions }
               description="Should the POET consensus protocol be active on this network?"
               validate={ validators.required }
               disabled={ this.props.submitting }
@@ -387,105 +406,11 @@ class DeploymentForm extends React.Component {
           ) : null
         }
 
-        
         <Divider className={ classes.divider } />
 
         <Typography
           variant='subheading'
-        >
-          XO Transaction Processor
-        </Typography>
-
-        <Grid
-          container
-          spacing={ 24 }
-        >
-          <Grid
-            item
-            xs={12}
-            md={6}
-          >
-            <Field
-              row
-              compact
-              name="xo_enabled"
-              component={ Radio }
-              options={ activatedOptions }
-              description="Should the XO transaction processor be deployed?"
-              validate={ validators.required }
-              disabled={ this.props.submitting }
-            />
-          </Grid>
-
-        </Grid>
-
-
-        <Divider className={ classes.divider } />
-
-        <Typography
-          variant='subheading'
-        >
-          Smallbank Transaction Processor
-        </Typography>
-
-        <Grid
-          container
-          spacing={ 24 }
-        >
-          <Grid
-            item
-            xs={12}
-            md={6}
-          >
-            <Field
-              row
-              compact
-              name="smallbank_enabled"
-              component={ Radio }
-              options={ activatedOptions }
-              description="Should the Smallbank transaction processor be deployed?"
-              validate={ validators.required }
-              disabled={ this.props.submitting }
-            />
-          </Grid>
-
-        </Grid>
-
-        <Divider className={ classes.divider } />
-
-        <Typography
-          variant='subheading'
-        >
-          Simple Transaction Processor
-        </Typography>
-
-        <Grid
-          container
-          spacing={ 24 }
-        >
-          <Grid
-            item
-            xs={12}
-            md={6}
-          >
-            <Field
-              row
-              compact
-              name="simple_enabled"
-              component={ Radio }
-              options={ activatedOptions }
-              description="Should the Simple transaction processor be deployed?"
-              validate={ validators.required }
-              disabled={ this.props.submitting }
-            />
-          </Grid>
-
-        </Grid>
-
-        <Divider className={ classes.divider } />
-
-        <Typography
-          variant='subheading'
+          className={ classes.marginBottom }
         >
           Custom Transaction Processors
         </Typography>
@@ -561,6 +486,87 @@ class DeploymentForm extends React.Component {
             <GenericTableSimple
               fields={ customTpFields }
               data={ customTpData }
+            />
+          </Grid>
+
+        </Grid>
+
+        <Divider className={ classes.divider } />
+
+        <Typography
+          variant='subheading'
+          className={ classes.marginBottom }
+        >
+          Demo Transaction Processors
+        </Typography>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              row
+              compact
+              name="xo_enabled"
+              component={ Radio }
+              label="XO Transaction Processor"
+              options={ activatedOptions }
+              description="Should the XO transaction processor be deployed?"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+        </Grid>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              row
+              compact
+              name="smallbank_enabled"
+              component={ Radio }
+              label="Smallbank Transaction Processor"
+              options={ activatedOptions }
+              description="Should the Smallbank transaction processor be deployed?"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
+            />
+          </Grid>
+
+        </Grid>
+
+        <Grid
+          container
+          spacing={ 24 }
+        >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Field
+              row
+              compact
+              name="simple_enabled"
+              component={ Radio }
+              label="Simple Transaction Processor"
+              options={ activatedOptions }
+              description="Should the Simple transaction processor be deployed?"
+              validate={ validators.required }
+              disabled={ this.props.submitting }
             />
           </Grid>
 
