@@ -25,7 +25,7 @@ const styles = theme => ({
   content: {
     height: 'calc(100% - 64px)',
   },
-  contentPaddingBottom: {
+  contentPadding: {
     height: '60px',
   }
 })
@@ -47,9 +47,10 @@ class Layout extends React.Component {
           onLogout={ auth.logout }
         />
         <div className={ classes.content }>
+          <div className={ classes.contentPadding }>
+          </div>
           { this.props.children }
-          <div className={ classes.contentPaddingBottom }>
-
+          <div className={ classes.contentPadding }>
           </div>
         </div>
         <AppFooter />
