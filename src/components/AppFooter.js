@@ -43,7 +43,7 @@ class AppFooterComponent extends React.Component {
       <AppBar position="fixed" color="default" className={classes.root}>
         <Toolbar>
           <Typography>
-            &copy; 2018 <a href="https://blockchaintp.com/" target="_blank">Blockchain Technology Partners</a>
+            &copy; 2018 <a href="https://blockchaintp.com/" target="_blank">Blockchain Technology Partners</a> : <a href="https://blockchaintp.com/sextant/support" target="_blank">Support page</a>
           </Typography>
         </Toolbar>
       </AppBar>

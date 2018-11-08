@@ -81,6 +81,18 @@ class SideMenu extends React.Component {
       </ListItem>
     )
 
+    items.push(
+      <ListItem 
+        button 
+        key='support'
+        onClick={ () => {
+          window.open('https://blockchaintp.com/sextant/support')
+        }}
+      >
+        <ListItemText primary="Support" />
+      </ListItem>
+    )
+
     return items
   }
 
