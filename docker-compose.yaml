@@ -7,3 +7,8 @@ services:
       context: .
       dockerfile: Dockerfile.multistage
     image: sextant:${ISOLATION_ID}
+  router:
+    build:
+      context: .
+      dockerfile: Dockerfile.noxy
+    image: noxy:${ISOLATION_ID} 

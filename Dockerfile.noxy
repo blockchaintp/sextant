@@ -1,0 +1,5 @@
+FROM nginx:alpine
+MAINTAINER kaiyadavenport@gmail.com
+RUN apk update && apk upgrade
+COPY ./noxy.sh /run.sh
+ENTRYPOINT ["bash", "/run.sh"]
