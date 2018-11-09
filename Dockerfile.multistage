@@ -15,6 +15,6 @@ MAINTAINER kai@blockchaintp.com
 COPY ./nginx.conf /etc/nginx/nginx.template
 COPY ./nginx_entry.sh /nginx_entry.sh
 COPY --from=build-env /app/frontend/dist /www
-RUN apk update 
-RUN apk upgrade
+RUN apt-get update -y && apt-get upgrade -y
+
 ENTRYPOINT ["bash", "nginx_entry.sh"] 
