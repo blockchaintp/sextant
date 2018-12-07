@@ -1,31 +1,23 @@
 
 pipeline {
     agent any
+    options {
+	timestamps()
+    }
+    
+    environment {
+	ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
+	ORGANIZATION=sh(returnStdout: true, script: 'basename `dirname $GIT_URL`').trim()
+	VERSION=sh(returnStdout: true, script: 'git describe |cut -c 2-').trim()
+	GIT_URL=echo scm.GIT_URL
+    }
+    
     stages {
-	stage ("Environment") {
-	    when { expression { not { return env.ISOLATION_ID } } }
-	    environment {
-		ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
-	    }
-	}
 	
-
-
-	stage("Clone Repo") {
-	    steps {
-		checkout scm
-
-	    }
-	    environment {
-		VERSION=sh(returnStdout: true, script: 'git describe |cut -c 2-').trim()
-		GIT_URL=echo scm.GIT_URL
-		ORGANIZATION=sh(returnStdout: true, script: 'basename `dirname $GIT_URL`').trim()
-	    }
-
-	}
  	stage("Clean All Previous Images") {
 	    steps {
-		sh "build/clean_images ${ISOLATION_ID}"
+		sh "docker rmi $(docker images --filter reference='*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
+		sh "docker rmi $(docker images --filter reference='*/*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
 	    }
 	} 
 	
@@ -51,15 +43,13 @@ pipeline {
 	} 
 	
 	// Archive Build artifacts
-	
-	
-
-	
     }
     // Post Pipeline Cleanup    
     post {
 	always {
-	    sh "build/clean_images ${ISOLATION_ID}"
+	    sh "docker rmi $(docker images --filter reference='*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
+	    sh "docker rmi $(docker images --filter reference='*/*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
+	    
 	}
     }	  	
     
