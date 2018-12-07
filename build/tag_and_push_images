@@ -9,7 +9,7 @@ else
 fi
 
 
-for img in $(docker images --filter reference=*:${ISOLATION_ID} --format {{.Repository}}) ; do \ 
+for img in $(docker images --filter reference=*:${ISOLATION_ID} --format {{.Repository}}) ; do 
 	docker tag $img:$ISOLATION_ID $ORGANIZATION/$img:$TAG
 	docker push $ORGANIZATION/$img:$TAG
 done
