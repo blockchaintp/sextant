@@ -17,7 +17,7 @@ pipeline {
 
 	    }
 	    environment {
-		VERSION=sh(returnStdout: true, script: 'get describe |cut -c 2-').trim()
+		VERSION=sh(returnStdout: true, script: 'git describe |cut -c 2-').trim()
 		GIT_URL=echo scm.GIT_URL
 		ORGANIZATION=sh(returnStdout: true, script: 'basename `dirname $GIT_URL`').trim()
 	    }
