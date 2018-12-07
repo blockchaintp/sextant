@@ -7,9 +7,8 @@ node {
 	}
 	
 	
-	env.GIT_URL=echo scm.GIT_URL
 	env.ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
-	env.ORGANIZATION=sh(returnStdout: true, script: 'basename `dirname $GIT_URL`').trim()
+	env.ORGANIZATION="blockchaintp"
 	env.VERSION=sh(returnStdout: true, script: 'git describe |cut -c 2-').trim()
 
 	
