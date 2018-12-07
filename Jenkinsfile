@@ -1,10 +1,5 @@
 
-pipeline {
-    agent any	    
-    options {
-	timestamps()
-    }
-
+node {
     ws("workspace/${env.BUILD_TAG}") {
 	stage("Clone Repo") {
 	    checkout scm
