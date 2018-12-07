@@ -14,8 +14,8 @@ node {
 	
 	
 	stage("Clean All Previous Images") {
-	    sh "docker rmi \$(docker images --filter reference='*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
-	    sh "docker rmi \$(docker images --filter reference='*/*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
+	    sh "docker rmi \$(docker images --filter reference='*:${ISOLATION_ID}' --format '{{.Repository}}:{{.Tag}}')"
+	    sh "docker rmi \$(docker images --filter reference='*/*:${ISOLATION_ID}' --format '{{.Repository}}:{{.Tag}}')"
 	} 
 	
 	// Build 
