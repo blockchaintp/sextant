@@ -14,17 +14,13 @@ node {
 	
 	
 	stage("Clean All Previous Images") {
-	    steps {
-		sh "docker rmi \$(docker images --filter reference='*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
-		sh "docker rmi \$(docker images --filter reference='*/*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
-	    }
+	    sh "docker rmi \$(docker images --filter reference='*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
+	    sh "docker rmi \$(docker images --filter reference='*/*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
 	} 
 	
 	// Build 
 	stage("Build Sextant") {
-	    steps {
-		sh "docker-compose -f docker-compose.yaml build"
-	    }
+	    sh "docker-compose -f docker-compose.yaml build"
 	}
 	
 	// Run the tests
@@ -33,11 +29,9 @@ node {
 	
 	// Push Docker images
 	stage("Tag Push images") {
-	    steps {
-		withCredentials([usernamePassword(credentialsId: 'dockerHubID', usernameVariable: 'DOCKER_USER',passwordVariable: 'DOCKER_PASSWD')]) {
-		    sh "docker login -u $DOCKER_USER --password=$DOCKER_PASSWD"
-		    sh "build/tag_and_push_images ${ISOLATION_ID} ${ORGANIZATION} ${VERSION}"	
-		}
+	    withCredentials([usernamePassword(credentialsId: 'dockerHubID', usernameVariable: 'DOCKER_USER',passwordVariable: 'DOCKER_PASSWD')]) {
+		sh "docker login -u $DOCKER_USER --password=$DOCKER_PASSWD"
+		sh "build/tag_and_push_images ${ISOLATION_ID} ${ORGANIZATION} ${VERSION}"	
 	    }
 	} 
 	
