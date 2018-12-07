@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 if [ -z "$1" -o -z "$2" -o -z "$3" ]; then 
 	echo "SYNTAX: $0 <isolation_id> <organization> <tag>"
