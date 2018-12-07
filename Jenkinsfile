@@ -1,20 +1,25 @@
 
 pipeline {
-    agent any
+    agent àny	    
     options {
 	timestamps()
     }
-    
-    environment {
-	ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
-	ORGANIZATION=sh(returnStdout: true, script: 'basename `dirname $GIT_URL`').trim()
-	VERSION=sh(returnStdout: true, script: 'git describe |cut -c 2-').trim()
-	GIT_URL=echo scm.GIT_URL
-    }
-    
-    stages {
+
+    ws("workspace/${env.BUILD_TAG}") {
+	stage("Clone Repo") {
+	    checkout scm
+	    sh "git fetch --tag"
+	}
 	
- 	stage("Clean All Previous Images") {
+	
+	env.GIT_URL=echo scm.GIT_URL
+	env.ISOLATION_ID = sh(returnStdout: true, script: 'printf $BUILD_TAG | sed -e \'s/\\//-/g\'| sha256sum | cut -c1-64').trim()
+	env.ORGANIZATION=sh(returnStdout: true, script: 'basename `dirname $GIT_URL`').trim()
+	env.VERSION=sh(returnStdout: true, script: 'git describe |cut -c 2-').trim()
+
+	
+	
+	stage("Clean All Previous Images") {
 	    steps {
 		sh "docker rmi \$(docker images --filter reference='*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
 		sh "docker rmi \$(docker images --filter reference='*/*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
@@ -51,6 +56,6 @@ pipeline {
 	    sh "docker rmi \$(docker images --filter reference='*/*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
 	    
 	}
-    }	  	
-    
+    }
 }
+
