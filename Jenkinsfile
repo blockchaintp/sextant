@@ -38,16 +38,18 @@ node {
 		sh "build/tag_and_push_images ${ISOLATION_ID} ${ORGANIZATION} ${VERSION}"	
 	    }
 	} 
-	
+
+	stage("Clean Up") {
+	    sh '''
+                for img in $(docker images --filter reference='*:${ISOLATION_ID}' --format '{{.Repository}}:{{.Tag}}') \
+                           $(docker images --filter reference='*/*:${ISOLATION_ID}' --format '{{.Repository}}:{{.Tag}}') ; do
+                    docker rmi $img
+                done
+            '''
+	}
+	    
 	// Archive Build artifacts
     }
-    // Post Pipeline Cleanup    
-    post {
-	always {
-	    sh "docker rmi \$(docker images --filter reference='*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
-	    sh "docker rmi \$(docker images --filter reference='*/*:${ISOLATION_ID} --format '{{.Repository}}:{{.Tag}})"
-	    
-	}
-    }
+    
 }
 
