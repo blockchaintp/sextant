@@ -27,6 +27,10 @@ const email = value =>
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
     ? 'Invalid email address'
     : undefined
+const password => value => 
+  value && !/^(?=.*[A-Z].*[A-Z])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,}$/.test(value)
+    ? 'Password must be at least 8 characters long and contain at least two uppercase characters, at least three lowercase characters and at least 2 numbers'
+    : undefined
 const alphaNumeric = value =>
   value && /[^a-zA-Z0-9 ]/i.test(value)
     ? 'Only alphanumeric characters'
@@ -211,11 +215,11 @@ const user = {
   ]),
   optionalPassword: optionalWrapper([
     required,
-    minLength(6),
+    password,
   ]),
   requiredPassword: wrapper([
     required,
-    minLength(6),
+    password,
   ]),
 }
 
