@@ -212,12 +212,10 @@ const user = {
   optionalPassword: optionalWrapper([
     required,
     minLength(6),
-    alphaNumeric,
   ]),
   requiredPassword: wrapper([
     required,
     minLength(6),
-    alphaNumeric,
   ]),
 }
 
