@@ -32,8 +32,8 @@ const alphaNumeric = value =>
     ? 'Only alphanumeric characters'
     : undefined
 const alphaNumericNoSpaces = value =>
-  value && /[^a-zA-Z0-9-]/i.test(value)
-    ? 'Only alphanumeric characters'
+  value && /[^a-zA-Z0-9-_]/i.test(value)
+    ? 'Only alphanumeric characters, dashes or underscores'
     : undefined
 const phone = value =>
   value && !/^(0|[1-9][0-9]{9})$/i.test(value)
