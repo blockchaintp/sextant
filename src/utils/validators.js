@@ -207,7 +207,7 @@ const user = {
   username: wrapper([
     required,
     minLength(2),
-    alphaNumeric,
+    alphaNumericNoSpaces,
   ]),
   optionalPassword: optionalWrapper([
     required,
