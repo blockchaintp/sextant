@@ -91,7 +91,7 @@ const custom_tp_name = value => {
 
 const custom_tp_image = value => {
   if(!value) return undefined
-  if(!value.match(/^[\w\/]+(:\w+)?$/)) return 'Invalid image format'
+  if(!value.match(/^[-\w\/]+(:[-\w\.]+)?$/)) return 'Invalid image format'
   return undefined
 }
 
