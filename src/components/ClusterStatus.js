@@ -97,8 +97,6 @@ class ClusterStatus extends React.Component {
     const { cluster, classes } = this.props
     const { settings, status } = cluster
 
-    if(status.phase != 'deployed') return null
-
     return (
       <Button 
         className={ classes.button }
@@ -233,6 +231,7 @@ class ClusterStatus extends React.Component {
         </Typography>
 
         { this.getKubeConfigDownload() }
+        { this.getDashboardButton() }
 
         <Button 
           className={ classes.button }
