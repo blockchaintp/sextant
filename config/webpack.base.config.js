@@ -10,6 +10,11 @@ module.exports = {
     publicPath: '/',
   },
   devtool: 'inline-module-source-map',
+  devServer: {
+    watchOptions: {
+      poll: true
+    }
+  },
   module: {
     rules: [
       {
