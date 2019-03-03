@@ -163,7 +163,7 @@ class DeploymentForm extends React.Component {
       <div className={classes.root}>
         
         <Typography
-          variant='subheading'
+          variant='subtitle1'
         >
           Network
         </Typography>
@@ -236,7 +236,7 @@ class DeploymentForm extends React.Component {
         <Divider className={ classes.divider } />
 
         <Typography
-          variant='subheading'
+          variant='subtitle1'
         >
           External Seeds
         </Typography>
@@ -281,7 +281,7 @@ class DeploymentForm extends React.Component {
         <Divider className={ classes.divider } />
 
         <Typography
-          variant='subheading'
+          variant='subtitle1'
         >
           Consensus Algorithm
         </Typography>
@@ -312,7 +312,7 @@ class DeploymentForm extends React.Component {
         <Divider className={ classes.divider } />
 
         <Typography
-          variant='subheading'
+          variant='subtitle1'
           className={ classes.marginBottom }
         >
           Custom Transaction Processors
@@ -397,7 +397,7 @@ class DeploymentForm extends React.Component {
         <Divider className={ classes.divider } />
 
         <Typography
-          variant='subheading'
+          variant='subtitle1'
           className={ classes.marginBottom }
         >
           Additional Transaction Processors

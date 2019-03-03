@@ -34,7 +34,7 @@ class Loading extends React.Component {
               color={ this.props.color }
             />
             <Typography
-              variant='subheading'
+              variant='subtitle1'
               color={ this.props.color }
             >
               { this.props.message }
@@ -55,7 +55,7 @@ Loading.propTypes = {
 }
 
 Loading.defaultProps = {
-  variant: 'subheading',
+  variant: 'subtitle1',
   color: 'primary',
   message: 'loading',
 }

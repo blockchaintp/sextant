@@ -102,7 +102,7 @@ class ClusterForm extends React.Component {
         />
         
         <Typography
-          variant='subheading'
+          variant='subtitle1'
         >
           Name & Domain
         </Typography>
@@ -149,7 +149,7 @@ class ClusterForm extends React.Component {
         <Divider className={ classes.divider } />
 
         <Typography
-          variant='subheading'
+          variant='subtitle1'
         >
           Cluster Size
         </Typography>
@@ -196,7 +196,7 @@ class ClusterForm extends React.Component {
         <Divider className={ classes.divider } />
 
         <Typography
-          variant='subheading'
+          variant='subtitle1'
         >
           Instance Types
         </Typography>
@@ -242,7 +242,7 @@ class ClusterForm extends React.Component {
         <Divider className={ classes.divider } />
 
         <Typography
-          variant='subheading'
+          variant='subtitle1'
         >
           Region
         </Typography>
@@ -281,7 +281,7 @@ class ClusterForm extends React.Component {
         <Divider className={ classes.divider } />
 
         <Typography
-          variant='subheading'
+          variant='subtitle1'
         >
           Zones
         </Typography>
@@ -333,7 +333,7 @@ class ClusterForm extends React.Component {
         <Divider className={ classes.divider } />
 
         <Typography
-          variant='subheading'
+          variant='subtitle1'
         >
           Networking
         </Typography>
@@ -380,7 +380,7 @@ class ClusterForm extends React.Component {
         <Divider className={ classes.divider } />
 
         <Typography
-          variant='subheading'
+          variant='subtitle1'
         >
           Access Credentials
         </Typography>
@@ -505,7 +505,7 @@ export default withStyles(styles)(ClusterForm)
         <Divider className={ classes.divider } />
 
         <Typography
-          variant='subheading'
+          variant='subtitle1'
         >
           Topology
         </Typography>

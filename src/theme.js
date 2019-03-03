@@ -7,6 +7,9 @@ const primary = convertHexToRGB('#3D4797')
 const secondary = convertHexToRGB('#D81C38')
 
 const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
   palette: {
     primary: {
       light: lighten(primary, 0.2),

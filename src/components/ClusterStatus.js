@@ -154,7 +154,7 @@ class ClusterStatus extends React.Component {
     return (
       <div>
         <Typography
-          variant='subheading'
+          variant='subtitle1'
           className={ classes.statusText }
         >
           Creating (this can take between 5 and 10 minutes)...
@@ -173,7 +173,7 @@ class ClusterStatus extends React.Component {
     return (
       <div>
         <Typography
-          variant='subheading'
+          variant='subtitle1'
           className={ classes.statusText }
         >
           Deploying
@@ -203,7 +203,7 @@ class ClusterStatus extends React.Component {
     return (
       <div>
         <Typography
-          variant='subheading'
+          variant='subtitle1'
           className={ classes.statusText }
         >
           Undeploying
@@ -226,7 +226,7 @@ class ClusterStatus extends React.Component {
           onConfirm={ this.onDeleteConfirm.bind(this) }
         />
         <Typography
-          variant='subheading'
+          variant='subtitle1'
           className={ classes.statusText }
         >
           Created
@@ -263,7 +263,7 @@ class ClusterStatus extends React.Component {
           onConfirm={ this.onUndeployConfirm.bind(this) }
         />
         <Typography
-          variant='subheading'
+          variant='subtitle1'
           className={ classes.statusText }
         >
           Deployed
@@ -291,7 +291,7 @@ class ClusterStatus extends React.Component {
     return (
       <div>
         <Typography
-          variant='subheading'
+          variant='subtitle1'
           className={ classes.statusText }
         >
           Deleting...
@@ -309,7 +309,7 @@ class ClusterStatus extends React.Component {
     return (
       <div>
         <Typography
-          variant='subheading'
+          variant='subtitle1'
           className={ classes.statusText }
         >
           Deleted
@@ -345,7 +345,7 @@ class ClusterStatus extends React.Component {
           onConfirm={ this.onUndeployConfirm.bind(this) }
         />
         <Typography
-          variant='subheading'
+          variant='subtitle1'
           className={ classes.errorText }
         >
           Error
@@ -422,7 +422,7 @@ class ClusterStatus extends React.Component {
       return (
         <div>
           <Typography
-            variant='subheading'
+            variant='subtitle1'
           >
             Unknown Status: { status.phase }
           </Typography>

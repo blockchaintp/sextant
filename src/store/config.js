@@ -85,19 +85,7 @@ const SAGAS = sagaErrorWrapper({
   CONFIG_LOAD_VALUES: function* (){
     try{
       const response = yield call(configApi.getValues)
-
-      const remoteName = response.data.remoteName
-
-      // if there is no remote then we can't do auth yet
-      if(!remoteName) {
-        yield put({
-          type: 'PAGE_REMOTE_SETUP',
-        })
-      }
-      else {
-        yield put(auth.actions.loadStatus())
-      }
-
+      yield put(auth.actions.loadStatus())
       yield put(actions.setValues(response.data))
     }
     catch(err){
