@@ -10,6 +10,7 @@ const prefix = 'user'
 const initialState = {
   loaded: false,
   data: null,
+  hasInitialUser: false,
   errors: {
     login: null,
     status: null,
@@ -22,6 +23,9 @@ const reducers = {
     state.loaded = true
     state.data = action.payload
     state.errors.status = null
+  },
+  setHasInitialUser: (state, action) => {
+    state.hasInitialUser = action.payload
   },
   clearError: (state, action) => {
     state.errors[action.payload] = null
@@ -39,6 +43,9 @@ const loaders = {
 
   status: () => axios.get(api.url('/user/status'))
     .then(api.process),
+
+  hasInitialUser: () => axios.get(api.url('/user/hasInitialUser'))
+    .then(api.process),
     
   login: (payload) => axios.post(api.url('/user/login'), payload)
     .then(api.process),
@@ -51,8 +58,15 @@ const loaders = {
 const sideEffects = {
   loadStatus: () => (dispatch, getState) => {
     dispatch(actions.clearError('status'))
-    loaders.status()
-      .then(data => dispatch(actions.setData(data)))
+    Promise.all([
+      loaders.status(),
+      loaders.hasInitialUser(),
+    ])
+      .then(data => {
+        const [ userStatus, hasInitialUser ] = data
+        dispatch(actions.setData(userStatus))
+        dispatch(actions.setHasInitialUser(hasInitialUser))
+      })
       .catch(error => {
         dispatch(actions.setError({
           name: 'status',
