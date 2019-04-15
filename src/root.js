@@ -1,21 +1,31 @@
-import { hot } from 'react-hot-loader'
 import React from 'react'
-import ReactDOM from 'react-dom'
-import {Provider} from 'react-redux'
-import store from './store'
+import { Provider } from 'react-redux'
+import { RouterProvider } from 'react-router5'
+
 import Theme from './theme'
-import Router from './router'
+import SnackbarWrapper from './containers/SnackbarWrapper'
+import Router from './router/Router'
 
 class Root extends React.Component {
   render() {
+
+    const {
+      store,
+      router,
+    } = this.props
+
     return (
       <Provider store={ store }>
         <Theme>
-          <Router />
+          <SnackbarWrapper>
+            <RouterProvider router={ router }>
+              <Router />
+            </RouterProvider>
+          </SnackbarWrapper>
         </Theme>
       </Provider>
-    );
+    )
   }
 }
 
-export default hot(module)(Root)
+export default Root
