@@ -1,4 +1,6 @@
-import selectors from '../store/selectors'
+import selectors from 'store/selectors'
+import userActions from 'store/modules/user'
+
 
 const routes = [
   {
@@ -29,6 +31,18 @@ const routes = [
   {
     name: 'notfound',
     path: '/notfound',
+  },
+  {
+    name: 'users',
+    path: '/users',
+    authorize: 'user',
+    trigger: (store) => store.dispatch(userActions.loadUsers()),
+  },
+  {
+    name: 'user',
+    path: '/user/:id',
+    authorize: 'user',
+    trigger: (store, params) => store.dispatch(userActions.loadUser(params.id)),
   },
 ]
 
