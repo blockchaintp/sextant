@@ -5,6 +5,7 @@ import api from '../utils/api'
 
 import routerActions from './router'
 import networkActions from './network'
+import snackbarActions from './snackbar'
 
 const prefix = 'user'
 
@@ -36,6 +37,9 @@ const loaders = {
     .then(api.process),
 
   logout: () => axios.post(api.url('/user/logout'))
+    .then(api.process),
+
+  create: (payload) => axios.post(api.url('/user'), payload)
     .then(api.process),
     
 }
@@ -84,6 +88,31 @@ const sideEffects = {
       .then(data => dispatch(actions.setData(data)))
       .then(() => dispatch(routerActions.navigateTo('login')))
       .catch(() => {})
+  },
+  createInitial: (payload) => async (dispatch, getState) => {
+    try {
+      const data = await dispatch(actions.create(payload))
+
+      console.log('--------------------------------------------')
+      console.log('here after create')
+    } catch(e) {
+      console.log('--------------------------------------------')
+      console.log('have create error')
+      console.dir(e)
+    }
+  },
+  create: (payload) => (dispatch, getState) => {
+    return api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.create({
+        username: payload.username,
+        password: payload.password,
+        permission: payload.permission,
+      }),
+      prefix,
+      name: 'create',
+      returnError: true,
+    })
   },
 }
 

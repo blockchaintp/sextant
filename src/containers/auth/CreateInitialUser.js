@@ -15,12 +15,12 @@ const initialValues = {
 
 @connect(
   state => ({
-    error: '',
+    error: selectors.user.errors.create(state),
     schema: selectors.config.forms.user.initialUser(state),
     initialValues,
   }),
   {
-    submitForm: () => {},
+    submitForm: userActions.createInitial,
   },
 )
 class CreateInitialUserContainer extends React.Component {
