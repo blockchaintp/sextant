@@ -45,6 +45,7 @@ const USER_NETWORK_NAMES = networkProps('user', [
   'status',
   'login',
   'logout',
+  'hasInitialUser',
 ])
 
 const config = state => state.config

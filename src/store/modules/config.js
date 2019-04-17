@@ -7,12 +7,6 @@ const prefix = 'config'
 
 const initialState = {
   data: null,
-  errors: {
-    data: null,
-  },
-  loading: {
-    data: false,
-  },
 }
 
 const reducers = {
@@ -30,11 +24,10 @@ const sideEffects = {
 
   loadData: () => (dispatch) => api.loaderSideEffect({
     dispatch,
-    actions,
     loader: () => loaders.getData(),
+    prefix,
     name: 'data',
     dataAction: actions.setData,
-    snackbarError: true,
   }),
 
 }

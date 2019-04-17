@@ -48,6 +48,13 @@ const sideEffects = {
     name: 'status',
     dataAction: actions.setData,
   }),
+  loadHasInitialUser: () => (dispatch, getState) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.hasInitialUser(),
+    prefix,
+    name: 'hasInitialUser',
+    dataAction: actions.setHasInitialUser,
+  }),
   login: (payload) => (dispatch, getState) => {
     api.loaderSideEffect({
       dispatch,
