@@ -35,17 +35,19 @@ const loaders = {
   hasInitialUser: () => axios.get(api.url(`/user/hasInitialUser`))
     .then(api.process),
 
+  list: () => axios.get(api.url(`/user`))
+    .then(api.process),
+
+  get: (id) => axios.get(api.url(`/user/${id}`))
+    .then(api.process),
+
   create: (payload) => axios.post(api.url(`/user`), payload)
     .then(api.process),
 
   update: (id, payload) => axios.put(api.url(`/user/${id}`), payload)
     .then(api.process),
 
-  getUsers: () => axios.get(api.url(`/user`))
-    .then(api.process),
-
-  getUser: (id) => axios.get(api.url(`/user/${id}`))
-    .then(api.process),
+  
     
 }
 
@@ -59,7 +61,7 @@ const sideEffects = {
   }),
   loadUsers: () => (dispatch) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.getUsers(),
+    loader: () => loaders.list(),
     prefix,
     name: 'users',
     dataAction: actions.setUsers,
@@ -67,7 +69,7 @@ const sideEffects = {
   }),
   loadUser: (id) => (dispatch) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.getUser(id),
+    loader: () => loaders.get(id),
     prefix,
     name: 'user',
     dataAction: actions.setUser,
