@@ -14,7 +14,8 @@ import RouteContext from './RouteContext'
 import Home from 'containers/Home'
 import NotFound from 'containers/NotFound'
 import Login from 'containers/auth/Login'
-import CreateInitialUser from 'containers/auth/CreateInitialUser'
+
+import CreateInitialUser from 'containers/user/CreateInitialUser'
 
 @connect(
   state => {
