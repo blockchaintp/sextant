@@ -28,47 +28,27 @@ const authorizeRoute = (routes) => (router, dependencies) => (toState, fromState
     store.dispatch(snackbarActions.setError(message))
   }
 
-  const authorizeSettings = findRoutes(routes, toActivate)
-    .map(routeSegment => routeSegment.authorize)
+  const authorizeHandlers = findRoutes(routes, toActivate)
+    .map(route => route.authorize)
     .filter(authorize => authorize)
 
   // there are no authorize settings on this route
-  if(authorizeSettings.length <= 0) return done()
-
-  const authorizeMap = authorizeSettings.reduce((all, type) => {
-    all[type] = true
-    return all
-  }, {})
-
+  if(authorizeHandlers.length <= 0) return done()
   // check there is only a single auth requirement
-  if(Object.keys(authorizeMap).length > 1) {
+  if(authorizeHandlers.length > 1) {
     routeError(`multiple authorize settings found in route`)
     return
   }
 
-  const authorizeSetting = authorizeSettings[0]
+  const authorizeHandler = authorizeHandlers[0]
 
-  const loggedIn = selectors.auth.loggedIn(store.getState())
+  const redirectTo = authorizeHandler(store.getState())
 
-  if(authorizeSetting == 'user') {
-    if(!loggedIn) {
-      store.dispatch(routerActions.navigateTo(settings.authRedirects.user))
-    }
-    else {
-      return done()
-    }
-  }
-  else if(authorizeSetting == 'guest') {
-    if(loggedIn) {
-      store.dispatch(routerActions.navigateTo(settings.authRedirects.guest))
-    }
-    else {
-      return done()
-    }
+  if(!redirectTo) {
+    done()
   }
   else {
-    routeError(`unknown authorize setting (${authorizeSetting}) found in route`)
-    return
+    store.dispatch(routerActions.navigateTo(redirectTo))
   }
 }
 

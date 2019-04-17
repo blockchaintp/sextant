@@ -1,17 +1,28 @@
 import selectors from 'store/selectors'
 import userActions from 'store/modules/user'
 
+const authHandlers = {
+  guest: (state) => selectors.auth.loggedIn(state) ?
+    'home' :
+    null,
+  user: (state) => selectors.auth.loggedIn(state) ?
+    null :
+    'login',
+  superuser: (state) => selectors.auth.isSuperuser(state) ?
+    null :
+    'home',
+}
 
 const routes = [
   {
     name: 'login',
     path: '/login',
-    authorize: 'guest',
+    authorize: authHandlers.guest,
   },
   {
     name: 'create-initial-user',
     path: '/create-initial-user',
-    authorize: 'guest',
+    authorize: authHandlers.guest,
     redirect: (state) => {
       const hasInitialUser = selectors.user.hasInitialUser(state)
 
@@ -26,7 +37,7 @@ const routes = [
   {
     name: 'home',
     path: '/',
-    authorize: 'user',
+    authorize: authHandlers.user,
   },
   {
     name: 'notfound',
@@ -35,13 +46,13 @@ const routes = [
   {
     name: 'users',
     path: '/users',
-    authorize: 'user',
+    authorize: authHandlers.superuser,
     trigger: (store) => store.dispatch(userActions.loadUsers()),
   },
   {
     name: 'user',
     path: '/user/:id',
-    authorize: 'user',
+    authorize: authHandlers.superuser,
     trigger: (store, params) => {
       if(params.id == 'new') return
       store.dispatch(userActions.loadUser(params.id))

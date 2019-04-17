@@ -25,14 +25,6 @@ const settings = {
   api: '/api/v1',
   devMode: process.env.NODE_ENV === 'development',
   snackbarAutoHide: 5000,
-  authRedirects: {
-    // where to redirect if a route requires a user
-    // and there is none
-    user: 'login',
-    // where to redirect if a route requires a guest
-    // and there is a user
-    guest: 'home',
-  },
   sideMenuWidth: 250,
   icons,
   sideMenu: ({
