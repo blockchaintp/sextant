@@ -3,7 +3,8 @@ import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
 import api from '../utils/api'
 
-import { actions as routerActions } from './router'
+import routerActions from './router'
+import networkActions from './network'
 
 const prefix = 'user'
 
@@ -11,31 +12,15 @@ const initialState = {
   loaded: false,
   data: null,
   hasInitialUser: false,
-  errors: {
-    login: null,
-    status: null,
-    logout: null,
-  },
 }
 
 const reducers = {
   setData: (state, action) => {
     state.loaded = true
     state.data = action.payload
-    state.errors.status = null
   },
   setHasInitialUser: (state, action) => {
     state.hasInitialUser = action.payload
-  },
-  clearError: (state, action) => {
-    state.errors[action.payload] = null
-  },
-  setError: (state, action) => {
-    const {
-      name,
-      error,
-    } = action.payload
-    state.errors[name] = error
   },
 }
 
@@ -56,49 +41,42 @@ const loaders = {
 }
 
 const sideEffects = {
-  loadStatus: () => (dispatch, getState) => {
-    dispatch(actions.clearError('status'))
-    Promise.all([
-      loaders.status(),
-      loaders.hasInitialUser(),
-    ])
-      .then(data => {
-        const [ userStatus, hasInitialUser ] = data
-        dispatch(actions.setHasInitialUser(hasInitialUser))
-        dispatch(actions.setData(userStatus))
-      })
-      .catch(error => {
-        dispatch(actions.setError({
-          name: 'status',
-          error: error.toString(),
-        }))
-      })
-  },
+  loadStatus: () => (dispatch, getState) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.status(),
+    prefix,
+    name: 'status',
+    dataAction: actions.setData,
+  }),
   login: (payload) => (dispatch, getState) => {
-    dispatch(actions.clearError('login'))
-    loaders.login(payload)
-      .then(() => loaders.status())
-      .then(data => dispatch(actions.setData(data)))
+    api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.login(payload),
+      prefix,
+      name: 'login',
+      dataAction: actions.setData,
+      returnError: true,
+    })
       .then(() => dispatch(routerActions.navigateTo('home')))
       .catch(error => {
-        dispatch(actions.setError({
-          name: 'login',
-          error: 'Incorrect details',
+        dispatch(networkActions.setError({
+          name: 'user.login',
+          value: 'Incorrect details',
         }))
       })
   },
   logout: () => (dispatch, getState) => {
-    dispatch(actions.clearError('logout'))
-    loaders.logout()
+    api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.logout(),
+      prefix,
+      name: 'logout',
+      returnError: true,
+    })
       .then(() => loaders.status())
       .then(data => dispatch(actions.setData(data)))
       .then(() => dispatch(routerActions.navigateTo('login')))
-      .catch(error => {
-        dispatch(actions.setError({
-          name: 'logout',
-          error,
-        }))
-      })
+      .catch(() => {})
   },
 }
 
