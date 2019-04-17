@@ -17,79 +17,6 @@ const styles = theme => ({
   },
 })
 
-const schema = [
-  {
-    id: 'username',
-    title: 'Username',
-    helperText: 'Enter your username',
-    component: 'text',
-    inputProps: {
-      type: 'text',
-    },
-    validate: {
-      type: 'string',
-      methods: [
-        ['matches', '^\\S+$', 'Cannot contain spaces'],
-        ['min', 6, 'Must be at least 6 characters'],
-        ['required', 'The username is required'], 
-      ]
-    }
-  },
-  {
-    id: 'accessLevel',
-    helperText: 'Access level',
-    component: 'select',
-    options: [{
-      title: 'Superuser',
-      value: 'superuser',
-    },{
-      title: 'Admin',
-      value: 'admin',
-    }, {
-      title: 'User',
-      value: 'user',
-    }],
-    extraProps: {
-      disabled: true,
-    }
-  },
-  {
-    id: 'password',
-    title: 'Password',
-    helperText: 'Enter your password (min 6 chars - alphanumeric)',
-    component: 'text',
-    inputProps: {
-      type: 'password',
-    },
-    validate: {
-      type: 'string',
-      methods: [
-        ['required', 'The password is required'],
-        ['min', 6, 'Must be at least 6 characters'],
-        ['matches', '^\\S+$', 'Cannot contain spaces'],
-      ]
-    }
-  },
-  {
-    id: 'confirmPassword',
-    title: 'Confirm Password',
-    helperText: 'Confirm your password',
-    component: 'text',
-    inputProps: {
-      type: 'password',
-    },
-    validate: {
-      type: 'string',
-      methods: [
-        ['required', 'The confirm password is required'],
-        ['min', 6, 'Must be at least 6 characters'],
-        ['matches', '^\\S+$', 'Cannot contain spaces'],
-        ['sameAs', 'password', 'Must be equal to password'],
-      ]
-    }
-  },
-]
-
 class UserForm extends React.Component {
   render() {
     const { 
@@ -97,6 +24,7 @@ class UserForm extends React.Component {
       title,
       submitTitle,
       submitForm,
+      schema,
       initialValues,
       error,
     } = this.props

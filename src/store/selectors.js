@@ -49,6 +49,11 @@ const USER_NETWORK_NAMES = networkProps('user', [
 ])
 
 const config = state => state.config
+const forms = createSelector(
+  config,
+  configState => configState.data.forms || {},
+)
+const userForms = prop(forms, 'user')
 
 const CONFIG_NETWORK_NAMES = networkProps('config', [
   'data',
@@ -135,6 +140,14 @@ const selectors = {
     ...props(config, [
       'data',
     ]),
+    forms: {
+      user: props(userForms, [
+        'initialUser',
+        'userAdd',
+        'userEdit',
+        'userSelf',
+      ])
+    }
   },
 
   fileupload: {

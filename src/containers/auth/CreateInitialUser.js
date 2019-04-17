@@ -16,6 +16,7 @@ const initialValues = {
 @connect(
   state => ({
     error: '',
+    schema: selectors.config.forms.user.initialUser(state),
     initialValues,
   }),
   {
