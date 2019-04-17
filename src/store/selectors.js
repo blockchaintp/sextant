@@ -101,6 +101,7 @@ const selectors = {
     ...props(user, [
       'data',
       'loaded',
+      'hasInitialUser',
     ]),
   },
 

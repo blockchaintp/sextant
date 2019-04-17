@@ -64,8 +64,8 @@ const sideEffects = {
     ])
       .then(data => {
         const [ userStatus, hasInitialUser ] = data
-        dispatch(actions.setData(userStatus))
         dispatch(actions.setHasInitialUser(hasInitialUser))
+        dispatch(actions.setData(userStatus))
       })
       .catch(error => {
         dispatch(actions.setError({
