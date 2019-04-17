@@ -4,6 +4,9 @@ import HomeIcon from '@material-ui/icons/Home'
 import PeopleIcon from '@material-ui/icons/People'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import AddIcon from '@material-ui/icons/Add'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 const icons = {
   home: HomeIcon,
@@ -12,6 +15,9 @@ const icons = {
   login: LoginIcon,
   logout: LogoutIcon,
   more: MoreVertIcon,
+  add: AddIcon,
+  edit: EditIcon,
+  delete: DeleteIcon,
 }
 
 const settings = {
