@@ -27,7 +27,6 @@ const redirectRoute = (routes) => (router, dependencies) => (toState, fromState,
   // if the redirect is a string - redirect there
   if(typeof(redirectInfo) === 'string') {
     store.dispatch(routerActions.navigateTo(redirectInfo))
-    return done()
   }
   // if it's a function - run the function passing the redux state
   // the function should return the redirect or falsey value for don't redirect
@@ -36,7 +35,9 @@ const redirectRoute = (routes) => (router, dependencies) => (toState, fromState,
     if(redirectTo) {
       store.dispatch(routerActions.navigateTo(redirectTo)) 
     }
-    done()
+    else {
+      done()
+    }
   }
   else {
     return done(`unknown type of redirect info: ${typeof(redirectInfo)}`)
