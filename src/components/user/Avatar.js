@@ -5,12 +5,10 @@ import { withStyles } from '@material-ui/core/styles'
 
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 
-import Typography from '@material-ui/core/Typography'
-import userUtils from 'utils/user'
+import settings from 'settings'
 
-import Icon from './Icon'
+const UserIcon = settings.icons.user
 
 const styles = (theme) => {
   return {
@@ -45,7 +43,7 @@ class UserAvatar extends React.Component {
         variant="outlined"
         avatar={
           <Avatar className={ classes.bigAvatar }>
-            <AccountCircle />
+            <UserIcon />
           </Avatar>
         }
         label={ user.username }
@@ -57,40 +55,6 @@ class UserAvatar extends React.Component {
         }}
       />
     )
-/*
-    const name = user && !noName ? (
-      <Typography 
-        variant="body1" 
-        color="inherit" 
-        className={ classes.avatarName }
-      >
-        { user.username }
-      </Typography>
-    ) : null
-
-    const icon = noIcon ? null : (
-      <Icon 
-        userData={ user }
-      />
-    )
-
-    if(this.props.iconAlign == 'left') {
-      return (
-        <div className={ classes.avatarWrapper }>
-          { icon }
-          { name }
-        </div>
-      )
-    }
-    else {
-      return (
-        <div className={ classes.avatarWrapper }>
-          { name }
-          { icon }
-        </div>
-      )
-    }    
-     */
   }
  
 }

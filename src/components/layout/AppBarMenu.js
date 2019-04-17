@@ -9,9 +9,10 @@ import MenuItem from '@material-ui/core/MenuItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-
 import UserAvatar from 'components/user/Avatar'
+import settings from 'settings'
+
+const MoreIcon = settings.icons.more
 
 const styles = (theme) => ({
   avatarWrapper: {
@@ -112,7 +113,7 @@ class AppBarMenu extends React.Component {
                 user={ user }
               />
             ) : (
-              <MoreVertIcon />
+              <MoreIcon />
             )
           }
         </Button>

@@ -2,6 +2,17 @@ import LoginIcon from '@material-ui/icons/ExitToApp'
 import LogoutIcon from '@material-ui/icons/PowerSettingsNew'
 import HomeIcon from '@material-ui/icons/Home'
 import PeopleIcon from '@material-ui/icons/People'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+
+const icons = {
+  home: HomeIcon,
+  users: PeopleIcon,
+  user: AccountCircleIcon,
+  login: LoginIcon,
+  logout: LogoutIcon,
+  more: MoreVertIcon,
+}
 
 const settings = {
   title: 'Sextant',
@@ -17,6 +28,7 @@ const settings = {
     guest: 'home',
   },
   sideMenuWidth: 250,
+  icons,
   sideMenu: ({
     loggedIn,
     isSuperuser,
@@ -28,14 +40,14 @@ const settings = {
       const pages = [{
         title: 'Home',
         handler: 'home',
-        icon: HomeIcon,
+        icon: icons.home,
       }]
 
       if(isSuperuser) {
         pages.push({
           title: 'Users',
           handler: 'users',
-          icon: PeopleIcon,
+          icon: icons.users,
         })
       }
 
@@ -44,7 +56,7 @@ const settings = {
         {
           title: 'Logout',
           handler: handlers.logout,
-          icon: LogoutIcon,
+          icon: icons.logout,
         }
       ])
     }
@@ -52,7 +64,7 @@ const settings = {
       return [{
         title: 'Login',
         handler: 'login',
-        icon: LoginIcon,
+        icon: icons.login,
       }]
     }
   },
@@ -66,14 +78,14 @@ const settings = {
       return [{
         title: 'Logout',
         handler: handlers.logout,
-        icon: LogoutIcon,
+        icon: icons.logout,
       }]
     }
     else {
       return [{
         title: 'Login',
         handler: 'login',
-        icon: LoginIcon,
+        icon: icons.login,
       }]
     }
   },
