@@ -3,6 +3,7 @@ import {
   object,
   string,
   number,
+  ref,
 } from 'yup'
 import dotty from 'dotty'
 import utils from './utils'
@@ -44,6 +45,15 @@ const validateArgsMappers = {
   },
 }
 
+const validateHandlers = {
+  string: {
+    sameAs: (validateObject, args) => {
+      const [ matchField, message ] = args
+      return validateObject.oneOf([ref(matchField), null], message || `Must be equal to ${matchField}`)
+    },
+  }
+}
+
 /*
     
   loop over each of the method args and apply them in a chain
@@ -58,6 +68,7 @@ const validateArgsMappers = {
       ['required', 'The password is required'],
       ['min', 6, 'Must be at least 6 characters'],
       ['matches', '^\\S+$', 'Cannot contain spaces'],
+      ['sameAs', 'otherField', 'Must be the same as otherField'],
     ]
   }
 
@@ -68,10 +79,14 @@ const validateArgsMappers = {
     .required('The password is required')
     .min(6, 'Must be at least 6 characters')
     .matches(/^\\S+$/, 'Cannot contain spaces')
+    .oneOf([yup.ref('otherField'), null], 'Must be the same as otherField')
 
   we run each of the method arguments through a mapper
   this is because we can only store the method config as JSON so things
   like RegExps need turning into actual arguments
+
+  also - there are special case handlers (for example oneOf) that use a
+  function to call methods on the existing validate object
 
 */
 const reduceValidateMethods = (validateType, baseType, validateMethods) => {
@@ -80,7 +95,15 @@ const reduceValidateMethods = (validateType, baseType, validateMethods) => {
     const methodArgs = validateArgs.slice(1)
     const argsMapper = validateArgsMappers[validateType]
     const applyMethodArgs = argsMapper ? argsMapper(methodName, methodArgs) : methodArgs
-    return validateObject[methodName].apply(validateObject, applyMethodArgs)
+
+    const validateHandler = (validateHandlers[validateType] || {})[methodName]
+
+    if(validateHandler) {
+      return validateHandler(validateObject, applyMethodArgs)
+    }
+    else {
+      return validateObject[methodName].apply(validateObject, applyMethodArgs)
+    }
   }, baseType)
 }
 
