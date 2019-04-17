@@ -8,7 +8,7 @@ import selectors from '../../store/selectors'
 
 const initialValues = {
   username: '',
-  accessLevel: 'superuser',
+  permission: 'superuser',
   password: '',
   confirmPassword: '', 
 }

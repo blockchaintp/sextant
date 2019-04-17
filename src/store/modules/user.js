@@ -91,14 +91,11 @@ const sideEffects = {
   },
   createInitial: (payload) => async (dispatch, getState) => {
     try {
-      const data = await dispatch(actions.create(payload))
-
-      console.log('--------------------------------------------')
-      console.log('here after create')
+      await dispatch(actions.create(payload))
+      dispatch(snackbarActions.setSuccess(`initial user created`))
+      dispatch(routerActions.navigateTo('login'))
     } catch(e) {
-      console.log('--------------------------------------------')
-      console.log('have create error')
-      console.dir(e)
+      dispatch(snackbarActions.setError(`error creating initial user: ${e.toString()}`))
     }
   },
   create: (payload) => (dispatch, getState) => {
