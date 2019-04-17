@@ -5,6 +5,7 @@ import CreateActions from '../utils/createActions'
 import { mergeEntities, mergeAll } from '../utils/mergeNormalized'
 import api from '../utils/api'
 
+import selectors from '../selectors'
 import routerActions from './router'
 import snackbarActions from './snackbar'
 
@@ -35,6 +36,9 @@ const loaders = {
     .then(api.process),
 
   create: (payload) => axios.post(api.url(`/user`), payload)
+    .then(api.process),
+
+  update: (id, payload) => axios.put(api.url(`/user/${id}`), payload)
     .then(api.process),
 
   getUsers: () => axios.get(api.url(`/user`))
@@ -95,19 +99,42 @@ const sideEffects = {
       dispatch(snackbarActions.setError(`error creating initial user: ${e.toString()}`))
     }
   },
-  createNew: (payload) => {
-    console.log('--------------------------------------------')
-    console.log('create user')
-    console.dir(payload)
+  createNew: (payload) => async (dispatch, getState) => {
+    try {
+      await dispatch(actions.create(payload))
+      dispatch(snackbarActions.setSuccess(`user created`))
+      dispatch(routerActions.navigateTo('users'))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error creating user: ${e.toString()}`))
+    }
   },
-  save: (payload) => (dispatch, getState) => {
-    console.log('--------------------------------------------')
-    console.log('save user')
-    console.dir(payload)
+  save: (id, payload) => async (dispatch, getState) => {
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.update(id, {
+          username: payload.username,
+          password: payload.password,
+          permission: payload.permission,
+        }),
+        prefix,
+        name: 'form',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setSuccess(`user saved`))
+      dispatch(routerActions.navigateTo('users'))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error saving user: ${e.toString()}`))
+    }
   },
   submitForm: (payload) => (dispatch, getState) => {
-    console.log('--------------------------------------------')
-    console.log('user submit form')
+    const id = selectors.router.idParam(getState())
+    if(id == 'new') {
+      dispatch(actions.createNew(payload))
+    }
+    else {
+      dispatch(actions.save(id, payload))
+    }
   },
 }
 
