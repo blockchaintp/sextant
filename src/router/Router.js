@@ -16,6 +16,7 @@ import NotFound from 'containers/NotFound'
 import Login from 'containers/auth/Login'
 
 import CreateInitialUser from 'containers/user/CreateInitialUser'
+import UserTable from 'containers/user/UserTable'
 
 @connect(
   state => {
@@ -52,6 +53,9 @@ class Router extends React.Component {
           </Route>
           <Route segment="create-initial-user" exact>
             <CreateInitialUser />
+          </Route>
+          <Route segment="users" exact>
+            <UserTable />
           </Route>
         </LayoutMain>
       </RouteContext.Provider>

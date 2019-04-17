@@ -69,6 +69,10 @@ const sideEffects = {
     dataAction: actions.setUser,
     snackbarError: true,
   }),
+  deleteUser: (id) => (dispatch) => {
+    console.log('--------------------------------------------')
+    console.log('delete ' + id)
+  },
   createInitial: (payload) => async (dispatch, getState) => {
     try {
       await dispatch(actions.create(payload))

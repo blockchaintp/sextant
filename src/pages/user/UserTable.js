@@ -12,7 +12,7 @@ import settings from 'settings'
 
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
-const DeleteIcon = settings.icons.edit
+const DeleteIcon = settings.icons.delete
 
 const styles = theme => ({
   
@@ -104,7 +104,7 @@ class UserTable extends React.Component {
         />
         <SimpleTableDeleteDialog
           open={ deleteConfirmOpen }
-          title={ deleteConfirmItem ? `the ${deleteConfirmItem.name} user` : null }
+          title={ deleteConfirmItem ? `the ${deleteConfirmItem.username} user` : null }
           onCancel={ () => this.closeDeleteDialog() }
           onConfirm={ () => {
             this.closeDeleteDialog()
