@@ -1,7 +1,7 @@
 import LoginIcon from '@material-ui/icons/ExitToApp'
 import LogoutIcon from '@material-ui/icons/PowerSettingsNew'
 import HomeIcon from '@material-ui/icons/Home'
-import ContentIcon from '@material-ui/icons/Inbox'
+import PeopleIcon from '@material-ui/icons/People'
 
 const settings = {
   title: 'Sextant',
@@ -19,18 +19,34 @@ const settings = {
   sideMenuWidth: 250,
   sideMenu: ({
     loggedIn,
+    isSuperuser,
+    isAdmin,
     handlers,
   }) => {
     if(loggedIn) {
-      return [{
+
+      const pages = [{
         title: 'Home',
         handler: 'home',
         icon: HomeIcon,
-      }, '-', {
-        title: 'Logout',
-        handler: handlers.logout,
-        icon: LogoutIcon,
       }]
+
+      if(isSuperuser) {
+        pages.push({
+          title: 'Users',
+          handler: 'users',
+          icon: PeopleIcon,
+        })
+      }
+
+      return pages.concat([
+        '-', 
+        {
+          title: 'Logout',
+          handler: handlers.logout,
+          icon: LogoutIcon,
+        }
+      ])
     }
     else {
       return [{
@@ -42,6 +58,8 @@ const settings = {
   },
   appbarMenu: ({
     loggedIn,
+    isSuperuser,
+    isAdmin,
     handlers,
   }) => {
     if(loggedIn) {

@@ -28,10 +28,14 @@ class LayoutContainer extends React.Component {
     const {
       loggedIn,
       logout,
+      isSuperuser,
+      isAdmin,
     } = this.props
 
     const sideMenuItems = settings.sideMenu({
       loggedIn,
+      isSuperuser,
+      isAdmin,
       handlers: {
         logout,
       },
@@ -39,6 +43,8 @@ class LayoutContainer extends React.Component {
 
     const appBarMenuItems = settings.appbarMenu({
       loggedIn,
+      isSuperuser,
+      isAdmin,
       handlers: {
         logout,
       },
