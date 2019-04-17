@@ -65,6 +65,7 @@ const userAccessFilter = (type) => createSelector(
   userData,
   userAccessLevels,
   (userDataValue, userAccessLevelsValue) => {
+    if(!userDataValue) return false
     return userAccessLevelsValue[userDataValue.permission] >= userAccessLevelsValue[type]
   },
 )
