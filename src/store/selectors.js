@@ -40,6 +40,7 @@ const routeParamId = createSelector(
 )
 
 const user = state => state.user
+const userData = prop(user, 'data')
 
 const USER_NETWORK_NAMES = networkProps('user', [
   'status',
@@ -50,11 +51,23 @@ const USER_NETWORK_NAMES = networkProps('user', [
 ])
 
 const config = state => state.config
+const configData = prop(config, 'data')
 const forms = createSelector(
-  config,
-  configState => configState.data.forms || {},
+  configData,
+  configState => configState.forms || {},
 )
 const userForms = prop(forms, 'user')
+
+const userAccessLevels = prop(configData, 'userAccessLevels')
+const roleAccessLevels = prop(configData, 'roleAccessLevels')
+
+const userAccessFilter = (type) => createSelector(
+  userData,
+  userAccessLevels,
+  (userDataValue, userAccessLevelsValue) => {
+    return userAccessLevelsValue[userDataValue.permission] >= userAccessLevelsValue[type]
+  },
+)
 
 const CONFIG_NETWORK_NAMES = networkProps('config', [
   'data',
@@ -127,8 +140,10 @@ const selectors = {
     loggedIn: createSelector(user, u => u.data ? true : false),
     errors: props(networkErrors, USER_NETWORK_NAMES),
     loading: props(networkLoading, USER_NETWORK_NAMES),
+    data: userData,
+    isSuperuser: userAccessFilter('superuser'),
+    isAdmin: userAccessFilter('admin'),
     ...props(user, [
-      'data',
       'loaded',
       'hasInitialUser',
     ]),
@@ -149,7 +164,9 @@ const selectors = {
         'userSelf',
         'login',
       ])
-    }
+    },
+    userAccessLevels,
+    roleAccessLevels,
   },
 
   fileupload: {

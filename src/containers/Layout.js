@@ -14,6 +14,8 @@ import Layout from 'pages/Layout'
     title: settings.title,
     loggedIn: selectors.user.loggedIn(state),
     user: selectors.user.data(state),
+    isSuperuser: selectors.user.isSuperuser(state),
+    isAdmin: selectors.user.isAdmin(state),
   }),
   {
     openPage: routerActions.navigateTo,
