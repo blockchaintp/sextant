@@ -36,7 +36,7 @@ const loaders = {
   login: (payload) => axios.post(api.url('/user/login'), payload)
     .then(api.process),
 
-  logout: () => axios.post(api.url('/user/logout'))
+  logout: () => axios.get(api.url('/user/logout'))
     .then(api.process),
 
   create: (payload) => axios.post(api.url('/user'), payload)
