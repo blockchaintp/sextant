@@ -1,5 +1,6 @@
 import settings from 'settings'
 
+import networkActions from '../modules/network'
 import snackbarActions from '../modules/snackbar'
 
 const url = (path) => [settings.api, path].join('/').replace(/\/+/g, '/')
@@ -13,21 +14,28 @@ const process = res => {
 
 const loaderSideEffect = ({
   dispatch,
-  actions,
+  prefix,
   name,
   dataAction,
   loader,
   returnError,
   snackbarError,
 }) => {
-  dispatch(actions.clearError(name))
-  dispatch(actions.setLoading(name))
+
+  const networkName = 
+    [prefix, name]
+    .filter(s => s)
+    .join('.')
+
+  dispatch(networkActions.clearError(networkName))
+  dispatch(networkActions.startLoading(networkName))
+
   return loader()
     .then(data => {
       if(dataAction) {
         dispatch(dataAction(data))
       }
-      dispatch(actions.clearLoading(name))
+      dispatch(networkActions.stopLoading(networkName))
       return data
     })
     .catch(error => {
@@ -36,12 +44,11 @@ const loaderSideEffect = ({
       let useErrorMessage = error.toString()
       const res = error.response
       if(res && res.data && res.data.error) useErrorMessage = res.data.error
-
-      dispatch(actions.setError({
-        name: name,
-        error: useErrorMessage,
+      dispatch(networkActions.setError({
+        name: networkName,
+        value: useErrorMessage,
       }))
-      dispatch(actions.clearLoading(name))
+      dispatch(networkActions.stopLoading(networkName))
       if(snackbarError) {
         dispatch(snackbarActions.setError(useErrorMessage))
       }
