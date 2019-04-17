@@ -28,6 +28,41 @@ const networkProps = (prefix, fields) => fields.map(field => {
   }
 })
 
+const entity = ({
+  baseSelector,
+  entityName,
+}) => {
+  const entities = createSelector(
+    baseSelector,
+    baseStore => baseStore.entities[entityName] || {},
+  )
+  const ids = createSelector(
+    baseSelector,
+    baseStore => baseStore.result || [],
+  )
+  const list = createSelector(
+    entities,
+    ids,
+    (entities, ids) => ids.map(id => entities[id])
+  )
+  const item = createSelector(
+    entities,
+    routeParamId,
+    (entities, id) => {
+      return id == 'new' ?
+        {} :
+        entities[id]
+    },
+  )
+
+  return {
+    entities,
+    ids,
+    list,
+    item,
+  }
+}
+
 const networkErrors = state => state.network.errors
 const networkLoading = state => state.network.loading
 
@@ -160,6 +195,10 @@ const selectors = {
     store: userStore,
     errors: props(networkErrors, USER_NETWORK_NAMES),
     loading: props(networkLoading, USER_NETWORK_NAMES),
+    collection: entity({
+      baseSelector: prop(userStore, 'users'),
+      entityName: 'user',
+    }),
     ...props(userStore, [
       'hasInitialUser',
     ]),
