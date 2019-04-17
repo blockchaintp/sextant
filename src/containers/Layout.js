@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import selectors from 'store/selectors'
 import routerActions from 'store/modules/router'
-import userActions from 'store/modules/user'
+import authActions from 'store/modules/auth'
 
 import settings from 'settings'
 
@@ -12,14 +12,14 @@ import Layout from 'pages/Layout'
 @connect(
   state => ({
     title: settings.title,
-    loggedIn: selectors.user.loggedIn(state),
-    user: selectors.user.data(state),
-    isSuperuser: selectors.user.isSuperuser(state),
-    isAdmin: selectors.user.isAdmin(state),
+    loggedIn: selectors.auth.loggedIn(state),
+    user: selectors.auth.data(state),
+    isSuperuser: selectors.auth.isSuperuser(state),
+    isAdmin: selectors.auth.isAdmin(state),
   }),
   {
     openPage: routerActions.navigateTo,
-    logout: userActions.logout,
+    logout: authActions.logout,
   },
 )
 class LayoutContainer extends React.Component {

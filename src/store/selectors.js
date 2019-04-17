@@ -34,27 +34,37 @@ const networkLoading = state => state.network.loading
 const route = state => state.router.route
 const previousRoute = state => state.router.previousRoute
 const routeParams = prop(route, 'params')
+const routeName = prop(route, 'name')
 const routeParamId = createSelector(
   routeParams,
   params => params.id,
 )
+const routeSegments = createSelector(
+  routeName,
+  name => name.split('.'),
+)
 
-const user = state => state.user
-const userData = prop(user, 'data')
+const authStore = state => state.auth
+const authData = prop(authStore, 'data')
 
-const USER_NETWORK_NAMES = networkProps('user', [
+const AUTH_NETWORK_NAMES = networkProps('auth', [
   'status',
   'login',
   'logout',
+])
+
+const userStore = state => state.user
+
+const USER_NETWORK_NAMES = networkProps('user', [
   'hasInitialUser',
   'create',
 ])
 
-const config = state => state.config
-const configData = prop(config, 'data')
+const configStore = state => state.config
+const configData = prop(configStore, 'data')
 const forms = createSelector(
   configData,
-  configState => configState.forms || {},
+  configData => configData.forms || {},
 )
 const userForms = prop(forms, 'user')
 
@@ -62,11 +72,11 @@ const userAccessLevels = prop(configData, 'userAccessLevels')
 const roleAccessLevels = prop(configData, 'roleAccessLevels')
 
 const userAccessFilter = (type) => createSelector(
-  userData,
+  authData,
   userAccessLevels,
-  (userDataValue, userAccessLevelsValue) => {
-    if(!userDataValue) return false
-    return userAccessLevelsValue[userDataValue.permission] >= userAccessLevelsValue[type]
+  (authData, userAccessLevels) => {
+    if(!authData) return false
+    return userAccessLevels[authData.permission] >= userAccessLevels[type]
   },
 )
 
@@ -74,9 +84,9 @@ const CONFIG_NETWORK_NAMES = networkProps('config', [
   'data',
 ])
 
-const snackbar = state => state.snackbar
+const snackbarStore = state => state.snackbar
 
-const fileupload = state => state.fileupload
+const fileuploadStore = state => state.fileupload
 
 const selectors = {
 
@@ -85,14 +95,14 @@ const selectors = {
 
     previousRoute,
 
-    fullRoute: (state) => findRoute(routes, selectors.router.name(state)),
+    fullRoute: (state) => findRoute(routes, routeName(state)),
 
     /*
     
       get the current route name
     
     */
-    name: prop(route, 'name'),
+    name: routeName,
 
     /*
     
@@ -109,10 +119,7 @@ const selectors = {
       it returns ['content', 'books', 1]
     
     */
-    segments: createSelector(
-      route,
-      currentRoute => currentRoute.name.split('.'),
-    ),
+    segments: routeSegments,
     /*
     
       get a single segment of the route based on index
@@ -120,7 +127,7 @@ const selectors = {
       index of 1 would return 'books'
     
     */
-    segment: (state, index) => selectors.router.segments(state)[index],
+    segment: (state, index) => routeSegments(state)[index],
     /*
     
       get a single segment of the route that is after the given segment
@@ -129,32 +136,40 @@ const selectors = {
     
     */
     segmentAfter: (state, segment) => {
-      const parts = selectors.router.segments(state)
+      const parts = routeSegments(state)
       const segmentIndex = parts.indexOf(segment)
       if(segmentIndex < 0) return null
       return parts[segmentIndex + 1]
     },
   },
 
-  user: {
-    store: user,
-    loggedIn: createSelector(user, u => u.data ? true : false),
-    errors: props(networkErrors, USER_NETWORK_NAMES),
-    loading: props(networkLoading, USER_NETWORK_NAMES),
-    data: userData,
+  auth: {
+    store: authStore,
+    data: authData,
+    loggedIn: createSelector(authData, data => data ? true : false),
+    errors: props(networkErrors, AUTH_NETWORK_NAMES),
+    loading: props(networkLoading, AUTH_NETWORK_NAMES),
     isSuperuser: userAccessFilter('superuser'),
     isAdmin: userAccessFilter('admin'),
-    ...props(user, [
+    ...props(authStore, [
       'loaded',
+    ]),
+  },
+
+  user: {
+    store: userStore,
+    errors: props(networkErrors, USER_NETWORK_NAMES),
+    loading: props(networkLoading, USER_NETWORK_NAMES),
+    ...props(userStore, [
       'hasInitialUser',
     ]),
   },
 
   config: {
-    store: config,
+    store: configStore,
     errors: props(networkErrors, CONFIG_NETWORK_NAMES),
     loading: props(networkLoading, CONFIG_NETWORK_NAMES),
-    ...props(config, [
+    ...props(configStore, [
       'data',
     ]),
     forms: {
@@ -171,8 +186,8 @@ const selectors = {
   },
 
   fileupload: {
-    store: fileupload,
-    ...props(fileupload, [
+    store: fileuploadStore,
+    ...props(fileuploadStore, [
       'inProgress',
       'status',
       'results',
@@ -181,8 +196,8 @@ const selectors = {
   },
 
   snackbar: {
-    store: snackbar,
-    ...props(snackbar, [
+    store: snackbarStore,
+    ...props(snackbarStore, [
       'open',
       'text',
       'type',

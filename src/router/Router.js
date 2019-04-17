@@ -19,7 +19,7 @@ import CreateInitialUser from 'containers/auth/CreateInitialUser'
 @connect(
   state => {
     return {
-      userLoaded: selectors.user.loaded(state),
+      userLoaded: selectors.auth.loaded(state),
       route: selectors.router.route(state),
     }
   },

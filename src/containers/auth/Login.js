@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import userActions from 'store/modules/user'
+import authActions from 'store/modules/auth'
 
 import Login from 'pages/auth/Login'
 import selectors from '../../store/selectors';
@@ -13,13 +13,13 @@ const initialValues = {
 
 @connect(
   state => ({
-    error: selectors.user.errors.login(state),
-    loading: selectors.user.loading.create(state),
+    error: selectors.auth.errors.login(state),
+    loading: selectors.auth.loading.login(state),
     schema: selectors.config.forms.user.login(state),
     initialValues,
   }),
   {
-    login: userActions.login,
+    login: authActions.login,
   },
 )
 class LoginContainer extends React.Component {

@@ -48,7 +48,7 @@ const authorizeRoute = (routes) => (router, dependencies) => (toState, fromState
 
   const authorizeSetting = authorizeSettings[0]
 
-  const loggedIn = selectors.user.loggedIn(store.getState())
+  const loggedIn = selectors.auth.loggedIn(store.getState())
 
   if(authorizeSetting == 'user') {
     if(!loggedIn) {

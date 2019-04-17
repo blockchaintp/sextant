@@ -7,6 +7,7 @@ import {
   all,
 } from 'redux-saga/effects'
 import snackbarActions from './modules/snackbar'
+import authActions from './modules/auth'
 import userActions from './modules/user'
 import configActions from './modules/config'
 import networkActions from './modules/network'
@@ -45,11 +46,11 @@ const RootSagas = ({
   router,
 }) => {
 
-  const loadUserStatus = initialLoader({
-    getLoaderAction: () => userActions.loadStatus(),
-    setDataAction: userActions.setData,
-    networkName: 'user.status',
-    title: 'load user status',
+  const loadAuthStatus = initialLoader({
+    getLoaderAction: () => authActions.loadStatus(),
+    setDataAction: authActions.setData,
+    networkName: 'auth.status',
+    title: 'load auth status',
   })
 
   const loadHasInitialUser = initialLoader({
@@ -72,7 +73,7 @@ const RootSagas = ({
   function* initialize() {
 
     const initialLoaderResults = yield all([
-      call(loadUserStatus),
+      call(loadAuthStatus),
       call(loadHasInitialUser),
       call(loadConfig),
     ])
