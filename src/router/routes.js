@@ -42,7 +42,10 @@ const routes = [
     name: 'user',
     path: '/user/:id',
     authorize: 'user',
-    trigger: (store, params) => store.dispatch(userActions.loadUser(params.id)),
+    trigger: (store, params) => {
+      if(params.id == 'new') return
+      store.dispatch(userActions.loadUser(params.id))
+    },
   },
 ]
 

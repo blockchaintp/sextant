@@ -9,7 +9,7 @@ import selectors from 'store/selectors'
 
 const onAdd = () => routerActions.navigateTo('user', { id: 'new' })
 const onEdit = (id) => routerActions.navigateTo('user', { id })
-const onDelete = (id) => userActions.deleteUser(id)
+const onDelete = (id) => userActions.delete(id)
 
 @connect(
   state => ({

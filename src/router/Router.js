@@ -17,6 +17,7 @@ import Login from 'containers/auth/Login'
 
 import CreateInitialUser from 'containers/user/CreateInitialUser'
 import UserTable from 'containers/user/UserTable'
+import UserForm from 'containers/user/UserForm'
 
 @connect(
   state => {
@@ -56,6 +57,9 @@ class Router extends React.Component {
           </Route>
           <Route segment="users" exact>
             <UserTable />
+          </Route>
+          <Route segment="user" exact>
+            <UserForm />
           </Route>
         </LayoutMain>
       </RouteContext.Provider>

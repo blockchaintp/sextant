@@ -15,6 +15,9 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 5,
   },
+  button: {
+    marginRight: theme.spacing.unit * 2,
+  },
 })
 
 class UserForm extends React.Component {
@@ -28,6 +31,7 @@ class UserForm extends React.Component {
       initialValues,
       error,
       loading,
+      onCancel,
     } = this.props
 
     return (
@@ -47,15 +51,31 @@ class UserForm extends React.Component {
                   ({
                     handleSubmit,
                   }) => (
-                    <Button
-                      type="button"
-                      variant="contained"
-                      color="primary"
-                      disabled={ loading }
-                      onClick={ handleSubmit }
-                    >
-                      { submitTitle }
-                    </Button>
+                    <React.Fragment>
+                      {
+                        onCancel && (
+                          <Button
+                            className={ classes.button }
+                            type="button"
+                            variant="contained"
+                            onClick={ onCancel }
+                          >
+                            Cancel
+                          </Button>
+                        )
+                      }
+                      <Button
+                        className={ classes.button }
+                        type="button"
+                        variant="contained"
+                        color="primary"
+                        disabled={ loading }
+                        onClick={ handleSubmit }
+                      >
+                        { submitTitle }
+                      </Button>
+                    </React.Fragment>
+                    
                   )
                 }
               />
@@ -74,6 +94,7 @@ UserForm.propTypes = {
   error: PropTypes.string,
   title: PropTypes.string,
   submitTitle: PropTypes.string,
+  onCancel: PropTypes.func,
 }
 
 UserForm.defaultProps = {

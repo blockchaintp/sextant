@@ -69,18 +69,9 @@ const sideEffects = {
     dataAction: actions.setUser,
     snackbarError: true,
   }),
-  deleteUser: (id) => (dispatch) => {
+  delete: (id) => (dispatch) => {
     console.log('--------------------------------------------')
     console.log('delete ' + id)
-  },
-  createInitial: (payload) => async (dispatch, getState) => {
-    try {
-      await dispatch(actions.create(payload))
-      dispatch(snackbarActions.setSuccess(`initial user created`))
-      dispatch(routerActions.navigateTo('login'))
-    } catch(e) {
-      dispatch(snackbarActions.setError(`error creating initial user: ${e.toString()}`))
-    }
   },
   create: (payload) => (dispatch, getState) => {
     return api.loaderSideEffect({
@@ -91,9 +82,32 @@ const sideEffects = {
         permission: payload.permission,
       }),
       prefix,
-      name: 'create',
+      name: 'form',
       returnError: true,
     })
+  },
+  createInitial: (payload) => async (dispatch, getState) => {
+    try {
+      await dispatch(actions.create(payload))
+      dispatch(snackbarActions.setSuccess(`initial user created`))
+      dispatch(routerActions.navigateTo('login'))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error creating initial user: ${e.toString()}`))
+    }
+  },
+  createNew: (payload) => {
+    console.log('--------------------------------------------')
+    console.log('create user')
+    console.dir(payload)
+  },
+  save: (payload) => (dispatch, getState) => {
+    console.log('--------------------------------------------')
+    console.log('save user')
+    console.dir(payload)
+  },
+  submitForm: (payload) => (dispatch, getState) => {
+    console.log('--------------------------------------------')
+    console.log('user submit form')
   },
 }
 
