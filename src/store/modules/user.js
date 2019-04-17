@@ -59,22 +59,25 @@ const sideEffects = {
     name: 'hasInitialUser',
     dataAction: actions.setHasInitialUser,
   }),
-  login: (payload) => (dispatch, getState) => {
-    api.loaderSideEffect({
-      dispatch,
-      loader: () => loaders.login(payload),
-      prefix,
-      name: 'login',
-      dataAction: actions.setData,
-      returnError: true,
-    })
-      .then(() => dispatch(routerActions.navigateTo('home')))
-      .catch(error => {
-        dispatch(networkActions.setError({
-          name: 'user.login',
-          value: 'Incorrect details',
-        }))
+  login: (payload) => async (dispatch, getState) => {
+    try {
+      const result = await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.login(payload),
+        prefix,
+        name: 'login',
+        returnError: true,
       })
+      
+      if(!result.ok) throw new Error('unexpected result from login')
+      await dispatch(actions.loadStatus())
+      dispatch(routerActions.navigateTo('home'))
+    } catch(err) {
+      dispatch(networkActions.setError({
+        name: 'user.login',
+        value: 'Incorrect details',
+      }))
+    }
   },
   logout: () => (dispatch, getState) => {
     api.loaderSideEffect({
