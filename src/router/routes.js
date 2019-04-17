@@ -58,6 +58,11 @@ const routes = [
       store.dispatch(userActions.loadUser(params.id))
     },
   },
+  {
+    name: 'accountdetails',
+    path: '/accountdetails',
+    authorize: authHandlers.user,
+  },
 ]
 
 

@@ -40,7 +40,6 @@ const onCancel = () => routerActions.navigateTo('users')
       loading: selectors.user.loading.user(state),
       schema,
       initialValues,
-      showCancelButton: true,
     }
   },
   {

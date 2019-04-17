@@ -74,6 +74,10 @@ const settings = {
   }) => {
     if(loggedIn) {
       return [{
+        title: 'Account Details',
+        handler: 'accountdetails',
+        icon: icons.user,
+      }, '-', {
         title: 'Logout',
         handler: handlers.logout,
         icon: icons.logout,

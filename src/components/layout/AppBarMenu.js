@@ -8,7 +8,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-
+import Divider from '@material-ui/core/Divider'
 import UserAvatar from 'components/user/Avatar'
 import settings from 'settings'
 

@@ -47,7 +47,8 @@ const loaders = {
   update: (id, payload) => axios.put(api.url(`/user/${id}`), payload)
     .then(api.process),
 
-  
+  delete: (id) => axios.delete(api.url(`/user/${id}`))
+    .then(api.process),
     
 }
 
@@ -75,9 +76,20 @@ const sideEffects = {
     dataAction: actions.setUser,
     snackbarError: true,
   }),
-  delete: (id) => (dispatch) => {
-    console.log('--------------------------------------------')
-    console.log('delete ' + id)
+  delete: (id) => async (dispatch) => {
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.delete(id),
+        prefix,
+        name: 'delete',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setSuccess(`user deleted`))
+      dispatch(actions.loadUsers())
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error deleting user: ${e.toString()}`))
+    }
   },
   create: (payload) => (dispatch, getState) => {
     return api.loaderSideEffect({
@@ -127,6 +139,25 @@ const sideEffects = {
       dispatch(routerActions.navigateTo('users'))
     } catch(e) {
       dispatch(snackbarActions.setError(`error saving user: ${e.toString()}`))
+    }
+  },
+  saveAccountDetails: (payload) => async (dispatch, getState) => {
+    const userData = selectors.auth.data(getState())
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.update(userData.id, {
+          username: payload.username,
+          password: payload.password,
+        }),
+        prefix,
+        name: 'form',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setSuccess(`account details saved`))
+      dispatch(routerActions.navigateTo('home'))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error saving account details: ${e.toString()}`))
     }
   },
   submitForm: (payload) => (dispatch, getState) => {
