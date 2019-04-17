@@ -11,9 +11,25 @@ const prop = (baseSelector, propName) => createSelector(
 // return an object of prop selectors given a base selector
 // and an array of prop names
 const props = (baseSelector, propNames) => propNames.reduce((all, propName) => {
-  all[propName] = prop(baseSelector, propName)
+  if(typeof(propName) == 'string') {
+    propName = {
+      selectorName: propName,
+      dataField: propName,
+    }
+  }
+  all[propName.selectorName] = prop(baseSelector, propName.dataField)
   return all
 }, {})
+
+const networkProps = (prefix, fields) => fields.map(field => {
+  return {
+    selectorName: field,
+    dataField: [prefix, field].join('.'),
+  }
+})
+
+const networkErrors = state => state.network.errors
+const networkLoading = state => state.network.loading
 
 const route = state => state.router.route
 const previousRoute = state => state.router.previousRoute
@@ -24,7 +40,18 @@ const routeParamId = createSelector(
 )
 
 const user = state => state.user
-const userErrors = prop(user, 'errors')
+
+const USER_NETWORK_NAMES = networkProps('user', [
+  'status',
+  'login',
+  'logout',
+])
+
+const config = state => state.config
+
+const CONFIG_NETWORK_NAMES = networkProps('config', [
+  'data',
+])
 
 const snackbar = state => state.snackbar
 
@@ -91,17 +118,21 @@ const selectors = {
   user: {
     store: user,
     loggedIn: createSelector(user, u => u.data ? true : false),
-    errors: {
-      ...props(userErrors, [
-        'login',
-        'status',
-        'logout',
-      ]),
-    },
+    errors: props(networkErrors, USER_NETWORK_NAMES),
+    loading: props(networkLoading, USER_NETWORK_NAMES),
     ...props(user, [
       'data',
       'loaded',
       'hasInitialUser',
+    ]),
+  },
+
+  config: {
+    store: config,
+    errors: props(networkErrors, CONFIG_NETWORK_NAMES),
+    loading: props(networkLoading, CONFIG_NETWORK_NAMES),
+    ...props(config, [
+      'data',
     ]),
   },
 
