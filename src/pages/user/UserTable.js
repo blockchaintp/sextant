@@ -55,12 +55,20 @@ class UserTable extends React.Component {
     const fields =[{
       title: 'Username',
       name: 'username',
+    },{
+      title: 'Permission',
+      name: 'permission',
+    },{
+      title: 'Created',
+      name: 'created',
     }]
 
     const data = users.map((user, index) => {
       return {
         id: user.id,
         username: user.username,
+        permission: user.permission,
+        created: new Date(user.created_at).toLocaleString(),
       }
     })
 
