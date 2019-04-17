@@ -109,7 +109,7 @@ class AppBarMenu extends React.Component {
           {
             user ? (
               <UserAvatar
-                userData={ user }
+                user={ user }
               />
             ) : (
               <MoreVertIcon />
