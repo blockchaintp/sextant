@@ -30,7 +30,7 @@ class UserForm extends React.Component {
       schema,
       initialValues,
       error,
-      loading,
+      submitting,
       onCancel,
     } = this.props
 
@@ -69,7 +69,7 @@ class UserForm extends React.Component {
                         type="button"
                         variant="contained"
                         color="primary"
-                        disabled={ loading }
+                        disabled={ submitting }
                         onClick={ handleSubmit }
                       >
                         { submitTitle }

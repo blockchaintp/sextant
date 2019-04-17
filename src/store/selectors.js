@@ -93,6 +93,8 @@ const userStore = state => state.user
 const USER_NETWORK_NAMES = networkProps('user', [
   'hasInitialUser',
   'form',
+  'users',
+  'user',
 ])
 
 const configStore = state => state.config

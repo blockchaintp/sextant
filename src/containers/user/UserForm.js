@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 
 import routerActions from 'store/modules/router'
 import userActions from 'store/modules/user'
+import selectors from 'store/selectors'
 
 import UserForm from 'pages/user/UserForm'
-import selectors from 'store/selectors'
+import Loading from 'components/system/Loading'
 
 const newInitialValues = {
   username: '',
@@ -19,10 +20,15 @@ const onCancel = () => routerActions.navigateTo('users')
 @connect(
   state => {
     const id = selectors.router.idParam(state)
+    const userData = selectors.auth.data(state)
 
     const schema = id == 'new' ?
       selectors.config.forms.user.userAdd(state) :
-      selectors.config.forms.user.userEdit(state)
+      (
+        id == userData.id ?
+        selectors.config.forms.user.userSelf(state) :
+        selectors.config.forms.user.userEdit(state)
+      )
 
     const initialValues = id == 'new' ?
       newInitialValues :
@@ -30,7 +36,8 @@ const onCancel = () => routerActions.navigateTo('users')
 
     return {
       error: selectors.user.errors.form(state),
-      loading: selectors.user.loading.form(state),
+      submitting: selectors.user.loading.form(state),
+      loading: selectors.user.loading.user(state),
       schema,
       initialValues,
       showCancelButton: true,
@@ -44,6 +51,15 @@ const onCancel = () => routerActions.navigateTo('users')
 class CreateInitialUserContainer extends React.Component {
 
   render() {
+
+    const {
+      loading,
+    } = this.props
+    
+    if(loading) {
+      return <Loading />
+    }
+
     return (
       <UserForm {...this.props} />
     )    
