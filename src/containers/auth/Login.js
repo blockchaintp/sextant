@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import authActions from 'store/modules/auth'
 
 import Login from 'pages/auth/Login'
-import selectors from '../../store/selectors';
+import selectors from 'store/selectors'
 
 const initialValues = {
   username: '',

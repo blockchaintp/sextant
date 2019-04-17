@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import userActions from 'store/modules/user'
 
 import UserForm from 'pages/user/UserForm'
-import selectors from '../../store/selectors'
+import selectors from 'store/selectors'
 
 const initialValues = {
   username: '',
