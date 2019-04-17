@@ -36,6 +36,24 @@ const schema = [
     }
   },
   {
+    id: 'accessLevel',
+    helperText: 'Access level',
+    component: 'select',
+    options: [{
+      title: 'Superuser',
+      value: 'superuser',
+    },{
+      title: 'Admin',
+      value: 'admin',
+    }, {
+      title: 'User',
+      value: 'user',
+    }],
+    extraProps: {
+      disabled: true,
+    }
+  },
+  {
     id: 'password',
     title: 'Password',
     helperText: 'Enter your password (min 6 chars - alphanumeric)',
@@ -72,12 +90,6 @@ const schema = [
   },
 ]
 
-const initialValues = {
-  username: '',
-  password: '',
-  confirmPassword: '',
-}
-
 class UserForm extends React.Component {
   render() {
     const { 
@@ -85,6 +97,7 @@ class UserForm extends React.Component {
       title,
       submitTitle,
       submitForm,
+      initialValues,
       error,
     } = this.props
 
@@ -128,6 +141,7 @@ class UserForm extends React.Component {
 UserForm.propTypes = {
   classes: PropTypes.object.isRequired,
   submitForm: PropTypes.func.isRequired,
+  initialValues: PropTypes.object.isRequired, 
   error: PropTypes.string,
   title: PropTypes.string,
   submitTitle: PropTypes.string,

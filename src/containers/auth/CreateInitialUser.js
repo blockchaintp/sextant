@@ -6,9 +6,17 @@ import userActions from 'store/modules/user'
 import UserForm from 'pages/auth/UserForm'
 import selectors from '../../store/selectors'
 
+const initialValues = {
+  username: '',
+  accessLevel: 'superuser',
+  password: '',
+  confirmPassword: '', 
+}
+
 @connect(
   state => ({
     error: '',
+    initialValues,
   }),
   {
     submitForm: () => {},

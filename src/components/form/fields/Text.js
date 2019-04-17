@@ -16,6 +16,7 @@ class Text extends React.Component {
     } = this.props
 
     const inputProps = item.inputProps || {}
+    const extraProps = item.extraProps || {}
 
     return (
       <TextField
@@ -29,6 +30,7 @@ class Text extends React.Component {
         onChange={ onChange }
         onBlur={ onBlur }
         { ...inputProps }
+        { ...extraProps }
       />
     )
   }

@@ -31,6 +31,7 @@ class RadioField extends React.Component {
     } = this.props
 
     const title = item.title || name
+    const extraProps = item.extraProps || {}
 
     return (
       <FormControl component="fieldset" className={ classes.root }>
@@ -54,7 +55,7 @@ class RadioField extends React.Component {
                   key={ i }
                   value={ option.value }
                   label={ option.title }
-                  control={<Radio />}
+                  control={<Radio { ...extraProps } />}
                 />
               )
             })

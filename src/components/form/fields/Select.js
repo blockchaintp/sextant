@@ -30,6 +30,7 @@ class SelectField extends React.Component {
     } = this.props
 
     const title = item.title || name
+    const extraProps = item.extraProps || {}
 
     return (
       <FormControl component="fieldset" className={ classes.root }>
@@ -41,6 +42,7 @@ class SelectField extends React.Component {
             name,
             id: name,
           }}
+          { ...extraProps }
         >
           {
             (item.options || []).map((option, i) => {

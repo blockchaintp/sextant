@@ -34,6 +34,7 @@ class MultipleCheckboxField extends React.Component {
 
     const title = item.title || name
     const useValue = value || {}
+    const extraProps = item.extraProps || {}
 
     return (
       <FormControl component="fieldset" className={ classes.root }>
@@ -68,6 +69,7 @@ class MultipleCheckboxField extends React.Component {
                         setFieldValue(name, newValue)
                       }}
                       value={ `${name}-${i}` }
+                      { ...extraProps }
                     />
                   }
                   label={ option.title }

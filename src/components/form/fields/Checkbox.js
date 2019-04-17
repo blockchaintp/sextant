@@ -30,6 +30,7 @@ class CheckboxField extends React.Component {
     } = this.props
 
     const title = item.title || name
+    const extraProps = item.extraProps || {}
 
     return (
       <FormControl component="fieldset" className={ classes.root }>
@@ -42,6 +43,7 @@ class CheckboxField extends React.Component {
                 checked={ value ? true : false }
                 onChange={ onChange }
                 value={ name }
+                { ...extraProps }
               />
             }
             label={ title }
