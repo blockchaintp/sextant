@@ -23,7 +23,8 @@ const styles = (theme) => {
       backgroundColor: [theme.palette.getContrastText(theme.palette.primary.main), '!important'],
     },
     chipLabel: {
-      color: theme.palette.getContrastText(theme.palette.primary.main)
+      color: theme.palette.getContrastText(theme.palette.primary.main),
+      textTransform: ['none', '!important'],
     },
     chipOutline: {
       borderColor: [theme.palette.getContrastText(theme.palette.primary.main), '!important'],
@@ -52,7 +53,6 @@ class UserAvatar extends React.Component {
         classes={{
           outlined: classes.chipOutline,
           label: classes.chipLabel,
-          icon: classes.chipLabel,
           avatar: classes.chipAvatar,
         }}
       />
