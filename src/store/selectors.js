@@ -147,6 +147,7 @@ const selectors = {
         'userAdd',
         'userEdit',
         'userSelf',
+        'login',
       ])
     }
   },

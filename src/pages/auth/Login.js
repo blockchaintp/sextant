@@ -17,54 +17,15 @@ const styles = theme => ({
   },
 })
 
-const schema = [
-  {
-    id: 'username',
-    title: 'Username',
-    helperText: 'Enter your username',
-    component: 'text',
-    inputProps: {
-      type: 'text',
-    },
-    validate: {
-      type: 'string',
-      methods: [
-        ['matches', '^\\S+$', 'Cannot contain spaces'],
-        ['min', 6, 'Must be at least 6 characters'],
-        ['required', 'The username is required'], 
-      ]
-    }
-  },
-  {
-    id: 'password',
-    title: 'Password',
-    helperText: 'Enter your password',
-    component: 'text',
-    inputProps: {
-      type: 'password',
-    },
-    validate: {
-      type: 'string',
-      methods: [
-        ['required', 'The password is required'],
-        ['min', 6, 'Must be at least 6 characters'],
-        ['matches', '^\\S+$', 'Cannot contain spaces'],
-      ]
-    }
-  },
-]
-
-const initialValues = {
-  username: '',
-  password: '',
-}
-
 class Login extends React.Component {
   render() {
     const { 
       classes,
       login,
       error,
+      loading,
+      initialValues,
+      schema,
     } = this.props
 
     return (
@@ -88,7 +49,7 @@ class Login extends React.Component {
                       type="button"
                       variant="contained"
                       color="primary"
-                      disabled={ false }
+                      disabled={ loading }
                       onClick={ handleSubmit }
                     >
                       Login
