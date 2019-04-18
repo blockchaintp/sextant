@@ -13,34 +13,34 @@ const redirectRoute = (routes) => (router, dependencies) => (toState, fromState,
   const { store } = dependencies
 
   const activeRoutes = findRoutes(routes, toActivate)
+  const activeRoute = activeRoutes[activeRoutes.length-1]
 
-  const redirects = activeRoutes
-    .map(route => route.redirect)
-    .filter(r => r)
+  if(!activeRoute) return done()
 
-  // any route in the tree can have a redirect but
-  // we only use the lower one
-  if(redirects.length <= 0) return done()
+  const redirectInfo = activeRoute.redirect
 
-  const redirectInfo = redirects[redirects.length-1]
+  if(!redirectInfo) return done()
+
+  let redirectTo = null
 
   // if the redirect is a string - redirect there
   if(typeof(redirectInfo) === 'string') {
-    store.dispatch(routerActions.navigateTo(redirectInfo))
+    redirectTo = redirectInfo
   }
   // if it's a function - run the function passing the redux state
   // the function should return the redirect or falsey value for don't redirect
   else if(typeof(redirectInfo) === 'function') {
-    const redirectTo = redirectInfo(store.getState())
-    if(redirectTo) {
-      store.dispatch(routerActions.navigateTo(redirectTo)) 
-    }
-    else {
-      done()
-    }
+    redirectTo = redirectInfo(store.getState())
   }
   else {
     return done(`unknown type of redirect info: ${typeof(redirectInfo)}`)
+  }
+
+  if(redirectTo && redirectTo != activeRoute.name) {
+    store.dispatch(routerActions.navigateTo(redirectTo)) 
+  }
+  else {
+    done()
   }
 }
 
