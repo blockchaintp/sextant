@@ -60,19 +60,19 @@ const sideEffects = {
     name: 'hasInitialUser',
     dataAction: actions.setHasInitialUser,
   }),
-  loadUsers: () => (dispatch) => api.loaderSideEffect({
+  list: () => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.list(),
     prefix,
-    name: 'users',
+    name: 'list',
     dataAction: actions.setUsers,
     snackbarError: true,
   }),
-  loadUser: (id) => (dispatch) => api.loaderSideEffect({
+  get: (id) => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.get(id),
     prefix,
-    name: 'user',
+    name: 'get',
     dataAction: actions.setUser,
     snackbarError: true,
   }),
@@ -86,7 +86,7 @@ const sideEffects = {
         returnError: true,
       })
       dispatch(snackbarActions.setSuccess(`user deleted`))
-      dispatch(actions.loadUsers())
+      dispatch(actions.list())
     } catch(e) {
       dispatch(snackbarActions.setError(`error deleting user: ${e.toString()}`))
     }

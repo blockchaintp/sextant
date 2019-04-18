@@ -37,7 +37,7 @@ const onCancel = () => routerActions.navigateTo('users')
     return {
       error: selectors.user.errors.form(state),
       submitting: selectors.user.loading.form(state),
-      loading: selectors.user.loading.user(state),
+      loading: selectors.user.loading.get(state),
       schema,
       initialValues,
     }

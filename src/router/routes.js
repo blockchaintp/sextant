@@ -47,7 +47,7 @@ const routes = [
     name: 'users',
     path: '/users',
     authorize: authHandlers.superuser,
-    trigger: (store) => store.dispatch(userActions.loadUsers()),
+    trigger: (store) => store.dispatch(userActions.list()),
   },
   {
     name: 'user',
@@ -55,7 +55,7 @@ const routes = [
     authorize: authHandlers.superuser,
     trigger: (store, params) => {
       if(params.id == 'new') return
-      store.dispatch(userActions.loadUser(params.id))
+      store.dispatch(userActions.get(params.id))
     },
   },
   {
