@@ -3,20 +3,13 @@ import findRoutes from '../utils/findRoutes'
 
 import snackbarActions from 'store/modules/snackbar'
 import routerActions from 'store/modules/router'
-import selectors from 'store/selectors'
-import settings from 'settings'
 
 /*
 
-  check the authorize properties of the current routes
+  run an authorize function on the route if present
 
-  if present - call the checkUser saga with one of the following values:
-
-   * user
-   * guest
-
-  the saga will check the status of the current user and if not matching,
-  will redirect accordingly
+  if the function returns a string - redirect there
+  otherwise allow the route
 
 */
 const authorizeRoute = (routes) => (router, dependencies) => (toState, fromState, done) => {
