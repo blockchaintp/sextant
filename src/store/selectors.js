@@ -97,6 +97,14 @@ const USER_NETWORK_NAMES = networkProps('user', [
   'get',
 ])
 
+const clusterStore = state => state.cluster
+
+const CLUSTER_NETWORK_NAMES = networkProps('cluster', [
+  'form',
+  'list',
+  'get',
+])
+
 const configStore = state => state.config
 const configData = prop(configStore, 'data')
 const forms = createSelector(
@@ -204,6 +212,16 @@ const selectors = {
     ...props(userStore, [
       'hasInitialUser',
     ]),
+  },
+
+  cluster: {
+    store: clusterStore,
+    errors: props(networkErrors, CLUSTER_NETWORK_NAMES),
+    loading: props(networkLoading, CLUSTER_NETWORK_NAMES),
+    collection: entity({
+      baseSelector: prop(clusterStore, 'clusters'),
+      entityName: 'cluster',
+    }),
   },
 
   config: {

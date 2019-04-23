@@ -1,5 +1,6 @@
 import selectors from 'store/selectors'
 import userActions from 'store/modules/user'
+import clusterActions from 'store/modules/cluster'
 
 const authHandlers = {
   guest: (state) => selectors.auth.loggedIn(state) ?
@@ -62,6 +63,21 @@ const routes = [
     name: 'accountdetails',
     path: '/accountdetails',
     authorize: authHandlers.user,
+  },
+  {
+    name: 'clusters',
+    path: '/clusters',
+    authorize: authHandlers.user,
+    trigger: (store) => store.dispatch(clusterActions.list()),
+  },
+  {
+    name: 'cluster',
+    path: '/cluster/:id',
+    authorize: authHandlers.user,
+    trigger: (store, params) => {
+      if(params.id == 'new') return
+      //store.dispatch(userActions.get(params.id))
+    },
   },
 ]
 

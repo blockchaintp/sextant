@@ -20,6 +20,8 @@ import CreateInitialUser from 'containers/user/CreateInitialUser'
 import UserTable from 'containers/user/UserTable'
 import UserForm from 'containers/user/UserForm'
 
+import ClusterTable from 'containers/cluster/ClusterTable'
+
 @connect(
   state => {
     return {
@@ -64,6 +66,9 @@ class Router extends React.Component {
           </Route>
           <Route segment="accountdetails" exact>
             <AccountDetails />
+          </Route>
+          <Route segment="clusters" exact>
+            <ClusterTable />
           </Route>
         </LayoutMain>
       </RouteContext.Provider>

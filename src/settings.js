@@ -7,6 +7,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
+import DashboardIcon from '@material-ui/icons/Dashboard'
 
 const icons = {
   home: HomeIcon,
@@ -18,6 +19,7 @@ const icons = {
   add: AddIcon,
   edit: EditIcon,
   delete: DeleteIcon,
+  cluster: DashboardIcon,
 }
 
 const settings = {
@@ -39,6 +41,10 @@ const settings = {
         title: 'Home',
         handler: 'home',
         icon: icons.home,
+      },{
+        title: 'Clusters',
+        handler: 'clusters',
+        icon: icons.cluster,
       }]
 
       if(isSuperuser) {

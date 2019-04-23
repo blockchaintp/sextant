@@ -28,37 +28,37 @@ const reducers = {
 
 const loaders = {
 
-  list: () => axios.get(api.url(`/cluster`))
+  list: () => axios.get(api.url(`/clusters`))
     .then(api.process),
 
-  get: (id) => axios.get(api.url(`/cluster/${id}`))
+  get: (id) => axios.get(api.url(`/clusters/${id}`))
     .then(api.process),
 
-  create: (payload) => axios.post(api.url(`/cluster`), payload)
+  create: (payload) => axios.post(api.url(`/clusters`), payload)
     .then(api.process),
 
-  update: (id, payload) => axios.put(api.url(`/cluster/${id}`), payload)
+  update: (id, payload) => axios.put(api.url(`/clusters/${id}`), payload)
     .then(api.process),
 
-  delete: (id) => axios.delete(api.url(`/cluster/${id}`))
+  delete: (id) => axios.delete(api.url(`/clusters/${id}`))
     .then(api.process),
     
 }
 
 const sideEffects = {
-  loadClusters: () => (dispatch) => api.loaderSideEffect({
+  list: () => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.list(),
     prefix,
-    name: 'clusters',
+    name: 'list',
     dataAction: actions.setClusters,
     snackbarError: true,
   }),
-  loadCluster: (id) => (dispatch) => api.loaderSideEffect({
+  get: (id) => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.get(id),
     prefix,
-    name: 'cluster',
+    name: 'get',
     dataAction: actions.setCluster,
     snackbarError: true,
   }),
