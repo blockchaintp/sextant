@@ -11,6 +11,7 @@ import triggerMiddleware from './middleware/trigger'
 const Router = () => {
   const router = createRouter(routes, {
     defaultRoute: 'notfound',
+    queryParamsMode: 'loose',
   })
 
   router.usePlugin(browserPlugin({}))

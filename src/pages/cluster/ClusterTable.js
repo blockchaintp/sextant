@@ -76,10 +76,10 @@ class ClusterTable extends React.Component {
 
     const addButtonItems = [{
       title: 'Remote Cluster',
-      handler: () => console.log('remote cluster')
+      handler: () => onAdd('remote')
     }, {
       title: 'Local Cluster',
-      handler: () => console.log('local cluster')
+      handler: () => onAdd('local')
     }]
 
     const addButton = (

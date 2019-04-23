@@ -21,6 +21,7 @@ import UserTable from 'containers/user/UserTable'
 import UserForm from 'containers/user/UserForm'
 
 import ClusterTable from 'containers/cluster/ClusterTable'
+import ClusterForm from 'containers/cluster/ClusterForm'
 
 @connect(
   state => {
@@ -69,6 +70,9 @@ class Router extends React.Component {
           </Route>
           <Route segment="clusters" exact>
             <ClusterTable />
+          </Route>
+          <Route segment="cluster" exact>
+            <ClusterForm />
           </Route>
         </LayoutMain>
       </RouteContext.Provider>
