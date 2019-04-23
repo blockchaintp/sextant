@@ -7,7 +7,7 @@ import clusterActions from 'store/modules/cluster'
 import ClusterTable from 'pages/cluster/ClusterTable'
 import selectors from 'store/selectors'
 
-const onAdd = (type) => routerActions.navigateTo('cluster', { id: 'new', type })
+const onAdd = (provision_type) => routerActions.navigateTo('cluster', { id: 'new', provision_type })
 const onEdit = (id) => routerActions.navigateTo('cluster', { id })
 const onDelete = (id) => clusterActions.delete(id)
 

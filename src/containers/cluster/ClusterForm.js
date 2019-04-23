@@ -24,7 +24,7 @@ const onCancel = () => routerActions.navigateTo('clusters')
 
     const {
       id,
-      type,
+      provision_type,
     } = routeParams
 
     return {
@@ -32,7 +32,7 @@ const onCancel = () => routerActions.navigateTo('clusters')
       submitting: selectors.cluster.loading.form(state),
       loading: selectors.cluster.loading.get(state),
       id,
-      type,
+      provision_type,
     }
   },
   {
