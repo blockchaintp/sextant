@@ -8,6 +8,8 @@ import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
+import MenuButton from 'components/layout/MenuButton'
+
 import settings from 'settings'
 
 const AddIcon = settings.icons.add
@@ -72,16 +74,25 @@ class ClusterTable extends React.Component {
       }
     })
 
+    const addButtonItems = [{
+      title: 'Remote Cluster',
+      handler: () => console.log('remote cluster')
+    }, {
+      title: 'Local Cluster',
+      handler: () => console.log('local cluster')
+    }]
+
     const addButton = (
-      <Button 
+      <MenuButton 
         className={classes.button} 
-        variant="contained"
-        color="secondary"
-        onClick={ onAdd }
-      >
-        Add 
-        <AddIcon />
-      </Button>
+        title="Add"
+        icon={ AddIcon }
+        buttonProps={{
+          variant: 'contained',
+          color: 'secondary',
+        }}
+        items={ addButtonItems }
+      />
     )
 
     const actions = [{
