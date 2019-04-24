@@ -1,6 +1,7 @@
 import selectors from 'store/selectors'
 import userActions from 'store/modules/user'
 import clusterActions from 'store/modules/cluster'
+import networkActions from 'store/modules/network'
 
 const authHandlers = {
   guest: (state) => selectors.auth.loggedIn(state) ?
@@ -76,7 +77,8 @@ const routes = [
     authorize: authHandlers.user,
     trigger: (store, params) => {
       if(params.id == 'new') return
-      //store.dispatch(userActions.get(params.id))
+      store.dispatch(networkActions.startLoading('cluster.get'))
+      store.dispatch(clusterActions.get(params.id))
     },
   },
 ]

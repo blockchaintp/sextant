@@ -45,7 +45,12 @@ const onCancel = () => routerActions.navigateTo('clusters')
       baseProps.schema = selectors.config.forms.cluster[provision_type](state)
     }
     else if(!baseProps.loading && !baseProps.loadingError) {
-      baseProps.initialValues = selectors.user.collection.item(state)
+      const cluster = selectors.cluster.collection.item(state)
+      baseProps.initialValues = {
+        name: cluster.name,
+        provision_type: cluster.provision_type,
+        connection: JSON.stringify(cluster.desired_state.connection, null, 4),
+      }
       baseProps.provision_type = baseProps.initialValues.provision_type
       baseProps.schema = selectors.config.forms.cluster[baseProps.initialValues.provision_type](state)
     }
