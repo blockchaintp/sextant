@@ -120,6 +120,7 @@ class MenuButton extends React.Component {
           open={ open }
           onClose={ this.handleClose }
         >
+          <MenuItem key="placeholder" style={{display: "none"}} />
           { this.getMenu() }
         </Menu>
       </div>
