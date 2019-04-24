@@ -62,9 +62,44 @@ const sideEffects = {
     dataAction: actions.setCluster,
     snackbarError: true,
   }),
-  submitForm: () => (dispatch) => {
-    console.log('--------------------------------------------')
-    console.log('submit')
+  submitForm: (data) => (dispatch) => {
+    const id = selectors.router.idParam(getState())
+    if(id == 'new') {
+      dispatch(actions.create(payload))
+    }
+    else {
+      dispatch(actions.save(id, payload))
+    }
+  },
+  create: (payload) => async (dispatch, getState) => {
+    try {    
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.create(payload),
+        prefix,
+        name: 'form',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setSuccess(`cluster created`))
+      dispatch(routerActions.navigateTo('clusters'))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error creating cluster: ${e.toString()}`))
+    }
+  },
+  save: (id, payload) => async (dispatch, getState) => {
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.update(id, payload),
+        prefix,
+        name: 'form',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setSuccess(`cluster saved`))
+      dispatch(routerActions.navigateTo('clusters'))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error saving cluster: ${e.toString()}`))
+    }
   },
 }
 

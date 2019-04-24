@@ -385,6 +385,7 @@ class FormWrapperInner extends React.Component {
       onSubmit,
       error,
       classes,
+      validate,
     } = this.props
 
     let isInitialValid = false
@@ -404,6 +405,7 @@ class FormWrapperInner extends React.Component {
         validationSchema={ validationSchema }
         isInitialValid={ isInitialValid }
         onSubmit={ onSubmit }
+        validate={ validate }
       >
         {
           ({

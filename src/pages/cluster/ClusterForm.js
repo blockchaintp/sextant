@@ -32,6 +32,7 @@ class ClusterForm extends React.Component {
       error,
       submitting,
       onCancel,
+      validate,
     } = this.props
 
     return (
@@ -47,6 +48,7 @@ class ClusterForm extends React.Component {
                 initialValues={ initialValues }
                 error={ error }
                 onSubmit={ submitForm }
+                validate={ validate }
                 renderButtons={
                   ({
                     handleSubmit,
