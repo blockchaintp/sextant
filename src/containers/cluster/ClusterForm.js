@@ -2,17 +2,20 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import routerActions from 'store/modules/router'
-import userActions from 'store/modules/user'
+import clusterActions from 'store/modules/cluster'
 import selectors from 'store/selectors'
 
-import UserForm from 'pages/user/UserForm'
+import ClusterForm from 'pages/cluster/ClusterForm'
 import Loading from 'components/system/Loading'
 
-const newInitialValues = {
-  username: '',
-  permission: 'user',
-  password: '',
-  confirmPassword: '', 
+const initialValues = {
+  local: {
+    name: '',
+  },
+  remote: {
+    name: '',
+    connection: '',
+  },
 }
 
 const onCancel = () => routerActions.navigateTo('clusters')
@@ -27,16 +30,23 @@ const onCancel = () => routerActions.navigateTo('clusters')
       provision_type,
     } = routeParams
 
-    return {
+    const baseProps = {
       error: selectors.cluster.errors.form(state),
       submitting: selectors.cluster.loading.form(state),
       loading: selectors.cluster.loading.get(state),
       id,
-      provision_type,
     }
+
+    if(id == 'new') {
+      baseProps.provision_type = provision_type
+      baseProps.initialValues = initialValues[provision_type]
+      baseProps.schema = selectors.config.forms.cluster[provision_type](state)
+    }
+
+    return baseProps
   },
   {
-    //submitForm: userActions.submitForm,
+    submitForm: clusterActions.submitForm,
     onCancel, 
   },
 )
@@ -44,10 +54,17 @@ class ClusterFormContainer extends React.Component {
 
   render() {
 
-    console.log('--------------------------------------------')
-    console.dir(this.props)
+    const {
+      loading,
+    } = this.props
 
-    return null 
+    if(loading) {
+      return <Loading />
+    }
+    
+    return (
+      <ClusterForm {...this.props} />
+    )
   }
 }
 

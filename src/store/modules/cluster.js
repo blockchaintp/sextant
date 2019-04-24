@@ -62,7 +62,12 @@ const sideEffects = {
     dataAction: actions.setCluster,
     snackbarError: true,
   }),
+  submitForm: () => (dispatch) => {
+    console.log('--------------------------------------------')
+    console.log('submit')
+  },
 }
+
 
 const reducer = CreateReducer({
   initialState,

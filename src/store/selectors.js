@@ -112,6 +112,7 @@ const forms = createSelector(
   configData => configData.forms || {},
 )
 const userForms = prop(forms, 'user')
+const clusterForms = prop(forms, 'cluster')
 
 const userAccessLevels = prop(configData, 'userAccessLevels')
 const roleAccessLevels = prop(configData, 'roleAccessLevels')
@@ -238,6 +239,10 @@ const selectors = {
         'userEdit',
         'userSelf',
         'login',
+      ]),
+      cluster: props(clusterForms, [
+        'local',
+        'remote',
       ])
     },
     userAccessLevels,
