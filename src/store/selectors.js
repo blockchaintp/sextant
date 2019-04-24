@@ -241,9 +241,11 @@ const selectors = {
         'login',
       ]),
       cluster: props(clusterForms, [
-        'local',
-        'remote',
-      ])
+        'localAdd',
+        'localEdit',
+        'remoteAdd',
+        'remoteEdit',
+      ]),
     },
     userAccessLevels,
     roleAccessLevels,
