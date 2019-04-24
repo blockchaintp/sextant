@@ -18,7 +18,7 @@ const initialState = {
 }
 
 const reducers = {
-  setCluster: (state, action) => {
+  setClusters: (state, action) => {
     state.clusters = normalize(action.payload, [cluster])
   },
   setCluster: (state, action) => {
@@ -62,7 +62,7 @@ const sideEffects = {
     dataAction: actions.setCluster,
     snackbarError: true,
   }),
-  submitForm: (data) => (dispatch) => {
+  submitForm: (payload) => (dispatch, getState) => {
     const id = selectors.router.idParam(getState())
     if(id == 'new') {
       dispatch(actions.create(payload))

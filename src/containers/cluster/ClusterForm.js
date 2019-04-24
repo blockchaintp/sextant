@@ -41,10 +41,12 @@ const onCancel = () => routerActions.navigateTo('clusters')
 
     if(id == 'new') {
       baseProps.initialValues = initialValues[provision_type]
+      baseProps.provision_type = routeParams.provision_type
       baseProps.schema = selectors.config.forms.cluster[provision_type](state)
     }
     else if(!baseProps.loading && !baseProps.loadingError) {
       baseProps.initialValues = selectors.user.collection.item(state)
+      baseProps.provision_type = baseProps.initialValues.provision_type
       baseProps.schema = selectors.config.forms.cluster[baseProps.initialValues.provision_type](state)
     }
 
@@ -80,6 +82,8 @@ class ClusterFormContainer extends React.Component {
     const {
       loading,
       loadingError,
+      provision_type,
+      submitForm,
     } = this.props
 
     if(loading) {
@@ -92,8 +96,22 @@ class ClusterFormContainer extends React.Component {
 
     return (
       <ClusterForm 
-        validate={ this.validate }
         {...this.props}
+        validate={ this.validate }
+        submitForm={ (data) => {
+          const submitData = provision_type == 'local' ? {
+            name: data.name,
+            provision_type,
+            desired_state: {},
+          } : {
+            name: data.name,
+            provision_type,
+            desired_state: {
+              connection: JSON.parse(data.connection),
+            },
+          }
+          submitForm(submitData)
+        }}
       />
     )
   }
