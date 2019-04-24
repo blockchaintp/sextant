@@ -54,6 +54,7 @@ const onCancel = () => routerActions.navigateTo('clusters')
       selectors.cluster.collection.item(state)
 
     return {
+      id,
       error: selectors.cluster.errors.form(state),
       submitting: selectors.cluster.loading.form(state),
       loading: selectors.cluster.loading.get(state),
