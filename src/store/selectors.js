@@ -223,6 +223,10 @@ const selectors = {
       baseSelector: prop(clusterStore, 'clusters'),
       entityName: 'cluster',
     }),
+    taskCollection: entity({
+      baseSelector: prop(clusterStore, 'tasks'),
+      entityName: 'task',
+    }),
   },
 
   config: {

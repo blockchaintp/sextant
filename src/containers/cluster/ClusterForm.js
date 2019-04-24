@@ -60,6 +60,7 @@ const onCancel = () => routerActions.navigateTo('clusters')
       schema,
       initialValues,
       provision_type: initialValues ? initialValues.provision_type : null,
+      tasks: selectors.cluster.taskCollection.list(state),
     }
   },
   {

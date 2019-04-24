@@ -79,6 +79,7 @@ const routes = [
       if(params.id == 'new') return
       store.dispatch(networkActions.startLoading('cluster.get'))
       store.dispatch(clusterActions.get(params.id))
+      store.dispatch(clusterActions.listTasks(params.id))
     },
   },
 ]

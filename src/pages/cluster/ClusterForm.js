@@ -6,6 +6,9 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
+import SimpleTable from 'components/table/SimpleTable'
+import SimpleTableHeader from 'components/table/SimpleTableHeader'
+
 import FormWrapper from 'components/form/Wrapper'
 
 const styles = theme => ({
@@ -18,11 +21,60 @@ const styles = theme => ({
   button: {
     marginRight: theme.spacing.unit * 2,
   },
+  errorText: {
+    color: theme.palette.error.main,
+  },
 })
 
 class ClusterForm extends React.Component {
+
+  getTaskTable() {
+    const {
+      classes,
+      tasks,
+    } = this.props
+
+    const fields =[{
+      title: 'Action',
+      name: 'action',
+    }, {
+      title: 'Status',
+      name: 'status',
+    }, {
+      title: 'Started',
+      name: 'started_at',
+    }, , {
+      title: 'Error',
+      name: 'error',
+    }]
+
+    const data = tasks.map((task, index) => {
+      return {
+        id: task.id,
+        action: task.action,
+        status: task.status,
+        started_at: new Date(task.started_at).toLocaleString(),
+        error: (
+          <span className={ classes.errorText }>
+            { task.error }
+          </span>
+        ),
+      }
+    })
+
+    return (
+      <div>
+        <SimpleTable
+          data={ data }
+          fields={ fields }
+        />
+      </div>
+    )
+  }
+
   render() {
     const { 
+      id,
       classes,
       title,
       submitTitle,
@@ -38,7 +90,7 @@ class ClusterForm extends React.Component {
     return (
       <div className={ classes.root }>
         <Grid container spacing={24}>
-          <Grid item xs={12}>
+          <Grid item xs={ id == 'new' ? 12 : 6 }>
             <Paper className={ classes.paper }>
               <Typography variant="h6" gutterBottom>
                 { title }
@@ -83,6 +135,18 @@ class ClusterForm extends React.Component {
               />
             </Paper>
           </Grid>
+          {
+            id != 'new' && (
+              <Grid item xs={ 6 }>
+                <Paper className={ classes.paper }>
+                  <Typography variant="h6" gutterBottom>
+                    Tasks
+                  </Typography>
+                  { this.getTaskTable() }
+                </Paper>
+              </Grid>
+            )
+          }
         </Grid>
       </div>
     )

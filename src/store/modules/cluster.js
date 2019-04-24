@@ -12,9 +12,11 @@ import snackbarActions from './snackbar'
 const prefix = 'cluster'
 
 const cluster = new schema.Entity('cluster')
+const task = new schema.Entity('task')
 
 const initialState = {
   clusters: normalize([], [cluster]),
+  tasks: normalize([], [task]),
 }
 
 const reducers = {
@@ -23,6 +25,9 @@ const reducers = {
   },
   setCluster: (state, action) => {
     mergeEntities(state.clusters, normalize([action.payload], [cluster]))
+  },
+  setTasks: (state, action) => {
+    state.tasks = normalize(action.payload, [task])
   },
 }
 
@@ -41,6 +46,9 @@ const loaders = {
     .then(api.process),
 
   delete: (id) => axios.delete(api.url(`/clusters/${id}`))
+    .then(api.process),
+
+  listTasks: (id) => axios.get(api.url(`/clusters/${id}/tasks`))
     .then(api.process),
     
 }
@@ -101,6 +109,14 @@ const sideEffects = {
       dispatch(snackbarActions.setError(`error saving cluster: ${e.toString()}`))
     }
   },
+  listTasks: (id) => (dispatch) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listTasks(id),
+    prefix,
+    name: 'listTasks',
+    dataAction: actions.setTasks,
+    snackbarError: true,
+  }),
 }
 
 
