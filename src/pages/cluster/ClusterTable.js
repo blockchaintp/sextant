@@ -17,7 +17,9 @@ const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
 
 const styles = theme => ({
-  
+  errorText: {
+    color: theme.palette.error.main,
+  },
 })
 
 class ClusterTable extends React.Component {
@@ -63,6 +65,9 @@ class ClusterTable extends React.Component {
     },{
       title: 'Status',
       name: 'status',
+    },{
+      title: 'Task',
+      name: 'task',
     }]
 
     const data = clusters.map((cluster, index) => {
@@ -71,6 +76,25 @@ class ClusterTable extends React.Component {
         name: cluster.name,
         provision_type: cluster.provision_type,
         status: cluster.status,
+        task: (
+          <div>
+            <div>
+              { cluster.task.action }
+              { 
+                cluster.task.status == 'error' ? (
+                  <span> (error)</span>
+                ) : null
+              }
+            </div>
+            {
+              cluster.task.error && (
+                <div className={ classes.errorText }>
+                  { cluster.task.error }
+                </div>
+              )
+            }
+          </div>
+        ),
       }
     })
 
