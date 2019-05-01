@@ -9,6 +9,21 @@ const flattenSchema = (schema) => {
   }, [])
 }
 
+const flattenErrors = (errors) => {
+  let flatErrors = {}
+  Object.keys(errors).forEach(key => {
+    const value = errors[key]
+
+    if(typeof(value) == 'string') {
+      flatErrors[key] = value
+    }
+    else {
+      flatErrors = Object.assign({}, flatErrors, flattenErrors(value))
+    }
+  })
+  return flatErrors
+}
+
 const getComponent = (component) => {
   let Component = typeof(component) === 'string' ?
       fields[component] :
@@ -36,6 +51,7 @@ const getInitialValues = (schema, initialValues) => {
 
 const utils = {
   flattenSchema,
+  flattenErrors,
   getComponent,
   getInitialValues,
 }

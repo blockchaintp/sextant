@@ -427,6 +427,8 @@ class FormWrapperInner extends React.Component {
               handleSubmit()
             }
 
+            const flatErrors = utils.flattenErrors(errors)
+
             return (
               <form onSubmit={ submitWrapper }>
                 <Grid container spacing={ spacing || 8 }>
@@ -469,13 +471,15 @@ class FormWrapperInner extends React.Component {
                       </Typography>
                       <ul className={ classes.errorText }>
                         {
-                          Object.keys(errors).map((key, i) => (
-                            <li key={ i }>
-                              <Typography className={ classes.errorText }>
-                                { key }: { errors[key] }
-                              </Typography>
-                            </li>
-                          ))
+                          Object.keys(flatErrors).map((key, i) => {
+                            return (
+                              <li key={ i }>
+                                <Typography className={ classes.errorText }>
+                                  { key }: { flatErrors[key] }
+                                </Typography>
+                              </li>
+                            )
+                          })
                         }
                       </ul>
                     </div> 
