@@ -1,6 +1,23 @@
 import transitionPath from 'router5-transition-path'
 import findRoutes from '../utils/findRoutes'
 
+
+const runTriggers = ({
+  routes,
+  params,
+  store,
+  propName,
+}) => {
+  const allTriggers = routes.reduce((all, route) => {
+    let triggers = route.trigger || {}
+    const toRun = triggers[propName]
+    if(!toRun) return all
+    if(typeof(toRun) === 'function') triggers = [toRun]
+    return all.concat(toRun)
+  }, [])
+  allTriggers.forEach(trigger => trigger(store, params))
+}
+
 /*
 
   trigger actions when routes become active
@@ -8,19 +25,26 @@ import findRoutes from '../utils/findRoutes'
 */
 const triggerRoute = (routes) => (router, dependencies) => (toState, fromState, done) => {
 
-  const { toActivate } = transitionPath(toState, fromState)
+  const { toActivate, toDeactivate } = transitionPath(toState, fromState)
   const { store } = dependencies
+  const params = toState.params
 
   const activeRoutes = findRoutes(routes, toActivate)
+  const deactiveRoutes = findRoutes(routes, toDeactivate)
 
-  const allTriggers = activeRoutes.reduce((all, route) => {
-    let triggers = route.trigger || []
-    if(typeof(triggers) === 'function') triggers = [triggers]
-    return all.concat(triggers)
-  }, [])
+  runTriggers({
+    routes: activeRoutes,
+    params,
+    store,
+    propName: 'activate',
+  })
 
-  const params = toState.params
-  allTriggers.forEach(trigger => trigger(store, params))
+  runTriggers({
+    routes: deactiveRoutes,
+    params,
+    store,
+    propName: 'deactivate',
+  })
 
   done()
 }

@@ -50,15 +50,19 @@ const routes = [
     name: 'users',
     path: '/users',
     authorize: authHandlers.superuser,
-    trigger: (store) => store.dispatch(userActions.list()),
+    trigger: {
+      activate: (store) => store.dispatch(userActions.list()),
+    },
   },
   {
     name: 'user',
     path: '/user/:id',
     authorize: authHandlers.superuser,
-    trigger: (store, params) => {
-      if(params.id == 'new') return
-      store.dispatch(userActions.get(params.id))
+    trigger: {
+      activate: (store, params) => {
+        if(params.id == 'new') return
+        store.dispatch(userActions.get(params.id))
+      },
     },
   },
   {
@@ -70,17 +74,22 @@ const routes = [
     name: 'clusters',
     path: '/clusters',
     authorize: authHandlers.user,
-    trigger: (store) => store.dispatch(clusterActions.list()),
+    trigger: {
+      activate: (store) => store.dispatch(clusterActions.startClusterLoop()),
+      deactivate: (store) => store.dispatch(clusterActions.stopClusterLoop()),
+    },
   },
   {
     name: 'cluster',
     path: '/cluster/:id',
     authorize: authHandlers.user,
-    trigger: (store, params) => {
-      if(params.id == 'new') return
-      store.dispatch(networkActions.startLoading('cluster.get'))
-      store.dispatch(clusterActions.get(params.id))
-      store.dispatch(clusterActions.listTasks(params.id))
+    trigger: {
+      activate: (store, params) => {
+        if(params.id == 'new') return
+        store.dispatch(networkActions.startLoading('cluster.get'))
+        store.dispatch(clusterActions.get(params.id))
+        store.dispatch(clusterActions.listTasks(params.id))
+      },
     },
   },
 ]

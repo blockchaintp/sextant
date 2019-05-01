@@ -17,6 +17,9 @@ const task = new schema.Entity('task')
 const initialState = {
   clusters: normalize([], [cluster]),
   tasks: normalize([], [task]),
+  loops: {
+    cluster: false,
+  }
 }
 
 const reducers = {
@@ -28,6 +31,13 @@ const reducers = {
   },
   setTasks: (state, action) => {
     state.tasks = normalize(action.payload, [task])
+  },
+  setLoop: (state, action) => {
+    const {
+      name,
+      value,
+    } = action.payload
+    state.loops[name] = value
   },
 }
 
@@ -117,6 +127,14 @@ const sideEffects = {
     dataAction: actions.setTasks,
     snackbarError: true,
   }),
+  startClusterLoop: () => (dispatch) => {
+    console.log('--------------------------------------------')
+    console.log('start cluster loop')
+  },
+  stopClusterLoop: () => (dispatch) => {
+    console.log('--------------------------------------------')
+    console.log('stop cluster loop')
+  },
 }
 
 
