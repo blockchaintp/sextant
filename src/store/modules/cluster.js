@@ -18,7 +18,7 @@ const initialState = {
   clusters: normalize([], [cluster]),
   tasks: normalize([], [task]),
   loops: {
-    cluster: false,
+    cluster: null,
   }
 }
 
@@ -127,13 +127,23 @@ const sideEffects = {
     dataAction: actions.setTasks,
     snackbarError: true,
   }),
-  startClusterLoop: () => (dispatch) => {
-    console.log('--------------------------------------------')
-    console.log('start cluster loop')
+  startClusterLoop: () => async (dispatch, getState) => {
+    await dispatch(actions.list())
+    const intervalTask = setInterval(() => {
+      dispatch(actions.list())
+    }, 1000)
+    dispatch(actions.setLoop({
+      name: 'cluster',
+      value: intervalTask,
+    }))
   },
-  stopClusterLoop: () => (dispatch) => {
-    console.log('--------------------------------------------')
-    console.log('stop cluster loop')
+  stopClusterLoop: () => (dispatch, getState) => {
+    const intervalId = getState().cluster.loops.cluster
+    clearInterval(intervalId)
+    dispatch(actions.setLoop({
+      name: 'cluster',
+      value: null,
+    }))
   },
 }
 
