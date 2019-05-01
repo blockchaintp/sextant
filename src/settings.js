@@ -38,10 +38,6 @@ const settings = {
     if(loggedIn) {
 
       const pages = [{
-        title: 'Home',
-        handler: 'home',
-        icon: icons.home,
-      },{
         title: 'Clusters',
         handler: 'clusters',
         icon: icons.cluster,

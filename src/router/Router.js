@@ -11,7 +11,6 @@ import LayoutMain from 'containers/Layout'
 import Route from './Route'
 import RouteContext from './RouteContext'
 
-import Home from 'containers/Home'
 import NotFound from 'containers/NotFound'
 import Login from 'containers/auth/Login'
 import AccountDetails from 'containers/auth/AccountDetails'
@@ -49,9 +48,6 @@ class Router extends React.Component {
         <LayoutMain>
           <Route segment="notfound" exact>
             <NotFound />
-          </Route>
-          <Route segment="home" exact>
-            <Home />
           </Route>
           <Route segment="login" exact>
             <Login />

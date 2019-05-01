@@ -40,6 +40,7 @@ const routes = [
     name: 'home',
     path: '/',
     authorize: authHandlers.user,
+    redirect: 'clusters',
   },
   {
     name: 'notfound',
