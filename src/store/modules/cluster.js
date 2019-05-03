@@ -17,6 +17,10 @@ const task = new schema.Entity('task')
 const initialState = {
   clusters: normalize([], [cluster]),
   tasks: normalize([], [task]),
+  showDeleted: false,
+  // a flag to not trigger any snackbars because
+  // tasks have changed - used when we re-filter the list
+  ignoreTaskStatus: false,
   loops: {
     cluster: null,
   }
@@ -35,6 +39,12 @@ const reducers = {
   setCluster: (state, action) => {
     mergeEntities(state.clusters, normalize([action.payload], [cluster]))
   },
+  setShowDeleted: (state, action) => {
+    state.showDeleted = action.payload
+  },
+  setIgnoreTaskStatus: (state, action) => {
+    state.ignoreTaskStatus = action.payload
+  },
   setTasks: (state, action) => {
     state.tasks = normalize(action.payload, [task])
   },
@@ -49,7 +59,13 @@ const reducers = {
 
 const loaders = {
 
-  list: () => axios.get(api.url(`/clusters`))
+  list: ({
+    showDeleted,
+  }) => axios.get(api.url(`/clusters`), {
+    params: {
+      showDeleted: showDeleted ? 'y' : ''
+    }
+  })
     .then(api.process),
 
   get: (id) => axios.get(api.url(`/clusters/${id}`))
@@ -71,10 +87,23 @@ const loaders = {
 
 const sideEffects = {
 
+  updateShowDeleted: (value) => (dispatch, getState) => {
+    dispatch(actions.setShowDeleted(value))
+    dispatch(actions.setIgnoreTaskStatus(true))
+    dispatch(actions.list())
+  },
+
   // look to see if there have been any task changes to any clusters
   // and trigger a snackbar if there have
   updateClusterList: (newData) => (dispatch, getState) => {
     const existingClusters = selectors.cluster.collection.list(getState())
+    const ignoreTaskStatus = selectors.cluster.ignoreTaskStatus(getState())
+
+    if(ignoreTaskStatus) {
+      dispatch(actions.setClusters(newData))
+      dispatch(actions.setIgnoreTaskStatus(false))
+      return
+    }
 
     // ignore updates if we are loading the first time
     if(existingClusters.length <= 0) return dispatch(actions.setClusters(newData))
@@ -119,9 +148,11 @@ const sideEffects = {
     dispatch(actions.setClusters(newData))
   },
 
-  list: () => (dispatch) => api.loaderSideEffect({
+  list: () => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.list(),
+    loader: () => loaders.list({
+      showDeleted: selectors.cluster.showDeleted(getState()),
+    }),
     prefix,
     name: 'list',
     dataAction: actions.updateClusterList,

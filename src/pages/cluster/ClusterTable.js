@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
-import Button from '@material-ui/core/Button'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
@@ -28,6 +30,18 @@ const styles = theme => ({
   },
   statusIcon: {
     marginRight: theme.spacing.unit * 2,
+  },
+  headerActions: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'right',
+    alignItems: 'center',
+  },
+  showDeletedCheckbox: {
+    marginRight: theme.spacing.unit * 2,
+  },
+  showDeletedLabel: {
+    whiteSpace: 'nowrap',
   },
 })
 
@@ -55,9 +69,11 @@ class ClusterTable extends React.Component {
     const { 
       classes,
       clusters,
+      showDeleted,
       onAdd,
       onEdit,
       onDelete,
+      updateShowDeleted,
     } = this.props
 
     const {
@@ -119,17 +135,37 @@ class ClusterTable extends React.Component {
       handler: () => onAdd('local')
     }]
 
-    const addButton = (
-      <MenuButton 
-        className={classes.button} 
-        title="Add"
-        icon={ AddIcon }
-        buttonProps={{
-          variant: 'contained',
-          color: 'secondary',
-        }}
-        items={ addButtonItems }
-      />
+    const headerActions = (
+      <div className={ classes.headerActions }>
+        <div className={ classes.showDeletedCheckbox }>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={ showDeleted }
+                onChange={ (event) => updateShowDeleted(event.target.checked) }
+                value="checkedB"
+                color="primary"
+              />
+            }
+            label="Show Deleted?"
+            classes={{
+              label: classes.showDeletedLabel,
+            }}
+          />
+        </div>
+        <div className={ classes.addButton }>
+          <MenuButton 
+            className={classes.button} 
+            title="Add"
+            icon={ AddIcon }
+            buttonProps={{
+              variant: 'contained',
+              color: 'secondary',
+            }}
+            items={ addButtonItems }
+          />
+        </div>
+      </div>
     )
 
     const actions = [{
@@ -146,7 +182,7 @@ class ClusterTable extends React.Component {
       <div>
         <SimpleTableHeader
           title='Clusters'
-          getActions={ () => addButton }
+          getActions={ () => headerActions }
         />
         <SimpleTable
           data={ data }

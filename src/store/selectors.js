@@ -227,6 +227,10 @@ const selectors = {
       baseSelector: prop(clusterStore, 'tasks'),
       entityName: 'task',
     }),
+    ...props(clusterStore, [
+      'showDeleted',
+      'ignoreTaskStatus',
+    ]),
   },
 
   config: {
