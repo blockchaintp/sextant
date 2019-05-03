@@ -22,6 +22,12 @@ const initialState = {
   }
 }
 
+const clusterTaskTitles = {
+  'cluster.create': 'cluster create',
+  'cluster.update': 'cluster update',
+  'cluster.delete': 'cluster delete',
+}
+
 const reducers = {
   setClusters: (state, action) => {
     state.clusters = normalize(action.payload, [cluster])
@@ -64,12 +70,48 @@ const loaders = {
 }
 
 const sideEffects = {
+
+  // look to see if there have been any task changes to any clusters
+  // and trigger a snackbar if there have
+  updateClusterList: (newData) => (dispatch, getState) => {
+    const existingClusters = selectors.cluster.collection.list(getState())
+
+    // ignore updates if we are loading the first time
+    if(existingClusters.length <= 0) return dispatch(actions.setClusters(newData))
+
+    const existingMap = existingClusters.reduce((all, cluster) => {
+      all[cluster.id] = cluster
+      return all
+    }, {})
+
+    const newMap = newData.reduce((all, cluster) => {
+      all[cluster.id] = cluster
+      return all
+    }, {})
+
+    Object.keys(newMap).forEach(id => {
+      const newTask = newMap[id].task
+      const oldTask = existingMap[id].task
+      if(newTask.status != oldTask.status) {
+        const taskTitle = clusterTaskTitles[newTask.action]
+        if(newTask.status == 'error') {
+          dispatch(snackbarActions.setError(`The ${taskTitle} task failed`))
+        }
+        else if(newTask.status == 'finished') {
+          dispatch(snackbarActions.setSuccess(`The ${taskTitle} task succeeded`))
+        }
+      }
+    })
+
+    dispatch(actions.setClusters(newData))
+  },
+
   list: () => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.list(),
     prefix,
     name: 'list',
-    dataAction: actions.setClusters,
+    dataAction: actions.updateClusterList,
     snackbarError: true,
   }),
   get: (id) => (dispatch) => api.loaderSideEffect({
@@ -98,7 +140,7 @@ const sideEffects = {
         name: 'form',
         returnError: true,
       })
-      dispatch(snackbarActions.setSuccess(`cluster created`))
+      dispatch(snackbarActions.setInfo(`cluster creating`))
       dispatch(routerActions.navigateTo('clusters'))
     } catch(e) {
       dispatch(snackbarActions.setError(`error creating cluster: ${e.toString()}`))
@@ -113,7 +155,7 @@ const sideEffects = {
         name: 'form',
         returnError: true,
       })
-      dispatch(snackbarActions.setSuccess(`cluster saved`))
+      dispatch(snackbarActions.setInfo(`cluster saving`))
       dispatch(routerActions.navigateTo('clusters'))
     } catch(e) {
       dispatch(snackbarActions.setError(`error saving cluster: ${e.toString()}`))
