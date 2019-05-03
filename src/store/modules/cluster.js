@@ -89,10 +89,16 @@ const sideEffects = {
       return all
     }, {})
 
-    Object.keys(newMap).forEach(id => {
+    Object.keys(existingMap).forEach(id => {
 
+      // deal with the fact that deleted clusters might not be in the new list
       const newCluster = newMap[id]
       const oldCluster = existingMap[id]
+      if(!newCluster && oldCluster) {
+        if(oldCluster.task.action == 'cluster.delete') {
+          dispatch(snackbarActions.setSuccess(`The ${clusterTaskTitles['cluster.delete']} task succeeded`))
+        }
+      }
 
       if(!newCluster || !oldCluster) return
 
@@ -166,6 +172,21 @@ const sideEffects = {
       dispatch(routerActions.navigateTo('clusters'))
     } catch(e) {
       dispatch(snackbarActions.setError(`error saving cluster: ${e.toString()}`))
+    }
+  },
+  delete: (id) => async (dispatch, getState) => {
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.delete(id),
+        prefix,
+        name: 'delete',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setInfo(`cluster deleting`))
+      dispatch(routerActions.navigateTo('clusters'))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error deleting cluster: ${e.toString()}`))
     }
   },
   listTasks: (id) => (dispatch) => api.loaderSideEffect({
