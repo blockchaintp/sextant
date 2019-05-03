@@ -79,12 +79,7 @@ class ClusterTable extends React.Component {
         task: (
           <div>
             <div>
-              { cluster.task.action }
-              { 
-                cluster.task.status == 'error' ? (
-                  <span> (error)</span>
-                ) : null
-              }
+              { cluster.task.action } ({ cluster.task.status })
             </div>
             {
               cluster.task.error && (
