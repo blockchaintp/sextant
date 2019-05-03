@@ -90,8 +90,15 @@ const sideEffects = {
     }, {})
 
     Object.keys(newMap).forEach(id => {
+
+      const newCluster = newMap[id]
+      const oldCluster = existingMap[id]
+
+      if(!newCluster || !oldCluster) return
+
       const newTask = newMap[id].task
       const oldTask = existingMap[id].task
+      
       if(newTask.status != oldTask.status) {
         const taskTitle = clusterTaskTitles[newTask.action]
         if(newTask.status == 'error') {
