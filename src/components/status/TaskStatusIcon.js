@@ -21,7 +21,7 @@ const styles = theme => ({
   },
 })
 
-class StatusIcon extends React.Component {
+class TaskStatusIcon extends React.Component {
 
   render() {
     const {
@@ -56,9 +56,9 @@ class StatusIcon extends React.Component {
   }
 }
 
-StatusIcon.propTypes = {
+TaskStatusIcon.propTypes = {
   classes: PropTypes.object.isRequired,
   status: PropTypes.oneOf(['created', 'running', 'finished', 'error']).isRequired,
 }
 
-export default withStyles(styles)(StatusIcon)
+export default withStyles(styles)(TaskStatusIcon)

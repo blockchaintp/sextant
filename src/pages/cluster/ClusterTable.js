@@ -11,7 +11,7 @@ import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
 import MenuButton from 'components/layout/MenuButton'
-import StatusIcon from 'components/status/StatusIcon'
+import TaskStatusIcon from 'components/status/TaskStatusIcon'
 
 import settings from 'settings'
 
@@ -108,7 +108,7 @@ class ClusterTable extends React.Component {
         task_status: (
           <div className={ classes.statusContainer }>
             <div className={ classes.statusIcon }>
-              <StatusIcon
+              <TaskStatusIcon
                 status={ cluster.task.status }
               />
             </div>
