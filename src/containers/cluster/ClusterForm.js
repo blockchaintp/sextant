@@ -37,28 +37,26 @@ const onCancel = () => routerActions.navigateTo('clusters')
       provision_type,
     } = routeParams
 
-    const schema = id == 'new' ?
-      (
-        provision_type == 'local' ?
-          selectors.config.forms.cluster.localAdd(state) :
-          selectors.config.forms.cluster.remoteAdd(state)
-      ) :
-      (
-        provision_type == 'local' ?
-          selectors.config.forms.cluster.localEdit(state) :
-          selectors.config.forms.cluster.remoteEdit(state)
-      )
+    const clusterForms = selectors.config.forms.cluster(state)
 
     const initialValues = id == 'new' ?
       clusterInitialValues[provision_type] :
-      selectors.cluster.collection.item(state)
+      selectors.cluster.collection.item(state) || {}
 
+    const schema = id == 'new' ?
+      clusterForms[provision_type].add :
+      (
+        initialValues.provision_type ?
+        clusterForms[initialValues.provision_type].edit :
+        []
+      )
+        
     return {
       id,
       error: selectors.cluster.errors.form(state),
       submitting: selectors.cluster.loading.form(state),
       loading: selectors.cluster.loading.get(state),
-      schema,
+      schema: schema,
       initialValues,
       provision_type: initialValues ? initialValues.provision_type : null,
       tasks: selectors.cluster.taskCollection.list(state),

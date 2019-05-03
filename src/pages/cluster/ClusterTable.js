@@ -9,6 +9,7 @@ import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
 import MenuButton from 'components/layout/MenuButton'
+import StatusIcon from 'components/status/StatusIcon'
 
 import settings from 'settings'
 
@@ -19,6 +20,14 @@ const DeleteIcon = settings.icons.delete
 const styles = theme => ({
   errorText: {
     color: theme.palette.error.main,
+  },
+  statusContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'left',
+  },
+  statusIcon: {
+    marginRight: theme.spacing.unit * 2,
   },
 })
 
@@ -63,11 +72,14 @@ class ClusterTable extends React.Component {
       title: 'Provision Type',
       name: 'provision_type',
     },{
-      title: 'Status',
+      title: 'Cluster Status',
       name: 'status',
-    },{
+    }, {
       title: 'Task',
       name: 'task',
+    }, {
+      title: 'Task Status',
+      name: 'task_status',
     }]
 
     const data = clusters.map((cluster, index) => {
@@ -76,18 +88,24 @@ class ClusterTable extends React.Component {
         name: cluster.name,
         provision_type: cluster.provision_type,
         status: cluster.status,
-        task: (
-          <div>
-            <div>
-              { cluster.task.action } ({ cluster.task.status })
+        task: cluster.task.action,
+        task_status: (
+          <div className={ classes.statusContainer }>
+            <div className={ classes.statusIcon }>
+              <StatusIcon
+                status={ cluster.task.status }
+              />
             </div>
-            {
-              cluster.task.error && (
-                <div className={ classes.errorText }>
-                  { cluster.task.error }
-                </div>
-              )
-            }
+            <div>
+              { cluster.task.status }
+              {
+                cluster.task.error && (
+                  <div className={ classes.errorText }>
+                    { cluster.task.error }
+                  </div>
+                )
+              }
+            </div>
           </div>
         ),
       }
