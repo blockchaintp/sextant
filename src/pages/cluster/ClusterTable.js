@@ -12,6 +12,7 @@ import SimpleTableActions from 'components/table/SimpleTableActions'
 
 import MenuButton from 'components/layout/MenuButton'
 import TaskStatusIcon from 'components/status/TaskStatusIcon'
+import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
 
@@ -104,7 +105,18 @@ class ClusterTable extends React.Component {
         name: cluster.name,
         provision_type: cluster.provision_type,
         status: cluster.status,
-        task: cluster.task.action,
+        task: (
+          <div className={ classes.statusContainer }>
+            <div className={ classes.statusIcon }>
+              <TaskActionIcon
+                action={ cluster.task.action.split('.')[1] }
+              />
+            </div>
+            <div>
+              { cluster.task.action }
+            </div>
+          </div>
+        ),
         task_status: (
           <div className={ classes.statusContainer }>
             <div className={ classes.statusIcon }>
