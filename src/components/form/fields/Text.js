@@ -10,6 +10,7 @@ class Text extends React.Component {
         onChange,
         onBlur
       },
+      form,
       error,
       touched,
       item,
@@ -17,6 +18,12 @@ class Text extends React.Component {
 
     const inputProps = item.inputProps || {}
     const extraProps = item.extraProps || {}
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Enter') {
+        form.submitForm()
+      }
+    }
 
     return (
       <TextField
@@ -29,6 +36,7 @@ class Text extends React.Component {
         value={ value || '' }
         onChange={ onChange }
         onBlur={ onBlur }
+        onKeyDown={ onKeyDown }
         { ...inputProps }
         { ...extraProps }
       />
