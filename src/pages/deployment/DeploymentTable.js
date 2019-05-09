@@ -191,8 +191,7 @@ class DeploymentTable extends React.Component {
             <InputLabel htmlFor="name-readonly">Cluster</InputLabel>
             <Select
               value={ clusterId }
-              onChange={ updateClusterId }
-              input={<Input name="cluster" id="cluster" readOnly />}
+              onChange={ (ev) => updateClusterId(ev.target.value) }
             >
               {
                 clusters.map((cluster, i) => {
