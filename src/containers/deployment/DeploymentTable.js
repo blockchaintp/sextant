@@ -14,12 +14,16 @@ const updateShowDeleted = (value) => deploymentActions.updateShowDeleted(value)
 const updateClusterId = (cluster) => routerActions.navigateTo('deployments', { cluster })
 
 @connect(
-  state => ({
-    clusterId: state.router.route.params.cluster,
-    clusters: selectors.cluster.collection.list(state),
-    deployments: selectors.deployment.collection.list(state),
-    showDeleted: selectors.deployment.showDeleted(state),
-  }),
+  state => {
+    const clusterId = state.router.route.params.cluster
+    return {
+      clusterId,
+      clusters: selectors.cluster.collection.list(state),
+      cluster: state.cluster.clusters.entities.cluster ? state.cluster.clusters.entities.cluster[clusterId] : null,
+      deployments: selectors.deployment.collection.list(state),
+      showDeleted: selectors.deployment.showDeleted(state),
+    }
+  },
   {
     onAdd,
     onEdit,

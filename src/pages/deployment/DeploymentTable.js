@@ -91,6 +91,7 @@ class DeploymentTable extends React.Component {
       onDelete,
       updateShowDeleted,
       clusters,
+      cluster,
       clusterId,
       updateClusterId,
     } = this.props
@@ -236,7 +237,7 @@ class DeploymentTable extends React.Component {
     return (
       <div>
         <SimpleTableHeader
-          title='Deployments'
+          title={`${cluster ? cluster.name + ': ' : '' }Deployments`}
           getActions={ () => headerActions }
         />
         <SimpleTable
