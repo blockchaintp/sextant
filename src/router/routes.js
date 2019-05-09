@@ -94,8 +94,16 @@ const routes = [
     },
   },
   {
-    name: 'deployments',
+    name: 'deployments_all',
     path: '/deployments',
+    authorize: authHandlers.user,
+    trigger: {
+      activate: (store) => store.dispatch(deploymentActions.redirectDeployments()),
+    },
+  },
+  {
+    name: 'deployments',
+    path: '/deployments/:cluster',
     authorize: authHandlers.user,
     trigger: {
       activate: (store) => store.dispatch(deploymentActions.startDeploymentLoop()),

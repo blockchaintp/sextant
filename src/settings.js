@@ -45,7 +45,7 @@ const settings = {
         icon: icons.cluster,
       }, {
         title: 'Deployments',
-        handler: 'deployments',
+        handler: 'deployments_all',
         icon: icons.deployment,
       }]
 

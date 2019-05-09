@@ -7,6 +7,7 @@ import api from '../utils/api'
 
 import selectors from '../selectors'
 import routerActions from './router'
+import clusterActions from './cluster'
 import snackbarActions from './snackbar'
 
 const prefix = 'deployment'
@@ -92,6 +93,18 @@ const loaders = {
 }
 
 const sideEffects = {
+
+  redirectDeployments: () => async (dispatch, getState) => {
+    await dispatch(clusterActions.list())
+
+    const clusters = selectors.cluster.collection.list(getState())
+    const provisioned = clusters.filter(cluster => cluster.status == 'provisioned')
+
+    if(provisioned.length <= 0) return
+
+    const firstCluster = provisioned[0]
+    dispatch(routerActions.navigateTo('deployments', { cluster: firstCluster.id }))
+  },
 
   updateShowDeleted: (value) => (dispatch, getState) => {
     dispatch(actions.setShowDeleted(value))
