@@ -71,7 +71,7 @@ const loaders = {
   })
     .then(api.process),
 
-  get: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployment/${id}`), {
+  get: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}`), {
     params: {
       withTask: 'y',
     }
