@@ -8,6 +8,7 @@ import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import DashboardIcon from '@material-ui/icons/Dashboard'
+import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 
 const icons = {
   home: HomeIcon,
@@ -20,6 +21,7 @@ const icons = {
   edit: EditIcon,
   delete: DeleteIcon,
   cluster: DashboardIcon,
+  deployment: PlayArrowIcon,
 }
 
 const settings = {
@@ -41,6 +43,10 @@ const settings = {
         title: 'Clusters',
         handler: 'clusters',
         icon: icons.cluster,
+      }, {
+        title: 'Deployments',
+        handler: 'deployments',
+        icon: icons.deployment,
       }]
 
       if(isSuperuser) {

@@ -5,6 +5,7 @@ import { reducer as snackbar } from './modules/snackbar'
 import { reducer as auth } from './modules/auth'
 import { reducer as user } from './modules/user'
 import { reducer as cluster } from './modules/cluster'
+import { reducer as deployment } from './modules/deployment'
 import { reducer as network } from './modules/network'
 import { reducer as config } from './modules/config'
 import { reducer as fileupload } from './modules/fileupload'
@@ -15,6 +16,7 @@ const reducers = {
   auth,
   user,
   cluster,
+  deployment,
   network,
   config,
   fileupload,

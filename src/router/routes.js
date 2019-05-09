@@ -1,6 +1,7 @@
 import selectors from 'store/selectors'
 import userActions from 'store/modules/user'
 import clusterActions from 'store/modules/cluster'
+import deploymentActions from 'store/modules/deployment'
 import networkActions from 'store/modules/network'
 
 const authHandlers = {
@@ -89,6 +90,28 @@ const routes = [
         store.dispatch(networkActions.startLoading('cluster.get'))
         store.dispatch(clusterActions.get(params.id))
         store.dispatch(clusterActions.listTasks(params.id))
+      },
+    },
+  },
+  {
+    name: 'deployments',
+    path: '/deployments',
+    authorize: authHandlers.user,
+    trigger: {
+      activate: (store) => store.dispatch(deploymentActions.startDeploymentLoop()),
+      deactivate: (store) => store.dispatch(deploymentActions.stopDeploymentLoop()),
+    },
+  },
+  {
+    name: 'deployment',
+    path: '/deployment/:id',
+    authorize: authHandlers.user,
+    trigger: {
+      activate: (store, params) => {
+        if(params.id == 'new') return
+        store.dispatch(networkActions.startLoading('deployment.get'))
+        store.dispatch(deploymentActions.get(params.id))
+        store.dispatch(deploymentActions.listTasks(params.id))
       },
     },
   },

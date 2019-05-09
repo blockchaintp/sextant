@@ -105,6 +105,14 @@ const CLUSTER_NETWORK_NAMES = networkProps('cluster', [
   'get',
 ])
 
+const deploymentStore = state => state.deployment
+
+const DEPLOYMENT_NETWORK_NAMES = networkProps('deployment', [
+  'form',
+  'list',
+  'get',
+])
+
 const configStore = state => state.config
 const configData = prop(configStore, 'data')
 const forms = createSelector(
@@ -113,6 +121,7 @@ const forms = createSelector(
 )
 const userForms = prop(forms, 'user')
 const clusterForms = prop(forms, 'cluster')
+const deploymentForms = prop(forms, 'deployment')
 
 const userAccessLevels = prop(configData, 'userAccessLevels')
 const roleAccessLevels = prop(configData, 'roleAccessLevels')
@@ -228,6 +237,24 @@ const selectors = {
       entityName: 'task',
     }),
     ...props(clusterStore, [
+      'showDeleted',
+      'ignoreTaskStatus',
+    ]),
+  },
+
+  deployment: {
+    store: deploymentStore,
+    errors: props(networkErrors, DEPLOYMENT_NETWORK_NAMES),
+    loading: props(networkLoading, DEPLOYMENT_NETWORK_NAMES),
+    collection: entity({
+      baseSelector: prop(deploymentStore, 'deployments'),
+      entityName: 'deployment',
+    }),
+    taskCollection: entity({
+      baseSelector: prop(deploymentStore, 'tasks'),
+      entityName: 'task',
+    }),
+    ...props(deploymentStore, [
       'showDeleted',
       'ignoreTaskStatus',
     ]),
