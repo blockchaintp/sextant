@@ -11,9 +11,13 @@ import Loading from 'components/system/Loading'
 const deploymentInitialValues = {
   sawtooth: {
     name: '',
+    deployment_type: 'sawtooth',
+    desired_state: {},
   },
   ethereum: {
     name: '',
+    deployment_type: 'ethereum',
+    desired_state: {},
   },
 }
 

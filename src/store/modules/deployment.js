@@ -213,7 +213,9 @@ const sideEffects = {
         returnError: true,
       })
       dispatch(snackbarActions.setInfo(`deployment creating`))
-      dispatch(routerActions.navigateTo('deployments'))
+      dispatch(routerActions.navigateTo('deployments', {
+        cluster,
+      }))
     } catch(e) {
       dispatch(snackbarActions.setError(`error creating deployment: ${e.toString()}`))
       console.error(e)
