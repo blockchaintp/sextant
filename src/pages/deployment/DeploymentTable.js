@@ -162,10 +162,10 @@ class DeploymentTable extends React.Component {
 
     const addButtonItems = [{
       title: 'Sawtooth',
-      handler: () => onAdd('sawtooth')
+      handler: () => onAdd(clusterId, 'sawtooth')
     }, {
       title: 'Ethereum',
-      handler: () => onAdd('ethereum')
+      handler: () => onAdd(clusterId, 'ethereum')
     }]
 
     const headerActions = (
@@ -230,7 +230,7 @@ class DeploymentTable extends React.Component {
     }, {
       title: 'Edit',
       icon: EditIcon,
-      handler: (item) => onEdit(item.id),
+      handler: (item) => onEdit(clusterId, item.id),
     }]
 
     return (

@@ -119,7 +119,7 @@ const routes = [
   },
   {
     name: 'deployment',
-    path: '/deployment/:id',
+    path: '/clusters/:cluster/deployment/:id',
     authorize: authHandlers.user,
     trigger: {
       activate: (store, params) => {

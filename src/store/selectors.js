@@ -276,6 +276,7 @@ const selectors = {
         'login',
       ]),
       cluster: clusterForms,
+      deployment: deploymentForms,
     },
     userAccessLevels,
     roleAccessLevels,

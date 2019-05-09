@@ -32,11 +32,11 @@ const onCancel = () => routerActions.navigateTo('deployments')
     const deploymentForms = selectors.config.forms.deployment(state)
 
     const initialValues = id == 'new' ?
-      clusterInitialValues[provision_type] :
-      selectors.cluster.collection.item(state) || {}
+      deploymentInitialValues[deployment_type] :
+      selectors.deployment.collection.item(state) || {}
 
     const schema = id == 'new' ?
-      deploymentInitialValues[deployment_type].add :
+      deploymentForms[deployment_type].add :
       (
         initialValues.deployment_type ?
         deploymentForms[initialValues.deployment_type].edit :

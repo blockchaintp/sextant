@@ -7,8 +7,8 @@ import deploymentActions from 'store/modules/deployment'
 import DeploymentTable from 'pages/deployment/DeploymentTable'
 import selectors from 'store/selectors'
 
-const onAdd = (deployment_type) => routerActions.navigateTo('deployment', { id: 'new', deployment_type })
-const onEdit = (id) => routerActions.navigateTo('deployment', { id })
+const onAdd = (cluster, deployment_type) => routerActions.navigateTo('deployment', { cluster, id: 'new', deployment_type })
+const onEdit = (cluster, id) => routerActions.navigateTo('deployment', { cluster, id })
 const onDelete = (id) => deploymentActions.delete(id)
 const updateShowDeleted = (value) => deploymentActions.updateShowDeleted(value)
 const updateClusterId = (cluster) => routerActions.navigateTo('deployments', { cluster })
