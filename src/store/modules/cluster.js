@@ -153,10 +153,10 @@ const sideEffects = {
     dispatch(actions.setClusters(newData))
   },
 
-  list: () => (dispatch, getState) => api.loaderSideEffect({
+  list: (opts = {}) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.list({
-      showDeleted: selectors.cluster.showDeleted(getState()),
+      showDeleted: opts.noDeleted ? false : selectors.cluster.showDeleted(getState()),
     }),
     prefix,
     name: 'list',

@@ -95,7 +95,9 @@ const loaders = {
 const sideEffects = {
 
   redirectDeployments: () => async (dispatch, getState) => {
-    await dispatch(clusterActions.list())
+    await dispatch(clusterActions.list({
+      noDeleted: true,
+    }))
 
     const clusters = selectors.cluster.collection.list(getState())
     const provisioned = clusters.filter(cluster => cluster.status == 'provisioned')

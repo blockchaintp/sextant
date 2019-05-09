@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import Input from '@material-ui/core/Input'
 import Checkbox from '@material-ui/core/Checkbox'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
@@ -41,11 +46,18 @@ const styles = theme => ({
     justifyContent: 'right',
     alignItems: 'center',
   },
+  clusterSelect: {
+    marginRight: theme.spacing.unit * 2,
+  },
   showDeletedCheckbox: {
     marginRight: theme.spacing.unit * 2,
   },
   showDeletedLabel: {
     whiteSpace: 'nowrap',
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 200,
   },
 })
 
@@ -78,6 +90,9 @@ class DeploymentTable extends React.Component {
       onEdit,
       onDelete,
       updateShowDeleted,
+      clusters,
+      clusterId,
+      updateClusterId,
     } = this.props
 
     const {
@@ -170,6 +185,29 @@ class DeploymentTable extends React.Component {
               label: classes.showDeletedLabel,
             }}
           />
+        </div>
+        <div className={ classes.clusterSelect }>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="name-readonly">Cluster</InputLabel>
+            <Select
+              value={ clusterId }
+              onChange={ updateClusterId }
+              input={<Input name="cluster" id="cluster" readOnly />}
+            >
+              {
+                clusters.map((cluster, i) => {
+                  return (
+                    <MenuItem 
+                      key={ i }
+                      value={ cluster.id }
+                    >
+                      { cluster.name }
+                    </MenuItem>
+                  )
+                })
+              }
+            </Select>
+          </FormControl>
         </div>
         <div className={ classes.addButton }>
           <MenuButton 

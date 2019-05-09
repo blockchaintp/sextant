@@ -5,7 +5,7 @@ import routerActions from 'store/modules/router'
 import deploymentActions from 'store/modules/deployment'
 import selectors from 'store/selectors'
 
-import DeploymentForm from 'pages/cluster/DeploymentForm'
+import DeploymentForm from 'pages/deployment/DeploymentForm'
 import Loading from 'components/system/Loading'
 
 const deploymentInitialValues = {
