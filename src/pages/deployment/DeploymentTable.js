@@ -195,16 +195,18 @@ class DeploymentTable extends React.Component {
               onChange={ (ev) => updateClusterId(ev.target.value) }
             >
               {
-                clusters.map((cluster, i) => {
-                  return (
-                    <MenuItem 
-                      key={ i }
-                      value={ cluster.id }
-                    >
-                      { cluster.name }
-                    </MenuItem>
-                  )
-                })
+                clusters
+                  .filter(cluster => cluster.status == 'provisioned')
+                  .map((cluster, i) => {
+                    return (
+                      <MenuItem 
+                        key={ i }
+                        value={ cluster.id }
+                      >
+                        { cluster.name }
+                      </MenuItem>
+                    )
+                  })
               }
             </Select>
           </FormControl>
