@@ -71,7 +71,7 @@ const loaders = {
   })
     .then(api.process),
 
-  get: (id) => axios.get(api.url(`/deployments/${id}`), {
+  get: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployment/${id}`), {
     params: {
       withTask: 'y',
     }
@@ -182,9 +182,9 @@ const sideEffects = {
     dataAction: actions.updateDeploymentList,
     snackbarError: true,
   }),
-  get: (id) => (dispatch) => api.loaderSideEffect({
+  get: (cluster, id) => (dispatch) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.get(id),
+    loader: () => loaders.get(cluster, id),
     prefix,
     name: 'get',
     dataAction: actions.setDeployment,
