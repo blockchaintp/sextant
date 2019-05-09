@@ -181,7 +181,7 @@ const sideEffects = {
     }
   },
   create: (payload) => async (dispatch, getState) => {
-    try {    
+    try {
       await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.create(payload),
@@ -221,6 +221,7 @@ const sideEffects = {
       })
       dispatch(snackbarActions.setInfo(`cluster deleting`))
       dispatch(routerActions.navigateTo('clusters'))
+      dispatch(actions.setShowDeleted(true))
     } catch(e) {
       dispatch(snackbarActions.setError(`error deleting cluster: ${e.toString()}`))
     }
