@@ -78,7 +78,7 @@ const loaders = {
   })
     .then(api.process),
 
-  create: (payload) => axios.post(api.url(`/deployments`), payload)
+  create: (cluster, payload) => axios.post(api.url(`/clusters/${cluster}/deployments`), payload)
     .then(api.process),
 
   update: (id, payload) => axios.put(api.url(`/deployments/${id}`), payload)
@@ -191,19 +191,23 @@ const sideEffects = {
     snackbarError: true,
   }),
   submitForm: (payload) => (dispatch, getState) => {
-    const id = selectors.router.idParam(getState())
+    const params = selectors.router.params(getState())
+    const {
+      id,
+      cluster,
+    } = params
     if(id == 'new') {
-      dispatch(actions.create(payload))
+      dispatch(actions.create(cluster, payload))
     }
     else {
-      dispatch(actions.save(id, payload))
+      dispatch(actions.save(cluster, id, payload))
     }
   },
-  create: (payload) => async (dispatch, getState) => {
+  create: (cluster, payload) => async (dispatch, getState) => {
     try {
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.create(payload),
+        loader: () => loaders.create(cluster, payload),
         prefix,
         name: 'form',
         returnError: true,
@@ -215,7 +219,7 @@ const sideEffects = {
       console.error(e)
     }
   },
-  save: (id, payload) => async (dispatch, getState) => {
+  save: (cluster, id, payload) => async (dispatch, getState) => {
     try {
       await api.loaderSideEffect({
         dispatch,
