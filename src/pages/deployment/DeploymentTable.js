@@ -104,8 +104,8 @@ class DeploymentTable extends React.Component {
       title: 'Name',
       name: 'name',
     },{
-      title: 'Provision Type',
-      name: 'provision_type',
+      title: 'Deployment Type',
+      name: 'deployment_type',
     },{
       title: 'Deployment Status',
       name: 'status',
