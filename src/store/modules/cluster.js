@@ -139,7 +139,7 @@ const sideEffects = {
       const newTask = newMap[id].task
       const oldTask = existingMap[id].task
       
-      if(newTask.status != oldTask.status) {
+      if(newTask && oldTask && newTask.status != oldTask.status) {
         const taskTitle = clusterTaskTitles[newTask.action]
         if(newTask.status == 'error') {
           dispatch(snackbarActions.setError(`The ${taskTitle} task failed`))
@@ -193,6 +193,7 @@ const sideEffects = {
       dispatch(routerActions.navigateTo('clusters'))
     } catch(e) {
       dispatch(snackbarActions.setError(`error creating cluster: ${e.toString()}`))
+      console.error(e)
     }
   },
   save: (id, payload) => async (dispatch, getState) => {
@@ -208,6 +209,7 @@ const sideEffects = {
       dispatch(routerActions.navigateTo('clusters'))
     } catch(e) {
       dispatch(snackbarActions.setError(`error saving cluster: ${e.toString()}`))
+      console.error(e)
     }
   },
   delete: (id) => async (dispatch, getState) => {
@@ -229,6 +231,7 @@ const sideEffects = {
       dispatch(routerActions.navigateTo('clusters'))
     } catch(e) {
       dispatch(snackbarActions.setError(`error deleting cluster: ${e.toString()}`))
+      console.error(e)
     }
   },
   listTasks: (id) => (dispatch) => api.loaderSideEffect({
