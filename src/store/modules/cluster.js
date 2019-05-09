@@ -212,6 +212,7 @@ const sideEffects = {
   },
   delete: (id) => async (dispatch, getState) => {
     try {
+      const cluster = getState().cluster.clusters.entities.cluster[id]
       await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.delete(id),
@@ -219,7 +220,12 @@ const sideEffects = {
         name: 'delete',
         returnError: true,
       })
-      dispatch(snackbarActions.setInfo(`cluster deleting`))
+      if(cluster.status == 'deleted') {
+        dispatch(snackbarActions.setSuccess(`cluster deleted`))
+      }
+      else {
+        dispatch(snackbarActions.setInfo(`cluster deleting`))
+      }
       dispatch(routerActions.navigateTo('clusters'))
       dispatch(actions.setShowDeleted(true))
     } catch(e) {
