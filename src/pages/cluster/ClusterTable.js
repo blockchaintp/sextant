@@ -102,6 +102,7 @@ class ClusterTable extends React.Component {
     const data = clusters.map((cluster, index) => {
       return {
         id: cluster.id,
+        clusterData: cluster,
         name: cluster.name,
         provision_type: cluster.provision_type,
         status: cluster.status,
@@ -199,12 +200,15 @@ class ClusterTable extends React.Component {
         <SimpleTable
           data={ data }
           fields={ fields }
-          getActions={ (item) => (
-            <SimpleTableActions
-              item={ item }
-              actions={ actions }
-            />
-          )}
+          getActions={ (item) => {
+            if(item.clusterData.task.status == 'running') return null
+            return (
+              <SimpleTableActions
+                item={ item }
+                actions={ actions }
+              />
+            )
+          }}
         />
         <SimpleTableDeleteDialog
           open={ deleteConfirmOpen }
