@@ -63,12 +63,17 @@ const loaders = {
     showDeleted,
   }) => axios.get(api.url(`/clusters`), {
     params: {
-      showDeleted: showDeleted ? 'y' : ''
+      showDeleted: showDeleted ? 'y' : '',
+      withTasks: 'y',
     }
   })
     .then(api.process),
 
-  get: (id) => axios.get(api.url(`/clusters/${id}`))
+  get: (id) => axios.get(api.url(`/clusters/${id}`), {
+    params: {
+      withTask: 'y',
+    }
+  })
     .then(api.process),
 
   create: (payload) => axios.post(api.url(`/clusters`), payload)
