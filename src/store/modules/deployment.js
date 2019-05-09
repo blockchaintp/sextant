@@ -87,7 +87,7 @@ const loaders = {
   delete: (id) => axios.delete(api.url(`/deployments/${id}`))
     .then(api.process),
 
-  listTasks: (id) => axios.get(api.url(`/deployments/${id}/tasks`))
+  listTasks: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/tasks`))
     .then(api.process),
     
 }
@@ -259,9 +259,9 @@ const sideEffects = {
       console.error(e)
     }
   },
-  listTasks: (id) => (dispatch) => api.loaderSideEffect({
+  listTasks: (cluster, id) => (dispatch) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listTasks(id),
+    loader: () => loaders.listTasks(cluster, id),
     prefix,
     name: 'listTasks',
     dataAction: actions.setTasks,

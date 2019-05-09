@@ -126,7 +126,7 @@ const routes = [
         if(params.id == 'new') return
         store.dispatch(networkActions.startLoading('deployment.get'))
         store.dispatch(deploymentActions.get(params.cluster, params.id))
-        //store.dispatch(deploymentActions.listTasks(params.id))
+        store.dispatch(deploymentActions.listTasks(params.cluster, params.id))
       },
     },
   },
