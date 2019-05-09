@@ -227,7 +227,6 @@ const sideEffects = {
         dispatch(snackbarActions.setInfo(`cluster deleting`))
       }
       dispatch(routerActions.navigateTo('clusters'))
-      dispatch(actions.setShowDeleted(true))
     } catch(e) {
       dispatch(snackbarActions.setError(`error deleting cluster: ${e.toString()}`))
     }
