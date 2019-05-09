@@ -254,7 +254,7 @@ const sideEffects = {
     }))
   },
   stopDeploymentLoop: () => (dispatch, getState) => {
-    const intervalId = getState().deployment.loops.cluster
+    const intervalId = getState().deployment.loops.deployment
     clearInterval(intervalId)
     dispatch(actions.setLoop({
       name: 'deployment',
