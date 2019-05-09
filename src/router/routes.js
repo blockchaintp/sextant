@@ -103,14 +103,16 @@ const routes = [
   },
   {
     name: 'deployments',
-    path: '/deployments/:cluster',
+    path: '/clusters/:cluster/deployments',
     authorize: authHandlers.user,
     trigger: {
-      activate: (store) => {
+      activate: (store, params) => {
         store.dispatch(clusterActions.list({
           noDeleted: true,
         }))
-        store.dispatch(deploymentActions.startDeploymentLoop())
+        store.dispatch(deploymentActions.startDeploymentLoop({
+          cluster: params.cluster,
+        }))
       },
       deactivate: (store) => store.dispatch(deploymentActions.stopDeploymentLoop()),
     },

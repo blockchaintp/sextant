@@ -63,7 +63,7 @@ const loaders = {
   list: ({
     cluster,
     showDeleted,
-  }) => axios.get(api.url(`/deployments`), {
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments`), {
     params: {
       showDeleted: showDeleted ? 'y' : '',
       withTasks: 'y',
@@ -169,9 +169,12 @@ const sideEffects = {
     dispatch(actions.setDeployments(newData))
   },
 
-  list: () => (dispatch, getState) => api.loaderSideEffect({
+  list: ({
+    cluster,
+  }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.list({
+      cluster,
       showDeleted: selectors.deployment.showDeleted(getState()),
     }),
     prefix,
@@ -258,10 +261,16 @@ const sideEffects = {
     dataAction: actions.setTasks,
     snackbarError: true,
   }),
-  startDeploymentLoop: () => async (dispatch, getState) => {
-    await dispatch(actions.list())
+  startDeploymentLoop: ({
+    cluster,
+  }) => async (dispatch, getState) => {
+    await dispatch(actions.list({
+      cluster,
+    }))
     const intervalTask = setInterval(() => {
-      dispatch(actions.list())
+      dispatch(actions.list({
+        cluster,
+      }))
     }, 1000)
     dispatch(actions.setLoop({
       name: 'deployment',
