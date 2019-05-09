@@ -126,6 +126,7 @@ class DeploymentForm extends React.Component {
       error,
       submitting,
       onCancel,
+      clusterId,
       validate,
     } = this.props
 
@@ -154,7 +155,7 @@ class DeploymentForm extends React.Component {
                             className={ classes.button }
                             type="button"
                             variant="contained"
-                            onClick={ onCancel }
+                            onClick={ () => onCancel(clusterId) }
                           >
                             Cancel
                           </Button>

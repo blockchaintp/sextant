@@ -17,7 +17,7 @@ const deploymentInitialValues = {
   },
 }
 
-const onCancel = () => routerActions.navigateTo('deployments')
+const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
 
 @connect(
   state => {
@@ -45,6 +45,7 @@ const onCancel = () => routerActions.navigateTo('deployments')
 
     return {
       id,
+      clusterId: state.router.route.params.cluster,
       error: selectors.deployment.errors.form(state),
       submitting: selectors.deployment.loading.form(state),
       loading: selectors.deployment.loading.get(state),
