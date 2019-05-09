@@ -7,7 +7,8 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
 import SimpleTable from 'components/table/SimpleTable'
-import SimpleTableHeader from 'components/table/SimpleTableHeader'
+import TaskStatusIcon from 'components/status/TaskStatusIcon'
+import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import FormWrapper from 'components/form/Wrapper'
 
@@ -18,11 +19,25 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 5,
   },
+  dateTime: {
+    whiteSpace: 'nowrap',
+  },
   button: {
     marginRight: theme.spacing.unit * 2,
   },
+  errorContainer: {
+    maxWidth: '200px',
+  },
   errorText: {
     color: theme.palette.error.main,
+  },
+  statusContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'left',
+  },
+  statusIcon: {
+    marginRight: theme.spacing.unit * 2,
   },
 })
 
@@ -35,29 +50,56 @@ class ClusterForm extends React.Component {
     } = this.props
 
     const fields =[{
+      title: 'Started',
+      name: 'started_at',
+    }, {
       title: 'Action',
       name: 'action',
     }, {
       title: 'Status',
       name: 'status',
-    }, {
-      title: 'Started',
-      name: 'started_at',
-    }, , {
-      title: 'Error',
-      name: 'error',
     }]
 
     const data = tasks.map((task, index) => {
       return {
         id: task.id,
-        action: task.action,
-        status: task.status,
-        started_at: new Date(task.started_at).toLocaleString(),
-        error: (
-          <span className={ classes.errorText }>
-            { task.error }
+        started_at: (
+          <span className={ classes.dateTime }>
+            { new Date(task.started_at).toLocaleString() }
           </span>
+        ),
+        action: (
+          <div className={ classes.statusContainer }>
+            <div className={ classes.statusIcon }>
+              <TaskActionIcon
+                action={ task.action.split('.')[1] }
+              />
+            </div>
+            <div>
+              { task.action }
+            </div>
+          </div>
+        ),
+        status: (
+          <div className={ classes.statusContainer }>
+            <div className={ classes.statusIcon }>
+              <TaskStatusIcon
+                status={ task.status }
+              />
+            </div>
+            <div>
+              { !task.error && task.status }
+              {
+                task.error && (
+                  <div className={ classes.errorContainer }>
+                    <span className={ classes.errorText }>
+                      { task.error }
+                    </span>
+                  </div>
+                )
+              }
+            </div>
+          </div>
         ),
       }
     })
