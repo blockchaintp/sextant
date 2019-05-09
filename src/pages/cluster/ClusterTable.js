@@ -24,6 +24,9 @@ const styles = theme => ({
   errorText: {
     color: theme.palette.error.main,
   },
+  errorContainer: {
+    maxWidth: '200px',
+  },
   statusContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -126,11 +129,13 @@ class ClusterTable extends React.Component {
               />
             </div>
             <div>
-              { cluster.task.status }
+              { !cluster.task.error && cluster.task.status }
               {
                 cluster.task.error && (
-                  <div className={ classes.errorText }>
-                    { cluster.task.error }
+                  <div className={ classes.errorContainer }>
+                    <span className={ classes.errorText }>
+                      { cluster.task.error }
+                    </span>
                   </div>
                 )
               }
