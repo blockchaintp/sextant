@@ -50,7 +50,7 @@ const onCancel = () => routerActions.navigateTo('clusters')
         clusterForms[initialValues.provision_type].edit :
         []
       )
-        
+
     return {
       id,
       error: selectors.cluster.errors.form(state),

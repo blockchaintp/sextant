@@ -106,7 +106,7 @@ class ClusterTable extends React.Component {
         name: cluster.name,
         provision_type: cluster.provision_type,
         status: cluster.status,
-        task: (
+        task: cluster.task ? (
           <div className={ classes.statusContainer }>
             <div className={ classes.statusIcon }>
               <TaskActionIcon
@@ -117,8 +117,8 @@ class ClusterTable extends React.Component {
               { cluster.task.action }
             </div>
           </div>
-        ),
-        task_status: (
+        ) : null,
+        task_status: cluster.task ? (
           <div className={ classes.statusContainer }>
             <div className={ classes.statusIcon }>
               <TaskStatusIcon
@@ -136,7 +136,7 @@ class ClusterTable extends React.Component {
               }
             </div>
           </div>
-        ),
+        ) : null,
       }
     })
 
@@ -201,7 +201,7 @@ class ClusterTable extends React.Component {
           data={ data }
           fields={ fields }
           getActions={ (item) => {
-            if(item.clusterData.task.status == 'running') return null
+            if(item.clusterData.task && item.clusterData.task.status == 'running') return null
             return (
               <SimpleTableActions
                 item={ item }
