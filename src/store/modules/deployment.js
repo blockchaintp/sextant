@@ -109,9 +109,14 @@ const sideEffects = {
   },
 
   updateShowDeleted: (value) => (dispatch, getState) => {
+
+    const routeParams = selectors.router.params(getState())
+
     dispatch(actions.setShowDeleted(value))
     dispatch(actions.setIgnoreTaskStatus(true))
-    dispatch(actions.list())
+    dispatch(actions.list({
+      cluster: routeParams.cluster
+    }))
   },
 
   // look to see if there have been any task changes to any deployments
