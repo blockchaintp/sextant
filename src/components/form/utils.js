@@ -44,12 +44,13 @@ const getInitialValues = (schema, initialValues) => {
   const flatSchema = flattenSchema(schema)
   return flatSchema.reduce((all, field) => {
     const existing = dotty.get(all, field.id)
-    const component = field.component || 'text'
-    if(!existing && field.list) {
-      dotty.put(all, field.id, [])
-    }
-    else if(!existing && typeof(component) === 'string') {
-      dotty.put(all, field.id, defaultValues[component])
+    if(!existing) {
+      if(field.list) {
+        dotty.put(all, field.id, [])
+      }
+      else if(typeof(field.default) !== 'undefined') {
+        dotty.put(all, field.id, field.default)
+      }
     }
     return all
   }, Object.assign({}, initialValues))

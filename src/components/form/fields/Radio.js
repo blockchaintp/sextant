@@ -53,9 +53,14 @@ class RadioField extends React.Component {
               return (
                 <FormControlLabel
                   key={ i }
-                  value={ option.value }
                   label={ option.title }
-                  control={<Radio { ...extraProps } />}
+                  control={
+                    <Radio 
+                      checked={ option.value == value }
+                      value={ option.value }
+                      { ...extraProps } 
+                    />
+                  }
                 />
               )
             })
