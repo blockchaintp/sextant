@@ -22,19 +22,22 @@ const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
     } = routeParams
 
     const deploymentForms = selectors.config.forms.deployment(state)
-    const deploymentForm = deploymentForms[deployment_type].forms[deployment_version]
+    let initialValues = {}
+    let schema = []
 
-    const initialValues = id == 'new' ?
-      {} :
-      selectors.deployment.collection.item(state) || {}
+    // we are creating a new deployment
+    if(id == 'new') {
+      schema = deploymentForms[deployment_type].forms[deployment_version]
+    }
+    // it's an existing deployment
+    else {
+      const existingValues = selectors.deployment.collection.item(state)
 
-    const schema = id == 'new' ?
-      deploymentForm :
-      (
-        initialValues.deployment_type && initialValues.deployment_version ?
-        deploymentForms[initialValues.deployment_type][initialValues.deployment_version] :
-        []
-      )
+      if(existingValues) {
+        initialValues = existingValues.desired_state
+        schema = deploymentForms[existingValues.deployment_type].forms[existingValues.deployment_version]
+      }
+    }
 
     return {
       id,
@@ -42,7 +45,7 @@ const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
       error: selectors.deployment.errors.form(state),
       submitting: selectors.deployment.loading.form(state),
       loading: selectors.deployment.loading.get(state),
-      schema: schema,
+      schema,
       initialValues,
       deployment_type: initialValues ? initialValues.deployment_type : null,
       tasks: selectors.deployment.taskCollection.list(state),
