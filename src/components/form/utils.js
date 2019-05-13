@@ -2,11 +2,13 @@ import fields, { defaultValues } from './fields'
 import dotty from 'dotty'
 
 const flattenSchema = (schema) => {
-  return schema.reduce((all, row) => {
-    return row.constructor === Array ?
-      all.concat(row) :
-      all.concat([row])
-  }, [])
+  return schema
+    .filter(item => typeof(item) === 'string' ? false : true)
+    .reduce((all, row) => {
+      return row.constructor === Array ?
+        all.concat(row) :
+        all.concat([row])
+    }, [])
 }
 
 const flattenErrors = (errors) => {

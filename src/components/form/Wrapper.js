@@ -10,6 +10,7 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import Divider from '@material-ui/core/Divider'
 
 import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
@@ -43,9 +44,17 @@ const styles = theme => {
     listTable: {
       marginTop: theme.spacing.unit * 2,
       marginBottom: theme.spacing.unit * 2,
-      border: '1px dotted #e5e5e5',
-      padding: theme.spacing.unit * 2,
     },
+    divider: {
+      marginTop: '20px',
+      marginBottom: '20px',
+    },
+    addButtonContainer: {
+      marginTop: theme.spacing.unit * 2,
+    },
+    listTableHeader: {
+      paddingLeft: '0px',
+    }
   }
 }
 
@@ -250,15 +259,17 @@ class FormListInner extends React.Component {
     })
 
     const addButton = (
-      <Button 
-        className={ classes.button } 
-        variant="contained"
-        onClick={ this.onAdd }
-        size="small"
-      >
-        Add 
-        <AddIcon />
-      </Button>
+      <div className={ classes.addButtonContainer }>
+        <Button 
+          className={ classes.button } 
+          variant="contained"
+          onClick={ this.onAdd }
+          size="small"
+        >
+          Add 
+          <AddIcon />
+        </Button>
+      </div>
     )
 
     const actions = [{
@@ -274,7 +285,7 @@ class FormListInner extends React.Component {
     return (
       <div className={ classes.listTable }>
         <SimpleTableHeader
-          getActions={ () => addButton }
+          className={ classes.listTableHeader }
           getTitle={ () => (
             <React.Fragment>
               <Typography className={ classes.listTableTitle } variant='subtitle1'>{ item.title || item.id }</Typography>
@@ -293,6 +304,7 @@ class FormListInner extends React.Component {
           )}
           hideHeaderIfEmpty
         />
+        { addButton }
         <SimpleTableDeleteDialog
           open={ deleteConfirmOpen }
           title={ deleteConfirmItem ? deleteConfirmItem[mainField] : null }
@@ -359,7 +371,30 @@ class FormWrapperInner extends React.Component {
   // leave up to the user to put fields into columns
   // that divide nicely into 12
   getRow(row, formProps, i) {
-    if (row.constructor === Array) {
+
+    const {
+      classes,
+    } = this.props
+
+    if(typeof(row) === 'string') {
+      return (
+        <Grid item xs={ 12 } key={ i }>
+          <Divider className={ classes.divider } />
+
+          {
+            row !== '-' && (
+              <Typography
+                variant='subtitle1'
+              >
+                { row }
+              </Typography>
+            )
+          }
+          
+        </Grid>
+      )
+    }
+    else if (row.constructor === Array) {
       const colSize = Math.floor(12 / row.length)
       return row.map((item, i) => (
         <Grid item xs={ 12 } sm={ colSize } key={ i }>
@@ -431,7 +466,7 @@ class FormWrapperInner extends React.Component {
 
             return (
               <form onSubmit={ submitWrapper }>
-                <Grid container spacing={ spacing || 8 }>
+                <Grid container spacing={ spacing || 24 }>
                   {
                     schema.map((item, i) => this.getRow(item, formProps, i))
                   }

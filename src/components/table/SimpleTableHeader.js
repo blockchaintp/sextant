@@ -29,6 +29,7 @@ class SimpleTableHeader extends React.Component {
   render() {
     const {
       classes,
+      className,
       title,
       getTitle,
       getActions,
@@ -36,9 +37,11 @@ class SimpleTableHeader extends React.Component {
       titleClassname,
     } = this.props
 
+    const useClassname = `${classes.toolbarRoot} ${className ? className : ''}`
+
     return (
       <Toolbar
-        className={ classes.toolbarRoot }
+        className={ useClassname }
       >
         <div className={classes.title}>
           {
