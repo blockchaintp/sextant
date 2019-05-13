@@ -19,6 +19,11 @@ const initialState = {
   deployments: normalize([], [deployment]),
   tasks: normalize([], [task]),
   showDeleted: false,
+
+  // a task we are tracking the status of so we show snackbars
+  // when it has finished or errored
+  trackTask: null,
+
   // a flag to not trigger any snackbars because
   // tasks have changed - used when we re-filter the list
   ignoreTaskStatus: false,
@@ -42,6 +47,9 @@ const reducers = {
   },
   setShowDeleted: (state, action) => {
     state.showDeleted = action.payload
+  },
+  setTrackTask: (state, action) => {
+    state.trackTask = action.payload
   },
   setIgnoreTaskStatus: (state, action) => {
     state.ignoreTaskStatus = action.payload
@@ -122,56 +130,31 @@ const sideEffects = {
   // look to see if there have been any task changes to any deployments
   // and trigger a snackbar if there have
   updateDeploymentList: (newData) => (dispatch, getState) => {
-    const existingDeployments = selectors.deployment.collection.list(getState())
-    const ignoreTaskStatus = selectors.deployment.ignoreTaskStatus(getState())
 
-    if(ignoreTaskStatus) {
-      dispatch(actions.setDeployments(newData))
-      dispatch(actions.setIgnoreTaskStatus(false))
-      return
+    const trackTask = getState().deployment.trackTask
+
+    if(trackTask) {
+      const taskTitle = deploymentTaskTitles[trackTask.action]
+      const newTrackTask = newData
+        .map(deployment => deployment.task)
+        .find(task => task.id == trackTask.id)
+      if(newTrackTask) {
+        // the tracked task has failed or finished
+        if(newTrackTask.status == 'error' || newTrackTask.status == 'finished') {
+          if(newTrackTask.status == 'error') {
+            dispatch(snackbarActions.setError(`The ${taskTitle} task failed`))
+          }
+          else if(newTrackTask.status == 'finished') {
+            dispatch(snackbarActions.setSuccess(`The ${taskTitle} task succeeded`))
+          }
+          dispatch(actions.setTrackTask(null))
+        }
+      }
+      else if(trackTask.action == 'deployment.delete') {
+        dispatch(snackbarActions.setSuccess(`The ${taskTitle} task succeeded`))
+        dispatch(actions.setTrackTask(null))
+      }
     }
-
-    // ignore updates if we are loading the first time
-    if(existingDeployments.length <= 0) return dispatch(actions.setDeployments(newData))
-
-    const existingMap = existingDeployments.reduce((all, deployment) => {
-      all[deployment.id] = deployment
-      return all
-    }, {})
-
-    const newMap = newData.reduce((all, deployment) => {
-      all[deployment.id] = deployment
-      return all
-    }, {})
-
-    Object.keys(existingMap).forEach(id => {
-
-      // deal with the fact that deleted clusters might not be in the new list
-      const newDeployment = newMap[id]
-      const oldDeployment = existingMap[id]
-      if(!newDeployment && oldDeployment) {
-        if(oldDeployment.task.action == 'deployment.delete') {
-          dispatch(snackbarActions.setSuccess(`The ${deploymentTaskTitles['deployment.delete']} task succeeded`))
-        }
-      }
-
-      if(!newDeployment || !oldDeployment) return
-
-      const newTask = newDeployment.task
-      const oldTask = oldDeployment.task
-
-      if(!newTask || !oldTask) return
-      
-      if(newTask && oldTask && newTask.status != oldTask.status) {
-        const taskTitle = deploymentTaskTitles[newTask.action]
-        if(newTask.status == 'error') {
-          dispatch(snackbarActions.setError(`The ${taskTitle} task failed`))
-        }
-        else if(newTask.status == 'finished') {
-          dispatch(snackbarActions.setSuccess(`The ${taskTitle} task succeeded`))
-        }
-      }
-    })
 
     dispatch(actions.setDeployments(newData))
   },
@@ -227,13 +210,15 @@ const sideEffects = {
     }
 
     try {
-      await api.loaderSideEffect({
+      const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.create(cluster, deployment),
         prefix,
         name: 'form',
         returnError: true,
       })
+
+      dispatch(actions.setTrackTask(task))
       dispatch(snackbarActions.setInfo(`deployment creating`))
       dispatch(routerActions.navigateTo('deployments', {
         cluster,
@@ -251,13 +236,14 @@ const sideEffects = {
     }
 
     try {
-      await api.loaderSideEffect({
+      const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.update(cluster, id, deploymentUpdate),
         prefix,
         name: 'form',
         returnError: true,
       })
+      dispatch(actions.setTrackTask(task))
       dispatch(snackbarActions.setInfo(`deployment saving`))
       dispatch(routerActions.navigateTo('deployments', {
         cluster,
@@ -270,17 +256,20 @@ const sideEffects = {
   delete: (cluster, id) => async (dispatch, getState) => {
     try {
       const deployment = getState().deployment.deployments.entities.deployment[id]
-      await api.loaderSideEffect({
+      const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.delete(cluster, id),
         prefix,
         name: 'delete',
         returnError: true,
       })
+
+      // this means we are doing a permenant delete
       if(deployment.status == 'deleted') {
         dispatch(snackbarActions.setSuccess(`deployment deleted`))
       }
       else {
+        dispatch(actions.setTrackTask(task))
         dispatch(snackbarActions.setInfo(`deployment deleting`))
       }
       dispatch(routerActions.navigateTo('deployments', {
