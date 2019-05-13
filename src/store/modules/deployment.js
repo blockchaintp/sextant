@@ -204,10 +204,25 @@ const sideEffects = {
     }
   },
   create: (cluster, payload) => async (dispatch, getState) => {
+
+    const routeParams = selectors.router.params(getState())
+
+    const {
+      deployment_type,
+      deployment_version,
+    } = routeParams
+
+    const deployment = {
+      name: payload.name,
+      deployment_type,
+      deployment_version,
+      desired_state: payload,
+    }
+
     try {
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.create(cluster, payload),
+        loader: () => loaders.create(cluster, deployment),
         prefix,
         name: 'form',
         returnError: true,
