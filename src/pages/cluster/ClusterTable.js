@@ -190,6 +190,10 @@ class ClusterTable extends React.Component {
 
     const getActions = (item) => {
       const baseActions = [{
+        title: 'Deployments',
+        icon: DeploymentIcon,
+        handler: (item) => viewDeployments(item.id),
+      }, {
         title: 'Delete',
         icon: DeleteIcon,
         handler: (item) => this.openDeleteDialog(item),
@@ -199,17 +203,7 @@ class ClusterTable extends React.Component {
         handler: (item) => onEdit(item.id),
       }]
 
-      const actions = []
-
-      if(item.status == 'provisioned') {
-        actions.push({
-          title: 'Deployments',
-          icon: DeploymentIcon,
-          handler: (item) => viewDeployments(item.id),
-        })
-      }
-
-      return actions.concat(baseActions)
+      return baseActions
     }
 
     return (
