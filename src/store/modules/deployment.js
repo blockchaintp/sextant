@@ -157,8 +157,10 @@ const sideEffects = {
 
       if(!newDeployment || !oldDeployment) return
 
-      const newTask = newMap[id].task
-      const oldTask = existingMap[id].task
+      const newTask = newDeployment.task
+      const oldTask = oldDeployment.task
+
+      if(!newTask || !oldTask) return
       
       if(newTask && oldTask && newTask.status != oldTask.status) {
         const taskTitle = deploymentTaskTitles[newTask.action]
