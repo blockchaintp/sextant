@@ -81,7 +81,7 @@ const loaders = {
   create: (cluster, payload) => axios.post(api.url(`/clusters/${cluster}/deployments`), payload)
     .then(api.process),
 
-  update: (id, payload) => axios.put(api.url(`/deployments/${id}`), payload)
+  update: (cluster, id, payload) => axios.put(api.url(`/clusters/${cluster}/deployments/${id}`), payload)
     .then(api.process),
 
   delete: (cluster, id) => axios.delete(api.url(`/clusters/${cluster}/deployments/${id}`))
@@ -244,16 +244,24 @@ const sideEffects = {
     }
   },
   save: (cluster, id, payload) => async (dispatch, getState) => {
+
+    const deploymentUpdate = {
+      name: payload.name,
+      desired_state: payload,
+    }
+
     try {
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.update(id, payload),
+        loader: () => loaders.update(cluster, id, deploymentUpdate),
         prefix,
         name: 'form',
         returnError: true,
       })
       dispatch(snackbarActions.setInfo(`deployment saving`))
-      dispatch(routerActions.navigateTo('deployments'))
+      dispatch(routerActions.navigateTo('deployments', {
+        cluster,
+      }))
     } catch(e) {
       dispatch(snackbarActions.setError(`error saving deployment: ${e.toString()}`))
       console.error(e)
