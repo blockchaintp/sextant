@@ -214,7 +214,7 @@ class FormListInner extends React.Component {
       deleteConfirmItem,
     } = this.state
 
-    const value = formProps.values[item.id] || []
+    const value = dotty.get(formProps.values, item.id)
     const fields = item.list.table
     const mainField = item.list.mainField
 

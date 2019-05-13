@@ -196,11 +196,15 @@ const sideEffects = {
     } = routeParams
 
     const deployment = {
-      name: payload.name,
+      name: payload.deployment.name,
       deployment_type,
       deployment_version,
       desired_state: payload,
     }
+
+    console.log('--------------------------------------------')
+    console.dir(deployment)
+    return
 
     try {
       const task = await api.loaderSideEffect({
