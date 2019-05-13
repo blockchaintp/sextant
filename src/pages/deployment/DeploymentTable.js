@@ -267,7 +267,7 @@ class DeploymentTable extends React.Component {
           onCancel={ () => this.closeDeleteDialog() }
           onConfirm={ () => {
             this.closeDeleteDialog()
-            onDelete(deleteConfirmItem.id)
+            onDelete(clusterId, deleteConfirmItem.id)
           }}
         />
       </div>

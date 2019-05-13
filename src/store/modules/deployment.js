@@ -84,7 +84,7 @@ const loaders = {
   update: (id, payload) => axios.put(api.url(`/deployments/${id}`), payload)
     .then(api.process),
 
-  delete: (id) => axios.delete(api.url(`/deployments/${id}`))
+  delete: (cluster, id) => axios.delete(api.url(`/clusters/${cluster}/deployments/${id}`))
     .then(api.process),
 
   listTasks: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/tasks`))
@@ -257,12 +257,12 @@ const sideEffects = {
       console.error(e)
     }
   },
-  delete: (id) => async (dispatch, getState) => {
+  delete: (cluster, id) => async (dispatch, getState) => {
     try {
       const deployment = getState().deployment.deployments.entities.deployment[id]
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.delete(id),
+        loader: () => loaders.delete(cluster, id),
         prefix,
         name: 'delete',
         returnError: true,
@@ -273,7 +273,9 @@ const sideEffects = {
       else {
         dispatch(snackbarActions.setInfo(`deployment deleting`))
       }
-      dispatch(routerActions.navigateTo('deployments'))
+      dispatch(routerActions.navigateTo('deployments', {
+        cluster,
+      }))
     } catch(e) {
       dispatch(snackbarActions.setError(`error deleting deployment: ${e.toString()}`))
       console.error(e)
