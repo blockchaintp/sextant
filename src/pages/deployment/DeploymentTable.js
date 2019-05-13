@@ -94,6 +94,7 @@ class DeploymentTable extends React.Component {
       cluster,
       clusterId,
       updateClusterId,
+      deploymentForms,
     } = this.props
 
     const {
@@ -161,13 +162,18 @@ class DeploymentTable extends React.Component {
       }
     })
 
-    const addButtonItems = [{
-      title: 'Sawtooth',
-      handler: () => onAdd(clusterId, 'sawtooth')
-    }, {
-      title: 'Ethereum',
-      handler: () => onAdd(clusterId, 'ethereum')
-    }]
+    const addButtonItems = Object.keys(deploymentForms).map(deploymentType => {
+
+      const formConfig = deploymentForms[deploymentType]
+
+      return {
+        title: formConfig.button.title,
+        items: formConfig.button.versions.map(version => ({
+          title: version.title,
+          handler: () => onAdd(clusterId, deploymentType, version.form),
+        }))
+      }
+    })
 
     const headerActions = (
       <div className={ classes.headerActions }>

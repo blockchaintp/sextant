@@ -17,6 +17,7 @@ const styles = (theme) => ({
 class MenuButton extends React.Component {
   state = {
     anchorEl: null,
+    items: null,
   }
 
   handleMenu = event => {
@@ -24,13 +25,26 @@ class MenuButton extends React.Component {
   }
 
   handleClose = () => {
-    this.setState({ anchorEl: null })
+    this.setState({ 
+      anchorEl: null,
+      items: null,
+    })
   }
 
   clickItem(item) {
     const {
       openPage,
     } = this.props
+
+    if(item.items) {
+      this.setState({
+        items: item.items,
+      })
+      if(item.handler) {
+        item.handler()
+      }
+      return
+    }
 
     if(typeof(item.handler) === 'string') {
       openPage(item.handler)
@@ -46,9 +60,7 @@ class MenuButton extends React.Component {
   }
 
   getMenu() {
-    const { 
-      items,
-    } = this.props
+    const items = this.state.items || this.props.items
 
     return items.map((item, i) => {
       if(item === '-') {

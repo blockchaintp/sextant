@@ -8,19 +8,6 @@ import selectors from 'store/selectors'
 import DeploymentForm from 'pages/deployment/DeploymentForm'
 import Loading from 'components/system/Loading'
 
-const deploymentInitialValues = {
-  sawtooth: {
-    name: '',
-    deployment_type: 'sawtooth',
-    desired_state: {},
-  },
-  ethereum: {
-    name: '',
-    deployment_type: 'ethereum',
-    desired_state: {},
-  },
-}
-
 const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
 
 @connect(
@@ -31,19 +18,21 @@ const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
     const {
       id,
       deployment_type,
+      deployment_version,
     } = routeParams
 
     const deploymentForms = selectors.config.forms.deployment(state)
+    const deploymentForm = deploymentForms[deployment_type].forms[deployment_version]
 
     const initialValues = id == 'new' ?
-      deploymentInitialValues[deployment_type] :
+      {} :
       selectors.deployment.collection.item(state) || {}
 
     const schema = id == 'new' ?
-      deploymentForms[deployment_type].add :
+      deploymentForm :
       (
-        initialValues.deployment_type ?
-        deploymentForms[initialValues.deployment_type].edit :
+        initialValues.deployment_type && initialValues.deployment_version ?
+        deploymentForms[initialValues.deployment_type][initialValues.deployment_version] :
         []
       )
 
