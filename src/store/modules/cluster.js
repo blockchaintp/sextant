@@ -18,9 +18,11 @@ const initialState = {
   clusters: normalize([], [cluster]),
   tasks: normalize([], [task]),
   showDeleted: false,
-  // a flag to not trigger any snackbars because
-  // tasks have changed - used when we re-filter the list
-  ignoreTaskStatus: false,
+
+  // a task we are tracking the status of so we show snackbars
+  // when it has finished or errored
+  trackTask: null,
+
   loops: {
     cluster: null,
   }
@@ -42,8 +44,8 @@ const reducers = {
   setShowDeleted: (state, action) => {
     state.showDeleted = action.payload
   },
-  setIgnoreTaskStatus: (state, action) => {
-    state.ignoreTaskStatus = action.payload
+  setTrackTask: (state, action) => {
+    state.trackTask = action.payload
   },
   setTasks: (state, action) => {
     state.tasks = normalize(action.payload, [task])
@@ -94,61 +96,37 @@ const sideEffects = {
 
   updateShowDeleted: (value) => (dispatch, getState) => {
     dispatch(actions.setShowDeleted(value))
-    dispatch(actions.setIgnoreTaskStatus(true))
     dispatch(actions.list())
   },
 
   // look to see if there have been any task changes to any clusters
   // and trigger a snackbar if there have
   updateClusterList: (newData) => (dispatch, getState) => {
-    const existingClusters = selectors.cluster.collection.list(getState())
-    const ignoreTaskStatus = selectors.cluster.ignoreTaskStatus(getState())
 
-    if(ignoreTaskStatus) {
-      dispatch(actions.setClusters(newData))
-      dispatch(actions.setIgnoreTaskStatus(false))
-      return
+    const trackTask = getState().cluster.trackTask
+
+    if(trackTask) {
+      const taskTitle = clusterTaskTitles[trackTask.action]
+      const newTrackTask = newData
+        .map(cluster => cluster.task)
+        .find(task => task.id == trackTask.id)
+      if(newTrackTask) {
+        // the tracked task has failed or finished
+        if(newTrackTask.status == 'error' || newTrackTask.status == 'finished') {
+          if(newTrackTask.status == 'error') {
+            dispatch(snackbarActions.setError(`The ${taskTitle} task failed`))
+          }
+          else if(newTrackTask.status == 'finished') {
+            dispatch(snackbarActions.setSuccess(`The ${taskTitle} task succeeded`))
+          }
+          dispatch(actions.setTrackTask(null))
+        }
+      }
+      else if(trackTask.action == 'cluster.delete') {
+        dispatch(snackbarActions.setSuccess(`The ${taskTitle} task succeeded`))
+        dispatch(actions.setTrackTask(null))
+      }
     }
-
-    // ignore updates if we are loading the first time
-    if(existingClusters.length <= 0) return dispatch(actions.setClusters(newData))
-
-    const existingMap = existingClusters.reduce((all, cluster) => {
-      all[cluster.id] = cluster
-      return all
-    }, {})
-
-    const newMap = newData.reduce((all, cluster) => {
-      all[cluster.id] = cluster
-      return all
-    }, {})
-
-    Object.keys(existingMap).forEach(id => {
-
-      // deal with the fact that deleted clusters might not be in the new list
-      const newCluster = newMap[id]
-      const oldCluster = existingMap[id]
-      if(!newCluster && oldCluster) {
-        if(oldCluster.task.action == 'cluster.delete') {
-          dispatch(snackbarActions.setSuccess(`The ${clusterTaskTitles['cluster.delete']} task succeeded`))
-        }
-      }
-
-      if(!newCluster || !oldCluster) return
-
-      const newTask = newMap[id].task
-      const oldTask = existingMap[id].task
-      
-      if(newTask && oldTask && newTask.status != oldTask.status) {
-        const taskTitle = clusterTaskTitles[newTask.action]
-        if(newTask.status == 'error') {
-          dispatch(snackbarActions.setError(`The ${taskTitle} task failed`))
-        }
-        else if(newTask.status == 'finished') {
-          dispatch(snackbarActions.setSuccess(`The ${taskTitle} task succeeded`))
-        }
-      }
-    })
 
     dispatch(actions.setClusters(newData))
   },
@@ -182,13 +160,15 @@ const sideEffects = {
   },
   create: (payload) => async (dispatch, getState) => {
     try {
-      await api.loaderSideEffect({
+      const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.create(payload),
         prefix,
         name: 'form',
         returnError: true,
       })
+
+      dispatch(actions.setTrackTask(task))
       dispatch(snackbarActions.setInfo(`cluster creating`))
       dispatch(routerActions.navigateTo('clusters'))
     } catch(e) {
@@ -198,13 +178,14 @@ const sideEffects = {
   },
   save: (id, payload) => async (dispatch, getState) => {
     try {
-      await api.loaderSideEffect({
+      const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.update(id, payload),
         prefix,
         name: 'form',
         returnError: true,
       })
+      dispatch(actions.setTrackTask(task))
       dispatch(snackbarActions.setInfo(`cluster saving`))
       dispatch(routerActions.navigateTo('clusters'))
     } catch(e) {
@@ -215,7 +196,7 @@ const sideEffects = {
   delete: (id) => async (dispatch, getState) => {
     try {
       const cluster = getState().cluster.clusters.entities.cluster[id]
-      await api.loaderSideEffect({
+      const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.delete(id),
         prefix,
@@ -226,6 +207,7 @@ const sideEffects = {
         dispatch(snackbarActions.setSuccess(`cluster deleted`))
       }
       else {
+        dispatch(actions.setTrackTask(task))
         dispatch(snackbarActions.setInfo(`cluster deleting`))
       }
       dispatch(routerActions.navigateTo('clusters'))

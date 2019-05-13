@@ -24,9 +24,6 @@ const initialState = {
   // when it has finished or errored
   trackTask: null,
 
-  // a flag to not trigger any snackbars because
-  // tasks have changed - used when we re-filter the list
-  ignoreTaskStatus: false,
   loops: {
     deployments: null,
   }
@@ -50,9 +47,6 @@ const reducers = {
   },
   setTrackTask: (state, action) => {
     state.trackTask = action.payload
-  },
-  setIgnoreTaskStatus: (state, action) => {
-    state.ignoreTaskStatus = action.payload
   },
   setTasks: (state, action) => {
     state.tasks = normalize(action.payload, [task])
@@ -121,7 +115,6 @@ const sideEffects = {
     const routeParams = selectors.router.params(getState())
 
     dispatch(actions.setShowDeleted(value))
-    dispatch(actions.setIgnoreTaskStatus(true))
     dispatch(actions.list({
       cluster: routeParams.cluster
     }))
