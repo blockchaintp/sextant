@@ -51,7 +51,7 @@ class CheckboxField extends React.Component {
         </FormGroup>
         <HelperText
           helperText={ item.helperText }
-          error={ error }
+          error={ error ? true : false }
           touched={ touched }
         />
       </FormControl>

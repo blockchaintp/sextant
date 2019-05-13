@@ -63,7 +63,7 @@ class RadioField extends React.Component {
         </RadioGroup>
         <HelperText
           helperText={ item.helperText }
-          error={ error }
+          error={ error ? true : false }
           touched={ touched }
         />
       </FormControl>

@@ -64,7 +64,7 @@ class SelectField extends React.Component {
         </Select>
         <HelperText
           helperText={ item.helperText }
-          error={ error }
+          error={ error ? true : false }
           touched={ touched }
         />
       </FormControl>
