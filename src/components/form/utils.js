@@ -11,16 +11,20 @@ const flattenSchema = (schema) => {
     }, [])
 }
 
-const flattenErrors = (errors) => {
+const flattenErrors = (errors, schema, baseKeys = []) => {
   let flatErrors = {}
   Object.keys(errors).forEach(key => {
     const value = errors[key]
 
+    const fullKey = baseKeys.concat(key).join('.')
+
     if(typeof(value) == 'string') {
-      flatErrors[key] = value
+      const field = schema.find(field => field.id == fullKey)
+      const errorKey = field ? field.title : fullKey
+      flatErrors[errorKey] = value
     }
     else {
-      flatErrors = Object.assign({}, flatErrors, flattenErrors(value))
+      flatErrors = Object.assign({}, flatErrors, flattenErrors(value, schema, baseKeys.concat([key])))
     }
   })
   return flatErrors

@@ -462,7 +462,7 @@ class FormWrapperInner extends React.Component {
               handleSubmit()
             }
 
-            const flatErrors = utils.flattenErrors(errors)
+            const flatErrors = utils.flattenErrors(errors, utils.flattenSchema(schema))
 
             return (
               <form onSubmit={ submitWrapper }>
