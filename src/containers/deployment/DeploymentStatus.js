@@ -12,8 +12,6 @@ const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
 
 @connect(
   state => {
-
-    const data = selectors.deployment.collection.item(state)
     const routeParams = selectors.router.params(state)
 
     const {
@@ -24,7 +22,10 @@ const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
     return {
       id,
       clusterId: cluster,
-      data,
+      deployment: selectors.deployment.collection.item(state),
+      resources: selectors.deployment.resources(state),
+      summary: selectors.deployment.summary(state),
+      tasks: selectors.deployment.taskCollection.list(state),
       loading: selectors.deployment.loading.get(state),
     }
   },

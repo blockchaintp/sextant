@@ -138,6 +138,8 @@ const routes = [
       activate: (store, params) => {
         store.dispatch(networkActions.startLoading('deployment.get'))
         store.dispatch(deploymentActions.get(params.cluster, params.id))
+        store.dispatch(deploymentActions.listTasks(params.cluster, params.id))
+        store.dispatch(deploymentActions.getSummary(params.cluster, params.id))
         store.dispatch(deploymentActions.startResourcesLoop({
           cluster: params.cluster,
           deployment: params.id,

@@ -23,6 +23,7 @@ const initialState = {
     services: [],
     volumes: [],
   },
+  summary: [],
   showDeleted: false,
 
   // a task we are tracking the status of so we show snackbars
@@ -60,6 +61,9 @@ const reducers = {
   },
   setResources: (state, action) => {
     state.resources = action.payload
+  },
+  setSummary: (state, action) => {
+    state.summary = action.payload
   },
   setLoop: (state, action) => {
     const {
@@ -103,6 +107,9 @@ const loaders = {
     .then(api.process),
   
   listResources: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/resources`))
+    .then(api.process),
+
+  getSummary: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/summary`))
     .then(api.process),
     
 }
@@ -301,6 +308,16 @@ const sideEffects = {
       prefix,
       name: 'listResources',
       dataAction: actions.setResources,
+      snackbarError: true,
+    })
+  },
+  getSummary: (cluster, id) => (dispatch) => {
+    return api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.getSummary(cluster, id),
+      prefix,
+      name: 'getSummary',
+      dataAction: actions.setSummary,
       snackbarError: true,
     })
   },

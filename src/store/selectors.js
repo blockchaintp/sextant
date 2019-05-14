@@ -238,7 +238,6 @@ const selectors = {
     }),
     ...props(clusterStore, [
       'showDeleted',
-      'ignoreTaskStatus',
     ]),
   },
 
@@ -256,7 +255,8 @@ const selectors = {
     }),
     ...props(deploymentStore, [
       'showDeleted',
-      'ignoreTaskStatus',
+      'resources',
+      'summary',
     ]),
   },
 

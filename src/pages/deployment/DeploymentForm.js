@@ -6,9 +6,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
-import SimpleTable from 'components/table/SimpleTable'
-import TaskStatusIcon from 'components/status/TaskStatusIcon'
-import TaskActionIcon from 'components/status/TaskActionIcon'
+import TaskTable from 'components/task/TaskTable'
 
 import FormWrapper from 'components/form/Wrapper'
 
@@ -25,94 +23,9 @@ const styles = theme => ({
   button: {
     marginRight: theme.spacing.unit * 2,
   },
-  errorContainer: {
-    maxWidth: '200px',
-  },
-  errorText: {
-    color: theme.palette.error.main,
-  },
-  statusContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'left',
-  },
-  statusIcon: {
-    marginRight: theme.spacing.unit * 2,
-  },
 })
 
 class DeploymentForm extends React.Component {
-
-  getTaskTable() {
-    const {
-      classes,
-      tasks,
-    } = this.props
-
-    const fields =[{
-      title: 'Started',
-      name: 'started_at',
-    }, {
-      title: 'Action',
-      name: 'action',
-    }, {
-      title: 'Status',
-      name: 'status',
-    }]
-
-    const data = tasks.map((task, index) => {
-      return {
-        id: task.id,
-        started_at: (
-          <span className={ classes.dateTime }>
-            { new Date(task.started_at).toLocaleString() }
-          </span>
-        ),
-        action: (
-          <div className={ classes.statusContainer }>
-            <div className={ classes.statusIcon }>
-              <TaskActionIcon
-                action={ task.action.split('.')[1] }
-              />
-            </div>
-            <div>
-              { task.action }
-            </div>
-          </div>
-        ),
-        status: (
-          <div className={ classes.statusContainer }>
-            <div className={ classes.statusIcon }>
-              <TaskStatusIcon
-                status={ task.status }
-              />
-            </div>
-            <div>
-              { !task.error && task.status }
-              {
-                task.error && (
-                  <div className={ classes.errorContainer }>
-                    <span className={ classes.errorText }>
-                      { task.error }
-                    </span>
-                  </div>
-                )
-              }
-            </div>
-          </div>
-        ),
-      }
-    })
-
-    return (
-      <div>
-        <SimpleTable
-          data={ data }
-          fields={ fields }
-        />
-      </div>
-    )
-  }
 
   render() {
     const { 
@@ -128,6 +41,7 @@ class DeploymentForm extends React.Component {
       onCancel,
       clusterId,
       validate,
+      tasks,
       exists,
     } = this.props
 
@@ -187,7 +101,9 @@ class DeploymentForm extends React.Component {
                   <Typography variant="h6" gutterBottom>
                     Tasks
                   </Typography>
-                  { this.getTaskTable() }
+                  <TaskTable
+                    data={ tasks }
+                  />
                 </Paper>
               </Grid>
             )
