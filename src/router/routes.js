@@ -136,11 +136,14 @@ const routes = [
     authorize: authHandlers.user,
     trigger: {
       activate: (store, params) => {
-        if(params.id == 'new') return
         store.dispatch(networkActions.startLoading('deployment.get'))
         store.dispatch(deploymentActions.get(params.cluster, params.id))
-        //store.dispatch(deploymentActions.listTasks(params.cluster, params.id))
+        store.dispatch(deploymentActions.startResourcesLoop({
+          cluster: params.cluster,
+          deployment: params.id,
+        }))
       },
+      deactivate: (store) => store.dispatch(deploymentActions.stopResourcesLoop()),
     },
   },
 ]

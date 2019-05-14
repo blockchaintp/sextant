@@ -18,14 +18,21 @@ const task = new schema.Entity('task')
 const initialState = {
   deployments: normalize([], [deployment]),
   tasks: normalize([], [task]),
+  resources: {
+    pods: [],
+    services: [],
+    volumes: [],
+  },
   showDeleted: false,
 
   // a task we are tracking the status of so we show snackbars
   // when it has finished or errored
   trackTask: null,
 
+  // are we looping for the following endpoints?
   loops: {
     deployments: null,
+    resources: null,
   }
 }
 
@@ -50,6 +57,9 @@ const reducers = {
   },
   setTasks: (state, action) => {
     state.tasks = normalize(action.payload, [task])
+  },
+  setResources: (state, action) => {
+    state.resources = action.payload
   },
   setLoop: (state, action) => {
     const {
@@ -90,6 +100,9 @@ const loaders = {
     .then(api.process),
 
   listTasks: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/tasks`))
+    .then(api.process),
+  
+  listResources: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/resources`))
     .then(api.process),
     
 }
@@ -281,28 +294,76 @@ const sideEffects = {
     dataAction: actions.setTasks,
     snackbarError: true,
   }),
+  listResources: (cluster, id) => (dispatch) => {
+    return api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.listResources(cluster, id),
+      prefix,
+      name: 'listResources',
+      dataAction: actions.setResources,
+      snackbarError: true,
+    })
+  },
   startDeploymentLoop: ({
     cluster,
   }) => async (dispatch, getState) => {
+    dispatch(actions.setLoop({
+      name: 'deployment',
+      value: true,
+    }))
+    dispatch(actions.deploymentLoop({
+      cluster,
+    }))    
+  },
+  deploymentLoop: ({
+    cluster,
+  }) => async (dispatch, getState) => {
+    const looping = getState().deployment.loops.deployment
+    if(!looping) return
     await dispatch(actions.list({
       cluster,
     }))
-    const intervalTask = setInterval(() => {
-      dispatch(actions.list({
-        cluster,
-      }))
-    }, 1000)
-    dispatch(actions.setLoop({
-      name: 'deployment',
-      value: intervalTask,
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    dispatch(actions.deploymentLoop({
+      cluster,
     }))
   },
   stopDeploymentLoop: () => (dispatch, getState) => {
-    const intervalId = getState().deployment.loops.deployment
-    clearInterval(intervalId)
     dispatch(actions.setLoop({
       name: 'deployment',
-      value: null,
+      value: false,
+    }))
+  },
+  startResourcesLoop: ({
+    cluster,
+    deployment,
+  }) => async (dispatch, getState) => {
+    dispatch(actions.setLoop({
+      name: 'resources',
+      value: true,
+    }))
+    dispatch(actions.resourcesLoop({
+      cluster,
+      deployment,
+    }))
+  },
+  resourcesLoop: ({
+    cluster,
+    deployment,
+  }) => async (dispatch, getState) => {
+    const looping = getState().deployment.loops.resources
+    if(!looping) return
+    await dispatch(actions.listResources(cluster, deployment))
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    dispatch(actions.resourcesLoop({
+      cluster,
+      deployment,
+    }))
+  },
+  stopResourcesLoop: () => (dispatch, getState) => {
+    dispatch(actions.setLoop({
+      name: 'resources',
+      value: false,
     }))
   },
 }
