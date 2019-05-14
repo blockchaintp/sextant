@@ -56,11 +56,30 @@ const getInitialValues = (schema, initialValues) => {
   }, Object.assign({}, initialValues))
 }
 
+const processValues = (schema, values) => {
+  const flatSchema = flattenSchema(schema)
+  const returnValues = JSON.parse(JSON.stringify(values))
+  return flatSchema.reduce((all, field) => {
+    if(field.dataType) {
+      let value = dotty.get(all, field.id)
+      if(field.dataType == 'boolean') {
+        value = (value === 'true')
+      }
+      dotty.put(all, field.id, value)
+      return all
+    }
+    else {
+      return all
+    }
+  }, returnValues)
+}
+
 const utils = {
   flattenSchema,
   flattenErrors,
   getComponent,
   getInitialValues,
+  processValues,
 }
 
 export default utils
