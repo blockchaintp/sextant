@@ -202,10 +202,6 @@ const sideEffects = {
       desired_state: payload,
     }
 
-    console.log('--------------------------------------------')
-    console.dir(deployment)
-    return
-
     try {
       const task = await api.loaderSideEffect({
         dispatch,
@@ -228,7 +224,7 @@ const sideEffects = {
   save: (cluster, id, payload) => async (dispatch, getState) => {
 
     const deploymentUpdate = {
-      name: payload.name,
+      name: payload.deployment.name,
       desired_state: payload,
     }
 

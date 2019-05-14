@@ -440,12 +440,8 @@ class FormWrapperInner extends React.Component {
         validationSchema={ validationSchema }
         isInitialValid={ isInitialValid }
         onSubmit={ (values) => {
-
           const processedValues = utils.processValues(schema, values)
-          //onSubmit 
-          console.log('--------------------------------------------')
-          console.log('--------------------------------------------')
-          console.dir(processedValues)
+          onSubmit(processedValues)
         }}
         validate={ validate }
       >

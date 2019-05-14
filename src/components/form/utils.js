@@ -63,7 +63,7 @@ const processValues = (schema, values) => {
     if(field.dataType) {
       let value = dotty.get(all, field.id)
       if(field.dataType == 'boolean') {
-        value = (value === 'true')
+        value = (value === 'true' || value === true)
       }
       dotty.put(all, field.id, value)
       return all
