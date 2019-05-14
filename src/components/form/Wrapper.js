@@ -205,6 +205,7 @@ class FormListInner extends React.Component {
       formProps,
       arrayHelpers,
       classes,
+      disabled,
     } = this.props
 
     const {
@@ -226,7 +227,7 @@ class FormListInner extends React.Component {
 
         let renderValue = baseRenderValue
 
-        if(field.sortable) {
+        if(field.sortable && !disabled) {
           renderValue = (
             <Sortable
               id={ index }
@@ -296,15 +297,18 @@ class FormListInner extends React.Component {
         <SimpleTable
           data={ data }
           fields={ fields }
-          getActions={ (item) => (
-            <SimpleTableActions
-              item={ item }
-              actions={ actions }
-            />
-          )}
+          getActions={ (item) => {
+            if(disabled) return null
+            return (
+              <SimpleTableActions
+                item={ item }
+                actions={ actions }
+              />
+            )
+          }}
           hideHeaderIfEmpty
         />
-        { addButton }
+        { disabled ? null : addButton }
         <SimpleTableDeleteDialog
           open={ deleteConfirmOpen }
           title={ deleteConfirmItem ? deleteConfirmItem[mainField] : null }
@@ -343,6 +347,21 @@ class FormWrapperInner extends React.Component {
 
   getItem(item, formProps) {
 
+    const {
+      exists,
+    } = this.props
+
+    let disabled = false
+
+    if(item.editable && typeof(item.editable.new) == 'boolean') {
+      if(item.editable.new && exists) {
+        disabled = true
+      }
+      else if(!item.editable.new && !exists) {
+        disabled = true
+      }
+    }
+
     const error = dotty.get(formProps.errors, item.id)
     const touched = dotty.get(formProps.touched, item.id)
 
@@ -354,6 +373,7 @@ class FormWrapperInner extends React.Component {
             item={ item }
             formProps={ formProps }
             arrayHelpers={ arrayHelpers }
+            disabled={ disabled }
           />
         )}
       />
@@ -362,6 +382,7 @@ class FormWrapperInner extends React.Component {
         name={ item.id }
         component={ utils.getComponent(item.component) }
         item={ item }
+        disabled={ disabled }
         error={ error }
         touched={ touched }
       />

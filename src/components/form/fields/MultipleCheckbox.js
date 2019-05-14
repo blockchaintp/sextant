@@ -29,6 +29,7 @@ class MultipleCheckboxField extends React.Component {
       error,
       touched,
       item,
+      disabled,
       classes,
     } = this.props
 
@@ -58,6 +59,7 @@ class MultipleCheckboxField extends React.Component {
                     <Checkbox
                       name={ `${name}-${i}` }
                       checked={ checked }
+                      disabled={ disabled }
                       onChange={ () => {
                         const newValue = Object.assign({}, useValue)
                         if(!checked) {

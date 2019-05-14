@@ -26,6 +26,7 @@ class CheckboxField extends React.Component {
       error,
       touched,
       item,
+      disabled,
       classes,
     } = this.props
 
@@ -42,6 +43,7 @@ class CheckboxField extends React.Component {
                 name={ name }
                 checked={ value ? true : false }
                 onChange={ onChange }
+                disabled={ disabled }
                 value={ name }
                 { ...extraProps }
               />

@@ -41,6 +41,7 @@ const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
 
     return {
       id,
+      exists: id == 'new' ? false : true,
       clusterId: state.router.route.params.cluster,
       error: selectors.deployment.errors.form(state),
       submitting: selectors.deployment.loading.form(state),

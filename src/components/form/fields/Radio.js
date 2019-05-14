@@ -27,6 +27,7 @@ class RadioField extends React.Component {
       error,
       touched,
       item,
+      disabled,
       classes,
     } = this.props
 
@@ -58,6 +59,7 @@ class RadioField extends React.Component {
                     <Radio 
                       checked={ option.value.toString() === value.toString() }
                       value={ option.value }
+                      disabled={ disabled }
                       { ...extraProps } 
                     />
                   }

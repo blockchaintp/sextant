@@ -14,6 +14,7 @@ class Text extends React.Component {
       error,
       touched,
       item,
+      disabled,
     } = this.props
 
     const inputProps = item.inputProps || {}
@@ -37,6 +38,7 @@ class Text extends React.Component {
         onChange={ onChange }
         onBlur={ onBlur }
         onKeyDown={ onKeyDown }
+        disabled={ disabled }
         { ...inputProps }
         { ...extraProps }
       />

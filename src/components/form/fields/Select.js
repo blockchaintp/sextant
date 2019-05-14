@@ -27,6 +27,7 @@ class SelectField extends React.Component {
       touched,
       item,
       classes,
+      disabled,
     } = this.props
 
     const title = item.title || name
@@ -38,6 +39,7 @@ class SelectField extends React.Component {
         <Select
           value={ value || '' }
           onChange={ onChange }
+          disabled={ disabled }
           inputProps={{
             name,
             id: name,

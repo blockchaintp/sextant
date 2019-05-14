@@ -128,6 +128,7 @@ class DeploymentForm extends React.Component {
       onCancel,
       clusterId,
       validate,
+      exists,
     } = this.props
 
     return (
@@ -144,6 +145,7 @@ class DeploymentForm extends React.Component {
                 error={ error }
                 onSubmit={ submitForm }
                 validate={ validate }
+                exists={ exists }
                 renderButtons={
                   ({
                     handleSubmit,
