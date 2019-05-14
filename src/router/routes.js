@@ -130,6 +130,19 @@ const routes = [
       },
     },
   },
+  {
+    name: 'deployment_status',
+    path: '/clusters/:cluster/deployment/:id/status',
+    authorize: authHandlers.user,
+    trigger: {
+      activate: (store, params) => {
+        if(params.id == 'new') return
+        store.dispatch(networkActions.startLoading('deployment.get'))
+        store.dispatch(deploymentActions.get(params.cluster, params.id))
+        //store.dispatch(deploymentActions.listTasks(params.cluster, params.id))
+      },
+    },
+  },
 ]
 
 

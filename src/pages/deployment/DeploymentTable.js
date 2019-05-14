@@ -24,6 +24,7 @@ import settings from 'settings'
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
+const ViewIcon = settings.icons.view
 
 const styles = theme => ({
   errorText: {
@@ -88,6 +89,7 @@ class DeploymentTable extends React.Component {
       showDeleted,
       onAdd,
       onEdit,
+      onViewStatus,
       onDelete,
       updateShowDeleted,
       clusters,
@@ -240,6 +242,10 @@ class DeploymentTable extends React.Component {
       title: 'Edit',
       icon: EditIcon,
       handler: (item) => onEdit(clusterId, item.id),
+    }, {
+      title: 'Status',
+      icon: ViewIcon,
+      handler: (item) => onViewStatus(clusterId, item.id),
     }]
 
     return (

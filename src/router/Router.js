@@ -24,6 +24,7 @@ import ClusterForm from 'containers/cluster/ClusterForm'
 
 import DeploymentTable from 'containers/deployment/DeploymentTable'
 import DeploymentForm from 'containers/deployment/DeploymentForm'
+import DeploymentStatus from 'containers/deployment/DeploymentStatus'
 
 @connect(
   state => {
@@ -78,6 +79,9 @@ class Router extends React.Component {
           </Route>
           <Route segment="deployment" exact>
             <DeploymentForm />
+          </Route>
+          <Route segment="deployment_status" exact>
+            <DeploymentStatus />
           </Route>
         </LayoutMain>
       </RouteContext.Provider>

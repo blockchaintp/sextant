@@ -9,6 +9,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import ViewIcon from '@material-ui/icons/Visibility'
 
 const icons = {
   home: HomeIcon,
@@ -22,6 +23,7 @@ const icons = {
   delete: DeleteIcon,
   cluster: DashboardIcon,
   deployment: PlayArrowIcon,
+  view: ViewIcon,
 }
 
 const settings = {
