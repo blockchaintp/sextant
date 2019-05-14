@@ -1,16 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import SimpleTable from 'components/table/SimpleTable'
 
-const fields = [{
-  title: 'Name',
-  name: 'name,'
-}, {
-  title: 'Value',
-  name: 'value',
-}]
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 
 const styles = theme => {
   return {}
@@ -18,63 +11,43 @@ const styles = theme => {
 
 class DeploymentSummary extends React.Component {
   
+  
   render() {
-    const { 
-      classes,
-      data,
-    } = this.props
+    const { classes, data } = this.props
+
+    const parts = data.reduce((all, row, i) => {
+      return all.concat([
+        <Grid
+          key={ `title-${i}` }
+          item
+          xs={6}
+        >
+          <Typography>
+            <strong>{ row.title }:</strong>
+          </Typography>
+        </Grid>,
+        <Grid
+          key={ `value-${i}` }
+          item
+          xs={6}
+        >
+          <Typography>
+            { row.value }
+          </Typography>
+        </Grid>
+      ])
+    }, [])
 
     return (
-      <div>
-        {
-          data.map((row, i) => {
-            return (
-              <Typography key={ i }>
-                { row.title }: <strong>{ row.value }</strong>
-              </Typography>
-            )
-          })
-        }
-      </div>
-    )
+      <Grid
+        container
+        direction='row'
+        className={ classes.container }
+      >
 
-    console.log('--------------------------------------------')
-    console.dir(data)
+      { parts }
 
-    return null
-
-    const tableData = data.map(item => {
-
-      const ret = {
-        id: item.title,
-        title: item.title,
-        name: item.title,
-      }
-      if(item.value.constructor === Array) {
-        ret.value = (
-          <ul>
-            {
-              item.value.map((row, i) => {
-                return (
-                  <ul key={ i }>{ row }</ul>
-                )
-              })
-            }
-          </ul>
-        )
-      }
-      else {
-        ret.value = item.value
-      }
-
-      return ret
-    })
-
-    return (
-      <SimpleTable
-        data={ tableData }
-        fields={ fields }
-      />
+      </Grid>
     )
   }
 }
