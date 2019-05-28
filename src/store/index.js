@@ -1,34 +1,49 @@
-import { compose, applyMiddleware } from 'redux';
-import { createStore } from 'redux-box'
-import { reducer as formReducer }  from 'redux-form'
-import { connectRoutes } from 'redux-first-router'
-import createHistory from 'history/createBrowserHistory'
+import { applyMiddleware, createStore, compose } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import thunk from 'redux-thunk'
+import { router5Middleware } from 'redux-router5'
 
-import { routes } from '../router'
-import configModule from './config'
-import clusterModule from './cluster'
-import userModule from './user'
-import authModule from './auth'
-import snackbarModule from './snackbar'
+import SagaManager from './sagaManager'
+import reducer from './reducer'
 
-const history = createHistory()
-const router = connectRoutes(history, routes) 
+const Store = (router, initialState = {}) => {
 
-const modules = [  
-  configModule,
-  clusterModule,
-  userModule,
-  authModule,
-  snackbarModule,
-]
+  const sagaMiddleware = createSagaMiddleware()
 
-const config = {
-  reducers : {
-    form : formReducer,
-    location: router.reducer,
-  },
-  middlewares: [router.middleware],
-  composeRedux: (composer) => (middleware) => composer(router.enhancer, middleware),
+  const middleware = [
+    router5Middleware(router),
+    thunk,
+    sagaMiddleware,
+  ]
+
+  const storeEnhancers = [
+    applyMiddleware(...middleware),
+  ]
+
+  if(window.__REDUX_DEVTOOLS_EXTENSION__) storeEnhancers.push(window.__REDUX_DEVTOOLS_EXTENSION__({
+    shouldHotReload: false,
+  }))
+
+  const store = createStore(
+    reducer,
+    initialState,
+    compose(...storeEnhancers)
+  )
+
+  router.setDependency('store', store)
+  SagaManager.startSagas(sagaMiddleware, router)
+
+  if (module.hot) {
+    module.hot.accept('./reducer', () => {
+      store.replaceReducer(require('./reducer').default)
+    })
+    module.hot.accept('./sagaManager', () => {
+      SagaManager.cancelSagas(store)
+      require('./sagaManager').default.startSagas(sagaMiddleware, router)
+    })
+  }
+
+  return store
 }
 
-export default createStore(modules, config)
+export default Store
