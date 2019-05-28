@@ -18,6 +18,7 @@ import AccountDetails from 'containers/auth/AccountDetails'
 import CreateInitialUser from 'containers/user/CreateInitialUser'
 import UserTable from 'containers/user/UserTable'
 import UserForm from 'containers/user/UserForm'
+import AccessToken from 'containers/user/AccessToken'
 
 import ClusterTable from 'containers/cluster/ClusterTable'
 import ClusterForm from 'containers/cluster/ClusterForm'
@@ -64,6 +65,9 @@ class Router extends React.Component {
           </Route>
           <Route segment="user" exact>
             <UserForm />
+          </Route>
+          <Route segment="accesstoken" exact>
+            <AccessToken />
           </Route>
           <Route segment="accountdetails" exact>
             <AccountDetails />

@@ -16,6 +16,7 @@ const user = new schema.Entity('user')
 const initialState = {
   hasInitialUser: false,
   users: normalize([], [user]),
+  accessToken: null,
 }
 
 const reducers = {
@@ -27,6 +28,9 @@ const reducers = {
   },
   setUser: (state, action) => {
     mergeEntities(state.users, normalize([action.payload], [user]))
+  },
+  setAccessToken: (state, action) => {
+    state.accessToken = action.payload
   },
 }
 
@@ -49,7 +53,13 @@ const loaders = {
 
   delete: (id) => axios.delete(api.url(`/user/${id}`))
     .then(api.process),
-    
+
+  getAccessToken: (id) => axios.get(api.url(`/user/${id}/token`))
+    .then(api.process)
+    .then(data => data.token),
+
+  refreshAccessToken: (id) => axios.put(api.url(`/user/${id}/token`))
+    .then(api.process)
 }
 
 const sideEffects = {
@@ -167,6 +177,33 @@ const sideEffects = {
     }
     else {
       dispatch(actions.save(id, payload))
+    }
+  },
+  getAccessToken: () => async (dispatch, getState) => {
+    const userData = selectors.auth.data(getState())
+    await api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.getAccessToken(userData.id),
+      prefix,
+      name: 'getAccessToken',
+      dataAction: actions.setAccessToken,
+      snackbarError: true,
+    })
+  },
+  refreshAccessToken: () => async (dispatch, getState) => {
+    const userData = selectors.auth.data(getState())
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.refreshAccessToken(userData.id),
+        prefix,
+        name: 'refreshAccessToken',
+        returnError: true,
+      })
+      await dispatch(actions.getAccessToken())
+      dispatch(snackbarActions.setSuccess(`access token refreshed`))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error updating access token: ${e.toString()}`))
     }
   },
 }

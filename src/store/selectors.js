@@ -92,6 +92,8 @@ const userStore = state => state.user
 
 const USER_NETWORK_NAMES = networkProps('user', [
   'hasInitialUser',
+  'refreshAccessToken',
+  'getAccessToken',
   'form',
   'list',
   'get',
@@ -221,6 +223,7 @@ const selectors = {
     }),
     ...props(userStore, [
       'hasInitialUser',
+      'accessToken',
     ]),
   },
 

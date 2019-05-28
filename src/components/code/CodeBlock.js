@@ -17,6 +17,7 @@ const styles = theme => ({
     fontFamily: 'Courier',
     fontSize: '0.8em',
     padding: theme.spacing.unit,
+    minHeight: '48px',
   },
   root: {
     position: 'relative',

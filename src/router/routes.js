@@ -72,6 +72,16 @@ const routes = [
     authorize: authHandlers.user,
   },
   {
+    name: 'accesstoken',
+    path: '/accesstoken',
+    authorize: authHandlers.user,
+    trigger: {
+      activate: (store, params) => {
+        store.dispatch(userActions.getAccessToken())
+      },
+    },
+  },
+  {
     name: 'clusters',
     path: '/clusters',
     authorize: authHandlers.user,

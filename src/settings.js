@@ -10,6 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import ViewIcon from '@material-ui/icons/Visibility'
+import KeyIcon from '@material-ui/icons/VpnKey'
 
 const icons = {
   home: HomeIcon,
@@ -24,6 +25,7 @@ const icons = {
   cluster: DashboardIcon,
   deployment: PlayArrowIcon,
   view: ViewIcon,
+  key: KeyIcon,
 }
 
 const settings = {
@@ -87,6 +89,10 @@ const settings = {
         title: 'Account Details',
         handler: 'accountdetails',
         icon: icons.user,
+      }, {
+        title: 'Access Token',
+        handler: 'accesstoken',
+        icon: icons.key,
       }, '-', {
         title: 'Logout',
         handler: handlers.logout,
