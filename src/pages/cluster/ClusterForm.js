@@ -129,6 +129,7 @@ class ClusterForm extends React.Component {
   getCreateInstructions() {
     const {
       classes,
+      snackbarMessage,
     } = this.props
     return (
       <Paper className={ classes.paper }>
@@ -159,7 +160,8 @@ class ClusterForm extends React.Component {
         </Typography>
         <CodeBlock
           code={ HELP_VARIABLES }
-          clipboard={ false }
+          clipboard={ true }
+          snackbarMessage={ snackbarMessage }
         />
         <Typography variant="subtitle1" gutterBottom>
           Step 2. Create service account
@@ -169,7 +171,8 @@ class ClusterForm extends React.Component {
         </Typography>
         <CodeBlock
           code={ HELP_CREATE_SERVICEACCOUNT }
-          clipboard={ false }
+          clipboard={ true }
+          snackbarMessage={ snackbarMessage }
         />
         <Typography variant="subtitle1" gutterBottom>
           Step 3. Get credentials
@@ -179,8 +182,15 @@ class ClusterForm extends React.Component {
         </Typography>
         <CodeBlock
           code={ HELP_GET_VALUES }
-          clipboard={ false }
+          clipboard={ true }
+          snackbarMessage={ snackbarMessage }
         />
+        <Typography variant="subtitle1" gutterBottom>
+          Step 4. Paste credentials
+        </Typography>
+        <Typography gutterBottom>
+          Copy the output of the script above and paste them into the form.
+        </Typography>
       </Paper>
     )
   }

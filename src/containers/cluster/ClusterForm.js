@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import routerActions from 'store/modules/router'
 import clusterActions from 'store/modules/cluster'
+import snackbarActions from 'store/modules/snackbar'
 import selectors from 'store/selectors'
 
 import ClusterForm from 'pages/cluster/ClusterForm'
@@ -64,6 +65,7 @@ const onCancel = () => routerActions.navigateTo('clusters')
   },
   {
     submitForm: clusterActions.submitForm,
+    snackbarMessage: snackbarActions.setInfo,
     onCancel, 
   },
 )
