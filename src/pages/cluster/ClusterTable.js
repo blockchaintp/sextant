@@ -20,6 +20,7 @@ const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
 const DeploymentIcon = settings.icons.deployment
+const ViewIcon = settings.icons.view
 
 const styles = theme => ({
   errorText: {
@@ -80,6 +81,7 @@ class ClusterTable extends React.Component {
       onDelete,
       updateShowDeleted,
       viewDeployments,
+      onViewStatus,
     } = this.props
 
     const {
@@ -190,10 +192,6 @@ class ClusterTable extends React.Component {
 
     const getActions = (item) => {
       const baseActions = [{
-        title: 'Deployments',
-        icon: DeploymentIcon,
-        handler: (item) => viewDeployments(item.id),
-      }, {
         title: 'Delete',
         icon: DeleteIcon,
         handler: (item) => this.openDeleteDialog(item),
@@ -201,6 +199,14 @@ class ClusterTable extends React.Component {
         title: 'Edit',
         icon: EditIcon,
         handler: (item) => onEdit(item.id),
+      }, {
+        title: 'View',
+        icon: ViewIcon,
+        handler: (item) => onViewStatus(item.id),
+      }, {
+        title: 'Deployments',
+        icon: DeploymentIcon,
+        handler: (item) => viewDeployments(item.id),
       }]
 
       return baseActions

@@ -241,6 +241,8 @@ const selectors = {
     }),
     ...props(clusterStore, [
       'showDeleted',
+      'resources',
+      'summary',
     ]),
   },
 

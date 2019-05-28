@@ -17,6 +17,10 @@ const task = new schema.Entity('task')
 const initialState = {
   clusters: normalize([], [cluster]),
   tasks: normalize([], [task]),
+  resources: {
+    nodes: [],
+  },
+  summary: [],
   showDeleted: false,
 
   // a task we are tracking the status of so we show snackbars
@@ -25,6 +29,7 @@ const initialState = {
 
   loops: {
     cluster: null,
+    resources: null,
   }
 }
 
@@ -49,6 +54,12 @@ const reducers = {
   },
   setTasks: (state, action) => {
     state.tasks = normalize(action.payload, [task])
+  },
+  setResources: (state, action) => {
+    state.resources = action.payload
+  },
+  setSummary: (state, action) => {
+    state.summary = action.payload
   },
   setLoop: (state, action) => {
     const {
@@ -88,6 +99,12 @@ const loaders = {
     .then(api.process),
 
   listTasks: (id) => axios.get(api.url(`/clusters/${id}/tasks`))
+    .then(api.process),
+
+  listResources: (id) => axios.get(api.url(`/clusters/${id}/resources`))
+    .then(api.process),
+
+  getSummary: (id) => axios.get(api.url(`/clusters/${id}/summary`))
     .then(api.process),
     
 }
@@ -224,6 +241,26 @@ const sideEffects = {
     dataAction: actions.setTasks,
     snackbarError: true,
   }),
+  listResources: (id) => (dispatch) => {
+    return api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.listResources(id),
+      prefix,
+      name: 'listResources',
+      dataAction: actions.setResources,
+      snackbarError: true,
+    })
+  },
+  getSummary: (id) => (dispatch) => {
+    return api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.getSummary(id),
+      prefix,
+      name: 'getSummary',
+      dataAction: actions.setSummary,
+      snackbarError: true,
+    })
+  },
   startClusterLoop: () => async (dispatch, getState) => {
     await dispatch(actions.list())
     const intervalTask = setInterval(() => {
@@ -240,6 +277,26 @@ const sideEffects = {
     dispatch(actions.setLoop({
       name: 'cluster',
       value: null,
+    }))
+  },
+  startResourcesLoop: (id) => async (dispatch, getState) => {
+    dispatch(actions.setLoop({
+      name: 'resources',
+      value: true,
+    }))
+    dispatch(actions.resourcesLoop(id))
+  },
+  resourcesLoop: (id) => async (dispatch, getState) => {
+    const looping = getState().cluster.loops.resources
+    if(!looping) return
+    await dispatch(actions.listResources(id))
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    dispatch(actions.resourcesLoop(id))
+  },
+  stopResourcesLoop: () => (dispatch, getState) => {
+    dispatch(actions.setLoop({
+      name: 'resources',
+      value: false,
     }))
   },
 }

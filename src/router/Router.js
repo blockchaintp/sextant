@@ -22,6 +22,7 @@ import AccessToken from 'containers/user/AccessToken'
 
 import ClusterTable from 'containers/cluster/ClusterTable'
 import ClusterForm from 'containers/cluster/ClusterForm'
+import ClusterStatus from 'containers/cluster/ClusterStatus'
 
 import DeploymentTable from 'containers/deployment/DeploymentTable'
 import DeploymentForm from 'containers/deployment/DeploymentForm'
@@ -77,6 +78,9 @@ class Router extends React.Component {
           </Route>
           <Route segment="cluster" exact>
             <ClusterForm />
+          </Route>
+          <Route segment="cluster_status" exact>
+            <ClusterStatus />
           </Route>
           <Route segment="deployments" exact>
             <DeploymentTable />

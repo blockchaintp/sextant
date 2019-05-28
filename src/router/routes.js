@@ -104,6 +104,21 @@ const routes = [
     },
   },
   {
+    name: 'cluster_status',
+    path: '/clusters/:id/status',
+    authorize: authHandlers.user,
+    trigger: {
+      activate: (store, params) => {
+        store.dispatch(networkActions.startLoading('cluster.get'))
+        store.dispatch(clusterActions.get(params.id))
+        store.dispatch(clusterActions.listTasks(params.id))
+        store.dispatch(clusterActions.getSummary(params.id))
+        store.dispatch(clusterActions.startResourcesLoop(params.id))
+      },
+      deactivate: (store) => store.dispatch(clusterActions.stopResourcesLoop()),
+    },
+  },
+  {
     name: 'deployments_all',
     path: '/deployments',
     authorize: authHandlers.user,

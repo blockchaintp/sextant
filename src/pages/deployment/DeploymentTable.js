@@ -243,7 +243,7 @@ class DeploymentTable extends React.Component {
       icon: EditIcon,
       handler: (item) => onEdit(clusterId, item.id),
     }, {
-      title: 'Status',
+      title: 'View',
       icon: ViewIcon,
       handler: (item) => onViewStatus(clusterId, item.id),
     }]
