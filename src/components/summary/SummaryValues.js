@@ -6,14 +6,22 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
 const styles = theme => {
-  return {}
+  return {
+    rightAlign: {
+      textAlign: 'right',
+      paddingRight: theme.spacing.unit * 2,
+    }
+  }
 }
 
-class DeploymentSummary extends React.Component {
+class SummaryValues extends React.Component {
   
   
   render() {
-    const { classes, data } = this.props
+    const {
+      classes,
+      data,
+    } = this.props
 
     const parts = data.reduce((all, row, i) => {
       return all.concat([
@@ -22,7 +30,7 @@ class DeploymentSummary extends React.Component {
           item
           xs={6}
         >
-          <Typography>
+          <Typography className={ classes.rightAlign }>
             <strong>{ row.title }:</strong>
           </Typography>
         </Grid>,
@@ -43,6 +51,7 @@ class DeploymentSummary extends React.Component {
         container
         direction='row'
         className={ classes.container }
+        spacing={ 8 }
       >
 
       { parts }
@@ -52,8 +61,8 @@ class DeploymentSummary extends React.Component {
   }
 }
 
-DeploymentSummary.propTypes = {
+SummaryValues.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(DeploymentSummary)
+export default withStyles(styles)(SummaryValues)

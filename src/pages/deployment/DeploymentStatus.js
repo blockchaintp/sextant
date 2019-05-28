@@ -9,7 +9,7 @@ import TaskTable from 'components/task/TaskTable'
 import PodTable from 'components/deployment/PodTable'
 import ServiceTable from 'components/deployment/ServiceTable'
 import VolumeTable from 'components/deployment/VolumeTable'
-import Summary from 'components/deployment/Summary'
+import SummaryValues from 'components/summary/SummaryValues'
 
 const styles = theme => ({
   root: {
@@ -73,7 +73,7 @@ class DeploymentStatus extends React.Component {
               <Typography variant="h6" gutterBottom>
                 Summary
               </Typography>
-              <Summary
+              <SummaryValues
                 data={ summary }
               />
             </Paper>
