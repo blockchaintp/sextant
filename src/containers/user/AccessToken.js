@@ -11,7 +11,6 @@ import AccessToken from 'pages/user/AccessToken'
 @connect(
   state => {
     return {
-      loading: selectors.user.loading.getAccessToken(state),
       submitting: selectors.user.loading.refreshAccessToken(state),
       accessToken: selectors.user.accessToken(state),
     }
@@ -25,9 +24,9 @@ class AccessTokenContainer extends React.Component {
 
   render() {
     const {
-      loading,
+      accessToken,
     } = this.props
-    if(loading) return <Loading />
+    if(!accessToken) return <Loading />
     return (
       <AccessToken 
         {...this.props}
