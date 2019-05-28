@@ -97,6 +97,7 @@ class DeploymentTable extends React.Component {
       clusterId,
       updateClusterId,
       deploymentForms,
+      embedded,
     } = this.props
 
     const {
@@ -177,62 +178,68 @@ class DeploymentTable extends React.Component {
       }
     })
 
-    const headerActions = (
-      <div className={ classes.headerActions }>
-        <div className={ classes.showDeletedCheckbox }>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={ showDeleted }
-                onChange={ (event) => updateShowDeleted(event.target.checked) }
-                value="checkedB"
-                color="primary"
-              />
-            }
-            label="Show Deleted?"
-            classes={{
-              label: classes.showDeletedLabel,
-            }}
-          />
-        </div>
-        <div className={ classes.clusterSelect }>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="name-readonly">Cluster</InputLabel>
-            <Select
-              value={ clusterId }
-              onChange={ (ev) => updateClusterId(ev.target.value) }
-            >
-              {
-                clusters
-                  .filter(cluster => cluster.status == 'provisioned')
-                  .map((cluster, i) => {
-                    return (
-                      <MenuItem 
-                        key={ i }
-                        value={ cluster.id }
-                      >
-                        { cluster.name }
-                      </MenuItem>
-                    )
-                  })
-              }
-            </Select>
-          </FormControl>
-        </div>
-        <div className={ classes.addButton }>
-          <MenuButton 
-            className={classes.button} 
-            title="Add"
-            icon={ AddIcon }
-            buttonProps={{
-              variant: 'contained',
-              color: 'secondary',
-            }}
-            items={ addButtonItems }
-          />
-        </div>
+    const addButton = (
+      <div className={ classes.addButton }>
+        <MenuButton 
+          className={classes.button} 
+          title="Add"
+          icon={ AddIcon }
+          buttonProps={{
+            variant: 'contained',
+            color: 'secondary',
+          }}
+          items={ addButtonItems }
+        />
       </div>
     )
+
+    const headerActions = embedded ? 
+      addButton : 
+      (
+        <div className={ classes.headerActions }>
+          <div className={ classes.showDeletedCheckbox }>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={ showDeleted }
+                  onChange={ (event) => updateShowDeleted(event.target.checked) }
+                  value="checkedB"
+                  color="primary"
+                />
+              }
+              label="Show Deleted?"
+              classes={{
+                label: classes.showDeletedLabel,
+              }}
+            />
+          </div>
+          <div className={ classes.clusterSelect }>
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="name-readonly">Cluster</InputLabel>
+              <Select
+                value={ clusterId }
+                onChange={ (ev) => updateClusterId(ev.target.value) }
+              >
+                {
+                  clusters
+                    .filter(cluster => cluster.status == 'provisioned')
+                    .map((cluster, i) => {
+                      return (
+                        <MenuItem 
+                          key={ i }
+                          value={ cluster.id }
+                        >
+                          { cluster.name }
+                        </MenuItem>
+                      )
+                    })
+                }
+              </Select>
+            </FormControl>
+          </div>
+          { addButton }
+        </div>
+      )
 
     const actions = [{
       title: 'Delete',
@@ -248,10 +255,14 @@ class DeploymentTable extends React.Component {
       handler: (item) => onViewStatus(clusterId, item.id),
     }]
 
+    const title = embedded ? 
+      `Deployments` : 
+      cluster ? cluster.name + ': Deployments' : 'Deployments'
+
     return (
       <div>
         <SimpleTableHeader
-          title={`${cluster ? cluster.name + ': ' : '' }Deployments`}
+          title={ title }
           getActions={ () => headerActions }
         />
         <SimpleTable

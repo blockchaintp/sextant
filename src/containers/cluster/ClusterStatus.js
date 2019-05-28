@@ -24,6 +24,7 @@ const onCancel = (cluster) => routerActions.navigateTo('clusters')
       summary: selectors.cluster.summary(state),
       tasks: selectors.cluster.taskCollection.list(state),
       loading: selectors.cluster.loading.get(state),
+      deployments: selectors.deployment.collection.list(state),
     }
   },
   {

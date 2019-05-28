@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 
+import DeploymentTable from 'containers/deployment/DeploymentTable'
 import TaskTable from 'components/task/TaskTable'
 import NodeTable from 'components/cluster/NodeTable'
 import SummaryValues from 'components/summary/SummaryValues'
@@ -32,13 +33,18 @@ class ClusterStatus extends React.Component {
     return (
       <div className={ classes.root }>
         <Grid container spacing={24}>
-          <Grid item xs={ 8 }>
+          <Grid item xs={ 9 }>
             <Paper className={ classes.paper }>
               <Typography variant="h6" gutterBottom>
                 Nodes
               </Typography>
               <NodeTable
                 data={ resources.nodes }
+              />
+            </Paper>
+            <Paper className={ classes.paper }>
+              <DeploymentTable
+                embedded
               />
             </Paper>
             <Paper className={ classes.paper }>
@@ -50,7 +56,7 @@ class ClusterStatus extends React.Component {
               />
             </Paper>
           </Grid>
-          <Grid item xs={ 4 }>
+          <Grid item xs={ 3 }>
             <Paper className={ classes.paper }>
               <Typography variant="h6" gutterBottom>
                 Summary

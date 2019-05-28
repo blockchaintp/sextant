@@ -114,6 +114,9 @@ const routes = [
         store.dispatch(clusterActions.listTasks(params.id))
         store.dispatch(clusterActions.getSummary(params.id))
         store.dispatch(clusterActions.startResourcesLoop(params.id))
+        store.dispatch(deploymentActions.list({
+          cluster: params.id
+        }))
       },
       deactivate: (store) => store.dispatch(clusterActions.stopResourcesLoop()),
     },

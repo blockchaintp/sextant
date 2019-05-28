@@ -7,7 +7,9 @@ import Tooltip from '@material-ui/core/Tooltip'
 
 const styles = theme => {
   return {
-    
+    root: {
+      whiteSpace: 'nowrap',
+    }
   }
 }
 
@@ -16,7 +18,7 @@ class SimpleTableActions extends React.Component {
   render() {
     const { classes, item, actions } = this.props
     return (
-      <div>
+      <div className={ classes.root }>
         {
           actions
             .filter(action => {
