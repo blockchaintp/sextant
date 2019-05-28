@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button'
 
 import TaskTable from 'components/task/TaskTable'
 
+import RoleTable from 'pages/role/RoleTable'
+
 import FormWrapper from 'components/form/Wrapper'
 import CodeBlock from 'components/code/CodeBlock'
 
@@ -106,6 +108,12 @@ const styles = theme => ({
     width: '100%',
     overflowX: 'auto',
   },
+  roleTableHeader: {
+    paddingLeft: '0px',
+  },
+  spacer: {
+    height: theme.spacing.unit * 2,
+  },
 })
 
 class ClusterForm extends React.Component {
@@ -122,6 +130,24 @@ class ClusterForm extends React.Component {
         </Typography>
         <TaskTable
           data={ tasks }
+        />
+      </Paper>
+    )
+  }
+
+  getRoleTable() {
+    const {
+      tasks,
+      classes,
+    } = this.props
+    return (
+      <Paper className={ classes.paper }>
+        <RoleTable
+          roles={ [] }
+          onAdd={ () => {} }
+          onDelete={ () => {} }
+          title="Access Control"
+          headerClassname={ classes.roleTableHeader }
         />
       </Paper>
     )
@@ -264,7 +290,18 @@ class ClusterForm extends React.Component {
             {
               id == 'new' ?
                 this.getCreateInstructions() :
-                this.getTaskTable()
+                (
+                  <div>
+                    {
+                      this.getRoleTable()
+                    }
+                    <div className={ classes.spacer } />
+                    {
+                      this.getTaskTable()
+                    }
+                  </div>
+                )
+                
             }
           </Grid>
         </Grid>

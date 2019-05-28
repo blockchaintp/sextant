@@ -13,10 +13,12 @@ const prefix = 'cluster'
 
 const cluster = new schema.Entity('cluster')
 const task = new schema.Entity('task')
+const role = new schema.Entity('role')
 
 const initialState = {
   clusters: normalize([], [cluster]),
   tasks: normalize([], [task]),
+  roles: normalize([], [role]),
   resources: {
     nodes: [],
   },
@@ -42,6 +44,12 @@ const clusterTaskTitles = {
 const reducers = {
   setClusters: (state, action) => {
     state.clusters = normalize(action.payload, [cluster])
+  },
+  setRoles: (state, action) => {
+    state.roles = normalize(action.payload, [role])
+  },
+  resetRoles: (state, action) => {
+    state.roles = normalize([], [role])
   },
   setCluster: (state, action) => {
     mergeEntities(state.clusters, normalize([action.payload], [cluster]))
@@ -87,6 +95,9 @@ const loaders = {
       withTask: 'y',
     }
   })
+    .then(api.process),
+
+  listRoles: (id) => axios.get(api.url(`/clusters/${id}/roles`))
     .then(api.process),
 
   create: (payload) => axios.post(api.url(`/clusters`), payload)
@@ -166,6 +177,20 @@ const sideEffects = {
     dataAction: actions.setCluster,
     snackbarError: true,
   }),
+  listRoles: (id) => async (dispatch) => {
+    if(id == 'new') {
+      dispatch(actions.resetRoles())
+      return
+    }
+    await api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.listRoles(id),
+      prefix,
+      name: 'listRoles',
+      dataAction: actions.setRoles,
+      snackbarError: true,
+    })
+  },
   submitForm: (payload) => (dispatch, getState) => {
     const id = selectors.router.idParam(getState())
     if(id == 'new') {

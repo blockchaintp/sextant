@@ -96,6 +96,7 @@ const routes = [
     authorize: authHandlers.user,
     trigger: {
       activate: (store, params) => {
+        store.dispatch(clusterActions.listRoles(params.id))
         if(params.id == 'new') return
         store.dispatch(networkActions.startLoading('cluster.get'))
         store.dispatch(clusterActions.get(params.id))
