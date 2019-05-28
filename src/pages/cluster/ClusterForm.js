@@ -112,6 +112,7 @@ class ClusterForm extends React.Component {
 
   getTaskTable() {
     const {
+      tasks,
       classes,
     } = this.props
     return (
