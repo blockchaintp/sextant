@@ -15,11 +15,11 @@ const onCancel = (cluster) => routerActions.navigateTo('clusters')
     const routeParams = selectors.router.params(state)
 
     const {
-      id,
+      cluster,
     } = routeParams
 
     return {
-      id,
+      id: cluster,
       resources: selectors.cluster.resources(state),
       summary: selectors.cluster.summary(state),
       tasks: selectors.cluster.taskCollection.list(state),

@@ -8,7 +8,7 @@ import ClusterTable from 'pages/cluster/ClusterTable'
 import selectors from 'store/selectors'
 
 const viewDeployments = (id) => routerActions.navigateTo('deployments', { cluster: id })
-const onViewStatus = (id) => routerActions.navigateTo('cluster_status', { id })
+const onViewStatus = (id) => routerActions.navigateTo('cluster_status', { cluster: id })
 const onAdd = (provision_type) => routerActions.navigateTo('cluster', { id: 'new', provision_type })
 const onEdit = (id) => routerActions.navigateTo('cluster', { id })
 const onDelete = (id) => clusterActions.delete(id)
