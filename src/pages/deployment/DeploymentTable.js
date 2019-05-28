@@ -60,6 +60,9 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     minWidth: 200,
   },
+  embeddedHeader: {
+    paddingLeft: '0px',
+  },
 })
 
 class DeploymentTable extends React.Component {
@@ -264,6 +267,7 @@ class DeploymentTable extends React.Component {
         <SimpleTableHeader
           title={ title }
           getActions={ () => headerActions }
+          className={ embedded ? classes.embeddedHeader : null }
         />
         <SimpleTable
           data={ data }
