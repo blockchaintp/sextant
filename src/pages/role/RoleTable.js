@@ -165,6 +165,7 @@ class RoleTable extends React.Component {
           }}
         />
         <RoleForm
+          title={ title || 'Role' }
           open={ this.state.formOpen }
           onCancel={ () => this.cancelForm() }
           onConfirm={ () => this.confirmForm() }

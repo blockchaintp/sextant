@@ -17,6 +17,8 @@ const initialState = {
   hasInitialUser: false,
   users: normalize([], [user]),
   accessToken: null,
+  accessControlSearch: '',
+  accessControlResults: [],
 }
 
 const reducers = {
@@ -31,6 +33,15 @@ const reducers = {
   },
   setAccessToken: (state, action) => {
     state.accessToken = action.payload
+  },
+  setAccessControlSearch: (state, action) => {
+    const value = typeof(action.payload) == 'object' ?
+      action.payload.username :
+      action.payload
+    state.accessControlSearch = value
+  },
+  setAccessControlResults: (state, action) => {
+    state.accessControlResults = action.payload
   },
 }
 
@@ -59,7 +70,15 @@ const loaders = {
     .then(data => data.token),
 
   refreshAccessToken: (id) => axios.put(api.url(`/user/${id}/token`))
-    .then(api.process)
+    .then(api.process),
+
+  loadAccessControlResults: (search) => axios.get(api.url(`/user/search`), {
+    params: {
+      search,
+    },
+  })
+    .then(api.process),
+
 }
 
 const sideEffects = {
@@ -206,6 +225,14 @@ const sideEffects = {
       dispatch(snackbarActions.setError(`error updating access token: ${e.toString()}`))
     }
   },
+  loadAccessControlResults: (search) => async (dispatch, getState) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.loadAccessControlResults(search),
+    prefix,
+    name: 'loadAccessControlResults',
+    dataAction: actions.setAccessControlResults,
+    snackbarError: true,
+  }),
 }
 
 const reducer = CreateReducer({

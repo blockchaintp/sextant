@@ -224,6 +224,8 @@ const selectors = {
     ...props(userStore, [
       'hasInitialUser',
       'accessToken',
+      'accessControlSearch',
+      'accessControlResults',
     ]),
   },
 
