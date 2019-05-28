@@ -8,6 +8,7 @@ import api from '../utils/api'
 import selectors from '../selectors'
 import routerActions from './router'
 import snackbarActions from './snackbar'
+import userActions from './user'
 
 const prefix = 'cluster'
 
@@ -116,6 +117,12 @@ const loaders = {
     .then(api.process),
 
   getSummary: (id) => axios.get(api.url(`/clusters/${id}/summary`))
+    .then(api.process),
+
+  createRole: (id, payload) => axios.post(api.url(`/clusters/${id}/roles`), payload)
+    .then(api.process),
+
+  deleteRole: (id, userid) => axios.delete(api.url(`/clusters/${id}/roles/${userid}`))
     .then(api.process),
     
 }
@@ -323,6 +330,44 @@ const sideEffects = {
       name: 'resources',
       value: false,
     }))
+  },
+  addRole: () => async (dispatch, getState) => {
+    const id = selectors.router.idParam(getState())  
+    const username = selectors.user.accessControlSearch(getState())
+    const permission = selectors.user.accessControlLevel(getState())
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.createRole(id, {
+          username,
+          permission,
+        }),
+        prefix,
+        name: 'addRole',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setSuccess(`role added`))
+      dispatch(actions.listRoles(id))
+      dispatch(userActions.closeAccessControlForm())
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error adding role: ${e.toString()}`))
+    }
+  },
+  deleteRole: (userid) =>  async (dispatch, getState) => {
+    const id = selectors.router.idParam(getState())  
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.deleteRole(id, userid),
+        prefix,
+        name: 'deleteRole',
+        returnError: true,IDBCursorWithValue
+      })
+      dispatch(snackbarActions.setSuccess(`role deleted`))
+      dispatch(actions.listRoles(id))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error deleting role: ${e.toString()}`))
+    }
   },
 }
 

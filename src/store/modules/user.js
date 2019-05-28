@@ -13,10 +13,14 @@ const prefix = 'user'
 
 const user = new schema.Entity('user')
 
+const DEFAUT_ACCESS_LEVEL = 'read'
+
 const initialState = {
   hasInitialUser: false,
   users: normalize([], [user]),
   accessToken: null,
+  accessControlFormOpen: false,
+  accessControlLevel: DEFAUT_ACCESS_LEVEL,
   accessControlSearch: '',
   accessControlResults: [],
 }
@@ -34,6 +38,12 @@ const reducers = {
   setAccessToken: (state, action) => {
     state.accessToken = action.payload
   },
+  setAccessControlFormOpen: (state, action) => {
+    state.accessControlFormOpen = action.payload
+  },
+  setAccessControlLevel: (state, action) => {
+    state.accessControlLevel = action.payload
+  },
   setAccessControlSearch: (state, action) => {
     const value = typeof(action.payload) == 'object' ?
       action.payload.username :
@@ -42,6 +52,12 @@ const reducers = {
   },
   setAccessControlResults: (state, action) => {
     state.accessControlResults = action.payload
+  },
+  closeAccessControlForm: (state, action) => {
+    state.accessControlFormOpen = false
+    state.accessControlSearch = ''
+    state.accessControlResults = []
+    state.accessControlLevel = DEFAUT_ACCESS_LEVEL
   },
 }
 

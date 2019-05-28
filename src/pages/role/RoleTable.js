@@ -52,27 +52,8 @@ const styles = theme => ({
 class RoleTable extends React.Component {
 
   state = {
-    formOpen: false,
     deleteConfirmOpen: false,
     deleteConfirmItem: null,
-  }
-
-  openForm() {
-    this.setState({
-      formOpen: true,
-    })
-  }
-
-  cancelForm() {
-    this.setState({
-      formOpen: false,
-    })
-  }
-
-  confirmForm() {
-    this.setState({
-      formOpen: false,
-    })
   }
 
   openDeleteDialog(item) {
@@ -96,6 +77,18 @@ class RoleTable extends React.Component {
       roles,
       onAdd,
       onDelete,
+      onCancel,
+
+      open,
+      search,
+      level,
+      users,
+      setOpen,
+      setLevel,
+      setSearch,
+      loadUsers,
+      clearUsers,
+      
     } = this.props
 
     const {
@@ -113,9 +106,10 @@ class RoleTable extends React.Component {
 
     const data = roles.map((role, index) => {
       return {
-        id: roles.id,
-        user: role.user,
-        role: role.role,
+        id: role.id,
+        user: role.userRecord.username,
+        userid: role.userRecord.id,
+        role: role.permission,
       }
     })
 
@@ -123,9 +117,7 @@ class RoleTable extends React.Component {
       <div className={ classes.headerActions }>
         <div className={ classes.addButton }>
           <Button 
-            onClick={ () => {
-              this.openForm()
-            }} 
+            onClick={ () => setOpen(true) } 
             variant="contained" 
             color="secondary" 
           >
@@ -166,17 +158,24 @@ class RoleTable extends React.Component {
         />
         <RoleForm
           title={ title || 'Role' }
-          open={ this.state.formOpen }
-          onCancel={ () => this.cancelForm() }
-          onConfirm={ () => this.confirmForm() }
+          open={ open }
+          level={ level }
+          search={ search }
+          users={ users }
+          setSearch={ setSearch }
+          setLevel={ setLevel }
+          loadUsers={ loadUsers }
+          clearUsers={ clearUsers }
+          onCancel={ onCancel }
+          onConfirm={ onAdd }
         />
         <SimpleTableDeleteDialog
           open={ deleteConfirmOpen }
-          title={ deleteConfirmItem ? `the ${deleteConfirmItem.user} role` : null }
+          title={ deleteConfirmItem ? `the role for ${deleteConfirmItem.user}` : null }
           onCancel={ () => this.closeDeleteDialog() }
           onConfirm={ () => {
             this.closeDeleteDialog()
-            onDelete(deleteConfirmItem.id)
+            onDelete(deleteConfirmItem.userid)
           }}
         />
       </div>

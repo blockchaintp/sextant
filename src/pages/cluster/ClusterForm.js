@@ -137,17 +137,40 @@ class ClusterForm extends React.Component {
 
   getRoleTable() {
     const {
-      tasks,
+      roles,
+      accessControlFormOpen,
+      accessControlSearch,
+      accessControlLevel,
+      accessControlUsers,
+      setAccessControlFormOpen,
+      setAccessControlLevel,
+      setAccessControlSearch,
+      loadAccessControlResults,
+      clearAccessControlResults,
+      addRole,
+      deleteRole,
+      onCancelRoleForm,
       classes,
     } = this.props
+    
     return (
       <Paper className={ classes.paper }>
         <RoleTable
-          roles={ [] }
-          onAdd={ () => {} }
-          onDelete={ () => {} }
+          roles={ roles }
+          onAdd={ addRole }
+          onDelete={ deleteRole }
+          onCancel={ onCancelRoleForm }
           title="Access Control"
           headerClassname={ classes.roleTableHeader }
+          open={ accessControlFormOpen }
+          search={ accessControlSearch }
+          level={ accessControlLevel }
+          users={ accessControlUsers }
+          setOpen={ setAccessControlFormOpen }
+          setLevel={ setAccessControlLevel }
+          setSearch={ setAccessControlSearch }
+          loadUsers={ loadAccessControlResults }
+          clearUsers={ clearAccessControlResults }
         />
       </Paper>
     )

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import routerActions from 'store/modules/router'
 import clusterActions from 'store/modules/cluster'
+import userActions from 'store/modules/user'
 import snackbarActions from 'store/modules/snackbar'
 import selectors from 'store/selectors'
 
@@ -27,6 +28,7 @@ const clusterInitialValues = {
 }
 
 const onCancel = () => routerActions.navigateTo('clusters')
+const clearAccessControlResults = () => userActions.setAccessControlResults([])
 
 @connect(
   state => {
@@ -61,11 +63,24 @@ const onCancel = () => routerActions.navigateTo('clusters')
       initialValues,
       provision_type: initialValues ? initialValues.provision_type : null,
       tasks: selectors.cluster.taskCollection.list(state),
+      roles: selectors.cluster.roleCollection.list(state),
+      accessControlFormOpen: selectors.user.accessControlFormOpen(state),
+      accessControlLevel: selectors.user.accessControlLevel(state),
+      accessControlSearch: selectors.user.accessControlSearch(state),
+      accessControlUsers: selectors.user.accessControlResults(state),
     }
   },
   {
     submitForm: clusterActions.submitForm,
     snackbarMessage: snackbarActions.setInfo,
+    setAccessControlFormOpen: userActions.setAccessControlFormOpen,
+    setAccessControlLevel: userActions.setAccessControlLevel,
+    setAccessControlSearch: userActions.setAccessControlSearch,
+    loadAccessControlResults: userActions.loadAccessControlResults,
+    clearAccessControlResults,
+    addRole: clusterActions.addRole,
+    deleteRole: clusterActions.deleteRole,
+    onCancelRoleForm: userActions.closeAccessControlForm,
     onCancel, 
   },
 )

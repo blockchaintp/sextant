@@ -224,6 +224,8 @@ const selectors = {
     ...props(userStore, [
       'hasInitialUser',
       'accessToken',
+      'accessControlFormOpen',
+      'accessControlLevel',
       'accessControlSearch',
       'accessControlResults',
     ]),
@@ -240,6 +242,10 @@ const selectors = {
     taskCollection: entity({
       baseSelector: prop(clusterStore, 'tasks'),
       entityName: 'task',
+    }),
+    roleCollection: entity({
+      baseSelector: prop(clusterStore, 'roles'),
+      entityName: 'role',
     }),
     ...props(clusterStore, [
       'showDeleted',

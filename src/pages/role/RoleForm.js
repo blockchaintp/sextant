@@ -14,8 +14,10 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormHelperText from '@material-ui/core/FormHelperText'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 
-import RoleUserAutoSuggest from 'containers/role/RoleUserAutoSuggest'
+import AutoComplete from 'components/autocomplete/AutoComplete'
 
 const styles = theme => ({
   formControl: {
@@ -28,26 +30,22 @@ const styles = theme => ({
 })
 
 class RoleForm extends React.Component {
-
-  state = {
-    accessLevel: 'read',
-    username: '',
-  }
-
-  handleAccessLevelChange = event => {
-    this.setState({
-      accessLevel: event.target.value
-    })
-  }
-
   render() {
     const {
       classes,
       title,
       open,
+      level,
+      search,
+      users,
+      setSearch,
+      setLevel,
+      loadUsers,
+      clearUsers,
       onCancel,
       onConfirm,
     } = this.props
+    
     return (
       <Dialog
         open={ open }
@@ -59,16 +57,50 @@ class RoleForm extends React.Component {
       >
         <DialogTitle id="alert-dialog-title">Add { title }</DialogTitle>
         <DialogContent>
-          <RoleUserAutoSuggest />
+          <AutoComplete
+            suggestions={ users }
+            getSuggestionValue={ (user) => user }
+            loadSuggestions={ loadUsers }
+            clearSuggestions={ clearUsers }
+            value={ search }
+            onChange={ setSearch }
+            onClick={ (user) => {} }
+            inputProps={{
+              placeholder: 'Search for user',
+              label: 'User',
+            }}
+            highlightClasses={{
+              highlight: classes.highlightText,
+              normal: classes.normalText,
+            }}
+            renderSuggestion={ ({
+              suggestion,
+              query,
+              getHighlightedText,
+              isHighlighted,
+            }) => {
+              return (
+                <ListItem
+                  selected={ isHighlighted }
+                  component="div"
+                >
+                  <ListItemText 
+                    primary={ getHighlightedText(suggestion.username, query) } 
+                    secondary={ suggestion.permission }
+                  />
+                </ListItem>
+              )
+            }}
+          />
           <FormHelperText>Search for the user to add access control for</FormHelperText>
           <div className={ classes.spacer } />
-          <FormControl className={classes.formControl}>
+          <FormControl className={ classes.formControl }>
             <InputLabel>
               Access Level
             </InputLabel>
             <Select
-              value={ this.state.accessLevel }
-              onChange={ this.handleAccessLevelChange }
+              value={ level }
+              onChange={ (e) => setLevel(e.target.value) }
               displayEmpty
               name="accessLevel"
             >
