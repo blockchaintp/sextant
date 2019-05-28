@@ -9,6 +9,82 @@ import Button from '@material-ui/core/Button'
 import TaskTable from 'components/task/TaskTable'
 
 import FormWrapper from 'components/form/Wrapper'
+import CodeBlock from 'components/code/CodeBlock'
+
+const HELP_VARIABLES = `export SERVICEACCOUNT=sextant
+export NAMESPACE=default
+`
+
+const HELP_CREATE_SERVICEACCOUNT = `#!/bin/bash -e
+
+set -e
+
+SERVICEACCOUNT=\${SERVICEACCOUNT:="sextant"}
+NAMESPACE=\${NAMESPACE:="default"}
+
+# create the service account:
+echo "creating serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
+kubectl create -n $NAMESPACE serviceaccount $SERVICEACCOUNT
+
+# get the RBAC api versions
+RBAC_API_VERSIONS=$(kubectl api-versions | grep rbac)
+
+# If RBAC is enabled - assign cluster-admin role to service account:
+if [ -n "$RBAC_API_VERSIONS" ]; then
+  echo "creating clusterrolebinding: $SERVICEACCOUNT in namespace $NAMESPACE"
+  kubectl create -n $NAMESPACE clusterrolebinding $SERVICEACCOUNT \
+    --clusterrole=cluster-admin \
+    --serviceaccount=$NAMESPACE:$SERVICEACCOUNT
+fi
+`
+
+const HELP_GET_VALUES = `#!/bin/bash -e
+
+set -e
+
+SERVICEACCOUNT=\${SERVICEACCOUNT:="sextant"}
+NAMESPACE=\${NAMESPACE:="default"}
+
+# get the secret name for the service account:
+echo "getting the secret name for serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
+SECRETNAME=$(kubectl get -n $NAMESPACE serviceaccounts sextant -o "jsonpath={.secrets[0].name}")
+
+# get the base64 bearer token:
+echo "getting the bearer token for serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
+BASE64_BEARER_TOKEN=$(kubectl get secret -n $NAMESPACE $SECRETNAME -o "jsonpath={.data.token}")
+
+# get the base64 CA:
+echo "getting the certificate authority for serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
+BASE64_CA_FILE=$(kubectl get secret -n $NAMESPACE $SECRETNAME -o "jsonpath={.data['ca\.crt']}")
+
+# get the api server address:
+echo "getting the api server address"
+APISERVER=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')
+
+# print out the details:
+echo
+echo "your access credentials are printed below:"
+echo
+echo "-----------"
+echo "apiServer |"
+echo "-----------"
+echo
+echo $APISERVER
+echo
+echo "-------"
+echo "token |"
+echo "-------"
+echo
+echo -n $BASE64_BEARER_TOKEN | base64 -d
+echo
+echo
+echo "-----"
+echo "ca: |"
+echo "-----"
+echo
+echo -n $BASE64_CA_FILE | base64 -d
+echo
+`
 
 const styles = theme => ({
   root: {
@@ -23,9 +99,91 @@ const styles = theme => ({
   button: {
     marginRight: theme.spacing.unit * 2,
   },
+  text: {
+    fontFamily: "Roboto",
+  },
+  codeblock: {
+    width: '100%',
+    overflowX: 'auto',
+  },
 })
 
 class ClusterForm extends React.Component {
+
+  getTaskTable() {
+    const {
+      classes,
+    } = this.props
+    return (
+      <Paper className={ classes.paper }>
+        <Typography variant="h6" gutterBottom>
+          Tasks
+        </Typography>
+        <TaskTable
+          data={ tasks }
+        />
+      </Paper>
+    )
+  }
+
+  getCreateInstructions() {
+    const {
+      classes,
+    } = this.props
+    return (
+      <Paper className={ classes.paper }>
+        <Typography variant="h6" gutterBottom>
+          Connect Remote Cluster
+        </Typography>
+        <Typography gutterBottom>
+          To connect a remote cluster, you will need to have <b>kubectl</b> connected to it 
+          and the ability to create service accounts.
+        </Typography>
+        <Typography gutterBottom>
+          You will need to provide these values:
+        </Typography>
+        <ul className={ classes.text }>
+          <li>API Server Address</li>
+          <li>Access Token</li>
+          <li>Certificate Authority</li>
+        </ul>
+        <Typography gutterBottom>
+          You can either create a service account manually or use the following scripts:
+        </Typography>
+        <Typography variant="subtitle1" gutterBottom>
+          Step 1. Choose service account name and namespace
+        </Typography>
+        <Typography gutterBottom>
+          Choose a service account name (default = <b>sextant</b>) and a namespace for the service account (default = <b>default</b>) we will create.
+          
+        </Typography>
+        <CodeBlock
+          code={ HELP_VARIABLES }
+          clipboard={ false }
+        />
+        <Typography variant="subtitle1" gutterBottom>
+          Step 2. Create service account
+        </Typography>
+        <Typography gutterBottom>
+          Then run this script that will create the service account and assign an cluster-admin role if RBAC is enabled on your cluster:
+        </Typography>
+        <CodeBlock
+          code={ HELP_CREATE_SERVICEACCOUNT }
+          clipboard={ false }
+        />
+        <Typography variant="subtitle1" gutterBottom>
+          Step 3. Get credentials
+        </Typography>
+        <Typography gutterBottom>
+          Once you have the service account created - use the following script to get the api server address, token and certificate authority.
+        </Typography>
+        <CodeBlock
+          code={ HELP_GET_VALUES }
+          clipboard={ false }
+        />
+      </Paper>
+    )
+  }
 
   render() {
     const { 
@@ -46,7 +204,7 @@ class ClusterForm extends React.Component {
     return (
       <div className={ classes.root }>
         <Grid container spacing={24}>
-          <Grid item xs={ id == 'new' ? 12 : 6 }>
+          <Grid item xs={ 6 }>
             <Paper className={ classes.paper }>
               <Typography variant="h6" gutterBottom>
                 { title }
@@ -91,20 +249,13 @@ class ClusterForm extends React.Component {
               />
             </Paper>
           </Grid>
-          {
-            id != 'new' && (
-              <Grid item xs={ 6 }>
-                <Paper className={ classes.paper }>
-                  <Typography variant="h6" gutterBottom>
-                    Tasks
-                  </Typography>
-                  <TaskTable
-                    data={ tasks }
-                  />
-                </Paper>
-              </Grid>
-            )
-          }
+          <Grid item xs={ 6 }>
+            {
+              id == 'new' ?
+                this.getCreateInstructions() :
+                this.getTaskTable()
+            }
+          </Grid>
         </Grid>
       </div>
     )
