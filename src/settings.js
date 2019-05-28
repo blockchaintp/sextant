@@ -8,7 +8,7 @@ import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import DashboardIcon from '@material-ui/icons/Dashboard'
-import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import StorageIcon from '@material-ui/icons/Storage'
 import ViewIcon from '@material-ui/icons/Visibility'
 import KeyIcon from '@material-ui/icons/VpnKey'
 
@@ -22,8 +22,8 @@ const icons = {
   add: AddIcon,
   edit: EditIcon,
   delete: DeleteIcon,
-  cluster: DashboardIcon,
-  deployment: PlayArrowIcon,
+  cluster: StorageIcon,
+  deployment: DashboardIcon,
   view: ViewIcon,
   key: KeyIcon,
 }
