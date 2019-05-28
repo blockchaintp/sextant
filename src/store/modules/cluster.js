@@ -361,7 +361,7 @@ const sideEffects = {
         loader: () => loaders.deleteRole(id, userid),
         prefix,
         name: 'deleteRole',
-        returnError: true,IDBCursorWithValue
+        returnError: true,
       })
       dispatch(snackbarActions.setSuccess(`role deleted`))
       dispatch(actions.listRoles(id))

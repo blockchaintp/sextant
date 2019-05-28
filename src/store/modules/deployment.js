@@ -8,16 +8,19 @@ import api from '../utils/api'
 import selectors from '../selectors'
 import routerActions from './router'
 import clusterActions from './cluster'
+import userActions from './user'
 import snackbarActions from './snackbar'
 
 const prefix = 'deployment'
 
 const deployment = new schema.Entity('deployment')
 const task = new schema.Entity('task')
+const role = new schema.Entity('role')
 
 const initialState = {
   deployments: normalize([], [deployment]),
   tasks: normalize([], [task]),
+  roles: normalize([], [role]),
   resources: {
     pods: [],
     services: [],
@@ -46,6 +49,12 @@ const deploymentTaskTitles = {
 const reducers = {
   setDeployments: (state, action) => {
     state.deployments = normalize(action.payload, [deployment])
+  },
+  setRoles: (state, action) => {
+    state.roles = normalize(action.payload, [role])
+  },
+  resetRoles: (state, action) => {
+    state.roles = normalize([], [role])
   },
   setDeployment: (state, action) => {
     mergeEntities(state.deployments, normalize([action.payload], [deployment]))
@@ -94,6 +103,9 @@ const loaders = {
   })
     .then(api.process),
 
+  listRoles: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/roles`))
+    .then(api.process),
+
   create: (cluster, payload) => axios.post(api.url(`/clusters/${cluster}/deployments`), payload)
     .then(api.process),
 
@@ -110,6 +122,12 @@ const loaders = {
     .then(api.process),
 
   getSummary: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/summary`))
+    .then(api.process),
+
+  createRole: (cluster, id, payload) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/roles`), payload)
+    .then(api.process),
+
+  deleteRole: (cluster, id, userid) => axios.delete(api.url(`/clusters/${cluster}/deployments/${id}/roles/${userid}`))
     .then(api.process),
     
 }
@@ -193,6 +211,20 @@ const sideEffects = {
     dataAction: actions.setDeployment,
     snackbarError: true,
   }),
+  listRoles: (cluster, id) => async (dispatch) => {
+    if(id == 'new') {
+      dispatch(actions.resetRoles())
+      return
+    }
+    await api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.listRoles(cluster, id),
+      prefix,
+      name: 'listRoles',
+      dataAction: actions.setRoles,
+      snackbarError: true,
+    })
+  },
   submitForm: (payload) => (dispatch, getState) => {
     const params = selectors.router.params(getState())
     const {
@@ -382,6 +414,52 @@ const sideEffects = {
       name: 'resources',
       value: false,
     }))
+  },
+  addRole: () => async (dispatch, getState) => {
+    const params = selectors.router.params(getState())  
+    const {
+      cluster,
+      id,
+    } = params
+    const username = selectors.user.accessControlSearch(getState())
+    const permission = selectors.user.accessControlLevel(getState())
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.createRole(cluster, id, {
+          username,
+          permission,
+        }),
+        prefix,
+        name: 'addRole',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setSuccess(`role added`))
+      dispatch(actions.listRoles(cluster, id))
+      dispatch(userActions.closeAccessControlForm())
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error adding role: ${e.toString()}`))
+    }
+  },
+  deleteRole: (userid) =>  async (dispatch, getState) => {
+    const params = selectors.router.params(getState())  
+    const {
+      cluster,
+      id,
+    } = params
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.deleteRole(cluster, id, userid),
+        prefix,
+        name: 'deleteRole',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setSuccess(`role deleted`))
+      dispatch(actions.listRoles(cluster, id))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error deleting role: ${e.toString()}`))
+    }
   },
 }
 

@@ -3,12 +3,14 @@ import { connect } from 'react-redux'
 
 import routerActions from 'store/modules/router'
 import deploymentActions from 'store/modules/deployment'
+import userActions from 'store/modules/user'
 import selectors from 'store/selectors'
 
 import DeploymentForm from 'pages/deployment/DeploymentForm'
 import Loading from 'components/system/Loading'
 
 const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
+const clearAccessControlResults = () => userActions.setAccessControlResults([])
 
 @connect(
   state => {
@@ -50,11 +52,24 @@ const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
       initialValues,
       deployment_type: initialValues ? initialValues.deployment_type : null,
       tasks: selectors.deployment.taskCollection.list(state),
+      roles: selectors.deployment.roleCollection.list(state),
+      accessControlFormOpen: selectors.user.accessControlFormOpen(state),
+      accessControlLevel: selectors.user.accessControlLevel(state),
+      accessControlSearch: selectors.user.accessControlSearch(state),
+      accessControlUsers: selectors.user.accessControlResults(state),
     }
   },
   {
     submitForm: deploymentActions.submitForm,
     onCancel, 
+    setAccessControlFormOpen: userActions.setAccessControlFormOpen,
+    setAccessControlLevel: userActions.setAccessControlLevel,
+    setAccessControlSearch: userActions.setAccessControlSearch,
+    loadAccessControlResults: userActions.loadAccessControlResults,
+    clearAccessControlResults,
+    addRole: deploymentActions.addRole,
+    deleteRole: deploymentActions.deleteRole,
+    onCancelRoleForm: userActions.closeAccessControlForm,
   },
 )
 class DeploymentFormContainer extends React.Component {

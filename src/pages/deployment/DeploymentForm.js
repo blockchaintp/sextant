@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
 import TaskTable from 'components/task/TaskTable'
+import RoleTable from 'pages/role/RoleTable'
 
 import FormWrapper from 'components/form/Wrapper'
 
@@ -23,9 +24,73 @@ const styles = theme => ({
   button: {
     marginRight: theme.spacing.unit * 2,
   },
+  roleTableHeader: {
+    paddingLeft: '0px',
+  },
+  spacer: {
+    height: theme.spacing.unit * 2,
+  },
 })
 
 class DeploymentForm extends React.Component {
+
+  getTaskTable() {
+    const {
+      tasks,
+      classes,
+    } = this.props
+    return (
+      <Paper className={ classes.paper }>
+        <Typography variant="h6" gutterBottom>
+          Tasks
+        </Typography>
+        <TaskTable
+          data={ tasks }
+        />
+      </Paper>
+    )
+  }
+
+  getRoleTable() {
+    const {
+      roles,
+      accessControlFormOpen,
+      accessControlSearch,
+      accessControlLevel,
+      accessControlUsers,
+      setAccessControlFormOpen,
+      setAccessControlLevel,
+      setAccessControlSearch,
+      loadAccessControlResults,
+      clearAccessControlResults,
+      addRole,
+      deleteRole,
+      onCancelRoleForm,
+      classes,
+    } = this.props
+    
+    return (
+      <Paper className={ classes.paper }>
+        <RoleTable
+          roles={ roles }
+          onAdd={ addRole }
+          onDelete={ deleteRole }
+          onCancel={ onCancelRoleForm }
+          title="Access Control"
+          headerClassname={ classes.roleTableHeader }
+          open={ accessControlFormOpen }
+          search={ accessControlSearch }
+          level={ accessControlLevel }
+          users={ accessControlUsers }
+          setOpen={ setAccessControlFormOpen }
+          setLevel={ setAccessControlLevel }
+          setSearch={ setAccessControlSearch }
+          loadUsers={ loadAccessControlResults }
+          clearUsers={ clearAccessControlResults }
+        />
+      </Paper>
+    )
+  }
 
   render() {
     const { 
@@ -97,14 +162,15 @@ class DeploymentForm extends React.Component {
           {
             id != 'new' && (
               <Grid item xs={ 6 }>
-                <Paper className={ classes.paper }>
-                  <Typography variant="h6" gutterBottom>
-                    Tasks
-                  </Typography>
-                  <TaskTable
-                    data={ tasks }
-                  />
-                </Paper>
+                <div>
+                  {
+                    this.getRoleTable()
+                  }
+                  <div className={ classes.spacer } />
+                  {
+                    this.getTaskTable()
+                  }
+                </div>
               </Grid>
             )
           }

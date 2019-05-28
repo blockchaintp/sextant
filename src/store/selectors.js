@@ -266,6 +266,10 @@ const selectors = {
       baseSelector: prop(deploymentStore, 'tasks'),
       entityName: 'task',
     }),
+    roleCollection: entity({
+      baseSelector: prop(deploymentStore, 'roles'),
+      entityName: 'role',
+    }),
     ...props(deploymentStore, [
       'showDeleted',
       'resources',
