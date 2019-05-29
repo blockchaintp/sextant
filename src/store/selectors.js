@@ -137,6 +137,20 @@ const userAccessFilter = (type) => createSelector(
   },
 )
 
+const isSuperuser = userAccessFilter('superuser')
+const isAdmin = userAccessFilter('admin')
+
+const userAccessSummary = createSelector(
+  isSuperuser,
+  isAdmin,
+  (superuser, admin) => {
+    return {
+      superuser,
+      admin,
+    }
+  },
+)
+
 const CONFIG_NETWORK_NAMES = networkProps('config', [
   'data',
 ])
@@ -206,8 +220,9 @@ const selectors = {
     loggedIn: createSelector(authData, data => data ? true : false),
     errors: props(networkErrors, AUTH_NETWORK_NAMES),
     loading: props(networkLoading, AUTH_NETWORK_NAMES),
-    isSuperuser: userAccessFilter('superuser'),
-    isAdmin: userAccessFilter('admin'),
+    isSuperuser,
+    isAdmin,
+    userAccessSummary,
     ...props(authStore, [
       'loaded',
     ]),

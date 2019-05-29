@@ -16,6 +16,8 @@ import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
 
+import authUtils from 'utils/auth'
+
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
@@ -82,6 +84,7 @@ class ClusterTable extends React.Component {
       updateShowDeleted,
       viewDeployments,
       onViewStatus,
+      userAccessSummary,
     } = this.props
 
     const {
@@ -101,15 +104,13 @@ class ClusterTable extends React.Component {
     }, {
       title: 'Task',
       name: 'task',
-    }, {
-      title: 'Task Status',
-      name: 'task_status',
     }]
 
     const data = clusters.map((cluster, index) => {
       return {
         id: cluster.id,
         clusterData: cluster,
+        role: cluster.role,
         name: cluster.name,
         provision_type: cluster.provision_type,
         status: cluster.status,
@@ -120,13 +121,9 @@ class ClusterTable extends React.Component {
                 action={ cluster.task.action.split('.')[1] }
               />
             </div>
-            <div>
+            <div className={ classes.statusIcon }>
               { cluster.task.action }
             </div>
-          </div>
-        ) : null,
-        task_status: cluster.task ? (
-          <div className={ classes.statusContainer }>
             <div className={ classes.statusIcon }>
               <TaskStatusIcon
                 status={ cluster.task.status }
@@ -147,6 +144,10 @@ class ClusterTable extends React.Component {
           </div>
         ) : null,
       }
+    })
+
+    const canCreateCluster = authUtils.canCreateCluster({
+      userAccessSummary,
     })
 
     const addButtonItems = [{
@@ -185,31 +186,46 @@ class ClusterTable extends React.Component {
               color: 'secondary',
             }}
             items={ addButtonItems }
+            disabled={ !canCreateCluster }
           />
         </div>
       </div>
     )
 
-    const getActions = (item) => {
-      const baseActions = [{
-        title: 'Delete',
-        icon: DeleteIcon,
-        handler: (item) => this.openDeleteDialog(item),
-      }, {
-        title: 'Edit',
-        icon: EditIcon,
-        handler: (item) => onEdit(item.id),
-      }, {
+    const getActions = (cluster) => {
+
+      const buttons = []
+
+      if(authUtils.accessControl({
+        userAccessSummary,
+        role: cluster.role,
+        action: 'write',
+      })) {
+        buttons.push({
+          title: 'Delete',
+          icon: DeleteIcon,
+          handler: (item) => this.openDeleteDialog(item),
+        })
+        buttons.push({
+          title: 'Edit',
+          icon: EditIcon,
+          handler: (item) => onEdit(item.id),
+        })
+      }
+
+      buttons.push({
         title: 'View',
         icon: ViewIcon,
         handler: (item) => onViewStatus(item.id),
-      }, {
+      })
+
+      buttons.push({
         title: 'Deployments',
         icon: DeploymentIcon,
         handler: (item) => viewDeployments(item.id),
-      }]
+      })
 
-      return baseActions
+      return buttons
     }
 
     return (

@@ -21,6 +21,8 @@ import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
 
+import authUtils from 'utils/auth'
+
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
@@ -101,6 +103,7 @@ class DeploymentTable extends React.Component {
       updateClusterId,
       deploymentForms,
       embedded,
+      userAccessSummary,
     } = this.props
 
     const {
@@ -112,24 +115,26 @@ class DeploymentTable extends React.Component {
       title: 'Name',
       name: 'name',
     },{
-      title: 'Deployment Type',
+      title: 'Cluster',
+      name: 'clusterName',
+    },{
+      title: 'Type',
       name: 'deployment_type',
     },{
-      title: 'Deployment Status',
+      title: 'Status',
       name: 'status',
     }, {
       title: 'Task',
       name: 'task',
-    }, {
-      title: 'Task Status',
-      name: 'task_status',
     }]
 
     const data = deployments.map((deployment, index) => {
       return {
         id: deployment.id,
         deploymentData: deployment,
+        role: deployment.role,
         name: deployment.name,
+        clusterName: deployment.clusterName,
         deployment_type: deployment.deployment_type,
         status: deployment.status,
         task: deployment.task ? (
@@ -139,13 +144,9 @@ class DeploymentTable extends React.Component {
                 action={ deployment.task.action.split('.')[1] }
               />
             </div>
-            <div>
+            <div className={ classes.statusIcon }>
               { deployment.task.action }
             </div>
-          </div>
-        ) : null,
-        task_status: deployment.task ? (
-          <div className={ classes.statusContainer }>
             <div className={ classes.statusIcon }>
               <TaskStatusIcon
                 status={ deployment.task.status }
@@ -181,6 +182,22 @@ class DeploymentTable extends React.Component {
       }
     })
 
+    let addButtonDisabled = true
+
+    if(clusterId != 'all') {
+      const role = cluster ?
+        cluster.role :
+        null
+
+      const canWriteToCluster = authUtils.accessControl({
+        userAccessSummary,
+        role,
+        action: 'write',
+      })
+
+      addButtonDisabled = canWriteToCluster ? false : true
+    }
+
     const addButton = (
       <div className={ classes.addButton }>
         <MenuButton 
@@ -192,6 +209,7 @@ class DeploymentTable extends React.Component {
             color: 'secondary',
           }}
           items={ addButtonItems }
+          disabled={ addButtonDisabled }
         />
       </div>
     )
@@ -224,8 +242,13 @@ class DeploymentTable extends React.Component {
                 onChange={ (ev) => updateClusterId(ev.target.value) }
               >
                 {
-                  clusters
-                    .filter(cluster => cluster.status == 'provisioned')
+                  [{
+                    id: 'all',
+                    name: 'all',
+                  }].concat(
+                    clusters
+                      .filter(cluster => cluster.status == 'provisioned')
+                  )
                     .map((cluster, i) => {
                       return (
                         <MenuItem 
@@ -244,19 +267,33 @@ class DeploymentTable extends React.Component {
         </div>
       )
 
-    const actions = [{
-      title: 'Delete',
-      icon: DeleteIcon,
-      handler: (item) => this.openDeleteDialog(item),
-    }, {
-      title: 'Edit',
-      icon: EditIcon,
-      handler: (item) => onEdit(clusterId, item.id),
-    }, {
-      title: 'View',
-      icon: ViewIcon,
-      handler: (item) => onViewStatus(clusterId, item.id),
-    }]
+    const getActions = (deployment) => {
+      const buttons = []
+      if(authUtils.accessControl({
+        userAccessSummary,
+        role: deployment.role,
+        action: 'write',
+      })) {
+        buttons.push({
+          title: 'Delete',
+          icon: DeleteIcon,
+          handler: (item) => this.openDeleteDialog(item),
+        })
+        buttons.push({
+          title: 'Edit',
+          icon: EditIcon,
+          handler: (item) => onEdit(clusterId, item.id),
+        })
+      }
+
+      buttons.push({
+        title: 'View',
+        icon: ViewIcon,
+        handler: (item) => onViewStatus(clusterId, item.id),
+      })
+
+      return buttons
+    }
 
     const title = embedded ? 
       `Deployments` : 
@@ -277,7 +314,7 @@ class DeploymentTable extends React.Component {
             return (
               <SimpleTableActions
                 item={ item }
-                actions={ actions }
+                actions={ getActions(item) }
               />
             )
           }}
