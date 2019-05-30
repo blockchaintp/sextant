@@ -447,17 +447,16 @@ class FormWrapperInner extends React.Component {
     let isInitialValid = false
 
     const validationSchema = Validate(schema)
-    const useInitialValues = utils.getInitialValues(schema, initialValues)
 
     try {
-      isInitialValid = validationSchema.validateSync(useInitialValues)
+      isInitialValid = validationSchema.validateSync(initialValues)
     } catch(e) {
 
     }
 
     return (
       <Formik
-        initialValues={ useInitialValues }
+        initialValues={ initialValues }
         validationSchema={ validationSchema }
         isInitialValid={ isInitialValid }
         onSubmit={ (values) => {
