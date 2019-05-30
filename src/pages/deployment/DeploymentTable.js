@@ -27,6 +27,7 @@ const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
 const ViewIcon = settings.icons.view
+const SettingsIcon = settings.icons.settings
 
 const styles = theme => ({
   errorText: {
@@ -95,6 +96,7 @@ class DeploymentTable extends React.Component {
       onAdd,
       onEdit,
       onViewStatus,
+      onViewSettings,
       onDelete,
       updateShowDeleted,
       clusters,
@@ -292,6 +294,12 @@ class DeploymentTable extends React.Component {
         title: 'View',
         icon: ViewIcon,
         handler: (item) => onViewStatus(clusterId, item.id),
+      })
+
+      buttons.push({
+        title: 'Settings',
+        icon: SettingsIcon,
+        handler: (item) => onViewSettings(clusterId, item.id),
       })
 
       return buttons

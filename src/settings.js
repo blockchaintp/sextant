@@ -11,6 +11,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard'
 import StorageIcon from '@material-ui/icons/Storage'
 import ViewIcon from '@material-ui/icons/Visibility'
 import KeyIcon from '@material-ui/icons/VpnKey'
+import SettingsIcon from '@material-ui/icons/Settings'
 
 const icons = {
   home: HomeIcon,
@@ -26,6 +27,7 @@ const icons = {
   deployment: DashboardIcon,
   view: ViewIcon,
   key: KeyIcon,
+  settings: SettingsIcon,
 }
 
 const settings = {
