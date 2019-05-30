@@ -34,6 +34,7 @@ class DeploymentSettings extends React.Component {
       deployment,
       localKeys,
       remoteKeys,
+      createRemoteKey,
     } = this.props
 
     if(page == 'keys') {
@@ -44,6 +45,7 @@ class DeploymentSettings extends React.Component {
           deployment={ deployment }
           localKeys={ localKeys }
           remoteKeys={ remoteKeys }
+          createRemoteKey={ createRemoteKey }
         />
       )
     }

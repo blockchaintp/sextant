@@ -71,6 +71,11 @@ const sideEffects = {
     key
   }) => async (dispatch, getState) => {
 
+    if(!key) {
+      dispatch(snackbarActions.setError(`please provide a remote key`))
+      return
+    }
+
     try {
       await api.loaderSideEffect({
         dispatch,

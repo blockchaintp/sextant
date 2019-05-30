@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import routerActions from 'store/modules/router'
+import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import selectors from 'store/selectors'
 
 import DeploymentSettings from 'pages/deployment/DeploymentSettings'
@@ -33,6 +34,7 @@ const onViewPage = (cluster, id, page) => routerActions.navigateTo('deployment_s
   },
   {
     onViewPage,
+    createRemoteKey: deploymentSettingsActions.createRemoteKey,
   },
 )
 class DeploymentSettingsContainer extends React.Component {
