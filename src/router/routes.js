@@ -123,14 +123,6 @@ const routes = [
     },
   },
   {
-    name: 'deployments_all',
-    path: '/deployments',
-    authorize: authHandlers.user,
-    trigger: {
-      activate: (store) => store.dispatch(deploymentActions.redirectDeployments()),
-    },
-  },
-  {
     name: 'deployments',
     path: '/clusters/:cluster/deployments',
     authorize: authHandlers.user,

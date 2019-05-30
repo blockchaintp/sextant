@@ -95,6 +95,7 @@ class MenuButton extends React.Component {
       title,
       icon,
       buttonProps,
+      disabled,
     } = this.props
 
     const { 
@@ -111,6 +112,7 @@ class MenuButton extends React.Component {
           aria-owns={ open ? 'menubutton-button' : null }
           aria-haspopup="true"
           onClick={ this.handleMenu }
+          disabled={ disabled }
           {...buttonProps}
         >
           { title }

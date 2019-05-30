@@ -18,6 +18,7 @@ const updateShowDeleted = (value) => clusterActions.updateShowDeleted(value)
   state => ({
     clusters: selectors.cluster.collection.list(state),
     showDeleted: selectors.cluster.showDeleted(state),
+    userAccessSummary: selectors.auth.userAccessSummary(state),
   }),
   {
     onAdd,

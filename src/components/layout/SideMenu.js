@@ -42,7 +42,7 @@ class SideMenu extends React.Component {
     } = this.props
 
     if(typeof(item.handler) === 'string') {
-      openPage(item.handler)
+      openPage(item.handler, item.params || {})
       this.handleClose()
     }
     else if(typeof(item.handler) === 'function') {

@@ -25,6 +25,7 @@ const updateClusterId = (cluster) => routerActions.navigateTo('deployments', { c
       deployments: selectors.deployment.collection.list(state),
       showDeleted: selectors.deployment.showDeleted(state),
       deploymentForms,
+      userAccessSummary: selectors.auth.userAccessSummary(state),
     }
   },
   {
