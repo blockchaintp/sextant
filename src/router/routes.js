@@ -23,6 +23,10 @@ const routes = [
     authorize: authHandlers.guest,
   },
   {
+    name: 'logout',
+    path: '/logout',
+  },
+  {
     name: 'create-initial-user',
     path: '/create-initial-user',
     authorize: authHandlers.guest,

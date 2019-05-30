@@ -61,6 +61,7 @@ const sideEffects = {
     }
   },
   logout: () => (dispatch, getState) => {
+    dispatch(routerActions.navigateTo('logout'))
     api.loaderSideEffect({
       dispatch,
       loader: () => loaders.logout(),
