@@ -9,6 +9,8 @@ import selectors from 'store/selectors'
 import DeploymentForm from 'pages/deployment/DeploymentForm'
 import Loading from 'components/system/Loading'
 
+import formUtils from 'components/form/utils'
+
 const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
 const clearAccessControlResults = () => userActions.setAccessControlResults([])
 
@@ -30,13 +32,14 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
     // we are creating a new deployment
     if(id == 'new') {
       schema = deploymentForms[deployment_type].forms[deployment_version]
+      initialValues = formUtils.getInitialValues(schema, {})
     }
     // it's an existing deployment
     else {
       const existingValues = selectors.deployment.collection.item(state)
 
       if(existingValues) {
-        initialValues = existingValues.desired_state
+        initialValues = JSON.parse(JSON.stringify(existingValues.desired_state))
         schema = deploymentForms[existingValues.deployment_type].forms[existingValues.deployment_version]
       }
     }
