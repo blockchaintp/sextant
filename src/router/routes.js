@@ -2,6 +2,7 @@ import selectors from 'store/selectors'
 import userActions from 'store/modules/user'
 import clusterActions from 'store/modules/cluster'
 import deploymentActions from 'store/modules/deployment'
+import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import networkActions from 'store/modules/network'
 
 const authHandlers = {
@@ -182,6 +183,14 @@ const routes = [
       activate: (store, params) => {
         store.dispatch(networkActions.startLoading('deployment.get'))
         store.dispatch(deploymentActions.get(params.cluster, params.id))
+        store.dispatch(deploymentSettingsActions.listLocalKeys({
+          cluster: params.cluster,
+          id: params.id
+        }))
+        store.dispatch(deploymentSettingsActions.listRemoteKeys({
+          cluster: params.cluster,
+          id: params.id
+        }))
       },
     },
   },

@@ -32,6 +32,8 @@ class DeploymentSettings extends React.Component {
       id,
       page,
       deployment,
+      localKeys,
+      remoteKeys,
     } = this.props
 
     if(page == 'keys') {
@@ -40,6 +42,8 @@ class DeploymentSettings extends React.Component {
           cluster={ cluster }
           id={ id }
           deployment={ deployment }
+          localKeys={ localKeys }
+          remoteKeys={ remoteKeys }
         />
       )
     }

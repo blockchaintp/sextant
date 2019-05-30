@@ -27,6 +27,8 @@ const onViewPage = (cluster, id, page) => routerActions.navigateTo('deployment_s
       id,
       page,
       deployment,
+      localKeys: selectors.deploymentSettings.localKeyCollection.list(state),
+      remoteKeys: selectors.deploymentSettings.remoteKeyCollection.list(state),
     }
   },
   {

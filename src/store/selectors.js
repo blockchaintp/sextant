@@ -115,6 +115,14 @@ const DEPLOYMENT_NETWORK_NAMES = networkProps('deployment', [
   'get',
 ])
 
+const deploymentSettingsStore = state => state.deploymentSettings
+
+const DEPLOYMENT_SETTINGS_NETWORK_NAMES = networkProps('deploymentSettings', [
+  'listLocalKeys',
+  'listRemoteKeys',
+  'createRemoteKey',
+])
+
 const configStore = state => state.config
 const configData = prop(configStore, 'data')
 const forms = createSelector(
@@ -290,6 +298,20 @@ const selectors = {
       'resources',
       'summary',
     ]),
+  },
+
+  deploymentSettings: {
+    store: deploymentSettingsStore,
+    errors: props(networkErrors, DEPLOYMENT_SETTINGS_NETWORK_NAMES),
+    loading: props(networkLoading, DEPLOYMENT_SETTINGS_NETWORK_NAMES),
+    localKeyCollection: entity({
+      baseSelector: prop(deploymentSettingsStore, 'localKeys'),
+      entityName: 'key',
+    }),
+    remoteKeyCollection: entity({
+      baseSelector: prop(deploymentSettingsStore, 'remoteKeys'),
+      entityName: 'key',
+    }),
   },
 
   config: {
