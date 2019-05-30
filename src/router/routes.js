@@ -174,6 +174,17 @@ const routes = [
       deactivate: (store) => store.dispatch(deploymentActions.stopResourcesLoop()),
     },
   },
+  {
+    name: 'deployment_settings',
+    path: '/clusters/:cluster/deployment/:id/settings/:page',
+    authorize: authHandlers.user,
+    trigger: {
+      activate: (store, params) => {
+        store.dispatch(networkActions.startLoading('deployment.get'))
+        store.dispatch(deploymentActions.get(params.cluster, params.id))
+      },
+    },
+  },
 ]
 
 

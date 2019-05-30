@@ -33,6 +33,7 @@ const updateClusterId = (cluster) => routerActions.navigateTo('deployments', { c
     onAdd,
     onEdit,
     onViewStatus,
+    onViewSettings,
     onDelete,
     updateShowDeleted,
     updateClusterId,
