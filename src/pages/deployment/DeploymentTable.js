@@ -21,7 +21,7 @@ import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
 
-import authUtils from 'utils/auth'
+import rbac from 'utils/rbac'
 
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
@@ -103,7 +103,7 @@ class DeploymentTable extends React.Component {
       updateClusterId,
       deploymentForms,
       embedded,
-      userAccessSummary,
+      user,
     } = this.props
 
     const {
@@ -185,14 +185,13 @@ class DeploymentTable extends React.Component {
     let addButtonDisabled = true
 
     if(clusterId != 'all') {
-      const role = cluster ?
-        cluster.role :
-        null
-
-      const canWriteToCluster = authUtils.accessControl({
-        userAccessSummary,
-        role,
-        action: 'write',
+      const canWriteToCluster = rbac({
+        user,
+        action: {
+          resource_type: 'cluster',
+          resource_id: clusterId,
+          method: 'write',
+        }
       })
 
       addButtonDisabled = canWriteToCluster ? false : true
@@ -269,10 +268,13 @@ class DeploymentTable extends React.Component {
 
     const getActions = (deployment) => {
       const buttons = []
-      if(authUtils.accessControl({
-        userAccessSummary,
-        role: deployment.role,
-        action: 'write',
+      if(rbac({
+        user,
+        action: {
+          resource_type: 'deployment',
+          resource_id: deployment.id,
+          method: 'write',
+        }
       })) {
         buttons.push({
           title: 'Delete',

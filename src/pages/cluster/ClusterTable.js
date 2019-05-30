@@ -16,7 +16,7 @@ import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
 
-import authUtils from 'utils/auth'
+import rbac from 'utils/rbac'
 
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
@@ -84,7 +84,7 @@ class ClusterTable extends React.Component {
       updateShowDeleted,
       viewDeployments,
       onViewStatus,
-      userAccessSummary,
+      user,
     } = this.props
 
     const {
@@ -146,8 +146,12 @@ class ClusterTable extends React.Component {
       }
     })
 
-    const canCreateCluster = authUtils.canCreateCluster({
-      userAccessSummary,
+    const canCreateCluster = rbac({
+      user,
+      action: {
+        resource_type: 'cluster',
+        method: 'create',
+      }
     })
 
     const addButtonItems = [{
@@ -196,10 +200,13 @@ class ClusterTable extends React.Component {
 
       const buttons = []
 
-      if(authUtils.accessControl({
-        userAccessSummary,
-        role: cluster.role,
-        action: 'write',
+      if(rbac({
+        user,
+        action: {
+          resource_type: 'cluster',
+          resource_id: cluster.id,
+          method: 'write',
+        }
       })) {
         buttons.push({
           title: 'Delete',
