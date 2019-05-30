@@ -44,7 +44,7 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
 
     const initialValues = id == 'new' ?
       clusterInitialValues[provision_type] :
-      selectors.cluster.collection.item(state) || {}
+      JSON.parse(JSON.stringify(selectors.cluster.collection.item(state) || {}))
 
     const schema = id == 'new' ?
       clusterForms[provision_type].add :

@@ -180,7 +180,11 @@ class ClusterForm extends React.Component {
     const {
       classes,
       snackbarMessage,
+      initialValues,
     } = this.props
+
+    if(initialValues.provision_type != 'remote') return null
+
     return (
       <Paper className={ classes.paper }>
         <Typography variant="h6" gutterBottom>
