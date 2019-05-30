@@ -45,7 +45,7 @@ const rbac = ({
   })
 
   if(!resourceRole) return false
-  return ROLES[resourceRole.permission] >= ROLES[action]
+  return ROLES[resourceRole.permission] >= ROLES[method]
 }
 
 export default rbac
