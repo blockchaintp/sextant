@@ -32,7 +32,8 @@ class DeploymentSettings extends React.Component {
       id,
       page,
       deployment,
-      localKeys,
+      localValidatorKeys,
+      localDamlRPCKeys,
       remoteKeys,
       createRemoteKey,
     } = this.props
@@ -43,7 +44,8 @@ class DeploymentSettings extends React.Component {
           cluster={ cluster }
           id={ id }
           deployment={ deployment }
-          localKeys={ localKeys }
+          localValidatorKeys={ localValidatorKeys }
+          localDamlRPCKeys={ localDamlRPCKeys }
           remoteKeys={ remoteKeys }
           createRemoteKey={ createRemoteKey }
         />

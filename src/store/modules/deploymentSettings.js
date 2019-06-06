@@ -11,13 +11,17 @@ const prefix = 'deploymentSettings'
 const key = new schema.Entity('key')
 
 const initialState = {
-  localKeys: normalize([], [key]),
+  localValidatorKeys: normalize([], [key]),
+  localDamlRPCKeys: normalize([], [key]),
   remoteKeys: normalize([], [key]),
 }
 
 const reducers = {
-  setLocalKeys: (state, action) => {
-    state.localKeys = normalize(action.payload, [key])
+  setLocalValidatorKeys: (state, action) => {
+    state.localValidatorKeys = normalize(action.payload, [key])
+  },
+  setLocalDamlRPCKeys: (state, action) => {
+    state.localDamlRPCKeys = normalize(action.payload, [key])
   },
   setRemoteKeys: (state, action) => {
     state.remoteKeys = normalize(action.payload, [key])
@@ -26,7 +30,10 @@ const reducers = {
 
 const loaders = {
 
-  listLocalKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/localKeys`))
+  listLocalValidatorKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/localValidatorKeys`))
+    .then(api.process),
+
+  listLocalDamlRPCKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/localDamlRPCKeys`))
     .then(api.process),
 
   listRemoteKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/remoteKeys`))
@@ -41,15 +48,27 @@ const loaders = {
 
 const sideEffects = {
 
-  listLocalKeys: ({
+  listLocalValidatorKeys: ({
     cluster,
     id,
   }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listLocalKeys(cluster, id),
+    loader: () => loaders.listLocalValidatorKeys(cluster, id),
     prefix,
-    name: 'listLocalKeys',
-    dataAction: actions.setLocalKeys,
+    name: 'listLocalValidatorKeys',
+    dataAction: actions.setLocalValidatorKeys,
+    snackbarError: true,
+  }),
+
+  listLocalDamlRPCKeys: ({
+    cluster,
+    id,
+  }) => (dispatch, getState) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listLocalDamlRPCKeys(cluster, id),
+    prefix,
+    name: 'listLocalDamlRPCKeys',
+    dataAction: actions.setLocalDamlRPCKeys,
     snackbarError: true,
   }),
 

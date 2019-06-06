@@ -183,7 +183,11 @@ const routes = [
       activate: (store, params) => {
         store.dispatch(networkActions.startLoading('deployment.get'))
         store.dispatch(deploymentActions.get(params.cluster, params.id))
-        store.dispatch(deploymentSettingsActions.listLocalKeys({
+        store.dispatch(deploymentSettingsActions.listLocalValidatorKeys({
+          cluster: params.cluster,
+          id: params.id
+        }))
+        store.dispatch(deploymentSettingsActions.listLocalDamlRPCKeys({
           cluster: params.cluster,
           id: params.id
         }))

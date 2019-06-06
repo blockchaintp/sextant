@@ -147,12 +147,10 @@ class DeploymentSettingsKeys extends React.Component {
   render() {
     const {
       classes,
-      localKeys,
+      localValidatorKeys,
+      localDamlRPCKeys,
       remoteKeys,
     } = this.props
-
-    const validatorKeys = localKeys.filter(key => key.type == 'validator')
-    const rpcKeys = localKeys.filter(key => key.type == 'daml')
 
     return (
       <div className={ classes.root }>
@@ -162,7 +160,7 @@ class DeploymentSettingsKeys extends React.Component {
               {
                 this.getKeyTable({
                   title: 'Local Validator Keys',
-                  keys: validatorKeys,
+                  keys: localValidatorKeys,
                 })
               }
             </Paper>
@@ -172,7 +170,7 @@ class DeploymentSettingsKeys extends React.Component {
               {
                 this.getKeyTable({
                   title: 'Local RPC Keys',
-                  keys: rpcKeys,
+                  keys: localDamlRPCKeys,
                 })
               }
             </Paper>

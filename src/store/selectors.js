@@ -118,7 +118,8 @@ const DEPLOYMENT_NETWORK_NAMES = networkProps('deployment', [
 const deploymentSettingsStore = state => state.deploymentSettings
 
 const DEPLOYMENT_SETTINGS_NETWORK_NAMES = networkProps('deploymentSettings', [
-  'listLocalKeys',
+  'listLocalValidatorKeys',
+  'listLocalDamlRPCKeys',
   'listRemoteKeys',
   'createRemoteKey',
 ])
@@ -304,8 +305,12 @@ const selectors = {
     store: deploymentSettingsStore,
     errors: props(networkErrors, DEPLOYMENT_SETTINGS_NETWORK_NAMES),
     loading: props(networkLoading, DEPLOYMENT_SETTINGS_NETWORK_NAMES),
-    localKeyCollection: entity({
-      baseSelector: prop(deploymentSettingsStore, 'localKeys'),
+    localValidatorKeyCollection: entity({
+      baseSelector: prop(deploymentSettingsStore, 'localValidatorKeys'),
+      entityName: 'key',
+    }),
+    localDamlRPCKeyCollection: entity({
+      baseSelector: prop(deploymentSettingsStore, 'localDamlRPCKeys'),
       entityName: 'key',
     }),
     remoteKeyCollection: entity({
