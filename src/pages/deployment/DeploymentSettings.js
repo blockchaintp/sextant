@@ -41,6 +41,8 @@ class DeploymentSettings extends React.Component {
       setSelectedParty,
       registerParticipant,
       rotateLocalDamlRPCKey,
+      tokenDialogOpen,
+      tokenValue,
     } = this.props
 
     if(page == 'keys') {
@@ -70,6 +72,8 @@ class DeploymentSettings extends React.Component {
           setSelectedParty={ setSelectedParty }
           registerParticipant={ registerParticipant }
           rotateLocalDamlRPCKey={ rotateLocalDamlRPCKey }
+          tokenDialogOpen={ tokenDialogOpen }
+          tokenValue={ tokenValue }
         />
       )
     }

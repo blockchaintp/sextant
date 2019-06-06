@@ -33,6 +33,8 @@ const onViewPage = (cluster, id, page) => routerActions.navigateTo('deployment_s
       damlParticipants: selectors.deploymentSettings.damlParticipantCollection.list(state),
       remoteKeys: selectors.deploymentSettings.remoteKeyCollection.list(state),
       selectedParties: selectors.deploymentSettings.selectedParties(state),
+      tokenDialogOpen: selectors.deploymentSettings.tokenDialogOpen(state),
+      tokenValue: selectors.deploymentSettings.tokenValue(state),
     }
   },
   {

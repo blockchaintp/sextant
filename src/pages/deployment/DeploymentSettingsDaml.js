@@ -10,6 +10,14 @@ import Button from '@material-ui/core/Button'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+
+import TextField from '@material-ui/core/TextField'
+
 import SimpleTable from 'components/table/SimpleTable'
 
 const styles = theme => ({
@@ -55,6 +63,123 @@ const styles = theme => ({
 })
 
 class DeploymentSettingsDaml extends React.Component {
+
+  state = {
+    addWindowOpen: false,
+    addWindowName: '',
+    addWindowParticipant: null,
+  }
+
+  setFormOpen(value, participant) {
+    this.setState({
+      addWindowOpen: value,
+      addWindowName: '',
+      addWindowParticipant: participant,
+    })
+  }
+
+  submitAddForm() {
+    const {
+      cluster,
+      id,
+      addParty,
+    } = this.props
+    addParty({
+      cluster,
+      id,
+      participant: this.state.participant,
+      name: this.state.addWindowName,
+    })
+    this.setFormOpen(false)
+  }
+
+  getAddPartyDialog() {
+    const {
+      classes,
+    } = this.props
+    return (
+      <Dialog
+        open={ this.state.addWindowOpen }
+        onClose={ () => this.setFormOpen(false) }
+        fullWidth
+        maxWidth="sm"
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Add Party</DialogTitle>
+        <DialogContent>
+          <div className={ classes.formTextContainer }>
+            <TextField
+              id="party-add"
+              label="Party Name"
+              style={{ margin: 8 }}
+              placeholder="Type the name of the party here"
+              helperText="Enter the name of the party you want to add to this participant"
+              fullWidth
+              margin="normal"
+              value={ this.state.addWindowName }
+              onChange={ (e) => this.setState({
+                addWindowName: e.target.value,
+              })}
+            />
+          </div>
+          
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ () => this.setFormOpen(false) }>
+            Cancel
+          </Button>
+          <Button onClick={ () => this.submitAddForm() } variant="contained" color="secondary" autoFocus>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+
+  getTokenDialog() {
+    const {
+      classes,
+      tokenDialogOpen,
+      tokenValue,
+      setTokenDialogOpen,
+    } = this.props
+    return (
+      <Dialog
+        open={ false }
+        onClose={ () => setTokenDialogOpen(false) }
+        fullWidth
+        maxWidth="sm"
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Token</DialogTitle>
+        <DialogContent>
+          <div className={ classes.formTextContainer }>
+            <TextField
+              id="party-add"
+              label="Your Token"
+              style={{ margin: 8 }}
+              placeholder="Your Access Token"
+              helperText="Copy this token - you will not see it again so keep it safe!"
+              fullWidth
+              margin="normal"
+              value={ 'e952bf901fdb8b628a95bbd50061bf00' }
+            />
+          </div>
+          
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ () => this.setFormOpen(false) }>
+            Close
+          </Button>
+          <Button variant="contained" color="secondary" autoFocus>
+            Copy to clipboard
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
 
   getLocalParticipantTable({
     participants,
@@ -265,7 +390,7 @@ class DeploymentSettingsDaml extends React.Component {
                       className={ classes.participantOptionsButton }
                       size="small"
                       variant="outlined"
-                      onClick={ () => this.setFormOpen(false) }
+                      onClick={ () => this.setFormOpen(true, participant.id) }
                     >
                       Add Party
                     </Button>
@@ -273,7 +398,7 @@ class DeploymentSettingsDaml extends React.Component {
                       className={ classes.participantOptionsButton }
                       size="small"
                       variant="outlined"
-                      onClick={ () => this.setFormOpen(false) }
+                      onClick={ () => {} }
                     >
                       Generate Tokens
                     </Button>
@@ -281,7 +406,7 @@ class DeploymentSettingsDaml extends React.Component {
                       className={ classes.participantOptionsButton }
                       size="small"
                       variant="outlined"
-                      onClick={ () => this.setFormOpen(false) }
+                      onClick={ () => {} }
                     >
                       Remove
                     </Button>
@@ -412,6 +537,8 @@ class DeploymentSettingsDaml extends React.Component {
             </Paper>
           </Grid>
         </Grid>
+        { this.getAddPartyDialog() }
+        { this.getTokenDialog() }
       </div>
     )
   }

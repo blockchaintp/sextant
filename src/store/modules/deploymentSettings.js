@@ -17,6 +17,8 @@ const initialState = {
   remoteKeys: normalize([], [key]),
   damlParticipants: normalize([], [participant]),
   selectedParties: {},
+  tokenDialogOpen: false,
+  tokenValue: null,
 }
 
 const reducers = {
@@ -56,6 +58,12 @@ const reducers = {
   },
   resetSelectedParties: (state, action) => {
     state.selectedParties = {}
+  },
+  setTokenDialogOpen: (state, action) => {
+    state.tokenDialogOpen = action.payload.value
+  },
+  setToken: (state, action) => {
+    state.tokenValue = action.payload.value
   },
 }
 

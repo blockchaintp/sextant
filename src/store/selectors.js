@@ -324,6 +324,8 @@ const selectors = {
     }),
     ...props(deploymentSettingsStore, [
       'selectedParties',
+      'tokenDialogOpen',
+      'tokenValue',
     ]),
   },
 
