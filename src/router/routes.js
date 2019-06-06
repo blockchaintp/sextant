@@ -195,6 +195,10 @@ const routes = [
           cluster: params.cluster,
           id: params.id
         }))
+        store.dispatch(deploymentSettingsActions.listDamlParticipants({
+          cluster: params.cluster,
+          id: params.id
+        }))
       },
     },
   },

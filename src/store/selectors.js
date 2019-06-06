@@ -121,6 +121,7 @@ const DEPLOYMENT_SETTINGS_NETWORK_NAMES = networkProps('deploymentSettings', [
   'listLocalValidatorKeys',
   'listLocalDamlRPCKeys',
   'listRemoteKeys',
+  'listDamlParticipants',
   'createRemoteKey',
 ])
 
@@ -316,6 +317,10 @@ const selectors = {
     remoteKeyCollection: entity({
       baseSelector: prop(deploymentSettingsStore, 'remoteKeys'),
       entityName: 'key',
+    }),
+    damlParticipantCollection: entity({
+      baseSelector: prop(deploymentSettingsStore, 'damlParticipants'),
+      entityName: 'participant',
     }),
   },
 

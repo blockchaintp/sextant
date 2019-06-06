@@ -21,6 +21,9 @@ class DeploymentSettingsDaml extends React.Component {
       deployment,
     } = this.props
 
+    console.log('--------------------------------------------')
+    console.dir(this.props)
+
     return (
       <div className={ classes.root }>
         daml

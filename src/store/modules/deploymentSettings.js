@@ -9,11 +9,13 @@ import snackbarActions from './snackbar'
 const prefix = 'deploymentSettings'
 
 const key = new schema.Entity('key')
+const participant = new schema.Entity('participant')
 
 const initialState = {
   localValidatorKeys: normalize([], [key]),
   localDamlRPCKeys: normalize([], [key]),
   remoteKeys: normalize([], [key]),
+  damlParticipants: normalize([], [participant]),
 }
 
 const reducers = {
@@ -22,6 +24,9 @@ const reducers = {
   },
   setLocalDamlRPCKeys: (state, action) => {
     state.localDamlRPCKeys = normalize(action.payload, [key])
+  },
+  setDamlParticipants: (state, action) => {
+    state.damlParticipants = normalize(action.payload, [participant])
   },
   setRemoteKeys: (state, action) => {
     state.remoteKeys = normalize(action.payload, [key])
@@ -37,6 +42,9 @@ const loaders = {
     .then(api.process),
 
   listRemoteKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/remoteKeys`))
+    .then(api.process),
+
+  listDamlParticipants: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlParticipants`))
     .then(api.process),
 
   createRemoteKey: (cluster, id, key) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/remoteKeys`), {
@@ -81,6 +89,18 @@ const sideEffects = {
     prefix,
     name: 'listRemoteKeys',
     dataAction: actions.setRemoteKeys,
+    snackbarError: true,
+  }),
+
+  listDamlParticipants: ({
+    cluster,
+    id,
+  }) => (dispatch, getState) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listDamlParticipants(cluster, id),
+    prefix,
+    name: 'listDamlParticipants',
+    dataAction: actions.setDamlParticipants,
     snackbarError: true,
   }),
 

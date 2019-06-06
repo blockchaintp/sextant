@@ -30,6 +30,7 @@ const onViewPage = (cluster, id, page) => routerActions.navigateTo('deployment_s
       deployment,
       localValidatorKeys: selectors.deploymentSettings.localValidatorKeyCollection.list(state),
       localDamlRPCKeys: selectors.deploymentSettings.localDamlRPCKeyCollection.list(state),
+      damlParticipants: selectors.deploymentSettings.damlParticipantCollection.list(state),
       remoteKeys: selectors.deploymentSettings.remoteKeyCollection.list(state),
     }
   },
