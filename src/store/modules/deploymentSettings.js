@@ -16,6 +16,16 @@ const initialState = {
   localDamlRPCKeys: normalize([], [key]),
   remoteKeys: normalize([], [key]),
   damlParticipants: normalize([], [participant]),
+  archives: [{
+    packageid: '3ab37fe8d_some.daml.package',
+    size: '3123987',
+    uploadedBy: 'participantA_Alice',
+    uploaded: new Date().getTime() - (1000 * 60 * 60 * 24 * 5),
+  }],
+  timeService: [{
+    publicKey: 'b23c0d330e89c3aa0700e0839f40033c',
+    lastClockUpdate: '3127383',
+  }],
   selectedParties: {},
   tokenDialogOpen: false,
   tokenValue: null,

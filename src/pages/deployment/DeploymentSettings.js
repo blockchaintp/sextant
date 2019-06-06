@@ -43,6 +43,8 @@ class DeploymentSettings extends React.Component {
       rotateLocalDamlRPCKey,
       tokenDialogOpen,
       tokenValue,
+      archives,
+      timeService,
     } = this.props
 
     if(page == 'keys') {
@@ -74,6 +76,8 @@ class DeploymentSettings extends React.Component {
           rotateLocalDamlRPCKey={ rotateLocalDamlRPCKey }
           tokenDialogOpen={ tokenDialogOpen }
           tokenValue={ tokenValue }
+          archives={ archives }
+          timeService={ timeService }
         />
       )
     }

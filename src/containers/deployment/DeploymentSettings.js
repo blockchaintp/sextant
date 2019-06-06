@@ -35,6 +35,8 @@ const onViewPage = (cluster, id, page) => routerActions.navigateTo('deployment_s
       selectedParties: selectors.deploymentSettings.selectedParties(state),
       tokenDialogOpen: selectors.deploymentSettings.tokenDialogOpen(state),
       tokenValue: selectors.deploymentSettings.tokenValue(state),
+      archives: selectors.deploymentSettings.archives(state),
+      timeService: selectors.deploymentSettings.timeService(state),
     }
   },
   {

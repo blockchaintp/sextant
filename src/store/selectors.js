@@ -326,6 +326,8 @@ const selectors = {
       'selectedParties',
       'tokenDialogOpen',
       'tokenValue',
+      'archives',
+      'timeService',
     ]),
   },
 

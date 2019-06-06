@@ -20,6 +20,9 @@ import TextField from '@material-ui/core/TextField'
 
 import SimpleTable from 'components/table/SimpleTable'
 
+import DropZone from 'components/uploader/DropZone'
+import UploadStatusDialog from 'components/uploader/UploadStatusDialog'
+
 const styles = theme => ({
   root: {
     padding: theme.spacing.unit * 2,
@@ -425,7 +428,142 @@ class DeploymentSettingsDaml extends React.Component {
       </React.Fragment>
     )
   }
+  
+  getPackageUploadWindow() {
 
+    const {
+      inProgress,
+      error,
+      status,
+      onUploadFiles,
+    } = this.props
+
+    return (
+      <Dialog
+        open={ false }
+        onClose={ () => {} }
+        fullWidth
+        maxWidth='md'
+      >
+        <DialogTitle>Upload Package</DialogTitle>
+        <DialogContent>
+          <DropZone
+            onDrop={ onUploadFiles }
+          >
+            <Paper className={ classes.root }>
+              <Typography>Drag files here or click to select file</Typography>
+            </Paper>
+          </DropZone>
+          <UploadStatusDialog
+            inProgress={ inProgress }
+            error={ error }
+            status={ status }
+            onFinish={ onFinish }
+            onCancel={ onCancel }
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ () => this.cancel() }>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+
+  getPackages() {
+    const {
+      classes,
+      archives,
+    } = this.props
+
+    const fields =[{
+      title: 'Package Id',
+      name: 'packageid',
+    },{
+      title: 'Size',
+      name: 'size',
+    },{
+      title: 'Uploaded By',
+      name: 'uploadedBy',
+    },{
+      title: 'Uploaded',
+      name: 'uploaded',
+    }]
+
+    return (
+      <div className={ classes.denseTable }>
+        <div className={ classes.participantOptionsContainer }>
+          <div className={ classes.participantOptionsTitle }>
+            <Typography variant="subtitle1">
+              <strong>Packages</strong>
+            </Typography>
+          </div>
+          
+          <div className={ classes.participantOptionsButtons }>
+            <Button 
+              className={ classes.participantOptionsButton }
+              size="small"
+              variant="outlined"
+              onClick={ () => this.setFormOpen(true, participant.id) }
+            >
+              Upload Archive
+            </Button>
+          </div>
+        </div>
+        <div className={ classes.spacing }></div>
+        <SimpleTable
+          data={ archives }
+          fields={ fields }
+        />
+      </div>
+    )
+                
+  }
+
+  getTimeService() {
+    const {
+      classes,
+      timeService,
+    } = this.props
+
+    const fields =[{
+      title: 'Public Key of Keeper',
+      name: 'publicKey',
+    },{
+      title: 'Last Clock Update',
+      name: 'lastClockUpdate',
+    }]
+
+    return (
+      <div className={ classes.denseTable }>
+        <div className={ classes.participantOptionsContainer }>
+          <div className={ classes.participantOptionsTitle }>
+            <Typography variant="subtitle1">
+              <strong>Time Service</strong>
+            </Typography>
+          </div>
+
+          <div className={ classes.participantOptionsButtons }>
+            <Button 
+              className={ classes.participantOptionsButton }
+              size="small"
+              variant="outlined"
+              onClick={ () => this.setFormOpen(true, participant.id) }
+            >
+              Set Update Period
+            </Button>
+          </div>
+        </div>
+        <div className={ classes.spacing }></div>
+        <SimpleTable
+          data={ timeService }
+          fields={ fields }
+        />
+      </div>
+    )
+                
+  }
 
   getData() {
     const {
@@ -533,6 +671,20 @@ class DeploymentSettingsDaml extends React.Component {
                 this.getPartiesByParticipant({
                   participants: data.registeredParticipants,
                 })
+              }
+            </Paper>
+          </Grid>
+          <Grid item xs={ 8 }>
+            <Paper className={ classes.paper }>
+              {
+                this.getPackages()
+              }
+            </Paper>
+          </Grid>
+          <Grid item xs={ 4 }>
+            <Paper className={ classes.paper }>
+              {
+                this.getTimeService()
               }
             </Paper>
           </Grid>
