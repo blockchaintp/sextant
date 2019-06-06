@@ -316,9 +316,17 @@ class DeploymentSettingsDaml extends React.Component {
       }
     })
 
-    const remoteParticipants = damlParticipants.filter(participant => {
-      return localKeyMap[participant.key] ? false : true
-    })
+    const remoteParticipants = damlParticipants
+      .filter(participant => {
+        return localKeyMap[participant.key] ? false : true
+      })
+      .map(participant => {
+        return {
+          id: participant.key,
+          key: participant.key,
+          damlId: participant.id,
+        }
+      })
 
     const registeredParticipants = localParticipants.filter(participant => {
       return participantsByKey[participant.id] ? true : false
