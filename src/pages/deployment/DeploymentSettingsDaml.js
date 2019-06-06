@@ -62,6 +62,10 @@ class DeploymentSettingsDaml extends React.Component {
 
     const {
       classes,
+      cluster,
+      id,
+      registerParticipant,
+      rotateLocalDamlRPCKey,
     } = this.props
 
     const fields =[{
@@ -85,7 +89,12 @@ class DeploymentSettingsDaml extends React.Component {
           className={ classes.smallButton }
           size="small"
           variant="outlined"
-          onClick={ () => this.setFormOpen(false) }
+          onClick={ () => rotateLocalDamlRPCKey({
+            cluster,
+            id,
+            key: participant.key,
+            damlId: participant.damlId,
+          }) }
         >
           Rotate Keys
         </Button>
@@ -94,7 +103,11 @@ class DeploymentSettingsDaml extends React.Component {
           className={ classes.smallButton }
           size="small"
           variant="outlined"
-          onClick={ () => this.setFormOpen(false) }
+          onClick={ () => registerParticipant({
+            cluster,
+            id,
+            key: participant.key,
+          }) }
         >
           Register
         </Button>
