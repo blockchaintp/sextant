@@ -21,9 +21,15 @@ const styles = theme => ({
   spacing: {
     marginTop: theme.spacing.unit * 2,
   },
+  smallButton: {
+    fontSize: ['0.8em', '!important'],
+  },
   denseTable: {
     '& th,td': {
       padding: ['3px', '!important'],
+    },
+    '& tr': {
+      height: ['30px', '!important'],
     }
   }
 })
@@ -56,6 +62,7 @@ class DeploymentSettingsDaml extends React.Component {
     const data = participants.map((participant, i) => {
       const action = participant.damlId ? (
         <Button 
+          className={ classes.smallButton }
           size="small"
           variant="outlined"
           onClick={ () => this.setFormOpen(false) }
@@ -64,6 +71,7 @@ class DeploymentSettingsDaml extends React.Component {
         </Button>
       ) : (
         <Button 
+          className={ classes.smallButton }
           size="small"
           variant="outlined"
           onClick={ () => this.setFormOpen(false) }
