@@ -106,33 +106,29 @@ class DeploymentSettingsKeys extends React.Component {
     )
   }
 
-  getLocalKeys() {
+  getKeyTable({
+    title,
+    keys,
+    getActions,
+  }) {
 
-    const {
-      classes,
-      localKeys,
-    } = this.props
-
-    const data = localKeys.map(key => {
+    const data = keys.map(key => {
       return {
-        id: key.id,
+        id: key.key,
         key: key.key,
-        type: key.type,
       }
     })
 
     const fields =[{
       title: 'Key',
       name: 'key',
-    }, {
-      title: 'Type',
-      name: 'type',
     }]
 
     return (
       <div>
         <SimpleTableHeader
-          title='Local Keys'
+          title={ title }
+          getActions={ getActions }
         />
         <SimpleTable
           data={ data }
@@ -142,26 +138,8 @@ class DeploymentSettingsKeys extends React.Component {
     )
   }
 
-  getRemoteKeys() {
-
-    const {
-      classes,
-      remoteKeys,
-    } = this.props
-
-    const data = remoteKeys.map(key => {
-      return {
-        id: key.id,
-        key: key.key,
-      }
-    })
-
-    const fields =[{
-      title: 'Key',
-      name: 'key',
-    }]
-
-    const addButton = (
+  getAddRemoteKeyButton() {
+    return (
       <Button
         variant='contained'
         color='secondary'
@@ -171,41 +149,50 @@ class DeploymentSettingsKeys extends React.Component {
         <AddIcon />
       </Button>
     )
-
-    return (
-      <div>
-        <SimpleTableHeader
-          title='Remote Keys'
-          getActions={ () => addButton }
-        />
-        <SimpleTable
-          data={ data }
-          fields={ fields }
-        />
-      </div>
-    )
   }
+
   render() {
     const {
       classes,
-      cluster,
-      id,
-      deployment,
       localKeys,
       remoteKeys,
     } = this.props
 
+    const validatorKeys = localKeys.filter(key => key.type == 'validator')
+    const rpcKeys = localKeys.filter(key => key.type == 'daml')
+
     return (
       <div className={ classes.root }>
         <Grid container spacing={24}>
-          <Grid item xs={ 6 }>
+          <Grid item xs={ 4 }>
             <Paper className={ classes.paper }>
-              { this.getLocalKeys() }
+              {
+                this.getKeyTable({
+                  title: 'Local Validator Keys',
+                  keys: validatorKeys,
+                })
+              }
             </Paper>
           </Grid>
-          <Grid item xs={ 6 }>
+          <Grid item xs={ 4 }>
             <Paper className={ classes.paper }>
-              { this.getRemoteKeys() }
+              {
+                this.getKeyTable({
+                  title: 'Local RPC Keys',
+                  keys: rpcKeys,
+                })
+              }
+            </Paper>
+          </Grid>
+          <Grid item xs={ 4 }>
+            <Paper className={ classes.paper }>
+              {
+                this.getKeyTable({
+                  title: 'Enrolled Validator Keys',
+                  keys: remoteKeys,
+                  getActions: () => this.getAddRemoteKeyButton()
+                })
+              }
             </Paper>
           </Grid>
         </Grid>
