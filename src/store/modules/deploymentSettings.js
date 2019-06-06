@@ -32,6 +32,18 @@ const reducers = {
   setRemoteKeys: (state, action) => {
     state.remoteKeys = normalize(action.payload, [key])
   },
+  setDamlData: (state, action) => {
+    const {
+      localValidatorKeys,
+      localDamlRPCKeys,
+      damlParticipants,
+      remoteKeys,
+    } = action.payload
+    state.localValidatorKeys = normalize(localValidatorKeys, [key])
+    state.localDamlRPCKeys = normalize(localDamlRPCKeys, [key])
+    state.damlParticipants = normalize(damlParticipants, [participant])
+    state.remoteKeys = normalize(remoteKeys, [key])
+  },
   setSelectedParty: (state, action) => {
     const {
       participant,
@@ -128,22 +140,23 @@ const sideEffects = {
     cluster,
     id,
   }) => async (dispatch, getState) => {
-    await dispatch(actions.listLocalValidatorKeys({
-      cluster,
-      id,
-    }))
-    await dispatch(actions.listLocalDamlRPCKeys({
-      cluster,
-      id,
-    }))
-    await dispatch(actions.listRemoteKeys({
-      cluster,
-      id,
-    }))
-    await dispatch(actions.listDamlParticipants({
-      cluster,
-      id,
-    }))    
+
+    try {
+      const localValidatorKeys = await loaders.listLocalValidatorKeys(cluster, id)
+      const localDamlRPCKeys = await loaders.listLocalDamlRPCKeys(cluster, id)
+      const remoteKeys = await loaders.listRemoteKeys(cluster, id)
+      const damlParticipants = await loaders.listDamlParticipants(cluster, id)
+
+      dispatch(actions.setDamlData({
+        localValidatorKeys,
+        localDamlRPCKeys,
+        remoteKeys,
+        damlParticipants,
+      }))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error loading daml data: ${e.toString()}`))
+      console.error(e)
+    }
   },
 
   createRemoteKey: ({
