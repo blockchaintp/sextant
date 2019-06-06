@@ -112,16 +112,9 @@ class DeploymentSettingsKeys extends React.Component {
     getActions,
   }) {
 
-    const data = keys.map(key => {
-      return {
-        id: key.key,
-        key: key.key,
-      }
-    })
-
     const fields =[{
       title: 'Key',
-      name: 'key',
+      name: 'id',
     }]
 
     return (
@@ -131,7 +124,7 @@ class DeploymentSettingsKeys extends React.Component {
           getActions={ getActions }
         />
         <SimpleTable
-          data={ data }
+          data={ keys }
           fields={ fields }
         />
       </div>
