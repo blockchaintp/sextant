@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
+import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
@@ -17,6 +18,14 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     margin: theme.spacing.unit * 2,
   },
+  tableHeading: {
+    marginTop: theme.spacing.unit * 2,
+  },
+  denseTable: {
+    '& th,td': {
+      padding: ['3px', '!important'],
+    }
+  }
 })
 
 class DeploymentSettingsDaml extends React.Component {
@@ -25,7 +34,14 @@ class DeploymentSettingsDaml extends React.Component {
     participants,
   }) {
 
+    const {
+      classes,
+    } = this.props
+
     const fields =[{
+      title: 'Name',
+      name: 'name',
+    },{
       title: 'Key',
       name: 'id',
     },{
@@ -34,6 +50,7 @@ class DeploymentSettingsDaml extends React.Component {
     },{
       title: 'Actions',
       name: 'actions',
+      numeric: true,
     }]
 
     const data = participants.map((participant, i) => {
@@ -56,16 +73,14 @@ class DeploymentSettingsDaml extends React.Component {
       )
       return {
         id: participant.key.substring(0, 8),
+        name: `#${i+1}`,
         damlId: participant.damlId ? participant.damlId.substring(0, 8) : 'none',
         actions: action,
       }
     })
 
     return (
-      <div>
-        <SimpleTableHeader
-          title="Local Participants"
-        />
+      <div className={ classes.denseTable }>
         <SimpleTable
           data={ data }
           fields={ fields }
@@ -77,6 +92,10 @@ class DeploymentSettingsDaml extends React.Component {
   getRemoteParticipantTable({
     participants,
   }) {
+
+    const {
+      classes,
+    } = this.props
 
     const fields =[{
       title: 'Key',
@@ -94,10 +113,7 @@ class DeploymentSettingsDaml extends React.Component {
     })
 
     return (
-      <div>
-        <SimpleTableHeader
-          title="Other Participants"
-        />
+      <div className={ classes.denseTable }>
         <SimpleTable
           data={ data }
           fields={ fields }
@@ -156,11 +172,21 @@ class DeploymentSettingsDaml extends React.Component {
         <Grid container spacing={24}>
           <Grid item xs={ 4 }>
             <Paper className={ classes.paper }>
+              <div className={ classes.tableHeading }>
+                <Typography variant="subtitle1">
+                  <strong>Local Participants</strong>
+                </Typography>
+              </div>
               {
                 this.getLocalParticipantTable({
                   participants: data.localParticipants,
                 })
               }
+              <div className={ classes.tableHeading }>
+                <Typography variant="subtitle1">
+                  <strong>Other Participants</strong>
+                </Typography>
+              </div>
               {
                 this.getRemoteParticipantTable({
                   participants: data.remoteParticipants,
