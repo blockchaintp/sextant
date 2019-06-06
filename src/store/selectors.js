@@ -322,6 +322,9 @@ const selectors = {
       baseSelector: prop(deploymentSettingsStore, 'damlParticipants'),
       entityName: 'participant',
     }),
+    ...props(deploymentSettingsStore, [
+      'selectedParties',
+    ]),
   },
 
   config: {

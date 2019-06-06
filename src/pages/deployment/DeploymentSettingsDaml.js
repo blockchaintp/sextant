@@ -7,8 +7,10 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+
 import SimpleTable from 'components/table/SimpleTable'
-import SimpleTableHeader from 'components/table/SimpleTableHeader'
 
 const styles = theme => ({
   root: {
@@ -22,7 +24,11 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
   },
   smallButton: {
-    fontSize: ['0.8em', '!important'],
+    fontSize: ['9px', '!important'],
+  },
+  checkbox: {
+    padding: ['3px', '!important'],
+    paddingLeft: ['12px', '!important'],
   },
   denseTable: {
     '& th,td': {
@@ -31,7 +37,21 @@ const styles = theme => ({
     '& tr': {
       height: ['30px', '!important'],
     }
-  }
+  },
+  participantOptionsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  participantOptionsTitle: {
+    flexGrow: 1,
+  },
+  participantOptionsButtons: {
+    flexGrow: 0,
+  },
+  participantOptionsButton: {
+    fontSize: ['9px', '!important'],
+    marginLeft: theme.spacing.unit,
+  },
 })
 
 class DeploymentSettingsDaml extends React.Component {
@@ -171,6 +191,103 @@ class DeploymentSettingsDaml extends React.Component {
     )
   }
 
+  getPartyOptions({
+    participants,
+  }) {
+    const {
+      classes,
+      selectedParties,
+      setSelectedParty,
+    } = this.props
+
+    return (
+      <React.Fragment>
+        {
+          participants.map((participant, i) => {
+
+            const selected = selectedParties[participant.id] || {}
+
+            const parties = participant.parties || []
+            const data = parties.map((party, j) => {
+              return {
+                id: j,
+                name: (
+                  <div>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          className={ classes.checkbox }
+                          checked={ selected[party.name] ? true : false }
+                          onChange={ (event) => {
+                            setSelectedParty({
+                              participant: participant.id,
+                              party: party.name,
+                              value: event.target.checked,
+                            })
+                          }}
+                          value={ party.name }
+                        />
+                      }
+                      label={ party.name }
+                    />
+                  </div> 
+                ),
+              }
+            })
+            const fields =[{
+              title: 'Name',
+              name: 'name',
+            }]
+            return (
+              <div key={ i } className={ classes.denseTable }>
+                <div className={ classes.spacing }></div>
+                <div className={ classes.participantOptionsContainer }>
+                  <div className={ classes.participantOptionsTitle }>
+                    <Typography variant="subtitle2">
+                      <strong>{`#${i+1}`}</strong>
+                    </Typography>
+                  </div>
+                  <div className={ classes.participantOptionsButtons }>
+                    <Button 
+                      className={ classes.participantOptionsButton }
+                      size="small"
+                      variant="outlined"
+                      onClick={ () => this.setFormOpen(false) }
+                    >
+                      Add Party
+                    </Button>
+                    <Button 
+                      className={ classes.participantOptionsButton }
+                      size="small"
+                      variant="outlined"
+                      onClick={ () => this.setFormOpen(false) }
+                    >
+                      Generate Tokens
+                    </Button>
+                    <Button 
+                      className={ classes.participantOptionsButton }
+                      size="small"
+                      variant="outlined"
+                      onClick={ () => this.setFormOpen(false) }
+                    >
+                      Remove
+                    </Button>
+                  </div>
+                </div>
+                
+                <SimpleTable
+                  hideHeader
+                  data={ data }
+                  fields={ fields }
+                />
+              </div>
+            )
+          })
+        }
+      </React.Fragment>
+    )
+  }
+
 
   getData() {
     const {
@@ -252,8 +369,13 @@ class DeploymentSettingsDaml extends React.Component {
           <Grid item xs={ 4 }>
             <Paper className={ classes.paper }>
               <Typography variant="subtitle1">
-                <strong>Middle</strong>
+                <strong>Configure Parties</strong>
               </Typography>
+              {
+                this.getPartyOptions({
+                  participants: data.registeredParticipants,
+                })
+              }
             </Paper>
           </Grid>
           <Grid item xs={ 4 }>

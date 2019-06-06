@@ -37,6 +37,8 @@ class DeploymentSettings extends React.Component {
       remoteKeys,
       damlParticipants,
       createRemoteKey,
+      selectedParties,
+      setSelectedParty,
     } = this.props
 
     if(page == 'keys') {
@@ -62,6 +64,8 @@ class DeploymentSettings extends React.Component {
           localDamlRPCKeys={ localDamlRPCKeys }
           remoteKeys={ remoteKeys }
           damlParticipants={ damlParticipants }
+          selectedParties={ selectedParties }
+          setSelectedParty={ setSelectedParty }
         />
       )
     }

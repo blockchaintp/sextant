@@ -16,6 +16,7 @@ const initialState = {
   localDamlRPCKeys: normalize([], [key]),
   remoteKeys: normalize([], [key]),
   damlParticipants: normalize([], [participant]),
+  selectedParties: {},
 }
 
 const reducers = {
@@ -30,6 +31,19 @@ const reducers = {
   },
   setRemoteKeys: (state, action) => {
     state.remoteKeys = normalize(action.payload, [key])
+  },
+  setSelectedParty: (state, action) => {
+    const {
+      participant,
+      party,
+      value,
+    } = action.payload
+    const parties = state.selectedParties[participant] || {}
+    parties[party] = value
+    state.selectedParties[participant] = parties
+  },
+  resetSelectedParties: (state, action) => {
+    state.selectedParties = {}
   },
 }
 

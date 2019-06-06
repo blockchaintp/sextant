@@ -32,11 +32,13 @@ const onViewPage = (cluster, id, page) => routerActions.navigateTo('deployment_s
       localDamlRPCKeys: selectors.deploymentSettings.localDamlRPCKeyCollection.list(state),
       damlParticipants: selectors.deploymentSettings.damlParticipantCollection.list(state),
       remoteKeys: selectors.deploymentSettings.remoteKeyCollection.list(state),
+      selectedParties: selectors.deploymentSettings.selectedParties(state),
     }
   },
   {
     onViewPage,
     createRemoteKey: deploymentSettingsActions.createRemoteKey,
+    setSelectedParty: deploymentSettingsActions.setSelectedParty,
   },
 )
 class DeploymentSettingsContainer extends React.Component {
