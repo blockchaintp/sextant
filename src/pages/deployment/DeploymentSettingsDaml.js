@@ -18,7 +18,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     margin: theme.spacing.unit * 2,
   },
-  tableHeading: {
+  spacing: {
     marginTop: theme.spacing.unit * 2,
   },
   denseTable: {
@@ -122,6 +122,47 @@ class DeploymentSettingsDaml extends React.Component {
     )
   }
 
+  getPartiesByParticipant({
+    participants,
+  }) {
+    const {
+      classes,
+    } = this.props
+    return (
+      <React.Fragment>
+        {
+          participants.map((participant, i) => {
+
+            const parties = participant.parties || []
+            const data = parties.map((party, j) => {
+              return {
+                id: j,
+                name: party.name,
+              }
+            })
+            const fields =[{
+              title: 'Name',
+              name: 'name',
+            }]
+            return (
+              <div key={ i } className={ classes.denseTable }>
+                <div className={ classes.spacing }></div>
+                <Typography variant="subtitle2">
+                  <strong>{`#${i+1}`}</strong>
+                </Typography>
+                <SimpleTable
+                  hideHeader
+                  data={ data }
+                  fields={ fields }
+                />
+              </div>
+            )
+          })
+        }
+      </React.Fragment>
+    )
+  }
+
 
   getData() {
     const {
@@ -139,12 +180,14 @@ class DeploymentSettingsDaml extends React.Component {
       return all
     }, {})
 
-    const localParticipants = localDamlRPCKeys.map(key => {
+    const localParticipants = localDamlRPCKeys.map((key, i) => {
       const participant = participantsByKey[key.id]
       return {
         id: key.id,
+        name: i+1,
         key: key.id,
         damlId: participant ? participant.id : null,
+        parties: participant ? (participant.parties || []) : [],
       }
     })
 
@@ -152,44 +195,67 @@ class DeploymentSettingsDaml extends React.Component {
       return localKeyMap[participant.key] ? false : true
     })
 
+    const registeredParticipants = localParticipants.filter(participant => {
+      return participantsByKey[participant.id] ? true : false
+    })
+    
+    damlParticipants.filter(participant => {
+      return localKeyMap[participant.key] ? true : false
+    })
+
     return {
       localParticipants,
       remoteParticipants,
+      registeredParticipants,
     }
   }
 
   render() {
     const {
       classes,
-      localDamlRPCKeys,
-      damlParticipants,
     } = this.props
 
     const data = this.getData()
 
     return (
       <div className={ classes.root }>
-        <Grid container spacing={24}>
+        <Grid container spacing={8}>
           <Grid item xs={ 4 }>
             <Paper className={ classes.paper }>
-              <div className={ classes.tableHeading }>
-                <Typography variant="subtitle1">
-                  <strong>Local Participants</strong>
-                </Typography>
-              </div>
+              <Typography variant="subtitle1">
+                <strong>Local Participants</strong>
+              </Typography>
               {
                 this.getLocalParticipantTable({
                   participants: data.localParticipants,
                 })
               }
-              <div className={ classes.tableHeading }>
-                <Typography variant="subtitle1">
-                  <strong>Other Participants</strong>
-                </Typography>
-              </div>
+              <div className={ classes.spacing }></div>
+              <Typography variant="subtitle1">
+                <strong>Other Participants</strong>
+              </Typography>
               {
                 this.getRemoteParticipantTable({
                   participants: data.remoteParticipants,
+                })
+              }
+            </Paper>
+          </Grid>
+          <Grid item xs={ 4 }>
+            <Paper className={ classes.paper }>
+              <Typography variant="subtitle1">
+                <strong>Middle</strong>
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={ 4 }>
+            <Paper className={ classes.paper }>
+              <Typography variant="subtitle1">
+                <strong>Parties By Participant</strong>
+              </Typography>
+              {
+                this.getPartiesByParticipant({
+                  participants: data.registeredParticipants,
                 })
               }
             </Paper>

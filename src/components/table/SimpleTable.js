@@ -53,6 +53,7 @@ class SimpleTable extends React.Component {
       getActions, 
       onRowClick,
       pagination,
+      hideHeader,
       hideHeaderIfEmpty,
     } = this.props
 
@@ -66,7 +67,7 @@ class SimpleTable extends React.Component {
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             {
-              (!hideHeaderIfEmpty || data.length > 0) && (
+              (!hideHeader && (!hideHeaderIfEmpty || data.length > 0)) && (
                 <TableHead>
                   <TableRow>
                     {
