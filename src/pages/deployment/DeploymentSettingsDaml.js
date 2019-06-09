@@ -491,6 +491,12 @@ class DeploymentSettingsDaml extends React.Component {
       name: 'uploaded',
     }]
 
+    const data = archives.map(archive => {
+      return Object.assign({}, archive, {
+        id: archive.packageid,
+      })
+    })
+
     return (
       <div className={ classes.denseTable }>
         <div className={ classes.participantOptionsContainer }>
@@ -513,7 +519,7 @@ class DeploymentSettingsDaml extends React.Component {
         </div>
         <div className={ classes.spacing }></div>
         <SimpleTable
-          data={ archives }
+          data={ data }
           fields={ fields }
         />
       </div>
@@ -534,6 +540,12 @@ class DeploymentSettingsDaml extends React.Component {
       title: 'Last Clock Update',
       name: 'lastClockUpdate',
     }]
+
+    const data = timeService.map(entry => {
+      return Object.assign({}, entry, {
+        id: entry.publicKey,
+      })
+    })
 
     return (
       <div className={ classes.denseTable }>
@@ -557,7 +569,7 @@ class DeploymentSettingsDaml extends React.Component {
         </div>
         <div className={ classes.spacing }></div>
         <SimpleTable
-          data={ timeService }
+          data={ data }
           fields={ fields }
         />
       </div>
