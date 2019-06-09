@@ -41,6 +41,7 @@ class DeploymentStatus extends React.Component {
               </Typography>
               <PodTable
                 data={ resources.pods }
+                nodes={ resources.nodes }
               />
             </Paper>
             <Paper className={ classes.paper }>
