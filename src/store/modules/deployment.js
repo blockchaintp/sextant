@@ -269,7 +269,8 @@ const sideEffects = {
   },
   save: (cluster, id, payload) => async (dispatch, getState) => {
     try {
-      const existingValues = selectors.deployment.collection.item(state)
+      const deploymentForms = selectors.config.forms.deployment(getState())
+      const existingValues = selectors.deployment.collection.item(getState())
 
       const {
         deployment_type,
@@ -286,10 +287,6 @@ const sideEffects = {
         name,
         desired_state: payload,
       }
-
-      console.log('--------------------------------------------')
-      console.dir(deploymentUpdate)
-      return
 
       const task = await api.loaderSideEffect({
         dispatch,
