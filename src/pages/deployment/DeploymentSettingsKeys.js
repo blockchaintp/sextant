@@ -36,114 +36,6 @@ const styles = theme => ({
 
 class DeploymentSettingsKeys extends React.Component {
 
-  state = {
-    addWindowOpen: false,
-    addWindowKey: '',
-  }
-
-  setFormOpen(value) {
-    this.setState({
-      addWindowOpen: value,
-      addWindowKey: '',
-    })
-  }
-
-  submitAddForm() {
-    const {
-      cluster,
-      id,
-      createRemoteKey,
-    } = this.props
-    createRemoteKey({
-      cluster,
-      id,
-      key: this.state.addWindowKey,
-    })
-    this.setFormOpen(false)
-  }
-
-  getAddRemoteKeyDialog() {
-    const {
-      classes,
-    } = this.props
-    return (
-      <Dialog
-        open={ this.state.addWindowOpen }
-        onClose={ () => this.setFormOpen(false) }
-        fullWidth
-        maxWidth="sm"
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Add Remote Key</DialogTitle>
-        <DialogContent>
-          <div className={ classes.formTextContainer }>
-            <TextField
-              id="remote-key-add"
-              label="Remote Key"
-              style={{ margin: 8 }}
-              placeholder="Paste the remote key here"
-              helperText="You need to get the remote key from the cluster admin"
-              fullWidth
-              margin="normal"
-              value={ this.state.addWindowKey }
-              onChange={ (e) => this.setState({
-                addWindowKey: e.target.value,
-              })}
-            />
-          </div>
-          
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={ () => this.setFormOpen(false) }>
-            Cancel
-          </Button>
-          <Button onClick={ () => this.submitAddForm() } variant="contained" color="secondary" autoFocus>
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-    )
-  }
-
-  getKeyTable({
-    title,
-    keys,
-    getActions,
-  }) {
-
-    const fields =[{
-      title: 'Key',
-      name: 'id',
-    }]
-
-    return (
-      <div>
-        <SimpleTableHeader
-          title={ title }
-          getActions={ getActions }
-        />
-        <SimpleTable
-          data={ keys }
-          fields={ fields }
-        />
-      </div>
-    )
-  }
-
-  getAddRemoteKeyButton() {
-    return (
-      <Button
-        variant='contained'
-        color='secondary'
-        onClick={ () => this.setFormOpen(true) }
-      >
-        Add
-        <AddIcon />
-      </Button>
-    )
-  }
-
   render() {
     const {
       classes,
@@ -157,37 +49,10 @@ class DeploymentSettingsKeys extends React.Component {
         <Grid container spacing={24}>
           <Grid item xs={ 4 }>
             <Paper className={ classes.paper }>
-              {
-                this.getKeyTable({
-                  title: 'Local Validator Keys',
-                  keys: localValidatorKeys,
-                })
-              }
-            </Paper>
-          </Grid>
-          <Grid item xs={ 4 }>
-            <Paper className={ classes.paper }>
-              {
-                this.getKeyTable({
-                  title: 'Local RPC Keys',
-                  keys: localDamlRPCKeys,
-                })
-              }
-            </Paper>
-          </Grid>
-          <Grid item xs={ 4 }>
-            <Paper className={ classes.paper }>
-              {
-                this.getKeyTable({
-                  title: 'Enrolled Validator Keys',
-                  keys: remoteKeys,
-                  getActions: () => this.getAddRemoteKeyButton()
-                })
-              }
+              Keys
             </Paper>
           </Grid>
         </Grid>
-        { this.getAddRemoteKeyDialog() }
       </div>
     )
   }

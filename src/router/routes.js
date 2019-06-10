@@ -177,18 +177,62 @@ const routes = [
   },
   {
     name: 'deployment_settings',
-    path: '/clusters/:cluster/deployment/:id/settings/:page',
+    path: '/clusters/:cluster/deployment/:id/settings',
     authorize: authHandlers.user,
-    trigger: {
-      activate: (store, params) => {
-        store.dispatch(networkActions.startLoading('deployment.get'))
-        store.dispatch(deploymentActions.get(params.cluster, params.id))
-        store.dispatch(deploymentSettingsActions.loadDamlData({
-          cluster: params.cluster,
-          id: params.id
-        }))
+    children: [{
+      name: 'deployment_settings_keys',
+      path: '/keys',
+      trigger: {
+        activate: (store, params) => {
+
+          console.log('--------------------------------------------')
+          console.log('activate keys')
+          //store.dispatch(networkActions.startLoading('deployment.get'))
+          //store.dispatch(deploymentActions.get(params.cluster, params.id))
+  
+          //console.log('--------------------------------------------')
+          //console.dir(params)
+  
+          /*
+          store.dispatch(deploymentSettingsActions.loadDamlData({
+            cluster: params.cluster,
+            id: params.id
+          }))
+          */
+        },
+        deactivate: (store, params) => {
+          console.log('--------------------------------------------')
+          console.log('deactivate keys')
+        }
       },
-    },
+    }, {
+      name: 'deployment_settings_daml',
+      path: '/daml',
+      trigger: {
+        activate: (store, params) => {
+
+          console.log('--------------------------------------------')
+          console.log('activate daml')
+          //store.dispatch(networkActions.startLoading('deployment.get'))
+          //store.dispatch(deploymentActions.get(params.cluster, params.id))
+  
+          //console.log('--------------------------------------------')
+          //console.dir(params)
+  
+          /*
+          store.dispatch(deploymentSettingsActions.loadDamlData({
+            cluster: params.cluster,
+            id: params.id
+          }))
+          */
+        },
+        deactivate: (store, params) => {
+          console.log('--------------------------------------------')
+          console.log('deactivate daml')
+        }
+      },
+    }]
+    
   },
 ]
 

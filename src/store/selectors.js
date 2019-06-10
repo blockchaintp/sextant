@@ -118,11 +118,11 @@ const DEPLOYMENT_NETWORK_NAMES = networkProps('deployment', [
 const deploymentSettingsStore = state => state.deploymentSettings
 
 const DEPLOYMENT_SETTINGS_NETWORK_NAMES = networkProps('deploymentSettings', [
-  'listLocalValidatorKeys',
-  'listLocalDamlRPCKeys',
-  'listRemoteKeys',
-  'listDamlParticipants',
-  'createRemoteKey',
+  'listKeyManagerKeys',
+  'listEnrolledKeys',
+  'addEnrolledKey',
+  //'listDamlParticipants',
+  //'createRemoteKey',
 ])
 
 const configStore = state => state.config
@@ -306,28 +306,15 @@ const selectors = {
     store: deploymentSettingsStore,
     errors: props(networkErrors, DEPLOYMENT_SETTINGS_NETWORK_NAMES),
     loading: props(networkLoading, DEPLOYMENT_SETTINGS_NETWORK_NAMES),
-    localValidatorKeyCollection: entity({
-      baseSelector: prop(deploymentSettingsStore, 'localValidatorKeys'),
-      entityName: 'key',
-    }),
-    localDamlRPCKeyCollection: entity({
-      baseSelector: prop(deploymentSettingsStore, 'localDamlRPCKeys'),
-      entityName: 'key',
-    }),
-    remoteKeyCollection: entity({
-      baseSelector: prop(deploymentSettingsStore, 'remoteKeys'),
-      entityName: 'key',
-    }),
-    damlParticipantCollection: entity({
-      baseSelector: prop(deploymentSettingsStore, 'damlParticipants'),
-      entityName: 'participant',
-    }),
     ...props(deploymentSettingsStore, [
+      'keyManagerKeys',
+      'enrolledKeys',
+      'damlParticipants',
+      'archives',
+      'timeService',
       'selectedParties',
       'tokenDialogOpen',
       'tokenValue',
-      'archives',
-      'timeService',
     ]),
   },
 

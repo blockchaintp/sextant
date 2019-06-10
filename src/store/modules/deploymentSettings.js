@@ -8,14 +8,10 @@ import snackbarActions from './snackbar'
 
 const prefix = 'deploymentSettings'
 
-const key = new schema.Entity('key')
-const participant = new schema.Entity('participant')
-
 const initialState = {
-  localValidatorKeys: normalize([], [key]),
-  localDamlRPCKeys: normalize([], [key]),
-  remoteKeys: normalize([], [key]),
-  damlParticipants: normalize([], [participant]),
+  keyManagerKeys: [],
+  enrolledKeys: [],
+  damlParticipants: [],
   archives: [{
     packageid: '3ab37fe8d_some.daml.package',
     size: '3123987',
@@ -32,29 +28,14 @@ const initialState = {
 }
 
 const reducers = {
-  setLocalValidatorKeys: (state, action) => {
-    state.localValidatorKeys = normalize(action.payload, [key])
+  setKeyManagerKeys: (state, action) => {
+    state.keyManagerKeys = action.payload
   },
-  setLocalDamlRPCKeys: (state, action) => {
-    state.localDamlRPCKeys = normalize(action.payload, [key])
+  setEnrolledKeys: (state, action) => {
+    state.enrolledKeys = action.payload
   },
   setDamlParticipants: (state, action) => {
-    state.damlParticipants = normalize(action.payload, [participant])
-  },
-  setRemoteKeys: (state, action) => {
-    state.remoteKeys = normalize(action.payload, [key])
-  },
-  setDamlData: (state, action) => {
-    const {
-      localValidatorKeys,
-      localDamlRPCKeys,
-      damlParticipants,
-      remoteKeys,
-    } = action.payload
-    state.localValidatorKeys = normalize(localValidatorKeys, [key])
-    state.localDamlRPCKeys = normalize(localDamlRPCKeys, [key])
-    state.damlParticipants = normalize(damlParticipants, [participant])
-    state.remoteKeys = normalize(remoteKeys, [key])
+    state.damlParticipants = action.payload
   },
   setSelectedParty: (state, action) => {
     const {
@@ -79,21 +60,18 @@ const reducers = {
 
 const loaders = {
 
-  listLocalValidatorKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/localValidatorKeys`))
+  listKeyManagerKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/keyManagerKeys`))
     .then(api.process),
 
-  listLocalDamlRPCKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/localDamlRPCKeys`))
+  listEnrolledKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/enrolledKeys`))
     .then(api.process),
 
-  listRemoteKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/remoteKeys`))
-    .then(api.process),
-
-  listDamlParticipants: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlParticipants`))
-    .then(api.process),
-
-  createRemoteKey: (cluster, id, key) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/remoteKeys`), {
-    key,
+  addEnrolledKey: (cluster, id, publicKey) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/enrolledKeys`), {
+    publicKey,
   })
+    .then(api.process),
+/*
+  listDamlParticipants: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlParticipants`))
     .then(api.process),
 
   registerParticipant: (cluster, id, payload) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/registerParticipant`), payload)
@@ -101,46 +79,65 @@ const loaders = {
 
   rotateLocalDamlRPCKey: (cluster, id, payload) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/rotateLocalDamlRPCKey`), payload)
     .then(api.process),
-
+*/
 }
 
 const sideEffects = {
 
-  listLocalValidatorKeys: ({
+  listKeyManagerKeys: ({
     cluster,
     id,
   }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listLocalValidatorKeys(cluster, id),
+    loader: () => loaders.listKeyManagerKeys(cluster, id),
     prefix,
-    name: 'listLocalValidatorKeys',
-    dataAction: actions.setLocalValidatorKeys,
+    name: 'listKeyManagerKeys',
+    dataAction: actions.setKeyManagerKeys,
     snackbarError: true,
   }),
 
-  listLocalDamlRPCKeys: ({
+  listEnrolledKeys: ({
     cluster,
     id,
   }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listLocalDamlRPCKeys(cluster, id),
+    loader: () => loaders.listEnrolledKeys(cluster, id),
     prefix,
-    name: 'listLocalDamlRPCKeys',
-    dataAction: actions.setLocalDamlRPCKeys,
+    name: 'listEnrolledKeys',
+    dataAction: actions.setEnrolledKeys,
     snackbarError: true,
   }),
 
-  listRemoteKeys: ({
+  addEnrolledKey: ({
     cluster,
     id,
-  }) => (dispatch, getState) => api.loaderSideEffect({
-    dispatch,
-    loader: () => loaders.listRemoteKeys(cluster, id),
-    prefix,
-    name: 'listRemoteKeys',
-    dataAction: actions.setRemoteKeys,
-    snackbarError: true,
-  }),
+    publicKey,
+  }) => async (dispatch, getState) => {
+
+    if(!publicKey) {
+      dispatch(snackbarActions.setError(`please provide a public key`))
+      return
+    }
+
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.addEnrolledKey(cluster, id, publicKey),
+        prefix,
+        name: 'addEnrolledKey',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setSuccess(`request succeeded`))
+      dispatch(actions.listEnrolledKeys({
+        cluster,
+        id,
+      }))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error enrolling key: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+/*
 
   listDamlParticipants: ({
     cluster,
@@ -154,58 +151,6 @@ const sideEffects = {
     snackbarError: true,
   }),
 
-  loadDamlData: ({
-    cluster,
-    id,
-  }) => async (dispatch, getState) => {
-
-    try {
-      const localValidatorKeys = await loaders.listLocalValidatorKeys(cluster, id)
-      const localDamlRPCKeys = await loaders.listLocalDamlRPCKeys(cluster, id)
-      const remoteKeys = await loaders.listRemoteKeys(cluster, id)
-      const damlParticipants = await loaders.listDamlParticipants(cluster, id)
-
-      dispatch(actions.setDamlData({
-        localValidatorKeys,
-        localDamlRPCKeys,
-        remoteKeys,
-        damlParticipants,
-      }))
-    } catch(e) {
-      dispatch(snackbarActions.setError(`error loading daml data: ${e.toString()}`))
-      console.error(e)
-    }
-  },
-
-  createRemoteKey: ({
-    cluster,
-    id,
-    key
-  }) => async (dispatch, getState) => {
-
-    if(!key) {
-      dispatch(snackbarActions.setError(`please provide a remote key`))
-      return
-    }
-
-    try {
-      await api.loaderSideEffect({
-        dispatch,
-        loader: () => loaders.createRemoteKey(cluster, id, key),
-        prefix,
-        name: 'createRemoteKey',
-        returnError: true,
-      })
-      dispatch(snackbarActions.setSuccess(`remote key created`))
-      dispatch(actions.listRemoteKeys({
-        cluster,
-        id,
-      }))
-    } catch(e) {
-      dispatch(snackbarActions.setError(`error creating remote key: ${e.toString()}`))
-      console.error(e)
-    }
-  },
 
   registerParticipant: ({
     cluster,
@@ -256,6 +201,7 @@ const sideEffects = {
       console.error(e)
     }
   },
+*/
 }
 
 

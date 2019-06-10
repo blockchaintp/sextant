@@ -27,7 +27,10 @@ import ClusterStatus from 'containers/cluster/ClusterStatus'
 import DeploymentTable from 'containers/deployment/DeploymentTable'
 import DeploymentForm from 'containers/deployment/DeploymentForm'
 import DeploymentStatus from 'containers/deployment/DeploymentStatus'
-import DeploymentSettings from 'containers/deployment/DeploymentSettings'
+
+import DeploymentSettingsTabs from 'containers/deployment/DeploymentSettingsTabs'
+import DeploymentSettingsKeys from 'containers/deployment/DeploymentSettingsKeys'
+import DeploymentSettingsDaml from 'containers/deployment/DeploymentSettingsDaml'
 
 @connect(
   state => {
@@ -92,8 +95,15 @@ class Router extends React.Component {
           <Route segment="deployment_status" exact>
             <DeploymentStatus />
           </Route>
-          <Route segment="deployment_settings" exact>
-            <DeploymentSettings />
+          <Route segment="deployment_settings">
+            <DeploymentSettingsTabs>
+              <Route segment="deployment_settings_keys" exact>
+                <DeploymentSettingsKeys />
+              </Route>
+              <Route segment="deployment_settings_daml" exact>
+                <DeploymentSettingsDaml />
+              </Route>
+            </DeploymentSettingsTabs>
           </Route>
         </LayoutMain>
       </RouteContext.Provider>
