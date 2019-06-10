@@ -59,10 +59,11 @@ class MenuButton extends React.Component {
     }
   }
 
-  getMenu() {
-    const items = this.state.items || this.props.items
-
-    return items.map((item, i) => {
+  getMenu({
+    open = false,
+    items,
+  }) {
+    const menuItems = items.map((item, i) => {
       if(item === '-') {
         return (
           <Divider key={ i } />
@@ -87,6 +88,29 @@ class MenuButton extends React.Component {
         </MenuItem>
       )
     })
+
+    const { 
+      anchorEl,
+    } = this.state
+
+    return (
+      <Menu
+        anchorEl={ anchorEl }
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={ open }
+        onClose={ this.handleClose }
+      >
+        <MenuItem key="placeholder" style={{display: "none"}} />
+        { menuItems }
+      </Menu>
+    )
   }
 
   render() {
@@ -109,8 +133,6 @@ class MenuButton extends React.Component {
     return (
       <div className={ classes.root }>
         <Button
-          aria-owns={ open ? 'menubutton-button' : null }
-          aria-haspopup="true"
           onClick={ this.handleMenu }
           disabled={ disabled }
           {...buttonProps}
@@ -120,23 +142,23 @@ class MenuButton extends React.Component {
             <ButtonIcon />
           ) }
         </Button>
-        <Menu
-          id="menubutton-button"
-          anchorEl={ anchorEl }
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={ open }
-          onClose={ this.handleClose }
-        >
-          <MenuItem key="placeholder" style={{display: "none"}} />
-          { this.getMenu() }
-        </Menu>
+
+        {
+          this.getMenu({
+            open: open && !this.state.items,
+            items: this.props.items,
+          })
+        }
+
+        {
+          this.state.items && open && (
+            this.getMenu({
+              open: true,
+              items: this.state.items,
+            })
+          )
+        }
+        
       </div>
     )
   }
