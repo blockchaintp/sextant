@@ -25,6 +25,11 @@ const initialState = {
 
   visibleParticipant: null,
   selectedParties: {},
+
+  addPartyWindowOpen: false,
+  addPartyName: '',
+  addPartyPublicKey: null,
+
   tokenDialogOpen: false,
   tokenValue: null,
 
@@ -62,6 +67,15 @@ const reducers = {
   },
   setVisibleParticipant: (state, action) => {
     state.visibleParticipant = action.payload
+  },
+  setAddPartyWindowOpen: (state, action) => {
+    state.addPartyWindowOpen = action.payload
+  },
+  setAddPartyName: (state, action) => {
+    state.addPartyName = action.payload
+  },
+  setAddPartyPubicKey: (state, action) => {
+    state.addPartyPublicKey = action.payload
   },
   setTokenDialogOpen: (state, action) => {
     state.tokenDialogOpen = action.payload.value
@@ -125,6 +139,30 @@ const loaders = {
     id,
     publicKey,
   }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/rotateKeys`), {publicKey})
+    .then(api.process),
+
+  addParty: ({
+    cluster,
+    id,
+    publicKey,
+    partyName,
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/addParty`), {publicKey, partyName})
+    .then(api.process),
+
+  removeParties: ({
+    cluster,
+    id,
+    publicKey,
+    partyNames,
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/removeParties`), {publicKey, partyNames})
+    .then(api.process),
+
+  generatePartyToken: ({
+    cluster,
+    id,
+    publicKey,
+    partyNames,
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/generatePartyToken`), {publicKey, partyNames})
     .then(api.process),
 
 }
@@ -276,6 +314,89 @@ const sideEffects = {
       dispatch(snackbarActions.setSuccess(`daml rpc key rotated`))
     } catch(e) {
       dispatch(snackbarActions.setError(`error rotating participant key: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+
+  addParty: ({
+    cluster,
+    id,
+    publicKey,
+    partyName,
+  }) => async (dispatch, getState) => {
+
+    if(!partyName) {
+      dispatch(snackbarActions.setError(`please enter a party name`))
+      return
+    }
+
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.addParty({cluster, id, publicKey, partyName}),
+        prefix,
+        name: 'addParty',
+        returnError: true,
+      })
+      dispatch(actions.loadParties({
+        cluster,
+        id,
+      }))
+      dispatch(snackbarActions.setSuccess(`party added`))
+      dispatch(actions.setAddPartyWindowOpen(false))
+      dispatch(actions.setAddPartyName(''))
+      dispatch(actions.setAddPartyPubicKey(null))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error adding party: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+
+  removeParties: ({
+    cluster,
+    id,
+    publicKey,
+    partyNames,
+  }) => async (dispatch, getState) => {
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.removeParties({cluster, id, publicKey, partyNames}),
+        prefix,
+        name: 'removeParties',
+        returnError: true,
+      })
+      dispatch(actions.loadParties({
+        cluster,
+        id,
+      }))
+      dispatch(snackbarActions.setSuccess(`parties removed`))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error removing parties: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+
+  generatePartyToken: ({
+    cluster,
+    id,
+    publicKey,
+    partyNames,
+  }) => async (dispatch, getState) => {
+    try {
+      const token = await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.generatePartyToken({cluster, id, publicKey, partyNames}),
+        prefix,
+        name: 'generatePartyToken',
+        returnError: true,
+      })
+
+      console.log('--------------------------------------------')
+      console.log('--------------------------------------------')
+      console.dir(token)
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error removing parties: ${e.toString()}`))
       console.error(e)
     }
   },

@@ -8,6 +8,11 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import TextField from '@material-ui/core/TextField'
 
 import SimpleTable from 'components/table/SimpleTable'
 
@@ -71,11 +76,97 @@ const styles = theme => ({
 
 class DeploymentSettingsDamlParties extends React.Component {
 
+  state = {
+    addWindowOpen: false,
+    addWindowName: '',
+    addWindowPublicKey: null,
+  }
+
   componentDidMount() {
     const {
       setVisibleParticipant,
+      setAddPartyWindowOpen,
+      setAddPartyName,
+      setAddPartyPubicKey,
+      resetSelectedParties,
     } = this.props
     setVisibleParticipant(null)
+    setAddPartyWindowOpen(false)
+    setAddPartyName('')
+    setAddPartyPubicKey(null)
+    resetSelectedParties()
+  }
+
+  setAddFormOpen(value, publicKey) {
+    const {
+      setAddPartyWindowOpen,
+      setAddPartyName,
+      setAddPartyPubicKey,
+    } = this.props
+
+    setAddPartyWindowOpen(value)
+    setAddPartyName('')
+    setAddPartyPubicKey(value ? publicKey : null)
+  }
+
+  submitAddForm() {
+    const {
+      cluster,
+      id,
+      addParty,
+      addPartyPublicKey,
+      addPartyName,
+    } = this.props
+    addParty({
+      cluster,
+      id,
+      publicKey: addPartyPublicKey,
+      partyName: addPartyName,
+    })
+  }
+
+  getAddPartyDialog() {
+    const {
+      addPartyWindowOpen,
+      addPartyName,
+      setAddPartyName
+    } = this.props
+    return (
+      <Dialog
+        open={ addPartyWindowOpen }
+        onClose={ () => this.setFormOpen(false) }
+        fullWidth
+        maxWidth="sm"
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Add Party</DialogTitle>
+        <DialogContent>
+          <div>
+            <TextField
+              id="party-add"
+              label="Party Name"
+              style={{ margin: 8 }}
+              placeholder="Type the name of the party here"
+              helperText="Enter the name of the party you want to add to this participant"
+              fullWidth
+              margin="normal"
+              value={ addPartyName }
+              onChange={ (e) => setAddPartyName(e.target.value) }
+            />
+          </div>
+          
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ () => this.setAddFormOpen(false) }>
+            Cancel
+          </Button>
+          <Button onClick={ () => this.submitAddForm() } variant="contained" color="secondary" autoFocus>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
   }
 
   setVisibleParticipant(publicKey) {
@@ -168,42 +259,13 @@ class DeploymentSettingsDamlParties extends React.Component {
       setSelectedParty,
     } = this.props
 
+    const publicKey = entry.keyManager.publicKey
+
     const {
       participant: {
         parties = [],
       },
     } = entry
-
-    const fields =[{
-      title: 'Name',
-      name: 'name',
-    }]
-
-    const data = parties.map((party, j) => {
-      return {
-        id: j,
-        name: (
-          <div>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  className={ classes.checkbox }
-                  checked={ selectedParties[party.name] ? true : false }
-                  onChange={ (event) => {
-                    setSelectedParty({
-                      party: party.name,
-                      value: event.target.checked,
-                    })
-                  }}
-                  value={ party.name }
-                />
-              }
-              label={ party.name }
-            />
-          </div> 
-        ),
-      }
-    })
 
     let checkedCount = 0
 
@@ -272,7 +334,7 @@ class DeploymentSettingsDamlParties extends React.Component {
               className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
               size="small"
               variant="outlined"
-              onClick={ () => this.setFormOpen(true, participant.id) }
+              onClick={ () => this.setAddFormOpen(true, publicKey) }
             >
               Add Party <AddIcon className={ classes.iconSmall } />
             </Button>
@@ -439,6 +501,7 @@ class DeploymentSettingsDamlParties extends React.Component {
               </Paper>
             </Grid>
         </Grid>
+        { this.getAddPartyDialog() }
       </div>
     )
   }

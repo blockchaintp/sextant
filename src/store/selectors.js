@@ -318,6 +318,9 @@ const selectors = {
       'tokenValue',
       'addEnrolledKeyDialogOpen',
       'addEnrolledKeyValue',
+      'addPartyWindowOpen',
+      'addPartyName',
+      'addPartyPublicKey',
     ]),
   },
 

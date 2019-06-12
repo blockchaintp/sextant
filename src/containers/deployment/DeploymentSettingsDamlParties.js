@@ -24,6 +24,9 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
       damlParticipants: selectors.deploymentSettings.damlParticipants(state),
       visibleParticipant: selectors.deploymentSettings.visibleParticipant(state),
       selectedParties: selectors.deploymentSettings.selectedParties(state),
+      addPartyWindowOpen: selectors.deploymentSettings.addPartyWindowOpen(state),
+      addPartyName: selectors.deploymentSettings.addPartyName(state),
+      addPartyPublicKey: selectors.deploymentSettings.addPartyPublicKey(state),
     }
   },
   {
@@ -33,6 +36,10 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
     setSelectedParty: deploymentSettingsActions.setSelectedParty,
     setSelectedParties: deploymentSettingsActions.setSelectedParties,
     resetSelectedParties: deploymentSettingsActions.resetSelectedParties,
+    addParty: deploymentSettingsActions.addParty,
+    setAddPartyWindowOpen: deploymentSettingsActions.setAddPartyWindowOpen,
+    setAddPartyName: deploymentSettingsActions.setAddPartyName,
+    setAddPartyPubicKey: deploymentSettingsActions.setAddPartyPubicKey,
   },
 )
 class DeploymentSettingsDamlPartiesContainer extends React.Component {
