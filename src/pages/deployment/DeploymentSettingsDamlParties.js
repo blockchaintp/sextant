@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
 
 import SimpleTable from 'components/table/SimpleTable'
 
@@ -133,6 +134,9 @@ class DeploymentSettingsDamlParties extends React.Component {
                     { this.getLocalParticipantActions(entry) }
                   </Grid>
                 </Grid>
+                <div className={ classes.spacing }></div>
+                <Divider />
+                <div className={ classes.spacing }></div>
               </div>
             )
           })
