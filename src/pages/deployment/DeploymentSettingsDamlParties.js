@@ -31,7 +31,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
   },
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 4,
     margin: theme.spacing.unit * 2,
   },
   denseTable: {
@@ -44,6 +44,9 @@ const styles = theme => ({
   },
   spacing: {
     marginTop: theme.spacing.unit * 2,
+  },
+  doubleSpacing: {
+    marginTop: theme.spacing.unit * 4,
   },
   smallButton: {
     fontSize: ['9px', '!important'],
@@ -538,11 +541,13 @@ class DeploymentSettingsDamlParties extends React.Component {
                 <Typography className={ classes.smallText }>
                   DAML ID: { participant.damlId }
                 </Typography>
-                <SimpleTable
-                  hideHeader
-                  data={ data }
-                  fields={ fields }
-                />
+                <div>
+                  <SimpleTable
+                    hideHeader
+                    data={ data }
+                    fields={ fields }
+                  />
+                </div>
               </div>
             )
           })
@@ -561,8 +566,8 @@ class DeploymentSettingsDamlParties extends React.Component {
         <Grid container spacing={24}>
           <Grid item xs={ 6 }>
             <Paper className={ classes.paper }>
-              <Typography variant="subtitle1">
-                <strong>Local Participants</strong>
+              <Typography variant="h6">
+                Local Participants
               </Typography>
               <div className={ classes.spacing }></div>
               {
@@ -572,8 +577,8 @@ class DeploymentSettingsDamlParties extends React.Component {
           </Grid>
           <Grid item xs={ 6 }>
               <Paper className={ classes.paper }>
-                <Typography variant="subtitle1">
-                  <strong>All Parties By Participant</strong>
+                <Typography variant="h6">
+                  All Parties By Participant
                 </Typography>
                 {
                   this.getPartiesByParticipant()

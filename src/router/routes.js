@@ -221,12 +221,13 @@ const routes = [
       path: '/damlArchives',
       trigger: {
         activate: (store, params) => {
-          console.log('--------------------------------------------')
-          console.log('activate damlArchives')
+          store.dispatch(deploymentSettingsActions.listDamlArchives({
+            cluster: params.cluster,
+            id: params.id
+          }))
         },
         deactivate: (store, params) => {
-          console.log('--------------------------------------------')
-          console.log('deactivate damlArchives')
+          
         }
       },
     }, {

@@ -12,16 +12,8 @@ const initialState = {
   keyManagerKeys: [],
   enrolledKeys: [],
   damlParticipants: [],
-  archives: [{
-    packageid: '3ab37fe8d_some.daml.package',
-    size: '3123987',
-    uploadedBy: 'participantA_Alice',
-    uploaded: new Date().getTime() - (1000 * 60 * 60 * 24 * 5),
-  }],
-  timeService: [{
-    publicKey: 'b23c0d330e89c3aa0700e0839f40033c',
-    lastClockUpdate: '3127383',
-  }],
+  damlArchives: [],
+  damlTimeServiceInfo: [],
 
   visibleParticipant: null,
   selectedParties: {},
@@ -51,6 +43,12 @@ const reducers = {
   },
   setDamlParticipants: (state, action) => {
     state.damlParticipants = action.payload
+  },
+  setDamlArchives: (state, action) => {
+    state.damlArchives = action.payload
+  },
+  setDamlTimeServiceInfo: (state, action) => {
+    state.damlTimeServiceInfo = action.payload
   },
   setSelectedParty: (state, action) => {
     const {
@@ -125,6 +123,18 @@ const loaders = {
     cluster,
     id,
   }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlParticipants`))
+    .then(api.process),
+
+  listDamlArchives: ({
+    cluster,
+    id,
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlArchives`))
+    .then(api.process),
+
+  listDamlTimeServiceInfo: ({
+    cluster,
+    id,
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlTimeServiceInfo`))
     .then(api.process),
 
   registerParticipant: ({
@@ -266,6 +276,30 @@ const sideEffects = {
     prefix,
     name: 'listDamlParticipants',
     dataAction: actions.setDamlParticipants,
+    snackbarError: true,
+  }),
+
+  listDamlArchives: ({
+    cluster,
+    id,
+  }) => (dispatch, getState) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listDamlArchives({cluster, id}),
+    prefix,
+    name: 'listDamlArchives',
+    dataAction: actions.setDamlArchives,
+    snackbarError: true,
+  }),
+
+  listDamlTimeServiceInfo: ({
+    cluster,
+    id,
+  }) => (dispatch, getState) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listDamlTimeServiecInfo({cluster, id}),
+    prefix,
+    name: 'listDamlTimeServiecInfo',
+    dataAction: actions.setDamlTimeServiceInfo,
     snackbarError: true,
   }),
 

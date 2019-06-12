@@ -10,8 +10,17 @@ import DeploymentSettingsDamlArchives from 'pages/deployment/DeploymentSettingsD
 @connect(
   state => {
 
+    const routeParams = selectors.router.params(state)
+
+    const {
+      cluster,
+      id,
+    } = routeParams
+
     return {
-      
+      cluster,
+      id,
+      damlArchives: selectors.deploymentSettings.damlArchives(state),
     }
   },
   {

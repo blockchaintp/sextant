@@ -16,6 +16,7 @@ import ClipboardIcon from '@material-ui/icons/FileCopy'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import UpArrowIcon from '@material-ui/icons/KeyboardArrowUp'
 import DownArrowIcon from '@material-ui/icons/KeyboardArrowDown'
+import UploadIcon from '@material-ui/icons/CloudUpload'
 
 const icons = {
   home: HomeIcon,
@@ -36,6 +37,7 @@ const icons = {
   refresh: RefreshIcon,
   upArrow: UpArrowIcon,
   downArrow: DownArrowIcon,
+  upload: UploadIcon,
 }
 
 const settings = {
