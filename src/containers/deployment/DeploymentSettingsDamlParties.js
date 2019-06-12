@@ -11,7 +11,8 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
   state => {
 
     return {
-      
+      keyManagerKeys: selectors.deploymentSettings.keyManagerKeys(state),
+      damlParticipants: selectors.deploymentSettings.damlParticipants(state),
     }
   },
   {
