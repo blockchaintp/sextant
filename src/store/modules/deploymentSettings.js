@@ -22,6 +22,8 @@ const initialState = {
     publicKey: 'b23c0d330e89c3aa0700e0839f40033c',
     lastClockUpdate: '3127383',
   }],
+
+  visibleParticipant: null,
   selectedParties: {},
   tokenDialogOpen: false,
   tokenValue: null,
@@ -47,16 +49,19 @@ const reducers = {
   },
   setSelectedParty: (state, action) => {
     const {
-      participant,
       party,
       value,
     } = action.payload
-    const parties = state.selectedParties[participant] || {}
-    parties[party] = value
-    state.selectedParties[participant] = parties
+    state.selectedParties[party] = value
+  },
+  setSelectedParties: (state, action) => {
+    state.selectedParties = action.payload
   },
   resetSelectedParties: (state, action) => {
     state.selectedParties = {}
+  },
+  setVisibleParticipant: (state, action) => {
+    state.visibleParticipant = action.payload
   },
   setTokenDialogOpen: (state, action) => {
     state.tokenDialogOpen = action.payload.value

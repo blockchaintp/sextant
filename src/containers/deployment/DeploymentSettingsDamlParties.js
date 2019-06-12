@@ -22,11 +22,17 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
       id,
       keyManagerKeys: selectors.deploymentSettings.keyManagerKeys(state),
       damlParticipants: selectors.deploymentSettings.damlParticipants(state),
+      visibleParticipant: selectors.deploymentSettings.visibleParticipant(state),
+      selectedParties: selectors.deploymentSettings.selectedParties(state),
     }
   },
   {
     registerParticipant: deploymentSettingsActions.registerParticipant,
     rotateParticipantKey: deploymentSettingsActions.rotateParticipantKey,
+    setVisibleParticipant: deploymentSettingsActions.setVisibleParticipant,
+    setSelectedParty: deploymentSettingsActions.setSelectedParty,
+    setSelectedParties: deploymentSettingsActions.setSelectedParties,
+    resetSelectedParties: deploymentSettingsActions.resetSelectedParties,
   },
 )
 class DeploymentSettingsDamlPartiesContainer extends React.Component {

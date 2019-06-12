@@ -6,15 +6,19 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
 
 import SimpleTable from 'components/table/SimpleTable'
 
 import settings from 'settings'
 
 const AddIcon = settings.icons.add
+const DeleteIcon = settings.icons.delete
 const RefreshIcon = settings.icons.refresh
 const UpArrowIcon = settings.icons.upArrow
 const DownArrowIcon = settings.icons.downArrow
+const KeyIcon = settings.icons.key
 
 const styles = theme => ({
   root: {
@@ -51,21 +55,33 @@ const styles = theme => ({
   buttonMargin: {
     marginRight: theme.spacing.unit,
   },
+  partyContainer: {
+    marginTop: theme.spacing.unit * 2, 
+    padding: theme.spacing.unit * 2,
+    border: '1px dashed #e5e5e5'
+  }
 })
 
 class DeploymentSettingsDamlParties extends React.Component {
 
-  state = {
-    visibleParticipant: null,
+  componentDidMount() {
+    const {
+      setVisibleParticipant,
+    } = this.props
+    setVisibleParticipant(null)
   }
 
   setVisibleParticipant(publicKey) {
-    const newValue = this.state.visibleParticipant == publicKey ?
+    const {
+      resetSelectedParties,
+      visibleParticipant,
+      setVisibleParticipant,
+    } = this.props
+    const newValue = visibleParticipant == publicKey ?
       null :
       publicKey
-    this.setState({
-      visibleParticipant: newValue,
-    })
+    setVisibleParticipant(newValue)
+    resetSelectedParties()
   }
 
   getLocalParticipantActions(entry) {
@@ -75,10 +91,11 @@ class DeploymentSettingsDamlParties extends React.Component {
       id,
       registerParticipant,
       rotateParticipantKey,
+      visibleParticipant,
     } = this.props
 
     const publicKey = entry.keyManager.publicKey
-    const partiesVisible = publicKey == this.state.visibleParticipant
+    const partiesVisible = publicKey == visibleParticipant
 
     const actionButton = entry.participant ? (
       <Button 
@@ -113,11 +130,7 @@ class DeploymentSettingsDamlParties extends React.Component {
         className={ classes.smallButton + ' ' + classes.buttonMargin }
         size="small"
         variant="outlined"
-        onClick={ () => registerParticipant({
-          cluster,
-          id,
-          publicKey: entry.keyManager.publicKey,
-        }) }
+        onClick={ () => this.setVisibleParticipant(publicKey) }
       >
         {
           partiesVisible ? 'Hide Parties' : 'Show Parties'
@@ -140,10 +153,147 @@ class DeploymentSettingsDamlParties extends React.Component {
     )
   }
 
+  getLocalParties(entry) {
+    const {
+      classes,
+      selectedParties,
+      setSelectedParties,
+      setSelectedParty,
+    } = this.props
+
+    const {
+      participant: {
+        parties = [],
+      },
+    } = entry
+
+    const fields =[{
+      title: 'Name',
+      name: 'name',
+    }]
+
+    const data = parties.map((party, j) => {
+      return {
+        id: j,
+        name: (
+          <div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  className={ classes.checkbox }
+                  checked={ selectedParties[party.name] ? true : false }
+                  onChange={ (event) => {
+                    setSelectedParty({
+                      party: party.name,
+                      value: event.target.checked,
+                    })
+                  }}
+                  value={ party.name }
+                />
+              }
+              label={ party.name }
+            />
+          </div> 
+        ),
+      }
+    })
+
+    let checkedCount = 0
+
+    parties.forEach(party => {
+      if(selectedParties[party.name]) checkedCount++
+    })
+
+    return (
+      <div className={ classes.partyContainer }>
+        <Grid container spacing={0}>
+          <Grid item xs={ 4 }>
+            <div>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    className={ classes.checkbox }
+                    checked={ checkedCount >= parties.length }
+                    onChange={ (event) => {
+                      const isChecked = event.target.checked
+                      if(!isChecked) {
+                        setSelectedParties({})
+                      }
+                      else {
+                        const allChecked = parties.reduce((all, party) => {
+                          all[party.name] = true
+                          return all
+                        }, {})
+                        setSelectedParties(allChecked)
+                      }
+                    }}
+                    value="all"
+                  />
+                }
+                label="All"
+              />
+            </div>
+            {
+              parties.map((party, j) => {
+                return (
+                  <div key={ j }>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          className={ classes.checkbox }
+                          checked={ selectedParties[party.name] ? true : false }
+                          onChange={ (event) => {
+                            setSelectedParty({
+                              party: party.name,
+                              value: event.target.checked,
+                            })
+                          }}
+                          value={ party.name }
+                        />
+                      }
+                      label={ party.name }
+                    />
+                  </div> 
+                )
+              })
+            }
+          </Grid>
+          <Grid item xs={ 8 } className={ classes.alignRight }>
+            <Button 
+              className={ classes.smallButton + ' ' + classes.buttonMargin }
+              size="small"
+              variant="outlined"
+              onClick={ () => this.setFormOpen(true, participant.id) }
+            >
+              Add Party <AddIcon className={ classes.iconSmall } />
+            </Button>
+            <Button 
+              className={ classes.smallButton + ' ' + classes.buttonMargin }
+              size="small"
+              variant="outlined"
+              onClick={ () => {} }
+            >
+              Generate Tokens <KeyIcon className={ classes.iconSmall } />
+            </Button>
+            <Button 
+              className={ classes.smallButton + ' ' + classes.buttonMargin }
+              size="small"
+              variant="outlined"
+              onClick={ () => {} }
+            >
+              Remove <DeleteIcon className={ classes.iconSmall } />
+            </Button>
+          </Grid>
+        </Grid>
+      </div>
+    )
+  }
+
   getLocalParticipants() {
     const {
       classes,
       damlParticipants,
+      visibleParticipant,
       keyManagerKeys,
     } = this.props
 
@@ -165,12 +315,16 @@ class DeploymentSettingsDamlParties extends React.Component {
       <React.Fragment>
         {
           localParticipants.map((entry, i) => {
+
+            const publicKey = entry.keyManager.publicKey
+            const partiesVisible = publicKey == visibleParticipant
+
             return (
               <div key={ i }>
                 <Grid container spacing={24}>
                   <Grid item xs={ 6 }>
                     <Typography variant="subtitle2">
-                      { entry.keyManager.publicKey }
+                      { publicKey }
                     </Typography>
                     <Typography className={ classes.smallText }>
                       DAML ID: { entry.participant ? entry.participant.damlId : 'unregistered' }
@@ -180,6 +334,9 @@ class DeploymentSettingsDamlParties extends React.Component {
                     { this.getLocalParticipantActions(entry) }
                   </Grid>
                 </Grid>
+                {
+                  partiesVisible ? this.getLocalParties(entry) : null
+                }
                 <div className={ classes.spacing }></div>
                 <Divider />
                 <div className={ classes.spacing }></div>

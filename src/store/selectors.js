@@ -312,6 +312,7 @@ const selectors = {
       'damlParticipants',
       'archives',
       'timeService',
+      'visibleParticipant',
       'selectedParties',
       'tokenDialogOpen',
       'tokenValue',
