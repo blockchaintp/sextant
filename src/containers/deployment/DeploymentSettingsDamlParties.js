@@ -10,13 +10,23 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
 @connect(
   state => {
 
+    const routeParams = selectors.router.params(state)
+
+    const {
+      cluster,
+      id,
+    } = routeParams
+
     return {
+      cluster,
+      id,
       keyManagerKeys: selectors.deploymentSettings.keyManagerKeys(state),
       damlParticipants: selectors.deploymentSettings.damlParticipants(state),
     }
   },
   {
-    
+    registerParticipant: deploymentSettingsActions.registerParticipant,
+    rotateParticipantKey: deploymentSettingsActions.rotateParticipantKey,
   },
 )
 class DeploymentSettingsDamlPartiesContainer extends React.Component {

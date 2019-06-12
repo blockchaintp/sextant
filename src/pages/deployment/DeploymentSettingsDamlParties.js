@@ -4,10 +4,14 @@ import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 
 import SimpleTable from 'components/table/SimpleTable'
 
 import settings from 'settings'
+
+const AddIcon = settings.icons.add
+const RefreshIcon = settings.icons.refresh
 
 const styles = theme => ({
   root: {
@@ -28,9 +32,114 @@ const styles = theme => ({
   spacing: {
     marginTop: theme.spacing.unit * 2,
   },
+  smallButton: {
+    fontSize: ['9px', '!important'],
+  },
+  smallText: {
+    fontSize: '0.7em',
+  },
+  alignRight: {
+    textAlign: 'right',
+  },
+  iconSmall: {
+    marginLeft: theme.spacing.unit,
+    fontSize: 20,
+  },
 })
 
 class DeploymentSettingsDamlParties extends React.Component {
+
+  getLocalParticipantActions(entry) {
+    const {
+      classes,
+      cluster,
+      id,
+      registerParticipant,
+      rotateParticipantKey,
+    } = this.props
+
+    const button = entry.participant ? (
+      <Button 
+        className={ classes.smallButton }
+        size="small"
+        variant="outlined"
+        onClick={ () => rotateParticipantKey({
+          cluster,
+          id,
+          publicKey: entry.keyManager.publicKey,
+        }) }
+      >
+        Rotate Keys <RefreshIcon className={ classes.iconSmall } />
+      </Button>
+    ) : (
+      <Button 
+        className={ classes.smallButton }
+        size="small"
+        variant="outlined"
+        onClick={ () => registerParticipant({
+          cluster,
+          id,
+          publicKey: entry.keyManager.publicKey,
+        }) }
+      >
+        Register <AddIcon className={ classes.iconSmall } />
+      </Button>
+    )
+
+    return (
+      <div>
+        { button }
+      </div>
+    )
+  }
+
+  getLocalParticipants() {
+    const {
+      classes,
+      damlParticipants,
+      keyManagerKeys,
+    } = this.props
+
+    const participantMap = damlParticipants.reduce((all, entry) => {
+      all[entry.publicKey] = entry
+      return all
+    }, {})
+
+    const localParticipants = keyManagerKeys
+      .filter(entry => entry.name.indexOf('daml:') == 0)
+      .map(entry => {
+        return {
+          keyManager: entry,
+          participant: participantMap[entry.publicKey]
+        }
+      })
+
+    return (
+      <React.Fragment>
+        {
+          localParticipants.map((entry, i) => {
+            return (
+              <div key={ i }>
+                <Grid container spacing={24}>
+                  <Grid item xs={ 6 }>
+                    <Typography variant="subtitle2">
+                      { entry.keyManager.publicKey }
+                    </Typography>
+                    <Typography className={ classes.smallText }>
+                      DAML ID: { entry.participant ? entry.participant.damlId : 'unregistered' }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={ 6 } className={ classes.alignRight }>
+                    { this.getLocalParticipantActions(entry) }
+                  </Grid>
+                </Grid>
+              </div>
+            )
+          })
+        }
+      </React.Fragment>
+    )
+  }
 
   getPartiesByParticipant() {
     const {
@@ -92,6 +201,10 @@ class DeploymentSettingsDamlParties extends React.Component {
               <Typography variant="subtitle1">
                 <strong>Local Participants</strong>
               </Typography>
+              <div className={ classes.spacing }></div>
+              {
+                this.getLocalParticipants()
+              }
             </Paper>
           </Grid>
           <Grid item xs={ 6 }>

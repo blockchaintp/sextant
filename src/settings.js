@@ -13,6 +13,7 @@ import ViewIcon from '@material-ui/icons/Visibility'
 import KeyIcon from '@material-ui/icons/VpnKey'
 import SettingsIcon from '@material-ui/icons/Settings'
 import ClipboardIcon from '@material-ui/icons/FileCopy'
+import RefreshIcon from '@material-ui/icons/Refresh'
 
 const icons = {
   home: HomeIcon,
@@ -30,6 +31,7 @@ const icons = {
   key: KeyIcon,
   settings: SettingsIcon,
   clipboard: ClipboardIcon,
+  refresh: RefreshIcon,
 }
 
 const settings = {

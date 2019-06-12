@@ -81,24 +81,45 @@ const reducers = {
 
 const loaders = {
 
-  listKeyManagerKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/keyManagerKeys`))
+  listKeyManagerKeys: ({
+    cluster,
+    id,
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/keyManagerKeys`))
     .then(api.process),
 
-  listEnrolledKeys: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/enrolledKeys`))
+  listEnrolledKeys: ({
+    cluster,
+    id,
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/enrolledKeys`))
     .then(api.process),
 
-  addEnrolledKey: (cluster, id, publicKey) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/enrolledKeys`), {
+  addEnrolledKey: ({
+    cluster,
+    id,
+    publicKey,
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/enrolledKeys`), {
     publicKey,
   })
     .then(api.process),
 
-  listDamlParticipants: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlParticipants`))
+  listDamlParticipants: ({
+    cluster,
+    id,
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlParticipants`))
     .then(api.process),
 
-  registerParticipant: (cluster, id, payload) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/registerParticipant`), payload)
+  registerParticipant: ({
+    cluster,
+    id,
+    publicKey,
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/registerParticipant`), {publicKey})
     .then(api.process),
 
-  rotateLocalDamlRPCKey: (cluster, id, payload) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/rotateLocalDamlRPCKey`), payload)
+  rotateParticipantKey: ({
+    cluster,
+    id,
+    publicKey,
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/rotateKeys`), {publicKey})
     .then(api.process),
 
 }
@@ -110,7 +131,7 @@ const sideEffects = {
     id,
   }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listKeyManagerKeys(cluster, id),
+    loader: () => loaders.listKeyManagerKeys({cluster, id}),
     prefix,
     name: 'listKeyManagerKeys',
     dataAction: actions.setKeyManagerKeys,
@@ -122,7 +143,7 @@ const sideEffects = {
     id,
   }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listEnrolledKeys(cluster, id),
+    loader: () => loaders.listEnrolledKeys({cluster, id}),
     prefix,
     name: 'listEnrolledKeys',
     dataAction: actions.setEnrolledKeys,
@@ -145,6 +166,22 @@ const sideEffects = {
     ])
   },
 
+  loadParties: ({
+    cluster,
+    id,
+  }) => async (dispatch, getState) => {
+    await Promise.all([
+      dispatch(actions.listKeyManagerKeys({
+        cluster,
+        id,
+      })),
+      dispatch(actions.listDamlParticipants({
+        cluster,
+        id,
+      }))
+    ])
+  },
+
   addEnrolledKey: ({
     cluster,
     id,
@@ -159,7 +196,7 @@ const sideEffects = {
     try {
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.addEnrolledKey(cluster, id, publicKey),
+        loader: () => loaders.addEnrolledKey({cluster, id, publicKey}),
         prefix,
         name: 'addEnrolledKey',
         returnError: true,
@@ -182,12 +219,61 @@ const sideEffects = {
     id,
   }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listDamlParticipants(cluster, id),
+    loader: () => loaders.listDamlParticipants({cluster, id}),
     prefix,
     name: 'listDamlParticipants',
     dataAction: actions.setDamlParticipants,
     snackbarError: true,
   }),
+
+  registerParticipant: ({
+    cluster,
+    id,
+    publicKey,
+  }) => async (dispatch, getState) => {
+
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.registerParticipant({cluster, id, publicKey}),
+        prefix,
+        name: 'registerParticipant',
+        returnError: true,
+      })
+      dispatch(actions.loadParties({
+        cluster,
+        id,
+      }))
+      dispatch(snackbarActions.setSuccess(`participant registered`))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error registering participant: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+
+  rotateParticipantKey: ({
+    cluster,
+    id,
+    publicKey,
+  }) => async (dispatch, getState) => {
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.rotateParticipantKey({cluster, id, publicKey}),
+        prefix,
+        name: 'rotateParticipantKey',
+        returnError: true,
+      })
+      dispatch(actions.loadParties({
+        cluster,
+        id,
+      }))
+      dispatch(snackbarActions.setSuccess(`daml rpc key rotated`))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error rotating participant key: ${e.toString()}`))
+      console.error(e)
+    }
+  },
 
   startKeysLoop: ({
     cluster,
@@ -224,61 +310,6 @@ const sideEffects = {
       value: false,
     }))
   },
-/*
-
-  
-
-
-  registerParticipant: ({
-    cluster,
-    id,
-    key,
-  }) => async (dispatch, getState) => {
-
-    try {
-      await api.loaderSideEffect({
-        dispatch,
-        loader: () => loaders.registerParticipant(cluster, id, {key}),
-        prefix,
-        name: 'registerParticipant',
-        returnError: true,
-      })
-      await dispatch(actions.loadDamlData({
-        cluster,
-        id,
-      }))
-      dispatch(snackbarActions.setSuccess(`participant registered`))
-    } catch(e) {
-      dispatch(snackbarActions.setError(`error registering participant: ${e.toString()}`))
-      console.error(e)
-    }
-  },
-
-  rotateLocalDamlRPCKey: ({
-    cluster,
-    id,
-    key,
-    damlId,
-  }) => async (dispatch, getState) => {
-    try {
-      await api.loaderSideEffect({
-        dispatch,
-        loader: () => loaders.rotateLocalDamlRPCKey(cluster, id, {key,damlId}),
-        prefix,
-        name: 'rotateLocalDamlRPCKey',
-        returnError: true,
-      })
-      await dispatch(actions.loadDamlData({
-        cluster,
-        id,
-      }))
-      dispatch(snackbarActions.setSuccess(`daml rpc key rotated`))
-    } catch(e) {
-      dispatch(snackbarActions.setError(`error rotating daml rpc key: ${e.toString()}`))
-      console.error(e)
-    }
-  },
-*/
 }
 
 
