@@ -52,8 +52,15 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     fontSize: 20,
   },
+  partyButtons: {
+    marginTop: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unit * 2,
+  },
   buttonMargin: {
     marginRight: theme.spacing.unit,
+  },
+  buttonBottomMargin: {
+    marginBottom: theme.spacing.unit,
   },
   partyContainer: {
     marginTop: theme.spacing.unit * 2, 
@@ -205,9 +212,9 @@ class DeploymentSettingsDamlParties extends React.Component {
     })
 
     return (
-      <div className={ classes.partyContainer }>
-        <Grid container spacing={0}>
-          <Grid item xs={ 4 }>
+      <Grid container spacing={0}>
+        <Grid item xs={ 6 }>
+          <div className={ classes.partyContainer }>
             <div>
               <FormControlLabel
                 control={
@@ -257,35 +264,39 @@ class DeploymentSettingsDamlParties extends React.Component {
                 )
               })
             }
-          </Grid>
-          <Grid item xs={ 8 } className={ classes.alignRight }>
+          </div>
+        </Grid>
+        <Grid item xs={ 6 }>
+          <div className={ classes.partyButtons }>
             <Button 
-              className={ classes.smallButton + ' ' + classes.buttonMargin }
+              className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
               size="small"
               variant="outlined"
               onClick={ () => this.setFormOpen(true, participant.id) }
             >
               Add Party <AddIcon className={ classes.iconSmall } />
             </Button>
+            <br />
             <Button 
-              className={ classes.smallButton + ' ' + classes.buttonMargin }
+              className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
               size="small"
               variant="outlined"
               onClick={ () => {} }
             >
               Generate Tokens <KeyIcon className={ classes.iconSmall } />
             </Button>
+            <br />
             <Button 
-              className={ classes.smallButton + ' ' + classes.buttonMargin }
+              className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
               size="small"
               variant="outlined"
               onClick={ () => {} }
             >
               Remove <DeleteIcon className={ classes.iconSmall } />
             </Button>
-          </Grid>
+          </div>
         </Grid>
-      </div>
+      </Grid>
     )
   }
 
@@ -381,6 +392,9 @@ class DeploymentSettingsDamlParties extends React.Component {
                 <div className={ classes.spacing }></div>
                 <Typography variant="subtitle2">
                   { participant.publicKey } - { localKeyMap[participant.publicKey] ? 'local' : 'remote' }
+                </Typography>
+                <Typography className={ classes.smallText }>
+                  DAML ID: { participant.damlId }
                 </Typography>
                 <SimpleTable
                   hideHeader
