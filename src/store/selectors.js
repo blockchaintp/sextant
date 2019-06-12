@@ -314,7 +314,7 @@ const selectors = {
       'timeService',
       'visibleParticipant',
       'selectedParties',
-      'tokenDialogOpen',
+      'tokenWindowOpen',
       'tokenValue',
       'addEnrolledKeyDialogOpen',
       'addEnrolledKeyValue',

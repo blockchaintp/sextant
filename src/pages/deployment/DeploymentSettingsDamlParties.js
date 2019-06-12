@@ -15,6 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
 
 import SimpleTable from 'components/table/SimpleTable'
+import CodeBlock from 'components/code/CodeBlock'
 
 import settings from 'settings'
 
@@ -71,6 +72,9 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2, 
     padding: theme.spacing.unit * 2,
     border: '1px dashed #e5e5e5'
+  },
+  warningText: {
+    color: '#cc0000',
   }
 })
 
@@ -169,6 +173,54 @@ class DeploymentSettingsDamlParties extends React.Component {
     )
   }
 
+  closeTokenDialog() {
+    const {
+      setToken,
+      setTokenWindowOpen,
+    } = this.props
+    setToken(null)
+    setTokenWindowOpen(false)
+  }
+
+  getTokenDialog() {
+    const {
+      classes,
+      tokenWindowOpen,
+      tokenValue,
+      snackbarMessage,
+    } = this.props
+    return (
+      <Dialog
+        open={ tokenWindowOpen }
+        onClose={ () => this.closeTokenDialog() }
+        fullWidth
+        maxWidth="sm"
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Party Access Token</DialogTitle>
+        <DialogContent>
+          <Typography gutterBottom>
+            Your Access Token is shown below.
+          </Typography>
+          <Typography gutterBottom className={ classes.warningText }>
+            <strong>Warning: </strong> you will not see this token again - make sure you keep it safe.
+          </Typography>
+          <CodeBlock
+            code={ tokenValue || '' }
+            clipboard={ true }
+            snackbarMessage={ snackbarMessage }
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ () => this.closeTokenDialog() }>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+
   setVisibleParticipant(publicKey) {
     const {
       resetSelectedParties,
@@ -260,6 +312,7 @@ class DeploymentSettingsDamlParties extends React.Component {
       setSelectedParties,
       setSelectedParty,
       removeParties,
+      generatePartyToken,
     } = this.props
 
     const publicKey = entry.keyManager.publicKey
@@ -275,6 +328,8 @@ class DeploymentSettingsDamlParties extends React.Component {
     parties.forEach(party => {
       if(selectedParties[party.name]) checkedCount++
     })
+
+    const selectedPartyCount = Object.keys(selectedParties).length
 
     return (
       <Grid container spacing={0}>
@@ -350,6 +405,7 @@ class DeploymentSettingsDamlParties extends React.Component {
               className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
               size="small"
               variant="outlined"
+              disabled={ selectedPartyCount == 0}
               onClick={ () => {
                 const partyNames = Object.keys(selectedParties)
                 removeParties({
@@ -367,7 +423,16 @@ class DeploymentSettingsDamlParties extends React.Component {
               className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
               size="small"
               variant="outlined"
-              onClick={ () => {} }
+              disabled={ selectedPartyCount == 0}
+              onClick={ () => {
+                const partyNames = Object.keys(selectedParties)
+                generatePartyToken({
+                  cluster,
+                  id,
+                  publicKey,
+                  partyNames,
+                })
+              } }
             >
               Generate Tokens <KeyIcon className={ classes.iconSmall } />
             </Button>
@@ -517,6 +582,7 @@ class DeploymentSettingsDamlParties extends React.Component {
             </Grid>
         </Grid>
         { this.getAddPartyDialog() }
+        { this.getTokenDialog() }
       </div>
     )
   }

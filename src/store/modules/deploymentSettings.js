@@ -30,7 +30,7 @@ const initialState = {
   addPartyName: '',
   addPartyPublicKey: null,
 
-  tokenDialogOpen: false,
+  tokenWindowOpen: false,
   tokenValue: null,
 
   addEnrolledKeyDialogOpen: false,
@@ -77,11 +77,11 @@ const reducers = {
   setAddPartyPubicKey: (state, action) => {
     state.addPartyPublicKey = action.payload
   },
-  setTokenDialogOpen: (state, action) => {
-    state.tokenDialogOpen = action.payload.value
+  setTokenWindowOpen: (state, action) => {
+    state.tokenWindowOpen = action.payload
   },
   setToken: (state, action) => {
-    state.tokenValue = action.payload.value
+    state.tokenValue = action.payload
   },
   setAddEnrolledKeyDialogOpen: (state, action) => {
     state.addEnrolledKeyDialogOpen = action.payload
@@ -389,18 +389,23 @@ const sideEffects = {
     publicKey,
     partyNames,
   }) => async (dispatch, getState) => {
+
+    if(partyNames.length <= 0) {
+      dispatch(snackbarActions.setError(`please select some parties to generate a token for`))
+      return
+    }
+
     try {
-      const token = await api.loaderSideEffect({
+      const res = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.generatePartyToken({cluster, id, publicKey, partyNames}),
         prefix,
         name: 'generatePartyToken',
         returnError: true,
       })
-
-      console.log('--------------------------------------------')
-      console.log('--------------------------------------------')
-      console.dir(token)
+      dispatch(actions.setToken(res.token))
+      dispatch(actions.setTokenWindowOpen(true))
+      dispatch(snackbarActions.setSuccess(`token generated`))
     } catch(e) {
       dispatch(snackbarActions.setError(`error removing parties: ${e.toString()}`))
       console.error(e)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import routerActions from 'store/modules/router'
+import snackbarActions from 'store/modules/snackbar'
 import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import selectors from 'store/selectors'
 
@@ -27,6 +27,8 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
       addPartyWindowOpen: selectors.deploymentSettings.addPartyWindowOpen(state),
       addPartyName: selectors.deploymentSettings.addPartyName(state),
       addPartyPublicKey: selectors.deploymentSettings.addPartyPublicKey(state),
+      tokenWindowOpen: selectors.deploymentSettings.tokenWindowOpen(state),
+      tokenValue: selectors.deploymentSettings.tokenValue(state),
     }
   },
   {
@@ -42,6 +44,9 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
     setAddPartyWindowOpen: deploymentSettingsActions.setAddPartyWindowOpen,
     setAddPartyName: deploymentSettingsActions.setAddPartyName,
     setAddPartyPubicKey: deploymentSettingsActions.setAddPartyPubicKey,
+    setToken: deploymentSettingsActions.setToken,
+    setTokenWindowOpen: deploymentSettingsActions.setTokenWindowOpen,
+    snackbarMessage: snackbarActions.setInfo,
   },
 )
 class DeploymentSettingsDamlPartiesContainer extends React.Component {
