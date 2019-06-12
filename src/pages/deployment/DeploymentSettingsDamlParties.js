@@ -332,7 +332,9 @@ class DeploymentSettingsDamlParties extends React.Component {
       if(selectedParties[party.name]) checkedCount++
     })
 
-    const selectedPartyCount = Object.keys(selectedParties).length
+    const selectedPartyCount = Object.keys(selectedParties).reduce((all, partyName) => {
+      return all + selectedParties[partyName] ? 1 : 0
+    }, 0)
 
     return (
       <Grid container spacing={0}>
@@ -408,7 +410,7 @@ class DeploymentSettingsDamlParties extends React.Component {
               className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
               size="small"
               variant="outlined"
-              disabled={ selectedPartyCount == 0}
+              disabled={ selectedPartyCount == 0 }
               onClick={ () => {
                 const partyNames = Object.keys(selectedParties)
                 removeParties({
@@ -426,7 +428,7 @@ class DeploymentSettingsDamlParties extends React.Component {
               className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
               size="small"
               variant="outlined"
-              disabled={ selectedPartyCount == 0}
+              disabled={ selectedPartyCount == 0 }
               onClick={ () => {
                 const partyNames = Object.keys(selectedParties)
                 generatePartyToken({
