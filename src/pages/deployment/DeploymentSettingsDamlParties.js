@@ -13,6 +13,8 @@ import settings from 'settings'
 
 const AddIcon = settings.icons.add
 const RefreshIcon = settings.icons.refresh
+const UpArrowIcon = settings.icons.upArrow
+const DownArrowIcon = settings.icons.downArrow
 
 const styles = theme => ({
   root: {
@@ -46,9 +48,25 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     fontSize: 20,
   },
+  buttonMargin: {
+    marginRight: theme.spacing.unit,
+  },
 })
 
 class DeploymentSettingsDamlParties extends React.Component {
+
+  state = {
+    visibleParticipant: null,
+  }
+
+  setVisibleParticipant(publicKey) {
+    const newValue = this.state.visibleParticipant == publicKey ?
+      null :
+      publicKey
+    this.setState({
+      visibleParticipant: newValue,
+    })
+  }
 
   getLocalParticipantActions(entry) {
     const {
@@ -59,7 +77,10 @@ class DeploymentSettingsDamlParties extends React.Component {
       rotateParticipantKey,
     } = this.props
 
-    const button = entry.participant ? (
+    const publicKey = entry.keyManager.publicKey
+    const partiesVisible = publicKey == this.state.visibleParticipant
+
+    const actionButton = entry.participant ? (
       <Button 
         className={ classes.smallButton }
         size="small"
@@ -67,7 +88,7 @@ class DeploymentSettingsDamlParties extends React.Component {
         onClick={ () => rotateParticipantKey({
           cluster,
           id,
-          publicKey: entry.keyManager.publicKey,
+          publicKey,
         }) }
       >
         Rotate Keys <RefreshIcon className={ classes.iconSmall } />
@@ -80,16 +101,41 @@ class DeploymentSettingsDamlParties extends React.Component {
         onClick={ () => registerParticipant({
           cluster,
           id,
-          publicKey: entry.keyManager.publicKey,
+          publicKey,
         }) }
       >
         Register <AddIcon className={ classes.iconSmall } />
       </Button>
     )
 
+    const toggleButton = entry.participant ? (
+      <Button 
+        className={ classes.smallButton + ' ' + classes.buttonMargin }
+        size="small"
+        variant="outlined"
+        onClick={ () => registerParticipant({
+          cluster,
+          id,
+          publicKey: entry.keyManager.publicKey,
+        }) }
+      >
+        {
+          partiesVisible ? 'Hide Parties' : 'Show Parties'
+        }
+        {
+          partiesVisible ? (
+            <UpArrowIcon className={ classes.iconSmall } />
+          ) : (
+            <DownArrowIcon className={ classes.iconSmall } />
+          )
+        } 
+      </Button>
+    ) : null
+
     return (
       <div>
-        { button }
+        { toggleButton }
+        { actionButton }
       </div>
     )
   }

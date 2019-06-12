@@ -14,6 +14,8 @@ import KeyIcon from '@material-ui/icons/VpnKey'
 import SettingsIcon from '@material-ui/icons/Settings'
 import ClipboardIcon from '@material-ui/icons/FileCopy'
 import RefreshIcon from '@material-ui/icons/Refresh'
+import UpArrowIcon from '@material-ui/icons/KeyboardArrowUp'
+import DownArrowIcon from '@material-ui/icons/KeyboardArrowDown'
 
 const icons = {
   home: HomeIcon,
@@ -32,6 +34,8 @@ const icons = {
   settings: SettingsIcon,
   clipboard: ClipboardIcon,
   refresh: RefreshIcon,
+  upArrow: UpArrowIcon,
+  downArrow: DownArrowIcon,
 }
 
 const settings = {
