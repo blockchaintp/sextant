@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { normalize, schema } from 'normalizr'
 import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
 import api from '../utils/api'
 
 import snackbarActions from './snackbar'
+import fileUploadActions from './fileupload'
 
 const prefix = 'deploymentSettings'
 
@@ -24,6 +24,8 @@ const initialState = {
 
   tokenWindowOpen: false,
   tokenValue: null,
+
+  uploadArchiveWindowOpen: false,
 
   addEnrolledKeyDialogOpen: false,
   addEnrolledKeyValue: '',
@@ -65,6 +67,9 @@ const reducers = {
   },
   setVisibleParticipant: (state, action) => {
     state.visibleParticipant = action.payload
+  },
+  setUploadArchiveWindowOpen: (state, action) => {
+    state.uploadArchiveWindowOpen = action.payload
   },
   setAddPartyWindowOpen: (state, action) => {
     state.addPartyWindowOpen = action.payload
@@ -444,6 +449,25 @@ const sideEffects = {
       dispatch(snackbarActions.setError(`error removing parties: ${e.toString()}`))
       console.error(e)
     }
+  },
+
+  uploadArchive: ({
+    cluster,
+    id,
+    files,
+  }) => async (dispatch, getState) => {
+    dispatch(fileUploadActions.startUploads({
+      files,
+      method: 'POST',
+      url: api.url(`/clusters/${cluster}/deployments/${id}/uploadArchive`),
+      onComplete: (results) => {
+        console.log('--------------------------------------------')
+        console.log('--------------------------------------------')
+        console.log('complete')
+        //const count = Object.keys(results).length
+        //dispatch(snackbarActions.setSuccess(`${count} file${count == 1 ? '' : 's'} uploaded`))
+      },
+    }))
   },
 
   startKeysLoop: ({

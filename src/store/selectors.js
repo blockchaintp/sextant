@@ -321,6 +321,7 @@ const selectors = {
       'addPartyWindowOpen',
       'addPartyName',
       'addPartyPublicKey',
+      'uploadArchiveWindowOpen',
     ]),
   },
 

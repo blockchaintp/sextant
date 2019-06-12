@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import routerActions from 'store/modules/router'
 import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import selectors from 'store/selectors'
 
@@ -21,10 +20,15 @@ import DeploymentSettingsDamlArchives from 'pages/deployment/DeploymentSettingsD
       cluster,
       id,
       damlArchives: selectors.deploymentSettings.damlArchives(state),
+      uploadArchiveWindowOpen: selectors.deploymentSettings.uploadArchiveWindowOpen(state),
+      inProgress: selectors.fileupload.inProgress(state),
+      error: selectors.fileupload.error(state),
+      status: selectors.fileupload.status(state),
     }
   },
   {
-    
+    setUploadArchiveWindowOpen: deploymentSettingsActions.setUploadArchiveWindowOpen,
+    uploadArchive: deploymentSettingsActions.uploadArchive,
   },
 )
 class DeploymentSettingsDamlArchivesContainer extends React.Component {

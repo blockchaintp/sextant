@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -11,10 +12,11 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
-import TextField from '@material-ui/core/TextField'
-
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
+
+import DropZone from 'components/uploader/DropZone'
+import UploadFileProgressBar from 'components/uploader/UploadFileProgressBar'
 
 import settings from 'settings'
 
@@ -35,47 +37,96 @@ const styles = theme => ({
   buttonIcon: {
     marginLeft: theme.spacing.unit,
   },
+  errorText: {
+    color: '#cc0000',
+  },
 })
 
 class DeploymentSettingsDamlArchives extends React.Component {
 
-  getUploader() {
-
+  getUploaderContent() {
     const {
+      classes,
+      cluster,
+      id,
       inProgress,
       error,
       status,
-      onUploadFiles,
+      uploadArchive,
+    } = this.props
+
+    if(error) {
+      return (
+        <DialogContentText className={ classes.errorText }>{ error }</DialogContentText>
+      )
+    }
+    else if(inProgress) {
+      return Object.keys(status).map((filename, i) => {
+        const uploadInfo = status[filename]
+        return (
+          <UploadFileProgressBar
+            key={ i }
+            filename={ filename }
+            size={ uploadInfo.size }
+            percentDone={ uploadInfo.percentDone }
+            remainingTime={ uploadInfo.remainingTime }
+            uploadedBytes={ uploadInfo.uploadedBytes }
+            color="primary"
+          />
+        )
+      })
+    }
+    else {
+      return (
+        <DropZone
+          onDrop={ (files) => uploadArchive({
+            cluster,
+            id,
+            files,
+          }) }
+        >
+          <Paper className={ classes.root }>
+            <Typography>Drag files here or click to select file</Typography>
+          </Paper>
+        </DropZone>
+      )
+    }
+  }
+
+  getUploader() {
+
+    const {
+      uploadArchiveWindowOpen,
+      setUploadArchiveWindowOpen,
+      inProgress,
+      onCancel,
     } = this.props
 
     return (
       <Dialog
-        open={ false }
-        onClose={ () => {} }
+        open={ uploadArchiveWindowOpen }
+        onClose={ () => setUploadArchiveWindowOpen(false) }
         fullWidth
         maxWidth='md'
       >
         <DialogTitle>Upload Package</DialogTitle>
         <DialogContent>
-          <DropZone
-            onDrop={ onUploadFiles }
-          >
-            <Paper className={ classes.root }>
-              <Typography>Drag files here or click to select file</Typography>
-            </Paper>
-          </DropZone>
-          <UploadStatusDialog
-            inProgress={ inProgress }
-            error={ error }
-            status={ status }
-            onFinish={ onFinish }
-            onCancel={ onCancel }
-          />
+          {
+            this.getUploaderContent()
+          }
         </DialogContent>
         <DialogActions>
-          <Button onClick={ () => this.cancel() }>
-            Close
-          </Button>
+          {
+            inProgress ? (
+              <Button onClick={ onCancel }>
+                Cancel
+              </Button>
+            ) : (
+              <Button onClick={ () => setUploadArchiveWindowOpen(false) }>
+                Close
+              </Button>
+            )
+          }
         </DialogActions>
       </Dialog>
     )
@@ -85,6 +136,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
     const {
       classes,
       damlArchives,
+      setUploadArchiveWindowOpen,
     } = this.props
 
     const fields =[{
@@ -115,7 +167,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
             <Button 
               color="secondary"
               variant="contained"
-              onClick={ () => {} }
+              onClick={ () => setUploadArchiveWindowOpen(true) }
             >
               Upload
               <UploadIcon className={ classes.buttonIcon } />
@@ -145,7 +197,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
             </Paper>
           </Grid>
         </Grid>
-        
+        { this.getUploader() }
       </div>
     )
   }
