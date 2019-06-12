@@ -26,6 +26,9 @@ const initialState = {
   tokenDialogOpen: false,
   tokenValue: null,
 
+  addEnrolledKeyDialogOpen: false,
+  addEnrolledKeyValue: '',
+
   // are we looping for the following endpoints?
   loops: {
     keys: null,
@@ -60,6 +63,12 @@ const reducers = {
   },
   setToken: (state, action) => {
     state.tokenValue = action.payload.value
+  },
+  setAddEnrolledKeyDialogOpen: (state, action) => {
+    state.addEnrolledKeyDialogOpen = action.payload
+  },
+  setAddEnrolledKeyValue: (state, action) => {
+    state.addEnrolledKeyValue = action.payload
   },
   setLoop: (state, action) => {
     const {
@@ -156,6 +165,8 @@ const sideEffects = {
         returnError: true,
       })
       dispatch(snackbarActions.setSuccess(`request succeeded`))
+      dispatch(actions.setAddEnrolledKeyDialogOpen(false))
+      dispatch(actions.setAddEnrolledKeyValue(''))
       dispatch(actions.listEnrolledKeys({
         cluster,
         id,

@@ -13,11 +13,15 @@ import DeploymentSettingsKeys from 'pages/deployment/DeploymentSettingsKeys'
     return {
       keyManagerKeys: selectors.deploymentSettings.keyManagerKeys(state),
       enrolledKeys: selectors.deploymentSettings.enrolledKeys(state),
+      addEnrolledKeyDialogOpen: selectors.deploymentSettings.addEnrolledKeyDialogOpen(state),
+      addEnrolledKeyValue: selectors.deploymentSettings.addEnrolledKeyValue(state),
     }
   },
   {
     addEnrolledKey: deploymentSettingsActions.addEnrolledKey,
     snackbarMessage: snackbarActions.setInfo,
+    setAddEnrolledKeyDialogOpen: deploymentSettingsActions.setAddEnrolledKeyDialogOpen,
+    setAddEnrolledKeyValue: deploymentSettingsActions.setAddEnrolledKeyValue,
   },
 )
 class DeploymentSettingsKeysContainer extends React.Component {

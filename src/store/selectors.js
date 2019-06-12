@@ -315,6 +315,8 @@ const selectors = {
       'selectedParties',
       'tokenDialogOpen',
       'tokenValue',
+      'addEnrolledKeyDialogOpen',
+      'addEnrolledKeyValue',
     ]),
   },
 

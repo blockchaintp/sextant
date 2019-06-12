@@ -44,6 +44,74 @@ const styles = theme => ({
 
 class DeploymentSettingsKeys extends React.Component {
 
+  setFormOpen(value) {
+    const {
+      setAddEnrolledKeyDialogOpen,
+      setAddEnrolledKeyValue,
+    } = this.props
+    setAddEnrolledKeyDialogOpen(value)
+    setAddEnrolledKeyValue('')
+  }
+
+  submitAddForm() {
+    const {
+      cluster,
+      id,
+      addEnrolledKeyValue,
+      addEnrolledKey,
+    } = this.props
+    addEnrolledKey({
+      cluster,
+      id,
+      publicKey: addEnrolledKeyValue,
+    })
+  }
+
+  getAddRemoteKeyDialog() {
+    const {
+      classes,
+      addEnrolledKeyDialogOpen,
+      addEnrolledKeyValue,
+      setAddEnrolledKeyValue,
+    } = this.props
+    return (
+      <Dialog
+        open={ addEnrolledKeyDialogOpen }
+        onClose={ () => this.setFormOpen(false) }
+        fullWidth
+        maxWidth="sm"
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Add Enrolled Key</DialogTitle>
+        <DialogContent>
+          <div className={ classes.formTextContainer }>
+            <TextField
+              id="remote-key-add"
+              label="Remote Key"
+              style={{ margin: 8 }}
+              placeholder="Paste the remote key here"
+              helperText="You need to get the remote key from the cluster admin"
+              fullWidth
+              margin="normal"
+              value={ addEnrolledKeyValue }
+              onChange={ (e) => setAddEnrolledKeyValue(e.target.value) }
+            />
+          </div>
+          
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ () => this.setFormOpen(false) }>
+            Cancel
+          </Button>
+          <Button onClick={ () => this.submitAddForm() } variant="contained" color="secondary" autoFocus>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+
   getKeyManagerTable() {
 
     const {
@@ -104,6 +172,54 @@ class DeploymentSettingsKeys extends React.Component {
     )
   }
 
+  getEnrolledKeysTable() {
+    const {
+      classes,
+      enrolledKeys,
+    } = this.props
+
+    const fields =[{
+      title: 'Key',
+      name: 'key',
+    }]
+
+    const data = enrolledKeys.map((entry, i) => {
+      return {
+        id: entry.publicKey,
+        publicKey: entry.publicKey,
+        key: (
+          <span className={ classes.smallText }>
+            { entry.publicKey }
+          </span>
+        )
+      }
+    })
+
+    return (
+      <div>
+        <SimpleTableHeader
+          title="Global Enrolled Keys"
+          getActions={ () => {
+            return (
+              <Button
+                variant='contained'
+                color='secondary'
+                onClick={ () => this.setFormOpen(true) }
+              >
+                Add
+                <AddIcon />
+              </Button>
+            )
+          } }
+        />
+        <SimpleTable
+          data={ data }
+          fields={ fields }
+        />
+      </div>
+    )
+  }
+
   render() {
     const {
       classes,
@@ -119,10 +235,11 @@ class DeploymentSettingsKeys extends React.Component {
           </Grid>
           <Grid item xs={ 6 }>
             <Paper className={ classes.paper }>
-              Keys
+              { this.getEnrolledKeysTable() }
             </Paper>
           </Grid>
         </Grid>
+        { this.getAddRemoteKeyDialog() }
       </div>
     )
   }
