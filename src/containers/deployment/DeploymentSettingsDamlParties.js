@@ -5,7 +5,7 @@ import routerActions from 'store/modules/router'
 import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import selectors from 'store/selectors'
 
-import DeploymentSettingsDaml from 'pages/deployment/DeploymentSettingsDaml'
+import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDamlParties'
 
 @connect(
   state => {
@@ -18,15 +18,15 @@ import DeploymentSettingsDaml from 'pages/deployment/DeploymentSettingsDaml'
     
   },
 )
-class DeploymentSettingsDamlContainer extends React.Component {
+class DeploymentSettingsDamlPartiesContainer extends React.Component {
 
   render() {
     return (
-      <DeploymentSettingsDaml 
+      <DeploymentSettingsDamlParties 
         {...this.props}
       />
     )
   }
 }
 
-export default DeploymentSettingsDamlContainer
+export default DeploymentSettingsDamlPartiesContainer

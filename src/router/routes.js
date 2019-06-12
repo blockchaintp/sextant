@@ -199,16 +199,42 @@ const routes = [
         }
       },
     }, {
-      name: 'daml',
-      path: '/daml',
+      name: 'damlParties',
+      path: '/damlParties',
       trigger: {
         activate: (store, params) => {
           console.log('--------------------------------------------')
-          console.log('activate daml')
+          console.log('activate damlParties')
         },
         deactivate: (store, params) => {
           console.log('--------------------------------------------')
-          console.log('deactivate daml')
+          console.log('deactivate damlParties')
+        }
+      },
+    }, {
+      name: 'damlArchives',
+      path: '/damlArchives',
+      trigger: {
+        activate: (store, params) => {
+          console.log('--------------------------------------------')
+          console.log('activate damlArchives')
+        },
+        deactivate: (store, params) => {
+          console.log('--------------------------------------------')
+          console.log('deactivate damlArchives')
+        }
+      },
+    }, {
+      name: 'damlTimeService',
+      path: '/damlTimeService',
+      trigger: {
+        activate: (store, params) => {
+          console.log('--------------------------------------------')
+          console.log('activate damlTimeService')
+        },
+        deactivate: (store, params) => {
+          console.log('--------------------------------------------')
+          console.log('deactivate damlTimeService')
         }
       },
     }]

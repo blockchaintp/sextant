@@ -19,9 +19,17 @@ const PAGES = [{
   title: 'Keys',
   index: 0,
 }, {
-  id: 'daml',
-  title: 'DAML',
+  id: 'damlParties',
+  title: 'DAML Parties',
   index: 1,
+}, {
+  id: 'damlArchives',
+  title: 'DAML Archives',
+  index: 2,
+}, {
+  id: 'damlTimeService',
+  title: 'DAML Time Service',
+  index: 3,
 }]
 
 class DeploymentSettings extends React.Component {

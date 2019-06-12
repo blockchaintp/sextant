@@ -34,7 +34,7 @@ const styles = theme => ({
   }
 })
 
-class DeploymentSettingsKeys extends React.Component {
+class DeploymentSettingsDamlArchives extends React.Component {
 
   render() {
     const {
@@ -49,7 +49,7 @@ class DeploymentSettingsKeys extends React.Component {
         <Grid container spacing={24}>
           <Grid item xs={ 4 }>
             <Paper className={ classes.paper }>
-              Daml
+              Daml Archives
             </Paper>
           </Grid>
         </Grid>
@@ -58,8 +58,8 @@ class DeploymentSettingsKeys extends React.Component {
   }
 }
 
-DeploymentSettingsKeys.propTypes = {
+DeploymentSettingsDamlArchives.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(DeploymentSettingsKeys)
+export default withStyles(styles)(DeploymentSettingsDamlArchives)

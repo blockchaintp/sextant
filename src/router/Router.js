@@ -30,7 +30,9 @@ import DeploymentStatus from 'containers/deployment/DeploymentStatus'
 
 import DeploymentSettingsTabs from 'containers/deployment/DeploymentSettingsTabs'
 import DeploymentSettingsKeys from 'containers/deployment/DeploymentSettingsKeys'
-import DeploymentSettingsDaml from 'containers/deployment/DeploymentSettingsDaml'
+import DeploymentSettingsDamlParties from 'containers/deployment/DeploymentSettingsDamlParties'
+import DeploymentSettingsDamlArchives from 'containers/deployment/DeploymentSettingsDamlArchives'
+import DeploymentSettingsDamlTimeService from 'containers/deployment/DeploymentSettingsDamlTimeService'
 
 @connect(
   state => {
@@ -100,8 +102,14 @@ class Router extends React.Component {
               <Route segment="keys" exact>
                 <DeploymentSettingsKeys />
               </Route>
-              <Route segment="daml" exact>
-                <DeploymentSettingsDaml />
+              <Route segment="damlParties" exact>
+                <DeploymentSettingsDamlParties />
+              </Route>
+              <Route segment="damlArchives" exact>
+                <DeploymentSettingsDamlArchives />
+              </Route>
+              <Route segment="damlTimeService" exact>
+                <DeploymentSettingsDamlTimeService />
               </Route>
             </DeploymentSettingsTabs>
           </Route>
