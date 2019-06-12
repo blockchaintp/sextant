@@ -133,6 +133,7 @@ class DeploymentTable extends React.Component {
     const data = deployments.map((deployment, index) => {
       return {
         id: deployment.id,
+        cluster: deployment.cluster,
         deploymentData: deployment,
         role: deployment.role,
         name: deployment.name,
@@ -286,20 +287,20 @@ class DeploymentTable extends React.Component {
         buttons.push({
           title: 'Edit',
           icon: EditIcon,
-          handler: (item) => onEdit(clusterId, item.id),
+          handler: (item) => onEdit(item.cluster, item.id),
         })
       }
 
       buttons.push({
         title: 'View',
         icon: ViewIcon,
-        handler: (item) => onViewStatus(clusterId, item.id),
+        handler: (item) => onViewStatus(item.cluster, item.id),
       })
 
       buttons.push({
         title: 'Settings',
         icon: SettingsIcon,
-        handler: (item) => onViewSettings(clusterId, item.id),
+        handler: (item) => onViewSettings(item.cluster, item.id),
       })
 
       return buttons
