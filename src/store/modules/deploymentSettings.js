@@ -91,7 +91,7 @@ const loaders = {
     publicKey,
   })
     .then(api.process),
-/*
+
   listDamlParticipants: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlParticipants`))
     .then(api.process),
 
@@ -100,7 +100,7 @@ const loaders = {
 
   rotateLocalDamlRPCKey: (cluster, id, payload) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/rotateLocalDamlRPCKey`), payload)
     .then(api.process),
-*/
+
 }
 
 const sideEffects = {
@@ -177,6 +177,18 @@ const sideEffects = {
     }
   },
 
+  listDamlParticipants: ({
+    cluster,
+    id,
+  }) => (dispatch, getState) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listDamlParticipants(cluster, id),
+    prefix,
+    name: 'listDamlParticipants',
+    dataAction: actions.setDamlParticipants,
+    snackbarError: true,
+  }),
+
   startKeysLoop: ({
     cluster,
     id,
@@ -214,17 +226,7 @@ const sideEffects = {
   },
 /*
 
-  listDamlParticipants: ({
-    cluster,
-    id,
-  }) => (dispatch, getState) => api.loaderSideEffect({
-    dispatch,
-    loader: () => loaders.listDamlParticipants(cluster, id),
-    prefix,
-    name: 'listDamlParticipants',
-    dataAction: actions.setDamlParticipants,
-    snackbarError: true,
-  }),
+  
 
 
   registerParticipant: ({

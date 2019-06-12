@@ -203,12 +203,17 @@ const routes = [
       path: '/damlParties',
       trigger: {
         activate: (store, params) => {
-          console.log('--------------------------------------------')
-          console.log('activate damlParties')
+          store.dispatch(deploymentSettingsActions.listKeyManagerKeys({
+            cluster: params.cluster,
+            id: params.id
+          }))
+          store.dispatch(deploymentSettingsActions.listDamlParticipants({
+            cluster: params.cluster,
+            id: params.id
+          }))
         },
         deactivate: (store, params) => {
-          console.log('--------------------------------------------')
-          console.log('deactivate damlParties')
+          
         }
       },
     }, {
