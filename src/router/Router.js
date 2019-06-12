@@ -97,10 +97,10 @@ class Router extends React.Component {
           </Route>
           <Route segment="deployment_settings">
             <DeploymentSettingsTabs>
-              <Route segment="deployment_settings_keys" exact>
+              <Route segment="keys" exact>
                 <DeploymentSettingsKeys />
               </Route>
-              <Route segment="deployment_settings_daml" exact>
+              <Route segment="daml" exact>
                 <DeploymentSettingsDaml />
               </Route>
             </DeploymentSettingsTabs>

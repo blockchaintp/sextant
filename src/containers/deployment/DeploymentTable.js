@@ -10,7 +10,7 @@ import selectors from 'store/selectors'
 const onAdd = (cluster, deployment_type, deployment_version) => routerActions.navigateTo('deployment', { cluster, id: 'new', deployment_type, deployment_version })
 const onEdit = (cluster, id) => routerActions.navigateTo('deployment', { cluster, id })
 const onViewStatus = (cluster, id) => routerActions.navigateTo('deployment_status', { cluster, id })
-const onViewSettings = (cluster, id) => routerActions.navigateTo('deployment_settings', { cluster, id, page: 'keys' })
+const onViewSettings = (cluster, id) => routerActions.navigateTo('deployment_settings.keys', { cluster, id })
 const onDelete = (cluster, id) => deploymentActions.delete(cluster, id)
 const updateShowDeleted = (value) => deploymentActions.updateShowDeleted(value)
 const updateClusterId = (cluster) => routerActions.navigateTo('deployments', { cluster })

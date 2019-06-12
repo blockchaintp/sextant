@@ -179,8 +179,14 @@ const routes = [
     name: 'deployment_settings',
     path: '/clusters/:cluster/deployment/:id/settings',
     authorize: authHandlers.user,
+    trigger: {
+      activate: (store, params) => {
+        console.log('--------------------------------------------')
+        console.log('activate top')
+      },
+    },
     children: [{
-      name: 'deployment_settings_keys',
+      name: 'keys',
       path: '/keys',
       trigger: {
         activate: (store, params) => {
@@ -206,7 +212,7 @@ const routes = [
         }
       },
     }, {
-      name: 'deployment_settings_daml',
+      name: 'daml',
       path: '/daml',
       trigger: {
         activate: (store, params) => {

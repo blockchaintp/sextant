@@ -6,23 +6,23 @@ import selectors from 'store/selectors'
 
 import DeploymentSettingsTabs from 'pages/deployment/DeploymentSettingsTabs'
 
-const onViewPage = (cluster, id, page) => routerActions.navigateTo(`deployment_settings_${page}`, { cluster, id, page })
+const onViewPage = (cluster, id, page) => routerActions.navigateTo(`deployment_settings.${page}`, { cluster, id, page })
 
 @connect(
   state => {
 
     const routeParams = selectors.router.params(state)
+    const route = selectors.router.route(state)
 
     const {
       cluster,
       id,
-      page,
     } = routeParams
 
     return {
       cluster,
       id,
-      page,
+      route,
     }
   },
   {

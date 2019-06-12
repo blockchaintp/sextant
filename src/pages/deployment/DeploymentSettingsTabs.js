@@ -14,12 +14,15 @@ const styles = theme => ({
   },
 })
 
-const PAGES = [
-  'Keys',
-  'DAML',
-]
-
-const LOWER_CASE_PAGES = PAGES.map(page => page.toLowerCase())
+const PAGES = [{
+  id: 'keys',
+  title: 'Keys',
+  index: 0,
+}, {
+  id: 'daml',
+  title: 'DAML',
+  index: 1,
+}]
 
 class DeploymentSettings extends React.Component {
 
@@ -28,28 +31,29 @@ class DeploymentSettings extends React.Component {
       classes,
       cluster,
       id,
-      page,
+      route,
       onViewPage,
       children,
     } = this.props
 
-    const pageIndex = LOWER_CASE_PAGES.indexOf(page)
+    const [ _, pageName ] = route.name.split('.')
+    const PAGE = PAGES.find(p => p.id == pageName)
 
     return (
       <div className={ classes.root }>
         <AppBar position="static"  color="default">
           <Tabs
-            value={ pageIndex }
+            value={ PAGE.index }
             onChange={ (ev, value) => {
-              const newPage = LOWER_CASE_PAGES[value]
-              onViewPage(cluster, id, newPage)
+              const NEXT_PAGE = PAGES[value]
+              onViewPage(cluster, id, NEXT_PAGE.id)
             }}
             indicatorColor="primary"
             textColor="primary"
           >
             {
               PAGES.map((page, i) => (
-                <Tab label={ page } key={ i } />
+                <Tab label={ page.title } key={ i } />
               ))
             }
           </Tabs>
