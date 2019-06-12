@@ -12,6 +12,7 @@ import StorageIcon from '@material-ui/icons/Storage'
 import ViewIcon from '@material-ui/icons/Visibility'
 import KeyIcon from '@material-ui/icons/VpnKey'
 import SettingsIcon from '@material-ui/icons/Settings'
+import ClipboardIcon from '@material-ui/icons/FileCopy'
 
 const icons = {
   home: HomeIcon,
@@ -28,6 +29,7 @@ const icons = {
   view: ViewIcon,
   key: KeyIcon,
   settings: SettingsIcon,
+  clipboard: ClipboardIcon,
 }
 
 const settings = {
