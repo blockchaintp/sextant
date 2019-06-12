@@ -181,8 +181,7 @@ const routes = [
     authorize: authHandlers.user,
     trigger: {
       activate: (store, params) => {
-        console.log('--------------------------------------------')
-        console.log('activate top')
+        store.dispatch(deploymentActions.get(params.cluster, params.id))
       },
     },
     children: [{
@@ -190,25 +189,13 @@ const routes = [
       path: '/keys',
       trigger: {
         activate: (store, params) => {
-
-          console.log('--------------------------------------------')
-          console.log('activate keys')
-          //store.dispatch(networkActions.startLoading('deployment.get'))
-          //store.dispatch(deploymentActions.get(params.cluster, params.id))
-  
-          //console.log('--------------------------------------------')
-          //console.dir(params)
-  
-          /*
-          store.dispatch(deploymentSettingsActions.loadDamlData({
+          store.dispatch(deploymentSettingsActions.startKeysLoop({
             cluster: params.cluster,
             id: params.id
           }))
-          */
         },
         deactivate: (store, params) => {
-          console.log('--------------------------------------------')
-          console.log('deactivate keys')
+          store.dispatch(deploymentSettingsActions.stopKeysLoop())
         }
       },
     }, {
@@ -216,21 +203,8 @@ const routes = [
       path: '/daml',
       trigger: {
         activate: (store, params) => {
-
           console.log('--------------------------------------------')
           console.log('activate daml')
-          //store.dispatch(networkActions.startLoading('deployment.get'))
-          //store.dispatch(deploymentActions.get(params.cluster, params.id))
-  
-          //console.log('--------------------------------------------')
-          //console.dir(params)
-  
-          /*
-          store.dispatch(deploymentSettingsActions.loadDamlData({
-            cluster: params.cluster,
-            id: params.id
-          }))
-          */
         },
         deactivate: (store, params) => {
           console.log('--------------------------------------------')

@@ -25,6 +25,11 @@ const initialState = {
   selectedParties: {},
   tokenDialogOpen: false,
   tokenValue: null,
+
+  // are we looping for the following endpoints?
+  loops: {
+    keys: null,
+  }
 }
 
 const reducers = {
@@ -55,6 +60,13 @@ const reducers = {
   },
   setToken: (state, action) => {
     state.tokenValue = action.payload.value
+  },
+  setLoop: (state, action) => {
+    const {
+      name,
+      value,
+    } = action.payload
+    state.loops[name] = value
   },
 }
 
@@ -108,6 +120,22 @@ const sideEffects = {
     snackbarError: true,
   }),
 
+  loadKeys: ({
+    cluster,
+    id,
+  }) => async (dispatch, getState) => {
+    await Promise.all([
+      dispatch(actions.listKeyManagerKeys({
+        cluster,
+        id,
+      })),
+      dispatch(actions.listEnrolledKeys({
+        cluster,
+        id,
+      }))
+    ])
+  },
+
   addEnrolledKey: ({
     cluster,
     id,
@@ -136,6 +164,42 @@ const sideEffects = {
       dispatch(snackbarActions.setError(`error enrolling key: ${e.toString()}`))
       console.error(e)
     }
+  },
+
+  startKeysLoop: ({
+    cluster,
+    id,
+  }) => async (dispatch, getState) => {
+    dispatch(actions.setLoop({
+      name: 'keys',
+      value: true,
+    }))
+    dispatch(actions.keysLoop({
+      cluster,
+      id,
+    }))    
+  },
+  keysLoop: ({
+    cluster,
+    id,
+  }) => async (dispatch, getState) => {
+    const looping = getState().deploymentSettings.loops.keys
+    if(!looping) return
+    await dispatch(actions.loadKeys({
+      cluster,
+      id,
+    }))
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    dispatch(actions.keysLoop({
+      cluster,
+      id,
+    }))
+  },
+  stopKeysLoop: () => (dispatch, getState) => {
+    dispatch(actions.setLoop({
+      name: 'keys',
+      value: false,
+    }))
   },
 /*
 
