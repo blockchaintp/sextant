@@ -358,6 +358,12 @@ const sideEffects = {
     publicKey,
     partyNames,
   }) => async (dispatch, getState) => {
+
+    if(partyNames.length <= 0) {
+      dispatch(snackbarActions.setError(`please select some parties to remove`))
+      return
+    }
+
     try {
       await api.loaderSideEffect({
         dispatch,

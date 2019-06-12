@@ -254,9 +254,12 @@ class DeploymentSettingsDamlParties extends React.Component {
   getLocalParties(entry) {
     const {
       classes,
+      cluster,
+      id,
       selectedParties,
       setSelectedParties,
       setSelectedParty,
+      removeParties,
     } = this.props
 
     const publicKey = entry.keyManager.publicKey
@@ -277,31 +280,35 @@ class DeploymentSettingsDamlParties extends React.Component {
       <Grid container spacing={0}>
         <Grid item xs={ 6 }>
           <div className={ classes.partyContainer }>
-            <div>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    className={ classes.checkbox }
-                    checked={ checkedCount >= parties.length }
-                    onChange={ (event) => {
-                      const isChecked = event.target.checked
-                      if(!isChecked) {
-                        setSelectedParties({})
-                      }
-                      else {
-                        const allChecked = parties.reduce((all, party) => {
-                          all[party.name] = true
-                          return all
-                        }, {})
-                        setSelectedParties(allChecked)
-                      }
-                    }}
-                    value="all"
+            { 
+              parties.length > 0 && (
+                <div>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        className={ classes.checkbox }
+                        checked={ checkedCount > 0 && checkedCount >= parties.length }
+                        onChange={ (event) => {
+                          const isChecked = event.target.checked
+                          if(!isChecked) {
+                            setSelectedParties({})
+                          }
+                          else {
+                            const allChecked = parties.reduce((all, party) => {
+                              all[party.name] = true
+                              return all
+                            }, {})
+                            setSelectedParties(allChecked)
+                          }
+                        }}
+                        value="all"
+                      />
+                    }
+                    label="All"
                   />
-                }
-                label="All"
-              />
-            </div>
+                </div>
+              )
+            }
             {
               parties.map((party, j) => {
                 return (
@@ -343,9 +350,17 @@ class DeploymentSettingsDamlParties extends React.Component {
               className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
               size="small"
               variant="outlined"
-              onClick={ () => {} }
+              onClick={ () => {
+                const partyNames = Object.keys(selectedParties)
+                removeParties({
+                  cluster,
+                  id,
+                  publicKey,
+                  partyNames,
+                })
+              } }
             >
-              Generate Tokens <KeyIcon className={ classes.iconSmall } />
+              Remove <DeleteIcon className={ classes.iconSmall } />
             </Button>
             <br />
             <Button 
@@ -354,7 +369,7 @@ class DeploymentSettingsDamlParties extends React.Component {
               variant="outlined"
               onClick={ () => {} }
             >
-              Remove <DeleteIcon className={ classes.iconSmall } />
+              Generate Tokens <KeyIcon className={ classes.iconSmall } />
             </Button>
           </div>
         </Grid>

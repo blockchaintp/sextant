@@ -37,6 +37,8 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
     setSelectedParties: deploymentSettingsActions.setSelectedParties,
     resetSelectedParties: deploymentSettingsActions.resetSelectedParties,
     addParty: deploymentSettingsActions.addParty,
+    removeParties: deploymentSettingsActions.removeParties,
+    generatePartyToken: deploymentSettingsActions.generatePartyToken,
     setAddPartyWindowOpen: deploymentSettingsActions.setAddPartyWindowOpen,
     setAddPartyName: deploymentSettingsActions.setAddPartyName,
     setAddPartyPubicKey: deploymentSettingsActions.setAddPartyPubicKey,
