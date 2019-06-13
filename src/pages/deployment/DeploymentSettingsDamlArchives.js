@@ -40,6 +40,16 @@ const styles = theme => ({
   errorText: {
     color: '#cc0000',
   },
+  dropzoneContent: {
+    padding: theme.spacing.unit * 4,
+    border: '1px dashed #ccc',
+    textAlign: 'center',
+    cursor: 'pointer',
+  },
+  clickMe: {
+    fontWeight: 'bold',
+    color: theme.palette.primary.main,
+  }
 })
 
 class DeploymentSettingsDamlArchives extends React.Component {
@@ -85,9 +95,9 @@ class DeploymentSettingsDamlArchives extends React.Component {
             files,
           }) }
         >
-          <Paper className={ classes.root }>
-            <Typography>Drag files here or click to select file</Typography>
-          </Paper>
+          <div className={ classes.dropzoneContent }>
+            <Typography>Drag files here or <span className={ classes.clickMe }>click</span> to select file</Typography>
+          </div>
         </DropZone>
       )
     }
@@ -140,6 +150,9 @@ class DeploymentSettingsDamlArchives extends React.Component {
     } = this.props
 
     const fields =[{
+      title: 'Uploaded',
+      name: 'uploadedFormatted',
+    },{
       title: 'Package Id',
       name: 'packageid',
     },{
@@ -148,14 +161,12 @@ class DeploymentSettingsDamlArchives extends React.Component {
     },{
       title: 'Uploaded By',
       name: 'uploadedBy',
-    },{
-      title: 'Uploaded',
-      name: 'uploaded',
     }]
 
     const data = damlArchives.map(archive => {
       return Object.assign({}, archive, {
         id: archive.packageid,
+        uploadedFormatted:  new Date(archive.uploaded).toLocaleString(),
       })
     })
 
