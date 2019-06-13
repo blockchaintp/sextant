@@ -523,10 +523,20 @@ class DeploymentSettingsDamlParties extends React.Component {
       name: 'name',
     }]
 
+    const localParticipants = participants.filter(participant => {
+      return localKeyMap[participant.publicKey] ? true : false
+    })
+
+    const remoteParticipants = participants.filter(participant => {
+      return localKeyMap[participant.publicKey] ? false : true
+    })
+
+    const allParticipants = localParticipants.concat(remoteParticipants)
+
     return (
       <React.Fragment>
         {
-          participants.map((participant, i) => {
+          allParticipants.map((participant, i) => {
             const parties = participant.parties || []
             const data = parties.map((party, j) => {
               return {
