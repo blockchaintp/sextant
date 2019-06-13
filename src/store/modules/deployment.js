@@ -1,4 +1,5 @@
 import axios from 'axios'
+import dotty from 'dotty'
 import { normalize, schema } from 'normalizr'
 import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
@@ -225,22 +226,29 @@ const sideEffects = {
     }
   },
   create: (cluster, payload) => async (dispatch, getState) => {
-
-    const routeParams = selectors.router.params(getState())
-
-    const {
-      deployment_type,
-      deployment_version,
-    } = routeParams
-
-    const deployment = {
-      name: payload.deployment.name,
-      deployment_type,
-      deployment_version,
-      desired_state: payload,
-    }
-
     try {
+
+      const routeParams = selectors.router.params(getState())
+      const deploymentForms = selectors.config.forms.deployment(getState())
+
+      const {
+        deployment_type,
+        deployment_version,
+      } = routeParams
+
+      const paths = deploymentForms[deployment_type].paths[deployment_version]
+
+      if(!paths || !paths.name) throw new Error(`cannot find name path for deployment: ${deployment_type} ${deployment_version}`)
+
+      const name = dotty.get(payload, paths.name)
+
+      const deployment = {
+        name,
+        deployment_type,
+        deployment_version,
+        desired_state: payload,
+      }
+      
       const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.create(cluster, deployment),
@@ -260,13 +268,26 @@ const sideEffects = {
     }
   },
   save: (cluster, id, payload) => async (dispatch, getState) => {
-
-    const deploymentUpdate = {
-      name: payload.deployment.name,
-      desired_state: payload,
-    }
-
     try {
+      const deploymentForms = selectors.config.forms.deployment(getState())
+      const existingValues = selectors.deployment.collection.item(getState())
+
+      const {
+        deployment_type,
+        deployment_version,
+      } = existingValues
+
+      const paths = deploymentForms[deployment_type].paths[deployment_version]
+
+      if(!paths || !paths.name) throw new Error(`cannot find name path for deployment: ${deployment_type} ${deployment_version}`)
+
+      const name = dotty.get(payload, paths.name)
+
+      const deploymentUpdate = {
+        name,
+        desired_state: payload,
+      }
+
       const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.update(cluster, id, deploymentUpdate),
