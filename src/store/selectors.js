@@ -309,9 +309,9 @@ const selectors = {
     ...props(deploymentSettingsStore, [
       'keyManagerKeys',
       'enrolledKeys',
-      'damlParticipants',
-      'damlArchives',
-      'damlTimeServiceInfo',
+      'participants',
+      'archives',
+      'timeServiceInfo',
       'visibleParticipant',
       'selectedParties',
       'tokenWindowOpen',

@@ -21,7 +21,7 @@ class DeploymentSettingsDamlTimeService extends React.Component {
 
   getTimeServiceInfo() {
     const {
-      damlTimeServiceInfo,
+      timeServiceInfo,
     } = this.props
 
     const fields =[{
@@ -32,7 +32,7 @@ class DeploymentSettingsDamlTimeService extends React.Component {
       name: 'lastClockUpdate',
     }]
 
-    const data = damlTimeServiceInfo.map(entry => {
+    const data = timeServiceInfo.map(entry => {
       return Object.assign({}, entry, {
         id: entry.publicKey,
       })

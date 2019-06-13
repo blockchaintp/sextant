@@ -450,12 +450,12 @@ class DeploymentSettingsDamlParties extends React.Component {
   getLocalParticipants() {
     const {
       classes,
-      damlParticipants,
+      participants,
       visibleParticipant,
       keyManagerKeys,
     } = this.props
 
-    const participantMap = damlParticipants.reduce((all, entry) => {
+    const participantMap = participants.reduce((all, entry) => {
       all[entry.publicKey] = entry
       return all
     }, {})
@@ -509,7 +509,7 @@ class DeploymentSettingsDamlParties extends React.Component {
   getPartiesByParticipant() {
     const {
       classes,
-      damlParticipants,
+      participants,
       keyManagerKeys,
     } = this.props
 
@@ -526,7 +526,7 @@ class DeploymentSettingsDamlParties extends React.Component {
     return (
       <React.Fragment>
         {
-          damlParticipants.map((participant, i) => {
+          participants.map((participant, i) => {
             const parties = participant.parties || []
             const data = parties.map((party, j) => {
               return {

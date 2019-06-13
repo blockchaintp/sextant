@@ -161,7 +161,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
   getPackages() {
     const {
       classes,
-      damlArchives,
+      archives,
       setUploadArchiveWindowOpen,
     } = this.props
 
@@ -179,7 +179,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
       name: 'uploadedBy',
     }]
 
-    const data = damlArchives.map(archive => {
+    const data = archives.map(archive => {
       return Object.assign({}, archive, {
         id: archive.packageid,
         uploadedFormatted:  new Date(archive.uploaded).toLocaleString(),

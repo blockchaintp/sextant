@@ -207,7 +207,7 @@ const routes = [
             cluster: params.cluster,
             id: params.id
           }))
-          store.dispatch(deploymentSettingsActions.listDamlParticipants({
+          store.dispatch(deploymentSettingsActions.listParticipants({
             cluster: params.cluster,
             id: params.id
           }))
@@ -221,7 +221,7 @@ const routes = [
       path: '/damlArchives',
       trigger: {
         activate: (store, params) => {
-          store.dispatch(deploymentSettingsActions.listDamlArchives({
+          store.dispatch(deploymentSettingsActions.listArchives({
             cluster: params.cluster,
             id: params.id
           }))
@@ -235,7 +235,7 @@ const routes = [
       path: '/damlTimeService',
       trigger: {
         activate: (store, params) => {
-          store.dispatch(deploymentSettingsActions.listDamlTimeServiceInfo({
+          store.dispatch(deploymentSettingsActions.listTimeServiceInfo({
             cluster: params.cluster,
             id: params.id
           }))

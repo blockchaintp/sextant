@@ -11,9 +11,9 @@ const prefix = 'deploymentSettings'
 const initialState = {
   keyManagerKeys: [],
   enrolledKeys: [],
-  damlParticipants: [],
-  damlArchives: [],
-  damlTimeServiceInfo: [],
+  participants: [],
+  archives: [],
+  timeServiceInfo: [],
 
   visibleParticipant: null,
   selectedParties: {},
@@ -43,14 +43,14 @@ const reducers = {
   setEnrolledKeys: (state, action) => {
     state.enrolledKeys = action.payload
   },
-  setDamlParticipants: (state, action) => {
-    state.damlParticipants = action.payload
+  setParticipants: (state, action) => {
+    state.participants = action.payload
   },
-  setDamlArchives: (state, action) => {
-    state.damlArchives = action.payload
+  setArchives: (state, action) => {
+    state.archives = action.payload
   },
-  setDamlTimeServiceInfo: (state, action) => {
-    state.damlTimeServiceInfo = action.payload
+  setTimeServiceInfo: (state, action) => {
+    state.timeServiceInfo = action.payload
   },
   setSelectedParty: (state, action) => {
     const {
@@ -124,22 +124,22 @@ const loaders = {
   })
     .then(api.process),
 
-  listDamlParticipants: ({
+  listParticipants: ({
     cluster,
     id,
-  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlParticipants`))
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/participants`))
     .then(api.process),
 
-  listDamlArchives: ({
+  listArchives: ({
     cluster,
     id,
-  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlArchives`))
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/archives`))
     .then(api.process),
 
-  listDamlTimeServiceInfo: ({
+  listTimeServiceInfo: ({
     cluster,
     id,
-  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/damlTimeServiceInfo`))
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/timeServiceInfo`))
     .then(api.process),
 
   registerParticipant: ({
@@ -233,7 +233,7 @@ const sideEffects = {
         cluster,
         id,
       })),
-      dispatch(actions.listDamlParticipants({
+      dispatch(actions.listParticipants({
         cluster,
         id,
       }))
@@ -272,39 +272,39 @@ const sideEffects = {
     }
   },
 
-  listDamlParticipants: ({
+  listParticipants: ({
     cluster,
     id,
   }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listDamlParticipants({cluster, id}),
+    loader: () => loaders.listParticipants({cluster, id}),
     prefix,
-    name: 'listDamlParticipants',
-    dataAction: actions.setDamlParticipants,
+    name: 'listParticipants',
+    dataAction: actions.setParticipants,
     snackbarError: true,
   }),
 
-  listDamlArchives: ({
+  listArchives: ({
     cluster,
     id,
   }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listDamlArchives({cluster, id}),
+    loader: () => loaders.listArchives({cluster, id}),
     prefix,
-    name: 'listDamlArchives',
-    dataAction: actions.setDamlArchives,
+    name: 'listArchives',
+    dataAction: actions.setArchives,
     snackbarError: true,
   }),
 
-  listDamlTimeServiceInfo: ({
+  listTimeServiceInfo: ({
     cluster,
     id,
   }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listDamlTimeServiceInfo({cluster, id}),
+    loader: () => loaders.listTimeServiceInfo({cluster, id}),
     prefix,
-    name: 'listDamlTimeServiceInfo',
-    dataAction: actions.setDamlTimeServiceInfo,
+    name: 'listTimeServiceInfo',
+    dataAction: actions.setTimeServiceInfo,
     snackbarError: true,
   }),
 
@@ -463,7 +463,7 @@ const sideEffects = {
       onComplete: (results) => {
         dispatch(actions.setUploadArchiveWindowOpen(false))
         dispatch(snackbarActions.setSuccess(`archive uploaded`))
-        dispatch(actions.listDamlArchives({
+        dispatch(actions.listArchives({
           cluster,
           id,
         }))

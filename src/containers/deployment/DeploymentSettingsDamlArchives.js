@@ -19,7 +19,7 @@ import DeploymentSettingsDamlArchives from 'pages/deployment/DeploymentSettingsD
     return {
       cluster,
       id,
-      damlArchives: selectors.deploymentSettings.damlArchives(state),
+      archives: selectors.deploymentSettings.archives(state),
       uploadArchiveWindowOpen: selectors.deploymentSettings.uploadArchiveWindowOpen(state),
       inProgress: selectors.fileupload.inProgress(state),
       error: selectors.fileupload.error(state),

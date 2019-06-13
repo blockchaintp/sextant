@@ -21,7 +21,7 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
       cluster,
       id,
       keyManagerKeys: selectors.deploymentSettings.keyManagerKeys(state),
-      damlParticipants: selectors.deploymentSettings.damlParticipants(state),
+      participants: selectors.deploymentSettings.participants(state),
       visibleParticipant: selectors.deploymentSettings.visibleParticipant(state),
       selectedParties: selectors.deploymentSettings.selectedParties(state),
       addPartyWindowOpen: selectors.deploymentSettings.addPartyWindowOpen(state),

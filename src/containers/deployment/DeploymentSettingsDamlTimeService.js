@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import routerActions from 'store/modules/router'
-import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import selectors from 'store/selectors'
 
 import DeploymentSettingsDamlTimeService from 'pages/deployment/DeploymentSettingsDamlTimeService'
@@ -20,7 +18,7 @@ import DeploymentSettingsDamlTimeService from 'pages/deployment/DeploymentSettin
     return {
       cluster,
       id,
-      damlTimeServiceInfo: selectors.deploymentSettings.damlTimeServiceInfo(state),
+      timeServiceInfo: selectors.deploymentSettings.timeServiceInfo(state),
     }
   },
   {
