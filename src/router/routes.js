@@ -235,12 +235,13 @@ const routes = [
       path: '/damlTimeService',
       trigger: {
         activate: (store, params) => {
-          console.log('--------------------------------------------')
-          console.log('activate damlTimeService')
+          store.dispatch(deploymentSettingsActions.listDamlTimeServiceInfo({
+            cluster: params.cluster,
+            id: params.id
+          }))
         },
         deactivate: (store, params) => {
-          console.log('--------------------------------------------')
-          console.log('deactivate damlTimeService')
+          
         }
       },
     }]

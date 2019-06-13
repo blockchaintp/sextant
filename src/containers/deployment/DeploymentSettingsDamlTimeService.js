@@ -10,8 +10,17 @@ import DeploymentSettingsDamlTimeService from 'pages/deployment/DeploymentSettin
 @connect(
   state => {
 
+    const routeParams = selectors.router.params(state)
+
+    const {
+      cluster,
+      id,
+    } = routeParams
+
     return {
-      
+      cluster,
+      id,
+      damlTimeServiceInfo: selectors.deploymentSettings.damlTimeServiceInfo(state),
     }
   },
   {

@@ -301,9 +301,9 @@ const sideEffects = {
     id,
   }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listDamlTimeServiecInfo({cluster, id}),
+    loader: () => loaders.listDamlTimeServiceInfo({cluster, id}),
     prefix,
-    name: 'listDamlTimeServiecInfo',
+    name: 'listDamlTimeServiceInfo',
     dataAction: actions.setDamlTimeServiceInfo,
     snackbarError: true,
   }),
