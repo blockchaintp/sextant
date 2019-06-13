@@ -113,7 +113,7 @@ class DeploymentTable extends React.Component {
       deleteConfirmItem,
     } = this.state
 
-    const fields =[{
+    let fields =[{
       title: 'Name',
       name: 'name',
     },{
@@ -129,6 +129,10 @@ class DeploymentTable extends React.Component {
       title: 'Task',
       name: 'task',
     }]
+
+    if(embedded) {
+      fields = fields.filter(f => f.name != 'clusterName')
+    }
 
     const data = deployments.map((deployment, index) => {
       return {
