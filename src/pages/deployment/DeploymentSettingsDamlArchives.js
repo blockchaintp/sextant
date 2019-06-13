@@ -15,6 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 
+import Loading from 'components/system/Loading'
 import DropZone from 'components/uploader/DropZone'
 import UploadFileProgressBar from 'components/uploader/UploadFileProgressBar'
 
@@ -49,6 +50,9 @@ const styles = theme => ({
   clickMe: {
     fontWeight: 'bold',
     color: theme.palette.primary.main,
+  },
+  centerAlign: {
+    textAlign: 'center',
   }
 })
 
@@ -71,11 +75,23 @@ class DeploymentSettingsDamlArchives extends React.Component {
       )
     }
     else if(inProgress) {
-      return Object.keys(status).map((filename, i) => {
-        const uploadInfo = status[filename]
+
+      // we have limited the dropzone to single files so we are only dealing with
+      // a single file
+      const filename = Object.keys(status)[0]
+      const uploadInfo = status[filename]
+
+      if(uploadInfo.percentDone >= 100) {
+        return (
+          <div className={ classes.centerAlign }>
+            <Loading />
+            <DialogContentText>We are now packaging and uploading your archive to the DAML api server</DialogContentText>
+          </div>
+        )
+      }
+      else {
         return (
           <UploadFileProgressBar
-            key={ i }
             filename={ filename }
             size={ uploadInfo.size }
             percentDone={ uploadInfo.percentDone }
@@ -84,7 +100,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
             color="primary"
           />
         )
-      })
+      }      
     }
     else {
       return (
