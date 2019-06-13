@@ -262,10 +262,6 @@ const sideEffects = {
       dispatch(snackbarActions.setSuccess(`request succeeded`))
       dispatch(actions.setAddEnrolledKeyDialogOpen(false))
       dispatch(actions.setAddEnrolledKeyValue(''))
-      dispatch(actions.listEnrolledKeys({
-        cluster,
-        id,
-      }))
     } catch(e) {
       dispatch(snackbarActions.setError(`error enrolling key: ${e.toString()}`))
       console.error(e)
