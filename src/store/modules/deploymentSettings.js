@@ -461,11 +461,12 @@ const sideEffects = {
       method: 'POST',
       url: api.url(`/clusters/${cluster}/deployments/${id}/uploadArchive`),
       onComplete: (results) => {
-        console.log('--------------------------------------------')
-        console.log('--------------------------------------------')
-        console.log('complete')
-        //const count = Object.keys(results).length
-        //dispatch(snackbarActions.setSuccess(`${count} file${count == 1 ? '' : 's'} uploaded`))
+        dispatch(actions.setUploadArchiveWindowOpen(false))
+        dispatch(snackbarActions.setSuccess(`archive uploaded`))
+        dispatch(actions.listDamlArchives({
+          cluster,
+          id,
+        }))
       },
     }))
   },
