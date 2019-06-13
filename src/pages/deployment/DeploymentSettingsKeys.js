@@ -144,7 +144,7 @@ class DeploymentSettingsKeys extends React.Component {
     return (
       <div>
         <SimpleTableHeader
-          title="Local Cluster Keys"
+          title="Local Keys"
         />
         <SimpleTable
           data={ data }
@@ -198,7 +198,7 @@ class DeploymentSettingsKeys extends React.Component {
     return (
       <div>
         <SimpleTableHeader
-          title="Global Enrolled Keys"
+          title="Allowed Keys"
           getActions={ () => {
             return (
               <Button

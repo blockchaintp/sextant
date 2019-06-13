@@ -16,7 +16,7 @@ const styles = theme => ({
 
 const PAGES = [{
   id: 'keys',
-  title: 'Keys',
+  title: 'Permissions',
   index: 0,
 }, {
   id: 'damlParties',
