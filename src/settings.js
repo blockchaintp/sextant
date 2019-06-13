@@ -17,6 +17,7 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import UpArrowIcon from '@material-ui/icons/KeyboardArrowUp'
 import DownArrowIcon from '@material-ui/icons/KeyboardArrowDown'
 import UploadIcon from '@material-ui/icons/CloudUpload'
+import BuildIcon from '@material-ui/icons/Build'
 
 const icons = {
   home: HomeIcon,
@@ -38,6 +39,7 @@ const icons = {
   upArrow: UpArrowIcon,
   downArrow: DownArrowIcon,
   upload: UploadIcon,
+  build: BuildIcon,
 }
 
 const settings = {
