@@ -124,7 +124,7 @@ class DeploymentSettingsKeys extends React.Component {
       title: 'Name',
       name: 'name',
     }, {
-      title: 'Key',
+      title: 'Public Key',
       name: 'key',
     }]
 
@@ -179,7 +179,7 @@ class DeploymentSettingsKeys extends React.Component {
     } = this.props
 
     const fields =[{
-      title: 'Key',
+      title: 'Public Key',
       name: 'key',
     }]
 
