@@ -12,7 +12,7 @@ const fields =[{
   title: 'Name',
   name: 'name',
 }, {
-  title: 'IP',
+  title: 'External IP',
   name: 'ip',
 }, {
   title: 'CPU',
