@@ -482,14 +482,19 @@ class DeploymentSettingsDamlParties extends React.Component {
                 <Grid container spacing={24}>
                   <Grid item xs={ 6 }>
                     <Typography variant="subtitle2">
-                      { publicKey }
-                    </Typography>
-                    <Typography className={ classes.smallText }>
-                      DAML ID: { entry.participant ? entry.participant.damlId : 'unregistered' }
+                      { publicKey.substring(0, 8) }
                     </Typography>
                   </Grid>
                   <Grid item xs={ 6 } className={ classes.alignRight }>
                     { this.getLocalParticipantActions(entry) }
+                  </Grid>
+                  <Grid item xs={ 12 }>
+                    <Typography className={ classes.smallText }>
+                      Pubic Key: { publicKey }
+                    </Typography>
+                    <Typography className={ classes.smallText }>
+                      DAML ID: { entry.participant ? entry.participant.damlId : 'unregistered' }
+                    </Typography>
                   </Grid>
                 </Grid>
                 {
@@ -548,12 +553,15 @@ class DeploymentSettingsDamlParties extends React.Component {
               <div key={ i } className={ classes.denseTable }>
                 <div className={ classes.spacing }></div>
                 <Typography variant="subtitle2">
-                  { participant.publicKey } - { localKeyMap[participant.publicKey] ? 'local' : 'remote' }
+                  { participant.publicKey.substring(0, 8) } - { localKeyMap[participant.publicKey] ? 'local' : 'remote' }
+                </Typography>
+                <Typography className={ classes.smallText }>
+                  Public Key: { participant.publicKey }
                 </Typography>
                 <Typography className={ classes.smallText }>
                   DAML ID: { participant.damlId }
                 </Typography>
-                <div>
+                <div className={ classes.partyContainer }>
                   <SimpleTable
                     hideHeader
                     data={ data }
