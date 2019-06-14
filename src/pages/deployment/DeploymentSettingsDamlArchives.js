@@ -105,6 +105,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
     else {
       return (
         <DropZone
+          accept=".dar"
           onDrop={ (files) => uploadArchive({
             cluster,
             id,
