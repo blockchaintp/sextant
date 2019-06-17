@@ -319,6 +319,7 @@ function* uploadFiles(action) {
     url,
     authHeader,
     onComplete,
+    onError,
   } = action.payload
 
   const uploadSagas = files.map(file => call(uploadFile, {
@@ -339,7 +340,14 @@ function* uploadFiles(action) {
   if(upload) {
     yield delay(1000)
     const results = yield select(selectors.fileupload.results)
-    if(onComplete) onComplete(results)
+    const uploadError = yield select(selectors.fileupload.error)
+    if(uploadError) {
+      if(onError) onError(uploadError)
+    }
+    else {
+      if(onComplete) onComplete(results)
+    }
+    
     yield put(actions.finish())
   }
 }

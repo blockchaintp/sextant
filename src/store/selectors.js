@@ -115,6 +115,16 @@ const DEPLOYMENT_NETWORK_NAMES = networkProps('deployment', [
   'get',
 ])
 
+const deploymentSettingsStore = state => state.deploymentSettings
+
+const DEPLOYMENT_SETTINGS_NETWORK_NAMES = networkProps('deploymentSettings', [
+  'listKeyManagerKeys',
+  'listEnrolledKeys',
+  'addEnrolledKey',
+  //'listDamlParticipants',
+  //'createRemoteKey',
+])
+
 const configStore = state => state.config
 const configData = prop(configStore, 'data')
 const forms = createSelector(
@@ -289,6 +299,29 @@ const selectors = {
       'showDeleted',
       'resources',
       'summary',
+    ]),
+  },
+
+  deploymentSettings: {
+    store: deploymentSettingsStore,
+    errors: props(networkErrors, DEPLOYMENT_SETTINGS_NETWORK_NAMES),
+    loading: props(networkLoading, DEPLOYMENT_SETTINGS_NETWORK_NAMES),
+    ...props(deploymentSettingsStore, [
+      'keyManagerKeys',
+      'enrolledKeys',
+      'participants',
+      'archives',
+      'timeServiceInfo',
+      'visibleParticipant',
+      'selectedParties',
+      'tokenWindowOpen',
+      'tokenValue',
+      'addEnrolledKeyDialogOpen',
+      'addEnrolledKeyValue',
+      'addPartyWindowOpen',
+      'addPartyName',
+      'addPartyPublicKey',
+      'uploadArchiveWindowOpen',
     ]),
   },
 

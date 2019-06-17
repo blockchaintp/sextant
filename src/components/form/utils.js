@@ -46,7 +46,7 @@ const getInitialValues = (schema, initialValues) => {
     const existing = dotty.get(all, field.id)
     if(!existing) {
       if(field.list) {
-        dotty.put(all, field.id, [])
+        dotty.put(all, field.id, field.default || [])
       }
       else if(typeof(field.default) !== 'undefined') {
         dotty.put(all, field.id, field.default)

@@ -27,6 +27,7 @@ const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
 const ViewIcon = settings.icons.view
+const SettingsIcon = settings.icons.build
 
 const styles = theme => ({
   errorText: {
@@ -95,6 +96,7 @@ class DeploymentTable extends React.Component {
       onAdd,
       onEdit,
       onViewStatus,
+      onViewSettings,
       onDelete,
       updateShowDeleted,
       clusters,
@@ -111,7 +113,7 @@ class DeploymentTable extends React.Component {
       deleteConfirmItem,
     } = this.state
 
-    const fields =[{
+    let fields =[{
       title: 'Name',
       name: 'name',
     },{
@@ -128,9 +130,14 @@ class DeploymentTable extends React.Component {
       name: 'task',
     }]
 
+    if(embedded) {
+      fields = fields.filter(f => f.name != 'clusterName')
+    }
+
     const data = deployments.map((deployment, index) => {
       return {
         id: deployment.id,
+        cluster: deployment.cluster,
         deploymentData: deployment,
         role: deployment.role,
         name: deployment.name,
@@ -284,14 +291,20 @@ class DeploymentTable extends React.Component {
         buttons.push({
           title: 'Edit',
           icon: EditIcon,
-          handler: (item) => onEdit(clusterId, item.id),
+          handler: (item) => onEdit(item.cluster, item.id),
         })
       }
 
       buttons.push({
         title: 'View',
         icon: ViewIcon,
-        handler: (item) => onViewStatus(clusterId, item.id),
+        handler: (item) => onViewStatus(item.cluster, item.id),
+      })
+
+      buttons.push({
+        title: 'Settings',
+        icon: SettingsIcon,
+        handler: (item) => onViewSettings(item.cluster, item.id),
       })
 
       return buttons

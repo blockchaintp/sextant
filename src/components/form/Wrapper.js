@@ -216,6 +216,7 @@ class FormListInner extends React.Component {
     } = this.state
 
     const value = dotty.get(formProps.values, item.id)
+
     const fields = item.list.table
     const mainField = item.list.mainField
 
@@ -346,6 +347,16 @@ class FormWrapperInner extends React.Component {
   }
 
   getItem(item, formProps) {
+
+    if(typeof(item) == 'string') {
+      return (
+        <Typography
+          variant='subtitle1'
+        >
+          { item }
+        </Typography>
+      )
+    }
 
     const {
       exists,

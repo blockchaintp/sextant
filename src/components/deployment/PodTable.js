@@ -18,8 +18,11 @@ const fields =[{
   title: 'Status',
   name: 'status',
 },{
-  title: 'IP',
+  title: 'Pod IP',
   name: 'ip',
+},{
+  title: 'Node IP',
+  name: 'externalIP',
 }]
 
 class PodTable extends React.Component {
@@ -28,7 +31,13 @@ class PodTable extends React.Component {
     const { 
       classes,
       data,
+      nodes,
     } = this.props
+
+    const nodesByName = (nodes || []).reduce((all, node) => {
+      all[node.metadata.name] = node
+      return all
+    }, {})
 
     const tableData = data
       .map(pod => {
@@ -45,6 +54,11 @@ class PodTable extends React.Component {
         if(containersCrashLoopBackoff > 0) status = 'CrashLoopBackOff'
         if(pod.metadata.deletionTimestamp) status = 'Terminating'
 
+        const node = nodesByName[pod.spec.nodeName]
+        const externalIP = node ?
+          node.status.addresses.find(address => address.type == 'ExternalIP')
+          : {}
+
         return {
           id: pod.metadata.name,
           name: pod.metadata.name,
@@ -53,6 +67,7 @@ class PodTable extends React.Component {
           //age: timeago().format(pod.metadata.creationTimestamp).replace(' ago', ''),
           created: new Date(pod.metadata.creationTimestamp).toLocaleString(),
           ip: pod.status.podIP,
+          externalIP: externalIP.address,
         }
       })
 

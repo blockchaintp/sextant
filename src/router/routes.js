@@ -2,6 +2,7 @@ import selectors from 'store/selectors'
 import userActions from 'store/modules/user'
 import clusterActions from 'store/modules/cluster'
 import deploymentActions from 'store/modules/deployment'
+import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import networkActions from 'store/modules/network'
 
 const authHandlers = {
@@ -173,6 +174,78 @@ const routes = [
       },
       deactivate: (store) => store.dispatch(deploymentActions.stopResourcesLoop()),
     },
+  },
+  {
+    name: 'deployment_settings',
+    path: '/clusters/:cluster/deployment/:id/settings',
+    authorize: authHandlers.user,
+    trigger: {
+      activate: (store, params) => {
+        store.dispatch(deploymentActions.get(params.cluster, params.id))
+      },
+    },
+    children: [{
+      name: 'keys',
+      path: '/keys',
+      trigger: {
+        activate: (store, params) => {
+          store.dispatch(deploymentSettingsActions.startKeysLoop({
+            cluster: params.cluster,
+            id: params.id
+          }))
+        },
+        deactivate: (store, params) => {
+          store.dispatch(deploymentSettingsActions.stopKeysLoop())
+        }
+      },
+    }, {
+      name: 'damlParties',
+      path: '/damlParties',
+      trigger: {
+        activate: (store, params) => {
+          store.dispatch(deploymentSettingsActions.listKeyManagerKeys({
+            cluster: params.cluster,
+            id: params.id
+          }))
+          store.dispatch(deploymentSettingsActions.listParticipants({
+            cluster: params.cluster,
+            id: params.id
+          }))
+        },
+        deactivate: (store, params) => {
+          
+        }
+      },
+    }, {
+      name: 'damlArchives',
+      path: '/damlArchives',
+      trigger: {
+        activate: (store, params) => {
+          store.dispatch(deploymentSettingsActions.listArchives({
+            cluster: params.cluster,
+            id: params.id
+          }))
+        },
+        deactivate: (store, params) => {
+          
+        }
+      },
+    }, {
+      name: 'damlTimeService',
+      path: '/damlTimeService',
+      trigger: {
+        activate: (store, params) => {
+          store.dispatch(deploymentSettingsActions.listTimeServiceInfo({
+            cluster: params.cluster,
+            id: params.id
+          }))
+        },
+        deactivate: (store, params) => {
+          
+        }
+      },
+    }]
+    
   },
 ]
 

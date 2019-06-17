@@ -11,6 +11,13 @@ import DashboardIcon from '@material-ui/icons/Dashboard'
 import StorageIcon from '@material-ui/icons/Storage'
 import ViewIcon from '@material-ui/icons/Visibility'
 import KeyIcon from '@material-ui/icons/VpnKey'
+import SettingsIcon from '@material-ui/icons/Settings'
+import ClipboardIcon from '@material-ui/icons/FileCopy'
+import RefreshIcon from '@material-ui/icons/Refresh'
+import UpArrowIcon from '@material-ui/icons/KeyboardArrowUp'
+import DownArrowIcon from '@material-ui/icons/KeyboardArrowDown'
+import UploadIcon from '@material-ui/icons/CloudUpload'
+import BuildIcon from '@material-ui/icons/Build'
 
 const icons = {
   home: HomeIcon,
@@ -26,6 +33,13 @@ const icons = {
   deployment: DashboardIcon,
   view: ViewIcon,
   key: KeyIcon,
+  settings: SettingsIcon,
+  clipboard: ClipboardIcon,
+  refresh: RefreshIcon,
+  upArrow: UpArrowIcon,
+  downArrow: DownArrowIcon,
+  upload: UploadIcon,
+  build: BuildIcon,
 }
 
 const settings = {

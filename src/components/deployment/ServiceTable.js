@@ -37,9 +37,7 @@ class ServiceTable extends React.Component {
       .map(service => {
 
         const externalIp = service.status.loadBalancer && service.status.loadBalancer.ingress ? (
-          <a target="_blank" href={ `http://${service.status.loadBalancer.ingress[0].hostname}` }>
-            { service.status.loadBalancer.ingress[0].hostname }
-          </a>
+          service.status.loadBalancer.ingress[0].hostname
         ) : '<none>'
         return {
           id: service.metadata.name,
