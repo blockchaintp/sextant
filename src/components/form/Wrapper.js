@@ -347,6 +347,16 @@ class FormWrapperInner extends React.Component {
 
   getItem(item, formProps) {
 
+    if(typeof(item) == 'string') {
+      return (
+        <Typography
+          variant='subtitle1'
+        >
+          { item }
+        </Typography>
+      )
+    }
+
     const {
       exists,
     } = this.props
