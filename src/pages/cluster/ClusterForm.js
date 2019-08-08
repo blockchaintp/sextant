@@ -57,7 +57,7 @@ BASE64_BEARER_TOKEN=$(kubectl get secret -n $NAMESPACE $SECRETNAME -o "jsonpath=
 
 # get the base64 CA:
 echo "getting the certificate authority for serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
-BASE64_CA_FILE=$(kubectl get secret -n $NAMESPACE $SECRETNAME -o "jsonpath={..data['ca\.crt']}")
+BASE64_CA_FILE=$(kubectl get secret -n $NAMESPACE $SECRETNAME -o "jsonpath={.data['ca\\.crt']}")
 
 # get the api server address:
 echo "getting the api server address"
@@ -152,7 +152,7 @@ class ClusterForm extends React.Component {
       onCancelRoleForm,
       classes,
     } = this.props
-    
+
     return (
       <Paper className={ classes.paper }>
         <RoleTable
@@ -191,7 +191,7 @@ class ClusterForm extends React.Component {
           Connect Remote Cluster
         </Typography>
         <Typography gutterBottom>
-          To connect a remote cluster, you will need to have <b>kubectl</b> connected to it 
+          To connect a remote cluster, you will need to have <b>kubectl</b> connected to it
           and the ability to create service accounts.
         </Typography>
         <Typography gutterBottom>
@@ -210,7 +210,7 @@ class ClusterForm extends React.Component {
         </Typography>
         <Typography gutterBottom>
           Choose a service account name (default = <b>sextant</b>) and a namespace for the service account (default = <b>default</b>) we will create.
-          
+
         </Typography>
         <CodeBlock
           code={ HELP_VARIABLES }
@@ -250,7 +250,7 @@ class ClusterForm extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       id,
       classes,
       title,
@@ -307,7 +307,7 @@ class ClusterForm extends React.Component {
                         { submitTitle }
                       </Button>
                     </React.Fragment>
-                    
+
                   )
                 }
               />
@@ -328,7 +328,7 @@ class ClusterForm extends React.Component {
                     }
                   </div>
                 )
-                
+
             }
           </Grid>
         </Grid>
@@ -340,7 +340,7 @@ class ClusterForm extends React.Component {
 ClusterForm.propTypes = {
   classes: PropTypes.object.isRequired,
   submitForm: PropTypes.func.isRequired,
-  initialValues: PropTypes.object.isRequired, 
+  initialValues: PropTypes.object.isRequired,
   error: PropTypes.string,
   title: PropTypes.string,
   submitTitle: PropTypes.string,
