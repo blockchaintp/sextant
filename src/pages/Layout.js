@@ -27,13 +27,20 @@ const styles = theme => ({
   },
   content: {
     height: 'calc(100% - 64px)'
+  },
+  box: {
+    flex: 1,
+    flexDirection: "column"
+  },
+  footer: {
+    alignSelf: 'flex-end'
   }
 })
 
 class Layout extends React.Component {
 
   render() {
-    const { 
+    const {
       classes,
       title,
       user,
@@ -48,15 +55,15 @@ class Layout extends React.Component {
         <div className={ classes.appbar }>
           <AppBar position="static">
             <Toolbar>
-              <SideMenu 
+              <SideMenu
                 user={ user }
                 items={ sideMenuItems }
                 openPage={ openPage }
               />
               <img src="/sextant-logo-white.svg" className={ classes.logo } />
-              <Typography 
-                variant="h6" 
-                color="inherit" 
+              <Typography
+                variant="h6"
+                color="inherit"
                 className={ classes.flex }
               >
                 { title }
@@ -71,6 +78,13 @@ class Layout extends React.Component {
         </div>
         <div className={ classes.content }>
           { children }
+        </div>
+        <div >
+          <Toolbar>
+            <Typography>
+              &copy; 2018-2019 <a href="https://blockchaintp.com/" target="_blank">Blockchain Technology Partners</a> All rights reserved : <a href="https://blockchaintp.com/sextant/aws-marketplace/support" target="_blank">Support page</a>
+            </Typography>
+          </Toolbar>
         </div>
       </div>
     )
