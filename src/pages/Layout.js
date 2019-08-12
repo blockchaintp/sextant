@@ -11,7 +11,9 @@ import AppBarMenu from 'components/layout//AppBarMenu'
 
 const styles = theme => ({
   root: {
-    height: '100%'
+    // makes a container that is 100% of veiwport height and relative so children can be absolute
+    position: 'relative',
+    minHeight: '100vh'
   },
   appbar: {
     flexGrow: 1,
@@ -26,14 +28,26 @@ const styles = theme => ({
     flex: 0,
   },
   content: {
-    height: 'calc(100% - 64px)'
+    height: 'calc(100% - 64px)',
+    //minHeight: 'calc(100% - 200px)'
+  },
+  box: {
+    // padding that is the height of the footer - ensures enough space for footer in shared container
+    paddingBottom: '2.5rem'
+  },
+  footer: {
+    // absolute postion within the root container set to the bottom 
+    position: 'absolute',
+    bottom: '0',
+    width: '100%',
+    height: '2.5rem'
   }
 })
 
 class Layout extends React.Component {
 
   render() {
-    const { 
+    const {
       classes,
       title,
       user,
@@ -48,15 +62,15 @@ class Layout extends React.Component {
         <div className={ classes.appbar }>
           <AppBar position="static">
             <Toolbar>
-              <SideMenu 
+              <SideMenu
                 user={ user }
                 items={ sideMenuItems }
                 openPage={ openPage }
               />
               <img src="/sextant-logo-white.svg" className={ classes.logo } />
-              <Typography 
-                variant="h6" 
-                color="inherit" 
+              <Typography
+                variant="h6"
+                color="inherit"
                 className={ classes.flex }
               >
                 { title }
@@ -69,8 +83,17 @@ class Layout extends React.Component {
             </Toolbar>
           </AppBar>
         </div>
+        <div className={ classes.box }>
         <div className={ classes.content }>
           { children }
+        </div>
+        <div >
+          <Toolbar className={ classes.footer }>
+            <Typography>
+              &copy; 2018-2019 <a href="https://blockchaintp.com/" target="_blank">Blockchain Technology Partners</a> All rights reserved : <a href="https://blockchaintp.com/sextant/aws-marketplace/support" target="_blank">Support page</a>
+            </Typography>
+          </Toolbar>
+        </div>
         </div>
       </div>
     )
