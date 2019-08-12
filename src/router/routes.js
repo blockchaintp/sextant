@@ -90,10 +90,10 @@ const routes = [
     name: 'clusters',
     path: '/clusters',
     authorize: authHandlers.user,
-    trigger: {
-      activate: (store) => store.dispatch(clusterActions.startClusterLoop()),
-      deactivate: (store) => store.dispatch(clusterActions.stopClusterLoop()),
-    },
+    // trigger: {
+    //   activate: (store) => store.dispatch(clusterActions.startClusterLoop()),
+    //   deactivate: (store) => store.dispatch(clusterActions.stopClusterLoop()),
+    // },
   },
   {
     name: 'cluster',
@@ -213,7 +213,7 @@ const routes = [
           }))
         },
         deactivate: (store, params) => {
-          
+
         }
       },
     }, {
@@ -227,7 +227,7 @@ const routes = [
           }))
         },
         deactivate: (store, params) => {
-          
+
         }
       },
     }, {
@@ -241,11 +241,11 @@ const routes = [
           }))
         },
         deactivate: (store, params) => {
-          
+
         }
       },
     }]
-    
+
   },
 ]
 
