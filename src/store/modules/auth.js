@@ -24,13 +24,14 @@ const loaders = {
 
   status: () => axios.get(api.url('/user/status'))
     .then(api.process),
-    
-  login: (payload) => axios.post(api.url('/user/login'), payload)
+
+// add query string to login path 
+  login: (payload) => axios.post(api.url('/user/login?test=1'), payload)
     .then(api.process),
 
   logout: () => axios.get(api.url('/user/logout'))
     .then(api.process),
-    
+
 }
 
 const sideEffects = {
