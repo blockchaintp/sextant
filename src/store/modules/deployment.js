@@ -89,10 +89,12 @@ const loaders = {
   list: ({
     cluster,
     showDeleted,
+    mode
   }) => axios.get(api.url(`/clusters/${cluster}/deployments`), {
     params: {
       showDeleted: showDeleted ? 'y' : '',
       withTasks: 'y',
+      mode: mode ? 'background' : 'foreground'
     }
   })
     .then(api.process),
@@ -118,8 +120,12 @@ const loaders = {
 
   listTasks: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/tasks`))
     .then(api.process),
-  
-  listResources: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/resources`))
+
+  listResources: (cluster, id, background) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/resources`),{
+    params: {
+      mode: background ? 'background' : 'foreground'
+    }
+  })
     .then(api.process),
 
   getSummary: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/summary`))
@@ -130,7 +136,7 @@ const loaders = {
 
   deleteRole: (cluster, id, userid) => axios.delete(api.url(`/clusters/${cluster}/deployments/${id}/roles/${userid}`))
     .then(api.process),
-    
+
 }
 
 const sideEffects = {
@@ -179,11 +185,12 @@ const sideEffects = {
 
   list: ({
     cluster,
-  }) => (dispatch, getState) => api.loaderSideEffect({
+  }, background = false) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.list({
       cluster,
       showDeleted: selectors.deployment.showDeleted(getState()),
+      mode: background ? background : false
     }),
     prefix,
     name: 'list',
@@ -248,7 +255,7 @@ const sideEffects = {
         deployment_version,
         desired_state: payload,
       }
-      
+
       const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.create(cluster, deployment),
@@ -340,10 +347,10 @@ const sideEffects = {
     dataAction: actions.setTasks,
     snackbarError: true,
   }),
-  listResources: (cluster, id) => (dispatch) => {
+  listResources: (cluster, id, background) => (dispatch) => {
     return api.loaderSideEffect({
       dispatch,
-      loader: () => loaders.listResources(cluster, id),
+      loader: () => loaders.listResources(cluster, id, background),
       prefix,
       name: 'listResources',
       dataAction: actions.setResources,
@@ -369,20 +376,20 @@ const sideEffects = {
     }))
     dispatch(actions.deploymentLoop({
       cluster,
-    }))    
+    }))
   },
   deploymentLoop: ({
     cluster,
-  }) => async (dispatch, getState) => {
+  }, background = false) => async (dispatch, getState) => {
     const looping = getState().deployment.loops.deployment
     if(!looping) return
     await dispatch(actions.list({
       cluster,
-    }))
+    }, background))
     await new Promise(resolve => setTimeout(resolve, 1000))
     dispatch(actions.deploymentLoop({
       cluster,
-    }))
+    }, background = true))
   },
   stopDeploymentLoop: () => (dispatch, getState) => {
     dispatch(actions.setLoop({
@@ -406,15 +413,15 @@ const sideEffects = {
   resourcesLoop: ({
     cluster,
     deployment,
-  }) => async (dispatch, getState) => {
+  }, background = false) => async (dispatch, getState) => {
     const looping = getState().deployment.loops.resources
     if(!looping) return
-    await dispatch(actions.listResources(cluster, deployment))
+    await dispatch(actions.listResources(cluster, deployment, background))
     await new Promise(resolve => setTimeout(resolve, 1000))
     dispatch(actions.resourcesLoop({
       cluster,
       deployment,
-    }))
+    },background = false ))
   },
   stopResourcesLoop: () => (dispatch, getState) => {
     dispatch(actions.setLoop({
@@ -423,7 +430,7 @@ const sideEffects = {
     }))
   },
   addRole: () => async (dispatch, getState) => {
-    const params = selectors.router.params(getState())  
+    const params = selectors.router.params(getState())
     const {
       cluster,
       id,
@@ -449,7 +456,7 @@ const sideEffects = {
     }
   },
   deleteRole: (userid) =>  async (dispatch, getState) => {
-    const params = selectors.router.params(getState())  
+    const params = selectors.router.params(getState())
     const {
       cluster,
       id,
