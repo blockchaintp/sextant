@@ -213,7 +213,7 @@ const routes = [
           }))
         },
         deactivate: (store, params) => {
-          
+
         }
       },
     }, {
@@ -227,7 +227,7 @@ const routes = [
           }))
         },
         deactivate: (store, params) => {
-          
+
         }
       },
     }, {
@@ -241,11 +241,11 @@ const routes = [
           }))
         },
         deactivate: (store, params) => {
-          
+
         }
       },
     }]
-    
+
   },
 ]
 

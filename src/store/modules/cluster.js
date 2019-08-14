@@ -82,11 +82,12 @@ const reducers = {
 const loaders = {
 
   list: ({
-    showDeleted,
+    showDeleted, mode
   }) => axios.get(api.url(`/clusters`), {
     params: {
       showDeleted: showDeleted ? 'y' : '',
       withTasks: 'y',
+      mode: mode ? "background" : 'foreground'
     }
   })
     .then(api.process),
@@ -113,7 +114,11 @@ const loaders = {
   listTasks: (id) => axios.get(api.url(`/clusters/${id}/tasks`))
     .then(api.process),
 
-  listResources: (id) => axios.get(api.url(`/clusters/${id}/resources`))
+  listResources: (id, {mode}) => axios.get(api.url(`/clusters/${id}/resources`), {
+    params: {
+      mode: mode ? "background" : 'foreground'
+    }
+  })
     .then(api.process),
 
   getSummary: (id) => axios.get(api.url(`/clusters/${id}/summary`))
@@ -124,7 +129,7 @@ const loaders = {
 
   deleteRole: (id, userid) => axios.delete(api.url(`/clusters/${id}/roles/${userid}`))
     .then(api.process),
-    
+
 }
 
 const sideEffects = {
@@ -170,6 +175,7 @@ const sideEffects = {
     dispatch,
     loader: () => loaders.list({
       showDeleted: opts.noDeleted ? false : selectors.cluster.showDeleted(getState()),
+      mode: opts.background ? opts.background : false
     }),
     prefix,
     name: 'list',
@@ -273,10 +279,12 @@ const sideEffects = {
     dataAction: actions.setTasks,
     snackbarError: true,
   }),
-  listResources: (id) => (dispatch) => {
+  listResources: (id, opts = {}) => (dispatch) => {
     return api.loaderSideEffect({
       dispatch,
-      loader: () => loaders.listResources(id),
+      loader: () => loaders.listResources(id, {
+        mode: opts.background ? opts.background : false
+      }),
       prefix,
       name: 'listResources',
       dataAction: actions.setResources,
@@ -296,7 +304,7 @@ const sideEffects = {
   startClusterLoop: () => async (dispatch, getState) => {
     await dispatch(actions.list())
     const intervalTask = setInterval(() => {
-      dispatch(actions.list())
+      dispatch(actions.list({background: true}))
     }, 1000)
     dispatch(actions.setLoop({
       name: 'cluster',
@@ -323,7 +331,7 @@ const sideEffects = {
     if(!looping) return
     await dispatch(actions.listResources(id))
     await new Promise(resolve => setTimeout(resolve, 1000))
-    dispatch(actions.resourcesLoop(id))
+    dispatch(actions.resourcesLoop(id, {background: true}))
   },
   stopResourcesLoop: () => (dispatch, getState) => {
     dispatch(actions.setLoop({
@@ -332,7 +340,7 @@ const sideEffects = {
     }))
   },
   addRole: () => async (dispatch, getState) => {
-    const id = selectors.router.idParam(getState())  
+    const id = selectors.router.idParam(getState())
     const username = selectors.user.accessControlSearch(getState())
     const permission = selectors.user.accessControlLevel(getState())
     try {
@@ -354,7 +362,7 @@ const sideEffects = {
     }
   },
   deleteRole: (userid) =>  async (dispatch, getState) => {
-    const id = selectors.router.idParam(getState())  
+    const id = selectors.router.idParam(getState())
     try {
       await api.loaderSideEffect({
         dispatch,

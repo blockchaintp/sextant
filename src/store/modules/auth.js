@@ -24,13 +24,14 @@ const loaders = {
 
   status: () => axios.get(api.url('/user/status'))
     .then(api.process),
-    
+
+
   login: (payload) => axios.post(api.url('/user/login'), payload)
     .then(api.process),
 
   logout: () => axios.get(api.url('/user/logout'))
     .then(api.process),
-    
+
 }
 
 const sideEffects = {
