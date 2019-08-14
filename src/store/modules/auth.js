@@ -25,8 +25,8 @@ const loaders = {
   status: () => axios.get(api.url('/user/status'))
     .then(api.process),
 
-// add query string to login path 
-  login: (payload) => axios.post(api.url('/user/login?test=1'), payload)
+
+  login: (payload) => axios.post(api.url('/user/login'), payload)
     .then(api.process),
 
   logout: () => axios.get(api.url('/user/logout'))
