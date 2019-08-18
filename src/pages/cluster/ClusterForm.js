@@ -13,6 +13,8 @@ import RoleTable from 'pages/role/RoleTable'
 import FormWrapper from 'components/form/Wrapper'
 import CodeBlock from 'components/code/CodeBlock'
 
+import saveAs from 'file-saver'
+
 const HELP_VARIABLES = `export SERVICEACCOUNT=sextant
 export NAMESPACE=default
 `
@@ -34,9 +36,7 @@ RBAC_API_VERSIONS=$(kubectl api-versions | grep rbac)
 # If RBAC is enabled - assign cluster-admin role to service account:
 if [ -n "$RBAC_API_VERSIONS" ]; then
   echo "creating clusterrolebinding: $SERVICEACCOUNT in namespace $NAMESPACE"
-  kubectl create -n $NAMESPACE clusterrolebinding $SERVICEACCOUNT \
-    --clusterrole=cluster-admin \
-    --serviceaccount=$NAMESPACE:$SERVICEACCOUNT
+  kubectl create -n $NAMESPACE clusterrolebinding $SERVICEACCOUNT --clusterrole=cluster-admin --serviceaccount=$NAMESPACE:$SERVICEACCOUNT
 fi
 `
 
@@ -191,11 +191,8 @@ class ClusterForm extends React.Component {
           Connect Remote Cluster
         </Typography>
         <Typography gutterBottom>
-          To connect a remote cluster, you will need to have <b>kubectl</b> connected to it
-          and the ability to create service accounts.
-        </Typography>
-        <Typography gutterBottom>
-          You will need to provide these values:
+          You will need to have already created a cluster and have set your <b>kubectl</b> to connect to
+          that cluster. In order to do this, you will need to provide <b>kubectl</b> these values:
         </Typography>
         <ul className={ classes.text }>
           <li>API Server Address</li>
@@ -203,14 +200,14 @@ class ClusterForm extends React.Component {
           <li>Certificate Authority</li>
         </ul>
         <Typography gutterBottom>
-          You can either create a service account manually or use the following scripts:
+          To help you obtain these values, please follow the following steps:
         </Typography>
         <Typography variant="subtitle1" gutterBottom>
           Step 1. Choose service account name and namespace
         </Typography>
         <Typography gutterBottom>
-          Choose a service account name (default = <b>sextant</b>) and a namespace for the service account (default = <b>default</b>) we will create.
-
+          Choose a service account name (default = <b>sextant</b>) and a namespace for the service account (default = <b>default</b>) by setting
+          the following environment variables where you'll be using <b>kubectl</b> to create the services. 
         </Typography>
         <CodeBlock
           code={ HELP_VARIABLES }
@@ -221,24 +218,51 @@ class ClusterForm extends React.Component {
           Step 2. Create service account
         </Typography>
         <Typography gutterBottom>
-          Then run this script that will create the service account and assign an cluster-admin role if RBAC is enabled on your cluster:
+          In the terminal create a shell script with the content shown below. Upon execution, the script will create the service account and 
+          assign an cluster-admin role if RBAC is enabled on your cluster. You can click on the copy button and transfer the
+          content to your shell script (e.g. 'create-service.sh'). 
         </Typography>
         <CodeBlock
           code={ HELP_CREATE_SERVICEACCOUNT }
           clipboard={ true }
           snackbarMessage={ snackbarMessage }
         />
+        <Typography gutterBottom>
+          Alternatively, click on the button below and download a file named 'create-service.sh' containing the scripts shown above.
+          Run the script after downloading.
+        </Typography>
+        <Button className={ classes.button }
+                type="button"
+                variant="contained" 
+                onClick={ () => {
+          const blob = new Blob([HELP_CREATE_SERVICEACCOUNT], {type:'text/plain;charset=utf-8'});
+          saveAs(blob, 'create-service.sh');
+        }}>Download create-service.sh</Button>
         <Typography variant="subtitle1" gutterBottom>
           Step 3. Get credentials
         </Typography>
         <Typography gutterBottom>
-          Once you have the service account created - use the following script to get the api server address, token and certificate authority.
+          Having completed STEP 2, you would have created the necessary service account in your chosen cluster.
+          Next execute the following script to get the api server address, token and certificate authority. You
+          will need to create a shell script with the following content yourself. You can click on the copy button
+          and transfer the content to the script of your choice (e.g. 'get-values.sh').
         </Typography>
         <CodeBlock
           code={ HELP_GET_VALUES }
           clipboard={ true }
           snackbarMessage={ snackbarMessage }
         />
+        <Typography gutterBottom>
+          Alternatively, click on the button below and download a file named 'get-value.sh' containing the scripts shown above.
+          Run the script after downloading.
+        </Typography>
+        <Button className={ classes.button }
+                type="button"
+                variant="contained" 
+                onClick={ () => {
+          const blob = new Blob([HELP_GET_VALUES ], {type:'text/plain;charset=utf-8'});
+          saveAs(blob, 'get-values.sh');
+        }}>Download get-values.sh</Button>
         <Typography variant="subtitle1" gutterBottom>
           Step 4. Paste credentials
         </Typography>
