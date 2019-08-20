@@ -1,5 +1,8 @@
 import settings from 'settings'
 
+import authActions from '../modules/auth'
+import clusterActions from '../modules/cluster'
+import deploymentActions from '../modules/deployment'
 import networkActions from '../modules/network'
 import snackbarActions from '../modules/snackbar'
 
@@ -7,8 +10,10 @@ const url = (path) => [settings.api, path].join('/').replace(/\/+/g, '/')
 
 // catch bad status codes and run an error handler
 // otherwise return the data property of the response
-const process = res => {
-  if(res.status >= 400) return Promise.reject(`status: ${res.status}`)
+const process = (res) => {
+  if(res.status >= 400) {
+    return Promise.reject(`status: ${res.status}`)
+  }
   return res.data
 }
 
@@ -22,7 +27,7 @@ const loaderSideEffect = ({
   snackbarError,
 }) => {
 
-  const networkName = 
+  const networkName =
     [prefix, name]
     .filter(s => s)
     .join('.')
@@ -43,6 +48,7 @@ const loaderSideEffect = ({
       // pluck an error message from the response body if present
       let useErrorMessage = error.toString()
       const res = error.response
+
       if(res && res.data && res.data.error) useErrorMessage = res.data.error
       dispatch(networkActions.setError({
         name: networkName,
@@ -52,7 +58,16 @@ const loaderSideEffect = ({
       if(snackbarError) {
         dispatch(snackbarActions.setError(useErrorMessage))
       }
-      if(returnError) return Promise.reject(useErrorMessage)
+
+      if(res.data.logout) {
+        dispatch(authActions.logout())
+        // stop background looping AJAX operations
+        dispatch(clusterActions.stopClusterLoop())
+        dispatch(deploymentActions.stopDeploymentLoop())
+        dispatch(deploymentActions.stopResourcesLoop())
+
+      }
+      if(returnError) {return Promise.reject(useErrorMessage)}
     })
 }
 
