@@ -75,6 +75,17 @@ const sideEffects = {
       .then(() => dispatch(routerActions.navigateTo('login')))
       .catch(() => {})
   },
+  reset: () => (dispatch, getState) => { api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.status(),
+    prefix,
+    name: 'reset',
+    dataAction: actions.setData,
+  })
+    .then(data => dispatch(actions.setData(data)))
+    .then(() => dispatch(routerActions.navigateTo('login')))
+    .catch(() => {})
+  }
 }
 
 const reducer = CreateReducer({

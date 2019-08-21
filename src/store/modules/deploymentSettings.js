@@ -478,7 +478,7 @@ const sideEffects = {
     dispatch(actions.keysLoop({
       cluster,
       id,
-    }))    
+    }))
   },
   keysLoop: ({
     cluster,
