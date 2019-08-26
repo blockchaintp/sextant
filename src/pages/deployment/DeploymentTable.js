@@ -15,7 +15,7 @@ import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
-import MenuButton from 'components/layout/MenuButton'
+import DialogButton from 'components/layout/DialogButton'
 import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
@@ -89,7 +89,7 @@ class DeploymentTable extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       classes,
       deployments,
       showDeleted,
@@ -107,6 +107,7 @@ class DeploymentTable extends React.Component {
       embedded,
       user,
     } = this.props
+
 
     const {
       deleteConfirmOpen,
@@ -182,10 +183,12 @@ class DeploymentTable extends React.Component {
 
       return {
         title: formConfig.button.title,
+        icon: formConfig.button.icon,
         items: formConfig.button.versions.map(version => ({
           title: version.title,
+          description: version.description,
           handler: () => onAdd(clusterId, deploymentType, version.form),
-        }))
+        })),
       }
     })
 
@@ -206,8 +209,8 @@ class DeploymentTable extends React.Component {
 
     const addButton = (
       <div className={ classes.addButton }>
-        <MenuButton 
-          className={classes.button} 
+        <DialogButton
+          className={classes.button}
           title="Add"
           icon={ AddIcon }
           buttonProps={{
@@ -220,8 +223,8 @@ class DeploymentTable extends React.Component {
       </div>
     )
 
-    const headerActions = embedded ? 
-      addButton : 
+    const headerActions = embedded ?
+      addButton :
       (
         <div className={ classes.headerActions }>
           <div className={ classes.showDeletedCheckbox }>
@@ -257,7 +260,7 @@ class DeploymentTable extends React.Component {
                   )
                     .map((cluster, i) => {
                       return (
-                        <MenuItem 
+                        <MenuItem
                           key={ i }
                           value={ cluster.id }
                         >
@@ -310,8 +313,8 @@ class DeploymentTable extends React.Component {
       return buttons
     }
 
-    const title = embedded ? 
-      `Deployments` : 
+    const title = embedded ?
+      `Deployments` :
       cluster ? cluster.name + ': Deployments' : 'Deployments'
 
     return (
@@ -357,4 +360,3 @@ DeploymentTable.propTypes = {
 }
 
 export default withStyles(styles)(DeploymentTable)
-
