@@ -44,7 +44,7 @@ class DeploymentTableContainer extends React.Component {
   render() {
     return (
       <DeploymentTable {...this.props} />
-    )    
+    )
   }
 }
 

@@ -186,7 +186,7 @@ class ClusterForm extends React.Component {
     if(initialValues.provision_type != 'remote') return null
 
     return (
-      <Paper className={ classes.paper }>
+      <Paper className={ classes.paper } >
         <Typography variant="h6" gutterBottom>
           Connect Remote Cluster
         </Typography>
@@ -207,7 +207,7 @@ class ClusterForm extends React.Component {
         </Typography>
         <Typography gutterBottom>
           Choose a service account name (default = <b>sextant</b>) and a namespace for the service account (default = <b>default</b>) by setting
-          the following environment variables where you'll be using <b>kubectl</b> to create the services. 
+          the following environment variables where you'll be using <b>kubectl</b> to create the services.
         </Typography>
         <CodeBlock
           code={ HELP_VARIABLES }
@@ -218,9 +218,9 @@ class ClusterForm extends React.Component {
           Step 2. Create service account
         </Typography>
         <Typography gutterBottom>
-          In the terminal create a shell script with the content shown below. Upon execution, the script will create the service account and 
+          In the terminal create a shell script with the content shown below. Upon execution, the script will create the service account and
           assign an cluster-admin role if RBAC is enabled on your cluster. You can click on the copy button and transfer the
-          content to your shell script (e.g. 'create-service.sh'). 
+          content to your shell script (e.g. 'create-service.sh').
         </Typography>
         <CodeBlock
           code={ HELP_CREATE_SERVICEACCOUNT }
@@ -233,7 +233,7 @@ class ClusterForm extends React.Component {
         </Typography>
         <Button className={ classes.button }
                 type="button"
-                variant="contained" 
+                variant="contained"
                 onClick={ () => {
           const blob = new Blob([HELP_CREATE_SERVICEACCOUNT], {type:'text/plain;charset=utf-8'});
           saveAs(blob, 'create-service.sh');
@@ -258,7 +258,7 @@ class ClusterForm extends React.Component {
         </Typography>
         <Button className={ classes.button }
                 type="button"
-                variant="contained" 
+                variant="contained"
                 onClick={ () => {
           const blob = new Blob([HELP_GET_VALUES ], {type:'text/plain;charset=utf-8'});
           saveAs(blob, 'get-values.sh');

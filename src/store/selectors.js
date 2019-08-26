@@ -179,42 +179,42 @@ const selectors = {
     fullRoute: (state) => findRoute(routes, routeName(state)),
 
     /*
-    
+
       get the current route name
-    
+
     */
     name: routeName,
 
     /*
-    
+
       get the current route params
-    
+
     */
     params: routeParams,
     idParam: routeParamId,
 
     /*
-    
+
       split the current route name by period
       so if the current route name is 'content.books.1'
       it returns ['content', 'books', 1]
-    
+
     */
     segments: routeSegments,
     /*
-    
+
       get a single segment of the route based on index
       so if the current route name is 'content.books.1'
       index of 1 would return 'books'
-    
+
     */
     segment: (state, index) => routeSegments(state)[index],
     /*
-    
+
       get a single segment of the route that is after the given segment
       so if the current route name is 'content.books.1'
       segment of 'content' would return 'books'
-    
+
     */
     segmentAfter: (state, segment) => {
       const parts = routeSegments(state)
