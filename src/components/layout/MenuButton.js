@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 
 const styles = (theme) => ({
-  
+
 })
 
 class MenuButton extends React.Component {
@@ -25,7 +25,7 @@ class MenuButton extends React.Component {
   }
 
   handleClose = () => {
-    this.setState({ 
+    this.setState({
       anchorEl: null,
       items: null,
     })
@@ -82,14 +82,14 @@ class MenuButton extends React.Component {
               </ListItemIcon>
             )
           }
-          <ListItemText 
+          <ListItemText
             primary={ item.title }
           />
         </MenuItem>
       )
     })
 
-    const { 
+    const {
       anchorEl,
     } = this.state
 
@@ -114,15 +114,15 @@ class MenuButton extends React.Component {
   }
 
   render() {
-    const { 
-      classes, 
+    const {
+      classes,
       title,
       icon,
       buttonProps,
       disabled,
     } = this.props
 
-    const { 
+    const {
       anchorEl,
     } = this.state
 
@@ -158,7 +158,7 @@ class MenuButton extends React.Component {
             })
           )
         }
-        
+
       </div>
     )
   }

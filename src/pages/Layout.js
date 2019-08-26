@@ -36,7 +36,7 @@ const styles = theme => ({
     paddingBottom: '2.5rem'
   },
   footer: {
-    // absolute postion within the root container set to the bottom 
+    // absolute postion within the root container set to the bottom
     position: 'absolute',
     bottom: '0',
     width: '100%',
