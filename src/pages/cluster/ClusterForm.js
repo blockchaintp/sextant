@@ -186,7 +186,7 @@ class ClusterForm extends React.Component {
     if(initialValues.provision_type != 'remote') return null
 
     return (
-      <Paper className={ classes.paper } >
+      <Paper className={ classes.paper } style={{maxHeight: 723, overflow: 'auto'}}>
         <Typography variant="h6" gutterBottom>
           Connect Remote Cluster
         </Typography>
@@ -231,6 +231,7 @@ class ClusterForm extends React.Component {
           Alternatively, click on the button below and download a file named 'create-service.sh' containing the scripts shown above.
           Run the script after downloading.
         </Typography>
+        <div className={classes.spacer}></div>
         <Button className={ classes.button }
                 type="button"
                 variant="contained"
@@ -238,6 +239,7 @@ class ClusterForm extends React.Component {
           const blob = new Blob([HELP_CREATE_SERVICEACCOUNT], {type:'text/plain;charset=utf-8'});
           saveAs(blob, 'create-service.sh');
         }}>Download create-service.sh</Button>
+        <div className={classes.spacer}></div>
         <Typography variant="subtitle1" gutterBottom>
           Step 3. Get credentials
         </Typography>
