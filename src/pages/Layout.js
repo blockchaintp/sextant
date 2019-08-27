@@ -23,7 +23,7 @@ const styles = theme => ({
     flex: 1,
   },
   logo: {
-    height: '50px',
+    height: '48px',
     marginRight: '20px',
     flex: 0,
   },
@@ -67,13 +67,12 @@ class Layout extends React.Component {
                 items={ sideMenuItems }
                 openPage={ openPage }
               />
-              <img src="/sextant-logo-white.svg" className={ classes.logo } />
+              <img src="/large-full-whiteoutline-roundel.svg" className={ classes.logo } />
               <Typography
                 variant="h6"
                 color="inherit"
                 className={ classes.flex }
               >
-                { title }
               </Typography>
               <AppBarMenu
                 user={ user }
