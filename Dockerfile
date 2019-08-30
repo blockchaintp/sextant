@@ -5,7 +5,7 @@ RUN apk upgrade
 RUN apk add bash git
 WORKDIR /app/frontend
 COPY ./package.json /app/frontend/package.json
-COPY ./yarn.lock /app/frontend/yarn.lock
-RUN yarn install --frozen-lockfile
+COPY ./package-lock.json /app/frontend/package-lock.json
+RUN npm install
 COPY ./ /app/frontend
-ENTRYPOINT ["yarn", "run", "develop"]
+ENTRYPOINT ["npm", "run", "develop"]
