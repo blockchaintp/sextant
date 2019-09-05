@@ -5,10 +5,10 @@ RUN apk upgrade
 RUN apk add bash git
 WORKDIR /app/frontend
 COPY ./package.json /app/frontend/package.json
-COPY ./yarn.lock /app/frontend/yarn.lock
-RUN yarn install
+COPY ./package-lock.json /app/frontend/package-lock.json
+RUN npm install
 COPY ./ /app/frontend
-RUN yarn run build
+RUN npm run build
 
 FROM nginx:alpine
 MAINTAINER kai@blockchaintp.com
@@ -18,4 +18,4 @@ COPY --from=build-env /app/frontend/dist /www
 RUN apk update  && apk upgrade
 RUN apk add bash
 
-ENTRYPOINT ["bash", "nginx_entry.sh"] 
+ENTRYPOINT ["bash", "nginx_entry.sh"]
