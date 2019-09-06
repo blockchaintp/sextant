@@ -204,7 +204,18 @@ class DeploymentTable extends React.Component {
         }
       })
 
-      addButtonDisabled = (canWriteToCluster) ? false : true
+    const noActiveDeployments = () => {
+     const deploymentList = this.props.deployments
+     let status = true
+     deploymentList.forEach((deployment) => {
+       if (deployment.task.action === "deployment.create" && deployment.task.status === "finished") {
+         status = false
+       }
+     })
+     return status
+ }
+
+      addButtonDisabled = (canWriteToCluster && noActiveDeployments()) ? false : true
     }
 
     const addButton = (
