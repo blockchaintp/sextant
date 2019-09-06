@@ -204,7 +204,7 @@ class DeploymentTable extends React.Component {
         }
       })
 
-      addButtonDisabled = canWriteToCluster ? false : true
+      addButtonDisabled = (canWriteToCluster) ? false : true
     }
 
     const addButton = (
@@ -304,11 +304,11 @@ class DeploymentTable extends React.Component {
         handler: (item) => onViewStatus(item.cluster, item.id),
       })
 
-      buttons.push({
-        title: 'Settings',
-        icon: SettingsIcon,
-        handler: (item) => onViewSettings(item.cluster, item.id),
-      })
+      // buttons.push({
+      //   title: 'Settings',
+      //   icon: SettingsIcon,s
+      //   handler: (item) => onViewSettings(item.cluster, item.id),
+      // })
 
       return buttons
     }
