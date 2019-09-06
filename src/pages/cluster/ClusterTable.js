@@ -74,7 +74,7 @@ class ClusterTable extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       classes,
       clusters,
       showDeleted,
@@ -181,8 +181,8 @@ class ClusterTable extends React.Component {
           />
         </div>
         <div className={ classes.addButton }>
-          <MenuButton 
-            className={classes.button} 
+          <MenuButton
+            className={classes.button}
             title="Add"
             icon={ AddIcon }
             buttonProps={{
@@ -277,4 +277,3 @@ ClusterTable.propTypes = {
 }
 
 export default withStyles(styles)(ClusterTable)
-

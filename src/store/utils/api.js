@@ -59,7 +59,7 @@ const loaderSideEffect = ({
         dispatch(snackbarActions.setError(useErrorMessage))
       }
 
-      if(res.data.reset) {
+      if(res && res.data.reset) {
         dispatch(authActions.reset())
         // stop background looping AJAX operations
         dispatch(clusterActions.stopClusterLoop())
