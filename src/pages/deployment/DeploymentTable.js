@@ -208,7 +208,7 @@ class DeploymentTable extends React.Component {
      const deploymentList = this.props.deployments
      let status = true
      deploymentList.forEach((deployment) => {
-       if (deployment.task.action === "deployment.create" && deployment.task.status === "finished") {
+       if (deployment.task && deployment.task.action === "deployment.create" && deployment.task.status === "finished") {
          status = false
        }
      })
