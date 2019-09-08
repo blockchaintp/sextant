@@ -27,7 +27,7 @@ const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
 const ViewIcon = settings.icons.view
-const SettingsIcon = settings.icons.build
+const SettingsIcon = settings.icons.settings
 
 const styles = theme => ({
   errorText: {
@@ -315,11 +315,12 @@ class DeploymentTable extends React.Component {
         handler: (item) => onViewStatus(item.cluster, item.id),
       })
 
-      // buttons.push({
-      //   title: 'Settings',
-      //   icon: SettingsIcon,s
-      //   handler: (item) => onViewSettings(item.cluster, item.id),
-      // })
+      buttons.push({
+        title: 'Settings',
+        icon: SettingsIcon,
+        disabled: true,
+        handler: (item) => onViewSettings(item.cluster, item.id),
+      })
 
       return buttons
     }

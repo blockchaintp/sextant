@@ -14,7 +14,7 @@ const styles = theme => {
 }
 
 class SimpleTableActions extends React.Component {
-  
+
   render() {
     const { classes, item, actions } = this.props
     return (
@@ -28,14 +28,18 @@ class SimpleTableActions extends React.Component {
             .map((action, i) => {
               const IconClass = action.getIcon ? action.getIcon(item) : action.icon
               const title = action.getTitle ? action.getTitle(item) : action.title
+              const visibility = action.disabled ? action.disabled : false
 
               const button = (
-                <IconButton onClick={ (event) => {
-                  event.stopPropagation()
-                  if(action.handler) {
-                    action.handler(item)  
-                  }
-                }}>
+                <IconButton
+                  onClick={ (event) => {
+                    event.stopPropagation()
+                    if(action.handler) {
+                      action.handler(item)
+                    }
+                  }}
+                  disabled={visibility}
+                >
                   <IconClass />
                 </IconButton>
               )
