@@ -27,7 +27,7 @@ const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
 const ViewIcon = settings.icons.view
-const SettingsIcon = settings.icons.build
+const SettingsIcon = settings.icons.settings
 
 const styles = theme => ({
   errorText: {
