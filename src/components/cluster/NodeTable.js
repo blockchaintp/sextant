@@ -23,9 +23,9 @@ const fields =[{
 }]
 
 class NodeTable extends React.Component {
-  
+
   render() {
-    const { 
+    const {
       classes,
       data,
     } = this.props
@@ -39,7 +39,7 @@ class NodeTable extends React.Component {
         return {
           id: node.metadata.name,
           name: node.metadata.name,
-          ip: externalIP.address,
+          ip: externalIP ? externalIP.address : "",
           cpu: node.status.allocatable.cpu,
           ram: node.status.allocatable.memory,
         }

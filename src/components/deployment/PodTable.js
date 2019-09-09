@@ -26,9 +26,9 @@ const fields =[{
 }]
 
 class PodTable extends React.Component {
-  
+
   render() {
-    const { 
+    const {
       classes,
       data,
       nodes,
@@ -67,7 +67,7 @@ class PodTable extends React.Component {
           //age: timeago().format(pod.metadata.creationTimestamp).replace(' ago', ''),
           created: new Date(pod.metadata.creationTimestamp).toLocaleString(),
           ip: pod.status.podIP,
-          externalIP: externalIP.address,
+          externalIP: externalIP ? externalIP.address : ""
         }
       })
 
