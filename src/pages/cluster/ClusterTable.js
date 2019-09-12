@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
+import Button from '@material-ui/core/Button'
 
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
@@ -154,13 +155,7 @@ class ClusterTable extends React.Component {
       }
     })
 
-    const addButtonItems = [{
-      title: 'Remote Cluster',
-      handler: () => onAdd('remote')
-    }, {
-      title: 'Local Cluster',
-      handler: () => onAdd('local')
-    }]
+    const addCluster = () => onAdd('remote')
 
     const headerActions = (
       <div className={ classes.headerActions }>
@@ -181,17 +176,16 @@ class ClusterTable extends React.Component {
           />
         </div>
         <div className={ classes.addButton }>
-          <MenuButton
+          <Button
             className={classes.button}
-            title="Add"
-            icon={ AddIcon }
-            buttonProps={{
-              variant: 'contained',
-              color: 'secondary',
-            }}
-            items={ addButtonItems }
+            variant= 'contained'
+            color= 'secondary'
+            onClick={addCluster}
             disabled={ !canCreateCluster }
-          />
+          >
+            Add
+            <AddIcon />
+          </Button>
         </div>
       </div>
     )
