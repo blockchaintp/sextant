@@ -1,4 +1,4 @@
-import { 
+import {
   array,
   object,
   string,
@@ -55,12 +55,12 @@ const validateHandlers = {
 }
 
 /*
-    
+
   loop over each of the method args and apply them in a chain
 
   return a flat object with dot notation fields
 
-  e.g. 
+  e.g.
 
   {
     type: 'string',
