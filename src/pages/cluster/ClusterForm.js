@@ -188,7 +188,7 @@ class ClusterForm extends React.Component {
     return (
       <Paper className={ classes.paper } style={{maxHeight: 723, overflow: 'auto'}}>
         <Typography variant="h6" gutterBottom>
-          Connect Remote Cluster
+          Obtain Cluster Details
         </Typography>
         <Typography gutterBottom>
           You will need to have already created a cluster and have set your <b>kubectl</b> to connect to
@@ -220,7 +220,7 @@ class ClusterForm extends React.Component {
         <Typography gutterBottom>
           In the terminal create a shell script with the content shown below. Upon execution, the script will create the service account and
           assign an cluster-admin role if RBAC is enabled on your cluster. You can click on the copy button and transfer the
-          content to your shell script (e.g. 'create-service.sh').
+          content to your shell script (e.g. <em>create-service.sh</em>).
         </Typography>
         <CodeBlock
           code={ HELP_CREATE_SERVICEACCOUNT }
@@ -228,7 +228,7 @@ class ClusterForm extends React.Component {
           snackbarMessage={ snackbarMessage }
         />
         <Typography gutterBottom>
-          Alternatively, click on the button below and download a file named 'create-service.sh' containing the scripts shown above.
+          Alternatively, click on the button below and download a file named <em>create-service.sh</em> containing the scripts shown above.
           Run the script after downloading.
         </Typography>
         <div className={classes.spacer}></div>
@@ -238,7 +238,7 @@ class ClusterForm extends React.Component {
                   onClick={ () => {
             const blob = new Blob([HELP_CREATE_SERVICEACCOUNT], {type:'text/plain;charset=utf-8'});
             saveAs(blob, 'create-service.sh');
-          }}>Download create-service.sh</Button>
+          }}>Download file</Button>
         <div className={classes.spacer}></div>
         <Typography variant="subtitle1" gutterBottom>
           Step 3. Get credentials
@@ -247,7 +247,7 @@ class ClusterForm extends React.Component {
           Having completed STEP 2, you would have created the necessary service account in your chosen cluster.
           Next execute the following script to get the api server address, token and certificate authority. You
           will need to create a shell script with the following content yourself. You can click on the copy button
-          and transfer the content to the script of your choice (e.g. 'get-values.sh').
+          and transfer the content to the script of your choice (e.g. <em>get-values.sh</em>).
         </Typography>
         <CodeBlock
           code={ HELP_GET_VALUES }
@@ -255,7 +255,7 @@ class ClusterForm extends React.Component {
           snackbarMessage={ snackbarMessage }
         />
         <Typography gutterBottom>
-          Alternatively, click on the button below and download a file named 'get-value.sh' containing the scripts shown above.
+          Alternatively, click on the button below and download a file named <em>get-values.sh</em> containing the scripts shown above.
           Run the script after downloading.
         </Typography>
         <div className={classes.spacer}></div>
@@ -265,7 +265,7 @@ class ClusterForm extends React.Component {
                   onClick={ () => {
             const blob = new Blob([HELP_GET_VALUES ], {type:'text/plain;charset=utf-8'});
             saveAs(blob, 'get-values.sh');
-          }}>Download get-values.sh</Button>
+          }}>Download file</Button>
         <div className={classes.spacer}></div>
         <Typography variant="subtitle1" gutterBottom>
           Step 4. Paste credentials
