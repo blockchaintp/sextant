@@ -68,7 +68,7 @@ class DeploymentForm extends React.Component {
       onCancelRoleForm,
       classes,
     } = this.props
-    
+
     return (
       <Paper className={ classes.paper }>
         <RoleTable
@@ -93,7 +93,7 @@ class DeploymentForm extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       id,
       classes,
       title,
@@ -109,6 +109,7 @@ class DeploymentForm extends React.Component {
       tasks,
       exists,
     } = this.props
+    console.log("SCHEMA", schema);
 
     return (
       <div className={ classes.root }>
@@ -153,7 +154,7 @@ class DeploymentForm extends React.Component {
                         { submitTitle }
                       </Button>
                     </React.Fragment>
-                    
+
                   )
                 }
               />
@@ -183,7 +184,7 @@ class DeploymentForm extends React.Component {
 DeploymentForm.propTypes = {
   classes: PropTypes.object.isRequired,
   submitForm: PropTypes.func.isRequired,
-  initialValues: PropTypes.object.isRequired, 
+  initialValues: PropTypes.object.isRequired,
   error: PropTypes.string,
   title: PropTypes.string,
   submitTitle: PropTypes.string,
