@@ -260,15 +260,29 @@ class FormListInner extends React.Component {
       return ret
     })
 
+    const disableButton = () => {
+      // only for image pull secrets field
+      let disabled
+      if (item.id === "imagePullSecrets.value" && formProps.values.imagePullSecrets['enabled']) {
+        // links add-button's render to radio-button state
+        disabled = formProps.values.imagePullSecrets['enabled'] === 'false' ? true : false
+      } else if(item.id === "imagePullSecrets.value") {
+        // sets initial render of add-button to disabled
+        disabled = true
+      }
+      return disabled
+    }
+
     const addButton = (
       <div className={ classes.addButtonContainer }>
-        <Button 
-          className={ classes.button } 
+        <Button
+          className={ classes.button }
           variant="contained"
           onClick={ this.onAdd }
           size="small"
+          disabled= {disableButton()}
         >
-          Add 
+          Add
           <AddIcon />
         </Button>
       </div>
@@ -337,7 +351,7 @@ const FormList = withStyles(styles)(FormListInner)
 
 class FormWrapperInner extends React.Component {
   state = {
-    hasSubmitted: false,
+    hasSubmitted: false
   }
 
   flagSubmitted() {
@@ -347,7 +361,6 @@ class FormWrapperInner extends React.Component {
   }
 
   getItem(item, formProps) {
-
     if(typeof(item) == 'string') {
       return (
         <Typography
@@ -422,7 +435,7 @@ class FormWrapperInner extends React.Component {
               </Typography>
             )
           }
-          
+
         </Grid>
       )
     }
@@ -464,6 +477,7 @@ class FormWrapperInner extends React.Component {
     } catch(e) {
 
     }
+
 
     return (
       <Formik
@@ -551,7 +565,7 @@ class FormWrapperInner extends React.Component {
                           })
                         }
                       </ul>
-                    </div> 
+                    </div>
                   )
                 }
               </form>
