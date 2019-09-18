@@ -463,7 +463,7 @@ class DeploymentSettingsDamlParties extends React.Component {
     const localParticipants = keyManagerKeys
       .filter(entry => entry.name.indexOf('daml:') == 0)
       .map(entry => {
-        return {
+         return {
           keyManager: entry,
           participant: participantMap[entry.publicKey]
         }
@@ -537,7 +537,6 @@ class DeploymentSettingsDamlParties extends React.Component {
     })
 
     const allParticipants = localParticipants.concat(remoteParticipants)
-
     return (
       <React.Fragment>
         {
@@ -549,27 +548,30 @@ class DeploymentSettingsDamlParties extends React.Component {
                 name: party.name,
               }
             })
-            return (
-              <div key={ i } className={ classes.denseTable }>
-                <div className={ classes.spacing }></div>
-                <Typography variant="subtitle2">
+
+            if ( data.length != 0) {
+              return (
+                <div key={ i } className={ classes.denseTable }>
+                  <div className={ classes.spacing }></div>
+                  <Typography variant="subtitle2">
                   { participant.publicKey.substring(0, 8) } - { localKeyMap[participant.publicKey] ? 'local' : 'remote' }
-                </Typography>
-                <Typography className={ classes.smallText }>
-                  Public Key: { participant.publicKey }
-                </Typography>
-                <Typography className={ classes.smallText }>
-                  DAML ID: { participant.damlId }
-                </Typography>
-                <div className={ classes.partyContainer }>
-                  <SimpleTable
-                    hideHeader
-                    data={ data }
-                    fields={ fields }
-                  />
+                  </Typography>
+                  <Typography className={ classes.smallText }>
+                    Public Key: { participant.publicKey }
+                  </Typography>
+                  <Typography className={ classes.smallText }>
+                    DAML ID: { participant.damlId }
+                  </Typography>
+                    <div className={ classes.partyContainer }>
+                    <SimpleTable
+                      hideHeader
+                      data={ data }
+                      fields={ fields }
+                    />
+                    </div>
                 </div>
-              </div>
-            )
+              )
+            }
           })
         }
       </React.Fragment>
