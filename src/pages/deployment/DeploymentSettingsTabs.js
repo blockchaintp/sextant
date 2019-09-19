@@ -16,7 +16,7 @@ const styles = theme => ({
 
 const PAGES = [{
   id: 'keys',
-  title: 'Permissions',
+  title: 'Sawtooth Identity',
   index: 0,
 }, {
   id: 'damlParties',
@@ -28,7 +28,7 @@ const PAGES = [{
   index: 2,
 }, {
   id: 'damlTimeService',
-  title: 'DAML Time Service',
+  title: 'DAML Timekeeper',
   index: 3,
 }]
 
