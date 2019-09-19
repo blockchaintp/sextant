@@ -318,7 +318,7 @@ class DeploymentTable extends React.Component {
       buttons.push({
         title: 'Settings',
         icon: SettingsIcon,
-        disabled: false,
+        disabled: true,
         handler: (item) => onViewSettings(item.cluster, item.id),
       })
 
