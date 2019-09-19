@@ -194,9 +194,6 @@ const routes = [
             id: params.id
           }))
         },
-        // deactivate: (store, params) => {
-        //   store.dispatch(deploymentSettingsActions.stopKeysLoop())
-        // }
       },
     }, {
       name: 'damlParties',
