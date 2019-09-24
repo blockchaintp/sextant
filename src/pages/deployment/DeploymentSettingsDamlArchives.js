@@ -167,9 +167,6 @@ class DeploymentSettingsDamlArchives extends React.Component {
     } = this.props
 
     const fields =[{
-      title: 'Validator',
-      name: 'validator',
-    },{
       title: 'Package Id',
       name: 'packageId',
     },{
@@ -179,8 +176,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
 
     const data = archives.map(archive => {
       return Object.assign({}, archive, {
-        id: `archive.packageId-${Math.random()}`,
-        validator: archive.validator,
+        id: `archive.packageId-${Math.random()}`, // Needed to generate table rows
         packageId: archive.packageId,
         numberOfModules: archive.numberOfModules,
       })
