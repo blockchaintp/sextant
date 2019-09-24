@@ -109,12 +109,26 @@ class DeploymentForm extends React.Component {
       tasks,
       exists,
     } = this.props
-    console.log("SCHEMA", schema);
 
     return (
       <div className={ classes.root }>
         <Grid container spacing={24}>
-          <Grid item xs={ id == 'new' ? 12 : 6 }>
+        {
+          id != 'new' && (
+            <Grid item xs={ 12 }>
+              <div>
+                {
+                  this.getRoleTable()
+                }
+                <div className={ classes.spacer } />
+                {
+                  this.getTaskTable()
+                }
+              </div>
+            </Grid>
+          )
+        }
+          <Grid item xs={ 12}>
             <Paper className={ classes.paper }>
               <Typography variant="h6" gutterBottom>
                 { title }
@@ -160,21 +174,7 @@ class DeploymentForm extends React.Component {
               />
             </Paper>
           </Grid>
-          {
-            id != 'new' && (
-              <Grid item xs={ 6 }>
-                <div>
-                  {
-                    this.getRoleTable()
-                  }
-                  <div className={ classes.spacer } />
-                  {
-                    this.getTaskTable()
-                  }
-                </div>
-              </Grid>
-            )
-          }
+
         </Grid>
       </div>
     )
