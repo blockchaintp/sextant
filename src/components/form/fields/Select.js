@@ -4,6 +4,8 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import MenuItem from '@material-ui/core/MenuItem'
+import Typography from '@material-ui/core/Typography'
+import FormLabel from '@material-ui/core/FormLabel';
 
 import HelperText from './HelperText'
 
@@ -28,14 +30,24 @@ class SelectField extends React.Component {
       item,
       classes,
       disabled,
+      formProps
     } = this.props
+
+    const selectedConsensus = formProps.values.sawtooth.consensus
+    // returns the helper text associated with the selected consensus algorithm
+    const blurbText = () => {
+      for (let i = 0; i < item.options.length; i ++) {
+        if (item.options[i].value === selectedConsensus)
+        return item.options[i].blurb
+      }
+    }
 
     const title = item.title || name
     const extraProps = item.extraProps || {}
-
+    console.log("Do I have formProps?", this.props.formProps);
     return (
       <FormControl component="fieldset" className={ classes.root }>
-        <InputLabel htmlFor={ name }>{ title }</InputLabel>
+        <FormLabel htmlFor={ name }>{ title }</FormLabel>
         <Select
           value={ value || '' }
           onChange={ onChange }
@@ -64,11 +76,18 @@ class SelectField extends React.Component {
             })
           }
         </Select>
-        <HelperText
+        {item.alternateText ? (
+          <HelperText helperText={ blurbText() }
+            error={ error ? true : false }
+            touched={ touched }>
+            </HelperText>) : (
+          <HelperText
           helperText={ item.helperText }
           error={ error ? true : false }
           touched={ touched }
         />
+      )}
+
       </FormControl>
     )
   }
