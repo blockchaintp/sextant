@@ -40,6 +40,7 @@ const styles = theme => {
     },
     listTableTitle: {
       color: theme.palette.text.secondary,
+      flex: 'flexGrow'
     },
     listTable: {
       marginTop: theme.spacing.unit * 2,
@@ -54,7 +55,8 @@ const styles = theme => {
     },
     listTableHeader: {
       paddingLeft: '0px',
-    }
+      display:"flex"
+    },
   }
 }
 
@@ -304,7 +306,7 @@ class FormListInner extends React.Component {
           className={ classes.listTableHeader }
           getTitle={ () => (
             <React.Fragment>
-              <Typography className={ classes.listTableTitle } variant='subtitle1'>{ item.title || item.id }</Typography>
+              <Typography noWrap='true' className={ classes.listTableTitle } variant='subtitle1'>{ item.title === 'skip' ? null : (item.title || item.id) }</Typography>
               <Typography className={ classes.listTableTitle } variant='caption'>{ item.helperText }</Typography>
             </React.Fragment>
           )}
@@ -409,6 +411,7 @@ class FormWrapperInner extends React.Component {
         disabled={ disabled }
         error={ error }
         touched={ touched }
+        formProps={ formProps }
       />
     )
   }
@@ -477,7 +480,6 @@ class FormWrapperInner extends React.Component {
     } catch(e) {
 
     }
-
 
     return (
       <Formik
