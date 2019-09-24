@@ -26,6 +26,7 @@ const UploadIcon = settings.icons.upload
 const styles = theme => ({
   root: {
     padding: theme.spacing.unit * 2,
+    wordWrap: 'break-word',
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -170,15 +171,18 @@ class DeploymentSettingsDamlArchives extends React.Component {
       title: 'Package Id',
       name: 'packageId',
     },{
-      title: 'Number of Modules',
-      name: 'numberOfModules',
+      title: 'Modules',
+      name: 'modules',
     }]
 
     const data = archives.map(archive => {
+      const reducedMods = archive.modules.reduce( (acc, curr) => {
+        return `${acc} ${curr}`
+      })
       return Object.assign({}, archive, {
         id: `archive.packageId-${Math.random()}`, // Needed to generate table rows
         packageId: archive.packageId,
-        numberOfModules: archive.numberOfModules,
+        modules: reducedMods,
       })
     })
 
