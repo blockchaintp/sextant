@@ -114,6 +114,14 @@ const styles = theme => ({
   spacer: {
     height: theme.spacing.unit * 2,
   },
+  child: {
+    flexGrow: 1,
+    flexBasis: '50%'
+  },
+  box: {
+    display: 'flex',
+    maxHeight: '800px'
+  }
 })
 
 class ClusterForm extends React.Component {
@@ -186,7 +194,7 @@ class ClusterForm extends React.Component {
     if(initialValues.provision_type != 'remote') return null
 
     return (
-      <Paper className={ classes.paper } style={{maxHeight: 723, overflow: 'auto'}}>
+      <Paper className={ classes.paper } style={{maxHeight: '814px', overflow: 'auto'}}>
         <Typography variant="h6" gutterBottom>
           Obtain Cluster Details
         </Typography>
@@ -295,8 +303,8 @@ class ClusterForm extends React.Component {
 
     return (
       <div className={ classes.root }>
-        <Grid container spacing={24}>
-          <Grid item xs={ 6 }>
+        <Grid container spacing={24} >
+          <Grid item xs={ id == 'new' ? 6 : 12 }>
             <Paper className={ classes.paper }>
               <Typography variant="h6" gutterBottom>
                 { title }
@@ -341,7 +349,7 @@ class ClusterForm extends React.Component {
               />
             </Paper>
           </Grid>
-          <Grid item xs={ 6 }>
+          <Grid item xs={ id == 'new' ? 6 : 12 }>
             {
               id == 'new' ?
                 this.getCreateInstructions() :
@@ -356,7 +364,6 @@ class ClusterForm extends React.Component {
                     }
                   </div>
                 )
-
             }
           </Grid>
         </Grid>
