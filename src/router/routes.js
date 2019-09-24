@@ -189,14 +189,11 @@ const routes = [
       path: '/keys',
       trigger: {
         activate: (store, params) => {
-          store.dispatch(deploymentSettingsActions.startKeysLoop({
+          store.dispatch(deploymentSettingsActions.listKeyManagerKeys({
             cluster: params.cluster,
             id: params.id
           }))
         },
-        deactivate: (store, params) => {
-          store.dispatch(deploymentSettingsActions.stopKeysLoop())
-        }
       },
     }, {
       name: 'damlParties',

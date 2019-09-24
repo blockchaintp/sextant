@@ -230,10 +230,7 @@ class DeploymentSettingsDamlParties extends React.Component {
       visibleParticipant,
       setVisibleParticipant,
     } = this.props
-    const newValue = visibleParticipant == publicKey ?
-      null :
-      publicKey
-    setVisibleParticipant(newValue)
+    setVisibleParticipant(publicKey)
     resetSelectedParties()
   }
 
@@ -247,10 +244,9 @@ class DeploymentSettingsDamlParties extends React.Component {
       visibleParticipant,
     } = this.props
 
-    const publicKey = entry.keyManager.publicKey
-    const partiesVisible = publicKey == visibleParticipant
+    const publicKey = entry.publicKey
 
-    const actionButton = entry.participant ? (
+    const actionButton = /*entry? (
       <Button 
         className={ classes.smallButton }
         size="small"
@@ -263,7 +259,7 @@ class DeploymentSettingsDamlParties extends React.Component {
       >
         Rotate Keys <RefreshIcon className={ classes.iconSmall } />
       </Button>
-    ) : (
+    ) : */ (
       <Button 
         className={ classes.smallButton }
         size="small"
@@ -278,25 +274,17 @@ class DeploymentSettingsDamlParties extends React.Component {
       </Button>
     )
 
-    const toggleButton = entry.participant ? (
+    const toggleButton = (
       <Button 
         className={ classes.smallButton + ' ' + classes.buttonMargin }
         size="small"
         variant="outlined"
         onClick={ () => this.setVisibleParticipant(publicKey) }
       >
-        {
-          partiesVisible ? 'Hide Parties' : 'Show Parties'
-        }
-        {
-          partiesVisible ? (
-            <UpArrowIcon className={ classes.iconSmall } />
-          ) : (
-            <DownArrowIcon className={ classes.iconSmall } />
-          )
-        } 
+          <DownArrowIcon className={ classes.iconSmall } />   
+         
       </Button>
-    ) : null
+    ) 
 
     return (
       <div>
@@ -318,12 +306,9 @@ class DeploymentSettingsDamlParties extends React.Component {
       generatePartyToken,
     } = this.props
 
-    const publicKey = entry.keyManager.publicKey
-
+    const publicKey = entry.publicKey
     const {
-      participant: {
-        parties = [],
-      },
+      parties,
     } = entry
 
     let checkedCount = 0
@@ -413,24 +398,6 @@ class DeploymentSettingsDamlParties extends React.Component {
               disabled={ selectedPartyCount == 0 }
               onClick={ () => {
                 const partyNames = Object.keys(selectedParties)
-                removeParties({
-                  cluster,
-                  id,
-                  publicKey,
-                  partyNames,
-                })
-              } }
-            >
-              Remove <DeleteIcon className={ classes.iconSmall } />
-            </Button>
-            <br />
-            <Button 
-              className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
-              size="small"
-              variant="outlined"
-              disabled={ selectedPartyCount == 0 }
-              onClick={ () => {
-                const partyNames = Object.keys(selectedParties)
                 generatePartyToken({
                   cluster,
                   id,
@@ -455,26 +422,12 @@ class DeploymentSettingsDamlParties extends React.Component {
       keyManagerKeys,
     } = this.props
 
-    const participantMap = participants.reduce((all, entry) => {
-      all[entry.publicKey] = entry
-      return all
-    }, {})
-
-    const localParticipants = keyManagerKeys
-      .filter(entry => entry.name.indexOf('daml:') == 0)
-      .map(entry => {
-        return {
-          keyManager: entry,
-          participant: participantMap[entry.publicKey]
-        }
-      })
-
     return (
       <React.Fragment>
-        {
-          localParticipants.map((entry, i) => {
+        {          
+          participants.map((entry, i) => {
 
-            const publicKey = entry.keyManager.publicKey
+            const publicKey = entry.publicKey
             const partiesVisible = publicKey == visibleParticipant
 
             return (
@@ -486,11 +439,11 @@ class DeploymentSettingsDamlParties extends React.Component {
                     </Typography>
                   </Grid>
                   <Grid item xs={ 6 } className={ classes.alignRight }>
-                    { this.getLocalParticipantActions(entry) }
+                    {this.getLocalParticipantActions(entry) }
                   </Grid>
                   <Grid item xs={ 12 }>
                     <Typography className={ classes.smallText }>
-                      Pubic Key: { publicKey }
+                      Pubic Key: { publicKey.substring(0, 8) }
                     </Typography>
                     <Typography className={ classes.smallText }>
                       DAML ID: { entry.participant ? entry.participant.damlId : 'unregistered' }
@@ -519,7 +472,7 @@ class DeploymentSettingsDamlParties extends React.Component {
     } = this.props
 
     const localKeyMap = keyManagerKeys.reduce((all, entry) => {
-      all[entry.publicKey] = true
+      all[entry.publicKey] = entry.name
       return all
     }, {})
 
@@ -536,8 +489,7 @@ class DeploymentSettingsDamlParties extends React.Component {
       return localKeyMap[participant.publicKey] ? false : true
     })
 
-    const allParticipants = localParticipants.concat(remoteParticipants)
-
+    const allParticipants = localParticipants
     return (
       <React.Fragment>
         {
@@ -549,27 +501,30 @@ class DeploymentSettingsDamlParties extends React.Component {
                 name: party.name,
               }
             })
-            return (
-              <div key={ i } className={ classes.denseTable }>
-                <div className={ classes.spacing }></div>
-                <Typography variant="subtitle2">
+
+            //if ( data.length != 0) {
+              return (
+                <div key={ i } className={ classes.denseTable }>
+                  <div className={ classes.spacing }></div>
+                  <Typography variant="subtitle2">
                   { participant.publicKey.substring(0, 8) } - { localKeyMap[participant.publicKey] ? 'local' : 'remote' }
-                </Typography>
-                <Typography className={ classes.smallText }>
-                  Public Key: { participant.publicKey }
-                </Typography>
-                <Typography className={ classes.smallText }>
-                  DAML ID: { participant.damlId }
-                </Typography>
-                <div className={ classes.partyContainer }>
-                  <SimpleTable
-                    hideHeader
-                    data={ data }
-                    fields={ fields }
-                  />
+                  </Typography>
+                  <Typography className={ classes.smallText }>
+                    Public Key: { participant.publicKey }
+                  </Typography>
+                  <Typography className={ classes.smallText }>
+                    DAML ID: { participant.damlId }
+                  </Typography>
+                    <div className={ classes.partyContainer }>
+                    <SimpleTable
+                      hideHeader
+                      data={ data }
+                      fields={ fields }
+                    />
+                    </div>
                 </div>
-              </div>
-            )
+              )
+            //}
           })
         }
       </React.Fragment>

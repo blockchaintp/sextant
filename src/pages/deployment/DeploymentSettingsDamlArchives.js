@@ -167,23 +167,22 @@ class DeploymentSettingsDamlArchives extends React.Component {
     } = this.props
 
     const fields =[{
-      title: 'Uploaded',
-      name: 'uploadedFormatted',
+      title: 'Validator',
+      name: 'validator',
     },{
       title: 'Package Id',
-      name: 'packageid',
+      name: 'packageId',
     },{
-      title: 'Size',
-      name: 'size',
-    },{
-      title: 'Uploaded By',
-      name: 'uploadedBy',
+      title: 'Number of Modules',
+      name: 'numberOfModules',
     }]
 
     const data = archives.map(archive => {
       return Object.assign({}, archive, {
-        id: archive.packageid,
-        uploadedFormatted:  new Date(archive.uploaded).toLocaleString(),
+        id: `archive.packageId-${Math.random()}`,
+        validator: archive.validator,
+        packageId: archive.packageId,
+        numberOfModules: archive.numberOfModules,
       })
     })
 
@@ -196,6 +195,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
               color="secondary"
               variant="contained"
               onClick={ () => setUploadArchiveWindowOpen(true) }
+              disabled={true}
             >
               Upload
               <UploadIcon className={ classes.buttonIcon } />
