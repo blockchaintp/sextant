@@ -15,10 +15,10 @@ const styles = theme => {
     root: {
       width: '100%',
     },
-    table: {
-    },
     tableWrapper: {
       overflowX: 'auto',
+      height: '68vh',
+      overflow: 'auto'
     },
     autoCell: {
       width: 'auto',
@@ -46,12 +46,12 @@ class DamlArchiveTable extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       classes,
       selected,
       data,
       fields,
-      getActions, 
+      getActions,
       onRowClick,
       pagination,
       hideHeader,
@@ -70,7 +70,7 @@ class DamlArchiveTable extends React.Component {
             {
               (!hideHeader && (!hideHeaderIfEmpty || data.length > 0)) && (
                 <TableHead>
-                  <TableRow>
+                  <TableRow >
                     {
                       fields.map((field, i) => {
                         return (
