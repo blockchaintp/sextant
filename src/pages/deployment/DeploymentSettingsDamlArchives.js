@@ -12,7 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
-import SimpleTable from 'components/table/SimpleTable'
+import DamlArchiveTable from 'components/table/DamlArchiveTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 
 import Loading from 'components/system/Loading'
@@ -26,7 +26,6 @@ const UploadIcon = settings.icons.upload
 const styles = theme => ({
   root: {
     padding: theme.spacing.unit * 2,
-    wordWrap: 'break-word',
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -176,13 +175,10 @@ class DeploymentSettingsDamlArchives extends React.Component {
     }]
 
     const data = archives.map(archive => {
-      const reducedMods = archive.modules.reduce( (acc, curr) => {
-        return `${acc} ${curr}`
-      })
       return Object.assign({}, archive, {
         id: `archive.packageId-${Math.random()}`, // Needed to generate table rows
         packageId: archive.packageId,
-        modules: reducedMods,
+        modules: archive.modules,
       })
     })
 
@@ -202,7 +198,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
           //   </Button>
           // ) }
         />
-        <SimpleTable
+        <DamlArchiveTable
           data={ data }
           fields={ fields }
         />
