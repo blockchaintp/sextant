@@ -18,6 +18,11 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 5,
   },
+  scrolling: {
+    padding: theme.spacing.unit * 5,
+    height: '68vh',
+    overflow: 'auto'
+  },
   dateTime: {
     whiteSpace: 'nowrap',
   },
@@ -129,7 +134,7 @@ class DeploymentForm extends React.Component {
           )
         }
           <Grid item xs={ 12}>
-            <Paper className={ classes.paper }>
+            <Paper className={ id != 'new' ? classes.scrolling : classes.paper }>
               <Typography variant="h6" gutterBottom>
                 { title }
               </Typography>
@@ -174,7 +179,6 @@ class DeploymentForm extends React.Component {
               />
             </Paper>
           </Grid>
-
         </Grid>
       </div>
     )
