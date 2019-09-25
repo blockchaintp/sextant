@@ -19,7 +19,7 @@ const styles = theme => {
       alignItems: 'flex-end',
     },
     title: {
-      flex: '0 0 auto',
+      //flex: '0 0 auto',
     },
   }
 
@@ -48,8 +48,8 @@ class SimpleTableHeader extends React.Component {
             getTitle ? (
               getTitle()
             ) : (
-              <Typography className={ titleClassname } variant={ titleVariant || 'h6' }>{ title }</Typography>
-            )   
+              <Typography noWrap='true' className={ titleClassname } variant={ titleVariant || 'h6' }>{ title }</Typography>
+            )
           }
         </div>
         <div className={classes.spacer} />

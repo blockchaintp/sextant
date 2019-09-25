@@ -31,7 +31,7 @@ class Text extends React.Component {
         fullWidth
         id={ name }
         name={ name }
-        label={ item.title || item.id }
+        label={item.title || item.id}
         helperText={ touched && error ? error : item.helperText }
         error={ touched && Boolean(error) }
         value={ value || '' }

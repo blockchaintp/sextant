@@ -5,9 +5,10 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
+    fontSize: 18 ,
   },
   palette: {
-    
+
   },
 })
 

@@ -23,8 +23,8 @@ const HELP_CREATE_SERVICEACCOUNT = `#!/bin/bash -e
 
 set -e
 
-SERVICEACCOUNT=\${SERVICEACCOUNT:="sextant"}
-NAMESPACE=\${NAMESPACE:="default"}
+SERVICEACCOUNT="sextant"
+NAMESPACE="default"
 
 # create the service account:
 echo "creating serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
@@ -44,8 +44,8 @@ const HELP_GET_VALUES = `#!/bin/bash -e
 
 set -e
 
-SERVICEACCOUNT=\${SERVICEACCOUNT:="sextant"}
-NAMESPACE=\${NAMESPACE:="default"}
+SERVICEACCOUNT="sextant"
+NAMESPACE="default"
 
 # get the secret name for the service account:
 echo "getting the secret name for serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
@@ -114,6 +114,14 @@ const styles = theme => ({
   spacer: {
     height: theme.spacing.unit * 2,
   },
+  child: {
+    flexGrow: 1,
+    flexBasis: '50%'
+  },
+  box: {
+    display: 'flex',
+    maxHeight: '800px'
+  }
 })
 
 class ClusterForm extends React.Component {
@@ -186,7 +194,7 @@ class ClusterForm extends React.Component {
     if(initialValues.provision_type != 'remote') return null
 
     return (
-      <Paper className={ classes.paper } style={{maxHeight: 723, overflow: 'auto'}}>
+      <Paper className={ classes.paper } style={{maxHeight: '814px', overflow: 'auto'}}>
         <Typography variant="h6" gutterBottom>
           Obtain Cluster Details
         </Typography>
@@ -202,20 +210,9 @@ class ClusterForm extends React.Component {
         <Typography gutterBottom>
           To help you obtain these values, please follow the following steps:
         </Typography>
+
         <Typography variant="subtitle1" gutterBottom>
-          Step 1. Choose service account name and namespace
-        </Typography>
-        <Typography gutterBottom>
-          Choose a service account name (default = <b>sextant</b>) and a namespace for the service account (default = <b>default</b>) by setting
-          the following environment variables where you'll be using <b>kubectl</b> to create the services.
-        </Typography>
-        <CodeBlock
-          code={ HELP_VARIABLES }
-          clipboard={ true }
-          snackbarMessage={ snackbarMessage }
-        />
-        <Typography variant="subtitle1" gutterBottom>
-          Step 2. Create service account
+          Step 1. Create service account
         </Typography>
         <Typography gutterBottom>
           In the terminal create a shell script with the content shown below. Upon execution, the script will create the service account and
@@ -241,10 +238,10 @@ class ClusterForm extends React.Component {
           }}>Download file</Button>
         <div className={classes.spacer}></div>
         <Typography variant="subtitle1" gutterBottom>
-          Step 3. Get credentials
+          Step 2. Get credentials
         </Typography>
         <Typography gutterBottom>
-          Having completed STEP 2, you would have created the necessary service account in your chosen cluster.
+          Having completed STEP 1, you would have created the necessary service account in your chosen cluster.
           Next execute the following script to get the api server address, token and certificate authority. You
           will need to create a shell script with the following content yourself. You can click on the copy button
           and transfer the content to the script of your choice (e.g. <em>get-values.sh</em>).
@@ -268,7 +265,7 @@ class ClusterForm extends React.Component {
           }}>Download file</Button>
         <div className={classes.spacer}></div>
         <Typography variant="subtitle1" gutterBottom>
-          Step 4. Paste credentials
+          Step 3. Paste credentials
         </Typography>
         <Typography gutterBottom>
           Copy the output of the script above and paste them into the form.
@@ -295,8 +292,8 @@ class ClusterForm extends React.Component {
 
     return (
       <div className={ classes.root }>
-        <Grid container spacing={24}>
-          <Grid item xs={ 6 }>
+        <Grid container spacing={24} >
+          <Grid item xs={ id == 'new' ? 6 : 12 }>
             <Paper className={ classes.paper }>
               <Typography variant="h6" gutterBottom>
                 { title }
@@ -341,7 +338,7 @@ class ClusterForm extends React.Component {
               />
             </Paper>
           </Grid>
-          <Grid item xs={ 6 }>
+          <Grid item xs={ id == 'new' ? 6 : 12 }>
             {
               id == 'new' ?
                 this.getCreateInstructions() :
@@ -356,7 +353,6 @@ class ClusterForm extends React.Component {
                     }
                   </div>
                 )
-
             }
           </Grid>
         </Grid>

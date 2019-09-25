@@ -33,15 +33,15 @@ const styles = theme => ({
   },
   box: {
     // padding that is the height of the footer - ensures enough space for footer in shared container
-    paddingBottom: '2.5rem'
+    paddingBottom: '4rem'
   },
   footer: {
     // absolute postion within the root container set to the bottom
     position: 'absolute',
     bottom: '0',
     width: '100%',
-    height: '2.5rem'
-  }
+    height: '4rem'
+  },
 })
 
 class Layout extends React.Component {
@@ -88,7 +88,7 @@ class Layout extends React.Component {
         </div>
         <div >
           <Toolbar className={ classes.footer }>
-            <Typography>
+            <Typography variant='caption' color='textSecondary'>
               &copy; 2018-2019 <a href="https://blockchaintp.com/" target="_blank">Blockchain Technology Partners</a> All rights reserved : <a href="https://blockchaintp.com/sextant/aws-marketplace/support" target="_blank">Support page</a>
             </Typography>
           </Toolbar>

@@ -18,6 +18,11 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 5,
   },
+  scrolling: {
+    padding: theme.spacing.unit * 5,
+    height: '68vh',
+    overflow: 'auto'
+  },
   dateTime: {
     whiteSpace: 'nowrap',
   },
@@ -109,13 +114,27 @@ class DeploymentForm extends React.Component {
       tasks,
       exists,
     } = this.props
-    console.log("SCHEMA", schema);
 
     return (
       <div className={ classes.root }>
         <Grid container spacing={24}>
-          <Grid item xs={ id == 'new' ? 12 : 6 }>
-            <Paper className={ classes.paper }>
+        {
+          id != 'new' && (
+            <Grid item xs={ 12 }>
+              <div>
+                {
+                  this.getRoleTable()
+                }
+                <div className={ classes.spacer } />
+                {
+                  this.getTaskTable()
+                }
+              </div>
+            </Grid>
+          )
+        }
+          <Grid item xs={ 12}>
+            <Paper className={ id != 'new' ? classes.scrolling : classes.paper }>
               <Typography variant="h6" gutterBottom>
                 { title }
               </Typography>
@@ -160,21 +179,6 @@ class DeploymentForm extends React.Component {
               />
             </Paper>
           </Grid>
-          {
-            id != 'new' && (
-              <Grid item xs={ 6 }>
-                <div>
-                  {
-                    this.getRoleTable()
-                  }
-                  <div className={ classes.spacer } />
-                  {
-                    this.getTaskTable()
-                  }
-                </div>
-              </Grid>
-            )
-          }
         </Grid>
       </div>
     )
