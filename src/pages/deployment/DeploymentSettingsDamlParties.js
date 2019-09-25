@@ -72,7 +72,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit,
   },
   partyContainer: {
-    marginTop: theme.spacing.unit * 2, 
+    marginTop: theme.spacing.unit * 2,
     padding: theme.spacing.unit * 2,
     border: '1px dashed #e5e5e5'
   },
@@ -123,7 +123,9 @@ class DeploymentSettingsDamlParties extends React.Component {
       addParty,
       addPartyPublicKey,
       addPartyName,
+      setAddPartyWindowOpen,
     } = this.props
+    setAddPartyWindowOpen(false)
     addParty({
       cluster,
       id,
@@ -162,7 +164,7 @@ class DeploymentSettingsDamlParties extends React.Component {
               onChange={ (e) => setAddPartyName(e.target.value) }
             />
           </div>
-          
+
         </DialogContent>
         <DialogActions>
           <Button onClick={ () => this.setAddFormOpen(false) }>
@@ -247,7 +249,7 @@ class DeploymentSettingsDamlParties extends React.Component {
     const publicKey = entry.publicKey
 
     const actionButton = /*entry? (
-      <Button 
+      <Button
         className={ classes.smallButton }
         size="small"
         variant="outlined"
@@ -260,7 +262,7 @@ class DeploymentSettingsDamlParties extends React.Component {
         Rotate Keys <RefreshIcon className={ classes.iconSmall } />
       </Button>
     ) : */ (
-      <Button 
+      <Button
         className={ classes.smallButton }
         size="small"
         variant="outlined"
@@ -275,16 +277,16 @@ class DeploymentSettingsDamlParties extends React.Component {
     )
 
     const toggleButton = (
-      <Button 
+      <Button
         className={ classes.smallButton + ' ' + classes.buttonMargin }
         size="small"
         variant="outlined"
         onClick={ () => this.setVisibleParticipant(publicKey) }
       >
-          <DownArrowIcon className={ classes.iconSmall } />   
-         
+          <DownArrowIcon className={ classes.iconSmall } />
+
       </Button>
-    ) 
+    )
 
     return (
       <div>
@@ -325,7 +327,7 @@ class DeploymentSettingsDamlParties extends React.Component {
       <Grid container spacing={0}>
         <Grid item xs={ 6 }>
           <div className={ classes.partyContainer }>
-            { 
+            {
               parties.length > 0 && (
                 <div>
                   <FormControlLabel
@@ -374,7 +376,7 @@ class DeploymentSettingsDamlParties extends React.Component {
                       }
                       label={ party.name }
                     />
-                  </div> 
+                  </div>
                 )
               })
             }
@@ -382,7 +384,7 @@ class DeploymentSettingsDamlParties extends React.Component {
         </Grid>
         <Grid item xs={ 6 }>
           <div className={ classes.partyButtons }>
-            <Button 
+            <Button
               className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
               size="small"
               variant="outlined"
@@ -391,7 +393,7 @@ class DeploymentSettingsDamlParties extends React.Component {
               Add Party <AddIcon className={ classes.iconSmall } />
             </Button>
             <br />
-            <Button 
+            <Button
               className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
               size="small"
               variant="outlined"
@@ -424,7 +426,7 @@ class DeploymentSettingsDamlParties extends React.Component {
 
     return (
       <React.Fragment>
-        {          
+        {
           participants.map((entry, i) => {
 
             const publicKey = entry.publicKey

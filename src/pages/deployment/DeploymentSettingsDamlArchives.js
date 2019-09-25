@@ -12,7 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
-import SimpleTable from 'components/table/SimpleTable'
+import DamlArchiveTable from 'components/table/DamlArchiveTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 
 import Loading from 'components/system/Loading'
@@ -167,22 +167,18 @@ class DeploymentSettingsDamlArchives extends React.Component {
     } = this.props
 
     const fields =[{
-      title: 'Validator',
-      name: 'validator',
-    },{
       title: 'Package Id',
       name: 'packageId',
     },{
-      title: 'Number of Modules',
-      name: 'numberOfModules',
+      title: 'Modules',
+      name: 'modules',
     }]
 
     const data = archives.map(archive => {
       return Object.assign({}, archive, {
-        id: `archive.packageId-${Math.random()}`,
-        validator: archive.validator,
+        id: `archive.packageId-${Math.random()}`, // Needed to generate table rows
         packageId: archive.packageId,
-        numberOfModules: archive.numberOfModules,
+        modules: archive.modules,
       })
     })
 
@@ -202,7 +198,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
           //   </Button>
           // ) }
         />
-        <SimpleTable
+        <DamlArchiveTable
           data={ data }
           fields={ fields }
         />
