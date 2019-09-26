@@ -33,18 +33,23 @@ class SelectField extends React.Component {
       formProps
     } = this.props
 
-    const selectedConsensus = formProps.values.sawtooth.consensus
-    // returns the helper text associated with the selected consensus algorithm
-    const blurbText = () => {
-      for (let i = 0; i < item.options.length; i ++) {
-        if (item.options[i].value === selectedConsensus)
-        return item.options[i].blurb
+
+    if (item.alternateText) {
+      const selectedConsensus = formProps.values.sawtooth.consensus
+      // returns the helper text associated with the selected consensus algorithm
+      const blurbText = () => {
+        for (let i = 0; i < item.options.length; i ++) {
+          if (item.options[i].value === selectedConsensus)
+          return item.options[i].blurb
+        }
       }
     }
 
+
+
     const title = item.title || name
     const extraProps = item.extraProps || {}
-    console.log("Do I have formProps?", this.props.formProps);
+
     return (
       <FormControl component="fieldset" className={ classes.root }>
         <FormLabel htmlFor={ name }>{ title }</FormLabel>
