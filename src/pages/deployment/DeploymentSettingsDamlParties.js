@@ -500,10 +500,10 @@ class DeploymentSettingsDamlParties extends React.Component {
           allParticipants.map((participant, i) => {
             const parties = participant.parties || []
             parties.sort((a,b)=> {
-              if (a.name.toLowerCase() > b.name.toLowerCase()) {
+              if (a.name > b.name) {
                 return 1;
               }
-              if (b.name.toLowerCase() > a.name.toLowerCase()) {
+              if (b.name > a.name) {
                   return -1;
               }
               return 0;
