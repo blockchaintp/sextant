@@ -48,9 +48,17 @@ class PodTable extends React.Component {
         const containersCrashLoopBackoff = containerStatuses.filter(status => {
           return status.state.waiting && status.state.waiting.reason == 'CrashLoopBackOff'
         }).length
+        const containersPodInitializing = containerStatuses.filter(status => {
+          return status.state.waiting && status.state.waiting.reason == 'PodInitializing'
+        }).length
+        const containersImagePullBackOff = containerStatuses.filter(status => {
+          return status.state.waiting && status.state.waiting.reason == 'ImagePullBackOff'
+        }).length
 
         let status = pod.status.phase
 
+        if(containersPodInitializing > 0) status = 'PodInitializing'
+        if(containersImagePullBackOff > 0) status = 'ImagePullBackOff'
         if(containersCrashLoopBackoff > 0) status = 'CrashLoopBackOff'
         if(pod.metadata.deletionTimestamp) status = 'Terminating'
 
