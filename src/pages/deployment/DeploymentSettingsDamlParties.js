@@ -487,6 +487,8 @@ class DeploymentSettingsDamlParties extends React.Component {
       return localKeyMap[participant.publicKey] ? true : false
     })
 
+    // This is currently not used but is left here for now
+    // To be pruned in due course
     const remoteParticipants = participants.filter(participant => {
       return localKeyMap[participant.publicKey] ? false : true
     })
@@ -497,36 +499,54 @@ class DeploymentSettingsDamlParties extends React.Component {
         {
           allParticipants.map((participant, i) => {
             const parties = participant.parties || []
+            parties.sort((a,b)=> {
+
+              if (b.name.toLowerCase() === a.name.toLowerCase() ) {
+                if (a.name > b.name) {
+                  return 1
+                }
+                if (b.name > a.name) {
+                  return -1
+                }
+              }
+
+              if (a.name.toLowerCase() > b.name.toLowerCase()) {
+                return 1;
+              }
+
+              if (b.name.toLowerCase() > a.name.toLowerCase()) {
+                return -1;
+              }
+
+              return 0;
+            })
             const data = parties.map((party, j) => {
               return {
                 id: j,
                 name: party.name,
               }
             })
-
-            //if ( data.length != 0) {
-              return (
-                <div key={ i } className={ classes.denseTable }>
-                  <div className={ classes.spacing }></div>
-                  <Typography variant="subtitle2">
-                  { participant.publicKey.substring(0, 8) } - { localKeyMap[participant.publicKey] ? 'local' : 'remote' }
-                  </Typography>
-                  <Typography className={ classes.smallText }>
-                    Public Key: { participant.publicKey }
-                  </Typography>
-                  <Typography className={ classes.smallText }>
-                    DAML ID: { participant.damlId }
-                  </Typography>
-                    <div className={ classes.partyContainer }>
-                    <SimpleTable
-                      hideHeader
-                      data={ data }
-                      fields={ fields }
-                    />
-                    </div>
-                </div>
-              )
-            //}
+            return (
+              <div key={ i } className={ classes.denseTable }>
+                <div className={ classes.spacing }></div>
+                <Typography variant="subtitle2">
+                { participant.publicKey.substring(0, 8) } - { localKeyMap[participant.publicKey] ? 'local' : 'remote' }
+                </Typography>
+                <Typography className={ classes.smallText }>
+                  Public Key: { participant.publicKey }
+                </Typography>
+                <Typography className={ classes.smallText }>
+                  DAML ID: { participant.damlId }
+                </Typography>
+                  <div className={ classes.partyContainer }>
+                  <SimpleTable
+                    hideHeader
+                    data={ data }
+                    fields={ fields }
+                  />
+                  </div>
+              </div>
+            )
           })
         }
       </React.Fragment>
