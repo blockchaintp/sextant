@@ -26,9 +26,9 @@ const fields =[{
 }]
 
 class ServiceTable extends React.Component {
-  
+
   render() {
-    const { 
+    const {
       classes,
       data,
     } = this.props
@@ -37,7 +37,7 @@ class ServiceTable extends React.Component {
       .map(service => {
 
         const externalIp = service.status.loadBalancer && service.status.loadBalancer.ingress ? (
-          service.status.loadBalancer.ingress[0].hostname
+          service.status.loadBalancer.ingress[0]['hostname'] || service.status.loadBalancer.ingress[0]['ip']
         ) : '<none>'
         return {
           id: service.metadata.name,
