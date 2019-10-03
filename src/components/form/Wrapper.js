@@ -306,7 +306,7 @@ class FormListInner extends React.Component {
           className={ classes.listTableHeader }
           getTitle={ () => (
             <React.Fragment>
-              <Typography noWrap={true} className={ classes.listTableTitle } variant='subtitle1'>{ item.title === 'skip' ? null : (item.title || item.id) }</Typography>
+              <Typography noWrap={true} className={ classes.listTableTitle } variant='subtitle1'>{ item.skip ? null : (item.title || item.id) }</Typography>
               <Typography className={ classes.listTableTitle } variant='caption'>{ item.helperText }</Typography>
             </React.Fragment>
           )}
@@ -442,6 +442,7 @@ class FormWrapperInner extends React.Component {
         </Grid>
       )
     }
+
     else if (row.constructor === Array) {
       const colSize = Math.floor(12 / row.length)
       return row.map((item, i) => (
