@@ -11,7 +11,7 @@ const fields = {
   radio: RadioField,
   checkbox: CheckboxField,
   multipleCheckbox: MultipleCheckboxField,
-  select: SelectField,
+  select: SelectField
 }
 
 export const defaultValues = {
@@ -20,7 +20,7 @@ export const defaultValues = {
   radio: '',
   checkbox: false,
   multipleCheckbox: {},
-  select: '',
+  select: ''
 }
 
 export default fields
