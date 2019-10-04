@@ -89,7 +89,7 @@ class Layout extends React.Component {
         <div >
           <Toolbar className={ classes.footer }>
             <Typography variant='caption' color='textSecondary'>
-              &copy; 2018-2019 <a href="https://blockchaintp.com/" target="_blank">Blockchain Technology Partners</a> All rights reserved : <a href="https://blockchaintp.com/sextant/aws-marketplace/support" target="_blank">Support page</a>
+              &copy; 2018-2019 <a href="https://blockchaintp.com/" target="_blank">Blockchain Technology Partners</a> All rights reserved : <a href="https://blockchaintp.com/sextant/support" target="_blank">Support page</a>
             </Typography>
           </Toolbar>
         </div>
