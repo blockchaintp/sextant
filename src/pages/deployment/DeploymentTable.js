@@ -177,15 +177,15 @@ class DeploymentTable extends React.Component {
       }
     })
 
+    // holds an array of deployment types
     const addButtonItems = Object.keys(deploymentForms).map(deploymentType => {
-
       const formConfig = deploymentForms[deploymentType]
-
+      // versions is an array of objects. Each object contains data for a version of the deploymentType
       return {
-        title: formConfig.button.title,
-        icon: formConfig.button.icon,
-        items: formConfig.button.versions.map(version => ({
+        versions: formConfig.button.versions.map(version => ({
+          icon: version.icon,
           title: version.title,
+          version: version.version,
           description: version.description,
           handler: () => onAdd(clusterId, deploymentType, version.form),
         })),
