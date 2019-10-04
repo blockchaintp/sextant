@@ -67,7 +67,7 @@ class Text extends React.Component {
           label={item.title || item.id}
           helperText={ touched && error ? error : item.helperText }
           error={ touched && Boolean(error) }
-          value={ value || generateDefault(item) }
+          value={ value }
           onChange={ onChange }
           onBlur={ onBlur }
           onKeyDown={ onKeyDown }
