@@ -9,8 +9,6 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
 import HorizontalCard from 'components/layout/HorizontalCard'
-//import hyperledgerSawtoothLogoBlack from'assets/hyperledger-sawtooth-logo-black.svg'
-//import logo from 'assets/logo.png'
 
 const styles = (theme) => ({
 
@@ -69,49 +67,33 @@ class DialogButton extends React.Component {
       items
     } = this.props
 
-    const deploymentCards = items.map((option, i) => {
-      return(
-        <div key={ i }>
-            {option.items.map((version, j) => {
-              return(
-                <DialogContent key={ j+1 } >
-                  <HorizontalCard
-                    classes={classes}
-                    theme={theme}
-                    optionIcon={option.icon || "/large-logo-outline-roundel.svg"}
-                    optionTitle={option.title}
-                    optionVersion={version.title}
-                    versionSummary={version.description}
-                    onClick={ () => this.clickItem(version) }
-                  />
-                </DialogContent>
-              )
-            })
-            }
-        </div>
-      )
-    })
-
-    const deploymentOptions = items.map((option, i) => {
-      return(
-        <div>
-          <DialogTitle key={ i } >{ option.title }</DialogTitle>
-          <DialogContent key={ i+1 }>
-            {option.items.map((version, i) => {
-              return(
-                <Button
-                  key={ i }
+    // returns an array of divs. Each div contains dialog content for a deployment version
+    const getDeploymentCards = (deploymentTypes) => {
+      let cards = []
+      deploymentTypes.forEach((deployment, i) => {
+        const versions = deployment.versions
+        versions.forEach((version) => {
+          cards.push(
+            <div key={ i }>
+              <DialogContent >
+                <HorizontalCard
+                  classes={classes}
+                  theme={theme}
+                  optionIcon={version.icon || "/large-logo-outline-roundel.svg"}
+                  optionTitle={version.title}
+                  optionVersion={version.title}
+                  versionSummary={version.description}
                   onClick={ () => this.clickItem(version) }
-                >
-                { version.title }
-                </Button>
-              )
-            })
-            }
-          </DialogContent>
-        </div>
-      )
-    })
+                />
+              </DialogContent>
+            </div>
+          )
+        })
+      })
+      return cards
+    }
+
+    const deploymentCards = getDeploymentCards(items)
 
     const ButtonIcon = icon
 
