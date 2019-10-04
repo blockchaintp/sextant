@@ -112,6 +112,8 @@ class DialogButton extends React.Component {
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
+          fullWidth={true}
+          maxWidth={'md'}
         >
           { deploymentCards }
         </Dialog>
