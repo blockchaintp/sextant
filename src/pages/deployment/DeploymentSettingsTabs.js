@@ -5,32 +5,16 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 
+import { getPages } from 'utils/deployment_settings_page'
+
 const styles = theme => ({
   root: {
-    
+
   },
   paper: {
     padding: theme.spacing.unit * 5,
   },
 })
-
-const PAGES = [{
-  id: 'keys',
-  title: 'Sawtooth Identity',
-  index: 0,
-}, {
-  id: 'damlParties',
-  title: 'DAML Parties',
-  index: 1,
-}, {
-  id: 'damlArchives',
-  title: 'DAML Archives',
-  index: 2,
-}, {
-  id: 'damlTimeService',
-  title: 'DAML Timekeeper',
-  index: 3,
-}]
 
 class DeploymentSettings extends React.Component {
 
@@ -39,34 +23,45 @@ class DeploymentSettings extends React.Component {
       classes,
       cluster,
       id,
+      deployment_type,
+      deployment_version,
+      features,
       route,
       onViewPage,
       children,
     } = this.props
 
-    const [ _, pageName ] = route.name.split('.')
-    const PAGE = PAGES.find(p => p.id == pageName)
-
+    const [_, pageName] = route.name.split('.')
+    if (getPages(features).length === 0) {
+      return (
+        <div className={classes.root}>
+        <AppBar position="static" color="default">
+        </AppBar>
+      </div>
+      )
+    }
+    //TODO come back to this mess
+    const PAGE = getPages(features)[0]
     return (
-      <div className={ classes.root }>
-        <AppBar position="static"  color="default">
+      <div className={classes.root}>
+        <AppBar position="static" color="default">
           <Tabs
-            value={ PAGE.index }
-            onChange={ (ev, value) => {
-              const NEXT_PAGE = PAGES[value]
-              onViewPage(cluster, id, NEXT_PAGE.id)
+            value={PAGE.index}
+            onChange={(ev, value) => {
+              const NEXT_PAGE = getPages(features)[value]
+              onViewPage(cluster, id, deployment_type, deployment_version,NEXT_PAGE.id)
             }}
             indicatorColor="primary"
             textColor="primary"
           >
             {
-              PAGES.map((page, i) => (
-                <Tab label={ page.title } key={ i } />
+              getPages(features).map((page, i) => (
+                <Tab label={page.title} key={i} />
               ))
             }
           </Tabs>
         </AppBar>
-        { children }
+        {children}
       </div>
     )
   }

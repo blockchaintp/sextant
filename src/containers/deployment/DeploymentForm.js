@@ -18,7 +18,6 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
   state => {
 
     const routeParams = selectors.router.params(state)
-
     const {
       id,
       deployment_type,
@@ -64,7 +63,7 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
   },
   {
     submitForm: deploymentActions.submitForm,
-    onCancel, 
+    onCancel,
     setAccessControlFormOpen: userActions.setAccessControlFormOpen,
     setAccessControlLevel: userActions.setAccessControlLevel,
     setAccessControlSearch: userActions.setAccessControlSearch,
@@ -87,7 +86,7 @@ class DeploymentFormContainer extends React.Component {
     }
 
     return (
-      <DeploymentForm 
+      <DeploymentForm
         {...this.props}
       />
     )
