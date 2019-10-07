@@ -22,7 +22,7 @@ import TaskActionIcon from 'components/status/TaskActionIcon'
 import settings from 'settings'
 
 import rbac from 'utils/rbac'
-import { getFirstTagForDeployment } from 'utils/deployment_settings_page'
+import { getFirstTagForDeployment, getFeaturesForDeployment } from 'utils/deployment_settings_page'
 
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
@@ -316,10 +316,14 @@ class DeploymentTable extends React.Component {
         handler: (item) => onViewStatus(item.cluster, item.id),
       })
 
+      const buttonDeploymentType = deployment.deploymentData.deployment_type
+      const buttonDeploymentVersion = deployment.deploymentData.deployment_version
+      const features = getFeaturesForDeployment(deploymentForms, buttonDeploymentType, buttonDeploymentVersion)
+      const enabled= features.length>0 ? false : true
       buttons.push({
         title: 'Settings',
         icon: SettingsIcon,
-        disabled: false,
+        disabled: enabled,
         handler: (item) => {
           const pageKey=getFirstTagForDeployment(deploymentForms, item.deployment_type, item.deploymentData.deployment_version)
           return onViewSettings(item.cluster, item.id, item.deployment_type, item.deploymentData.deployment_version, pageKey)

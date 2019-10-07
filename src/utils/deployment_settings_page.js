@@ -53,5 +53,6 @@ const getFirstTagForDeployment = (deploymentForms, deployment_type, deployment_v
 
 module.exports = {
   getFirstTagForDeployment,
+  getFeaturesForDeployment,
   getPages,
 }
