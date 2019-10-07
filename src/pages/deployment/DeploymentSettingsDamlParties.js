@@ -291,7 +291,8 @@ class DeploymentSettingsDamlParties extends React.Component {
     return (
       <div>
         { toggleButton }
-        { actionButton }
+        {/* { actionButton } */}
+        {/* Leave action button commented out for now. */}
       </div>
     )
   }
@@ -437,7 +438,7 @@ class DeploymentSettingsDamlParties extends React.Component {
                 <Grid container spacing={24}>
                   <Grid item xs={ 6 }>
                     <Typography variant="subtitle2">
-                      { publicKey.substring(0, 8) }
+                      { entry.damlId }
                     </Typography>
                   </Grid>
                   <Grid item xs={ 6 } className={ classes.alignRight }>
@@ -445,11 +446,11 @@ class DeploymentSettingsDamlParties extends React.Component {
                   </Grid>
                   <Grid item xs={ 12 }>
                     <Typography className={ classes.smallText }>
-                      Pubic Key: { publicKey.substring(0, 8) }
+                      Pubic Key: { publicKey }
                     </Typography>
-                    <Typography className={ classes.smallText }>
+                    {/* <Typography className={ classes.smallText }>
                       DAML ID: { entry.participant ? entry.participant.damlId : 'unregistered' }
-                    </Typography>
+                    </Typography> */}
                   </Grid>
                 </Grid>
                 {
@@ -483,10 +484,11 @@ class DeploymentSettingsDamlParties extends React.Component {
       name: 'name',
     }]
 
-    const localParticipants = participants.filter(participant => {
+    let localParticipants = participants.filter(participant => {
       return localKeyMap[participant.publicKey] ? true : false
     })
 
+    localParticipants = [localParticipants[0]]
     // This is currently not used but is left here for now
     // To be pruned in due course
     const remoteParticipants = participants.filter(participant => {
@@ -498,7 +500,7 @@ class DeploymentSettingsDamlParties extends React.Component {
       <React.Fragment>
         {
           allParticipants.map((participant, i) => {
-            const parties = participant.parties || []
+            const parties = participant ? participant.parties : []
             parties.sort((a,b)=> {
 
               if (b.name.toLowerCase() === a.name.toLowerCase() ) {
@@ -529,18 +531,18 @@ class DeploymentSettingsDamlParties extends React.Component {
             return (
               <div key={ i } className={ classes.denseTable }>
                 <div className={ classes.spacing }></div>
-                <Typography variant="subtitle2">
+                {/* <Typography variant="subtitle2">
                 { participant.publicKey.substring(0, 8) } - { localKeyMap[participant.publicKey] ? 'local' : 'remote' }
-                </Typography>
-                <Typography className={ classes.smallText }>
+                </Typography> */}
+                {/* <Typography className={ classes.smallText }>
                   Public Key: { participant.publicKey }
-                </Typography>
-                <Typography className={ classes.smallText }>
+                </Typography> */}
+                {/* <Typography className={ classes.smallText }>
                   DAML ID: { participant.damlId }
-                </Typography>
+                </Typography> */}
                   <div className={ classes.partyContainer }>
                   <SimpleTable
-                    hideHeader
+                    // hideHeader
                     data={ data }
                     fields={ fields }
                   />
@@ -575,7 +577,7 @@ class DeploymentSettingsDamlParties extends React.Component {
           <Grid item xs={ 6 }>
               <Paper className={ classes.paper }>
                 <Typography variant="h6">
-                  All Parties By Participant
+                  All Parties
                 </Typography>
                 {
                   this.getPartiesByParticipant()
