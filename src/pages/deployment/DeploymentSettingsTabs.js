@@ -40,16 +40,16 @@ class DeploymentSettings extends React.Component {
       </div>
       )
     }
-    //TODO come back to this mess
-    const PAGE = getPages(features)[0]
+
+    const currentPage = getPages(features).find(p => p.id == pageName)
     return (
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
-            value={PAGE.index}
+            value={currentPage.index}
             onChange={(ev, value) => {
-              const NEXT_PAGE = getPages(features)[value]
-              onViewPage(cluster, id, deployment_type, deployment_version,NEXT_PAGE.id)
+              const nextPage = getPages(features)[value]
+              onViewPage(cluster, id, deployment_type, deployment_version,nextPage.id)
             }}
             indicatorColor="primary"
             textColor="primary"

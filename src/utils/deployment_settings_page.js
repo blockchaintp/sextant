@@ -1,32 +1,33 @@
 const getPages = function (features) {
 
   let pages = []
+  let counter=0
   if (features.includes("sawtooth.identity")) {
     pages.push({
       id: 'keys',
       title: 'Sawtooth Identity',
-      index: 0,
+      index: counter++,
     })
   }
   if (features.includes("daml.parties")) {
     pages.push({
       id: 'damlParties',
       title: 'DAML Parties',
-      index: 1,
+      index: counter++,
     })
   }
   if (features.includes("daml.archives")) {
     pages.push({
         id: 'damlArchives',
         title: 'DAML Archives',
-        index: 2,
+        index: counter++,
       })
   }
   if (features.includes("daml.timekeeper")) {
     pages.push({
       id: 'damlTimeService',
         title: 'DAML Timekeeper',
-      index: 3,
+      index: counter++,
     })
   }
 
