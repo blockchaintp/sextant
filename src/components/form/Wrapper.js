@@ -377,19 +377,52 @@ class FormWrapperInner extends React.Component {
       exists,
     } = this.props
 
-    let disabled = false
+    const disableField = () => {
+      let disabled = false
 
-    if(item.editable && typeof(item.editable.new) == 'boolean') {
-      if(item.editable.new && exists) {
-        disabled = true
+      if(item.editable && typeof(item.editable.new) == 'boolean') {
+        if(item.editable.new && exists) {
+          disabled = true
+        }
+        else if(!item.editable.new && !exists) {
+          disabled = true
+        }
       }
-      else if(!item.editable.new && !exists) {
-        disabled = true
-      }
+
+      return disabled
     }
 
     const error = dotty.get(formProps.errors, item.id)
     const touched = dotty.get(formProps.touched, item.id)
+
+    const disableComponent = (item) => {
+      if (item.id === 'daml.postgres.secret' && formProps.values.aws.db.create === 'false'){
+        return (
+          <Field
+            name={ item.id }
+            component={ utils.getComponent(item.component) }
+            item={ item }
+            disabled={ disableField() }
+            error={ error }
+            touched={ touched }
+            formProps={ formProps }
+          />
+        )
+      } else if (item.id === 'daml.postgres.secret') {
+          return ''
+      }
+      return (
+        <Field
+          name={ item.id }
+          component={ utils.getComponent(item.component) }
+          item={ item }
+          disabled={ disableField() }
+          error={ error }
+          touched={ touched }
+          formProps={ formProps }
+        />
+      )
+    }
 
     return item.list ? (
       <FieldArray
@@ -399,20 +432,12 @@ class FormWrapperInner extends React.Component {
             item={ item }
             formProps={ formProps }
             arrayHelpers={ arrayHelpers }
-            disabled={ disabled }
+            disabled={ disableField() }
           />
         )}
       />
     ) : (
-      <Field
-        name={ item.id }
-        component={ utils.getComponent(item.component) }
-        item={ item }
-        disabled={ disabled }
-        error={ error }
-        touched={ touched }
-        formProps={ formProps }
-      />
+      disableComponent(item)
     )
   }
 
