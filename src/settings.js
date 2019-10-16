@@ -19,6 +19,8 @@ import DownArrowIcon from '@material-ui/icons/KeyboardArrowDown'
 import UploadIcon from '@material-ui/icons/CloudUpload'
 import BuildIcon from '@material-ui/icons/Build'
 
+import edition from './edition'
+
 const icons = {
   home: HomeIcon,
   users: PeopleIcon,
@@ -43,6 +45,7 @@ const icons = {
 }
 
 const settings = {
+  edition: edition,
   title: 'Sextant',
   api: '/api/v1',
   devMode: process.env.NODE_ENV === 'development',
@@ -79,7 +82,7 @@ const settings = {
       }
 
       return pages.concat([
-        '-', 
+        '-',
         {
           title: 'Logout',
           handler: handlers.logout,
