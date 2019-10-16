@@ -13,17 +13,33 @@ const styles = theme => ({
   root: {
     // makes a container that is 100% of veiwport height and relative so children can be absolute
     position: 'relative',
-    minHeight: '100vh'
+    minHeight: '100vh',
   },
   appbar: {
     flexGrow: 1,
     flex: 1,
   },
+  line: {
+    marginRight: theme.spacing.unit * 2
+  },
+  text: {
+    flex: 1,
+    marginTop: theme.spacing.unit * .5
+  },
+  logoText: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flex: 1
+  },
+  toolbar: {
+    margin: theme.spacing.unit * 1
+  },
   flex: {
     flex: 1,
   },
   logo: {
-    height: '48px',
+    height: '42px',
     marginRight: '20px',
     flex: 0,
   },
@@ -55,29 +71,39 @@ class Layout extends React.Component {
       appBarMenuItems,
       openPage,
       children,
+      header
     } = this.props
 
     return (
       <div className={ classes.root }>
         <div className={ classes.appbar }>
           <AppBar position="static">
-            <Toolbar>
+            <Toolbar className={ classes.toolbar }>
               <SideMenu
                 user={ user }
                 items={ sideMenuItems }
                 openPage={ openPage }
               />
-              <img src="/large-full-whiteoutline-roundel.svg" className={ classes.logo } />
+              <img src={header.logo} className={ classes.logo } />
+              <div className={ classes.logoText }>
               <Typography
-                variant="h6"
+                variant="h4"
                 color="inherit"
-                className={ classes.flex }
-              >
+                className={ classes.line }
+              >|
               </Typography>
+              <Typography
+                variant="h5"
+                color="inherit"
+                className={ classes.text }
+              >{header.text}
+              </Typography>
+              </div>
               <AppBarMenu
                 user={ user }
                 items={ appBarMenuItems }
                 openPage={ openPage }
+                classname={ classes.appbarMenu }
               />
             </Toolbar>
           </AppBar>
