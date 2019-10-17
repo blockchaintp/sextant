@@ -11,4 +11,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.noxy
+      args:
+        EDITION_MODULE: dev.js
     image: noxy:${ISOLATION_ID} 

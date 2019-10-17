@@ -11,6 +11,7 @@ import Layout from 'pages/Layout'
 
 @connect(
   state => ({
+    header: settings.edition.header,
     title: settings.title,
     loggedIn: selectors.auth.loggedIn(state),
     user: selectors.auth.data(state),
@@ -58,7 +59,7 @@ class LayoutContainer extends React.Component {
 
     return (
       <Layout {...layoutProps} />
-    )    
+    )
   }
 }
 
