@@ -186,17 +186,17 @@ class DeploymentSettingsDamlArchives extends React.Component {
       <div>
         <SimpleTableHeader
           title="Packages"
-          // getActions={ () => (
-          //   <Button 
-          //     color="secondary"
-          //     variant="contained"
-          //     onClick={ () => setUploadArchiveWindowOpen(true) }
-          //     disabled={true}
-          //   >
-          //     Upload
-          //     <UploadIcon className={ classes.buttonIcon } />
-          //   </Button>
-          // ) }
+          getActions={ () => (
+            <Button 
+              color="secondary"
+              variant="contained"
+              onClick={ () => setUploadArchiveWindowOpen(true) }
+              disabled={true}
+            >
+              Upload
+              <UploadIcon className={ classes.buttonIcon } />
+            </Button>
+          ) }
         />
         <DamlArchiveTable
           data={ data }
