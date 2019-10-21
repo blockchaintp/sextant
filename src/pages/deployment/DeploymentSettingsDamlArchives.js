@@ -191,7 +191,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
               color="secondary"
               variant="contained"
               onClick={ () => setUploadArchiveWindowOpen(true) }
-              disabled={true}
+              disabled={false}
             >
               Upload
               <UploadIcon className={ classes.buttonIcon } />
