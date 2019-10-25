@@ -6,11 +6,32 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.multistage
+      args:
+        EDITION_MODULE: dev.js
     image: sextant:${ISOLATION_ID}
+  frontend-sfs:
+    build:
+      context: .
+      dockerfile: Dockerfile.multistage
+      args:
+        EDITION_MODULE: aws_sfs.js
+    image: sextant-sfs:${ISOLATION_ID}
+  frontend-sfd:
+    build:
+      context: .
+      dockerfile: Dockerfile.multistage
+      args:
+        EDITION_MODULE: aws_sfd.js
+    image: sextant-sfd:${ISOLATION_ID}
+  frontend-enterprise:
+    build:
+      context: .
+      dockerfile: Dockerfile.multistage
+      args:
+        EDITION_MODULE: enterprise.js
+    image: sextant-enterprise:${ISOLATION_ID}
   router:
     build:
       context: .
       dockerfile: Dockerfile.noxy
-      args:
-        EDITION_MODULE: dev.js
-    image: noxy:${ISOLATION_ID} 
+    image: noxy:${ISOLATION_ID}
