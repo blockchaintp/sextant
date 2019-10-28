@@ -81,7 +81,7 @@ class DialogButton extends React.Component {
                   theme={theme}
                   optionIcon={version.icon || "/large-logo-outline-roundel.svg"}
                   optionTitle={version.title}
-                  optionVersion={version.title}
+                  optionVersion={version.version}
                   versionSummary={version.description}
                   onClick={ () => this.clickItem(version) }
                 />
