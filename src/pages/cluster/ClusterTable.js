@@ -16,6 +16,8 @@ import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
+import { friendlyNameGenerator } from '../../utils/friendlyFunctions'
+
 
 import rbac from 'utils/rbac'
 
@@ -123,7 +125,7 @@ class ClusterTable extends React.Component {
               />
             </div>
             <div className={ classes.statusIcon }>
-              { cluster.task.action }
+              { friendlyNameGenerator(cluster.task.action) }
             </div>
             <div className={ classes.statusIcon }>
               <TaskStatusIcon
