@@ -5,6 +5,8 @@ import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
 import { mergeEntities, mergeAll } from '../utils/mergeNormalized'
 import api from '../utils/api'
+import { friendlyMessageGenerator, friendlyErrorGenerator } from '../../utils/friendlyFunctions'
+
 
 import selectors from '../selectors'
 import routerActions from './router'
@@ -39,12 +41,6 @@ const initialState = {
     deployments: null,
     resources: null,
   }
-}
-
-const deploymentTaskTitles = {
-  'deployment.create': 'deployment create',
-  'deployment.update': 'deployment update',
-  'deployment.delete': 'deployment delete',
 }
 
 const reducers = {
@@ -158,7 +154,6 @@ const sideEffects = {
     const trackTask = getState().deployment.trackTask
 
     if(trackTask) {
-      const taskTitle = deploymentTaskTitles[trackTask.action]
       const newTrackTask = newData
         .map(deployment => deployment.task)
         .find(task => task.id == trackTask.id)
@@ -166,16 +161,16 @@ const sideEffects = {
         // the tracked task has failed or finished
         if(newTrackTask.status == 'error' || newTrackTask.status == 'finished') {
           if(newTrackTask.status == 'error') {
-            dispatch(snackbarActions.setError(`The ${taskTitle} task failed`))
+            dispatch(snackbarActions.setError(friendlyErrorGenerator(trackTask.action)))
           }
           else if(newTrackTask.status == 'finished') {
-            dispatch(snackbarActions.setSuccess(`The ${taskTitle} task succeeded`))
+            dispatch(snackbarActions.setSuccess(friendlyMessageGenerator(trackTask.action)))
           }
           dispatch(actions.setTrackTask(null))
         }
       }
       else if(trackTask.action == 'deployment.delete') {
-        dispatch(snackbarActions.setSuccess(`The ${taskTitle} task succeeded`))
+        dispatch(snackbarActions.setSuccess(friendlyMessageGenerator(trackTask.action)))
         dispatch(actions.setTrackTask(null))
       }
     }
