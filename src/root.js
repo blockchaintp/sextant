@@ -5,6 +5,9 @@ import { RouterProvider } from 'react-router5'
 import Theme from './theme'
 import SnackbarWrapper from './containers/SnackbarWrapper'
 import Router from './router/Router'
+import edition from './edition'
+
+const header = edition.header
 
 class Root extends React.Component {
   render() {
@@ -13,6 +16,8 @@ class Root extends React.Component {
       store,
       router,
     } = this.props
+
+    document.title = `Sextant for ${header.text}`
 
     return (
       <Provider store={ store }>
