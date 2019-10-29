@@ -6,6 +6,8 @@ import SimpleTable from 'components/table/SimpleTable'
 import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
+import { friendlyNameGenerator } from '../../utils/friendlyFunctions'
+
 const styles = theme => {
   return {
     root: {
@@ -46,9 +48,9 @@ const fields =[{
 }]
 
 class TaskTable extends React.Component {
-  
+
   render() {
-    const { 
+    const {
       classes,
       data,
     } = this.props
@@ -69,7 +71,7 @@ class TaskTable extends React.Component {
               />
             </div>
             <div>
-              { task.action }
+              { friendlyNameGenerator(task.action) }
             </div>
           </div>
         ),

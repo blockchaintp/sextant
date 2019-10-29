@@ -3,6 +3,7 @@ import { normalize, schema } from 'normalizr'
 import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
 import { mergeEntities, mergeAll } from '../utils/mergeNormalized'
+import { friendlyMessageGenerator, friendlyErrorGenerator } from '../../utils/friendlyFunctions'
 import api from '../utils/api'
 
 import selectors from '../selectors'
@@ -34,12 +35,6 @@ const initialState = {
     cluster: null,
     resources: null,
   }
-}
-
-const clusterTaskTitles = {
-  'cluster.create': 'cluster create',
-  'cluster.update': 'cluster update',
-  'cluster.delete': 'cluster delete',
 }
 
 const reducers = {
@@ -146,7 +141,6 @@ const sideEffects = {
     const trackTask = getState().cluster.trackTask
 
     if(trackTask) {
-      const taskTitle = clusterTaskTitles[trackTask.action]
       const newTrackTask = newData
         .map(cluster => cluster.task)
         .find(task => task.id == trackTask.id)
@@ -154,16 +148,16 @@ const sideEffects = {
         // the tracked task has failed or finished
         if(newTrackTask.status == 'error' || newTrackTask.status == 'finished') {
           if(newTrackTask.status == 'error') {
-            dispatch(snackbarActions.setError(`The ${taskTitle} task failed`))
+            dispatch(snackbarActions.setError(friendlyErrorGenerator(trackTask.action)))
           }
           else if(newTrackTask.status == 'finished') {
-            dispatch(snackbarActions.setSuccess(`The ${taskTitle} task succeeded`))
+            dispatch(snackbarActions.setSuccess(friendlyMessageGenerator(trackTask.action)))
           }
           dispatch(actions.setTrackTask(null))
         }
       }
       else if(trackTask.action == 'cluster.delete') {
-        dispatch(snackbarActions.setSuccess(`The ${taskTitle} task succeeded`))
+        dispatch(snackbarActions.setSuccess(friendlyMessageGenerator(trackTask.action)))
         dispatch(actions.setTrackTask(null))
       }
     }
