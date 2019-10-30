@@ -23,7 +23,8 @@ class Text extends React.Component {
       touched,
       item,
       disabled,
-      classes
+      classes, 
+      dbId
     } = this.props
 
     const inputProps = item.inputProps || {}

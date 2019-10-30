@@ -7,6 +7,7 @@ import selectors from 'store/selectors'
 
 import UserForm from 'pages/user/UserForm'
 import Loading from 'components/system/Loading'
+import { Typography } from '@material-ui/core'
 
 const newInitialValues = {
   username: '',
@@ -40,6 +41,7 @@ const onCancel = () => routerActions.navigateTo('users')
       loading: selectors.user.loading.get(state),
       schema,
       initialValues,
+      dbId: id
     }
   },
   {
@@ -58,7 +60,7 @@ class CreateInitialUserContainer extends React.Component {
     if(loading) {
       return <Loading />
     }
-
+    
     return (
       <UserForm {...this.props} />
     )    

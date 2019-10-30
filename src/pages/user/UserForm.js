@@ -32,8 +32,10 @@ class UserForm extends React.Component {
       error,
       submitting,
       onCancel,
+      dbId
     } = this.props
-
+    
+    
     return (
       <div className={ classes.root }>
         <Grid container spacing={24}>
@@ -43,6 +45,7 @@ class UserForm extends React.Component {
                 { title }
               </Typography>
               <FormWrapper
+                dbId={dbId}
                 schema={ schema }
                 initialValues={ initialValues }
                 error={ error }
