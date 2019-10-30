@@ -75,6 +75,11 @@ const routes = [
     name: 'accountdetails',
     path: '/accountdetails',
     authorize: authHandlers.user,
+    trigger: {
+      deactivate: (store) => {
+        store.dispatch(networkActions.clearError('user.form'))
+      },
+    },
   },
   {
     name: 'accesstoken',
