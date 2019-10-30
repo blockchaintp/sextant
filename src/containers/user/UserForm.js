@@ -1,13 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
 import routerActions from 'store/modules/router'
 import userActions from 'store/modules/user'
 import selectors from 'store/selectors'
 
-import UserForm from 'pages/user/UserForm'
 import Loading from 'components/system/Loading'
-import { Typography } from '@material-ui/core'
+import UserForm from 'pages/user/UserForm'
 
 const newInitialValues = {
   username: '',
