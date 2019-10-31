@@ -13,21 +13,14 @@ const styles = theme => ({
   card: {
     display: 'flex',
   },
-  details: {
+  titles: {
     display: 'flex',
+    flex: '1 0 auto',
+    alignItems: "flex-start",
     flexDirection: 'column',
   },
-  titles: {
-    flex: '1 0 auto',
-  },
   icon: {
-    width: 60,
-  },
-  summary: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
+    width: 100,
   },
 });
 
@@ -50,22 +43,20 @@ function HorizontalCard(props) {
         <CardContent>
           <img src={optionIcon} className={ classes.icon } />
         </CardContent>
-      </ButtonBase>
-      <div className={classes.details}>
-        <CardContent className={classes.titles}>
-          <div className={classes.row}>
+        <div>
+          <CardContent className={classes.titles}>
             <Typography component="h5" variant="h5">
               {optionTitle}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
               {optionVersion}
             </Typography>
-          </div>
-          <Typography >
-            {versionSummary}
-          </Typography>
-        </CardContent>
-      </div>
+            <Typography >
+              {versionSummary}
+            </Typography>
+          </CardContent>
+        </div>
+      </ButtonBase>
     </Card>
   );
 }
