@@ -377,6 +377,8 @@ class FormWrapperInner extends React.Component {
       exists,
     } = this.props
 
+    const isNew = this.props.dbId
+
     const disableField = () => {
       let disabled = false
 
@@ -395,10 +397,11 @@ class FormWrapperInner extends React.Component {
     const error = dotty.get(formProps.errors, item.id)
     const touched = dotty.get(formProps.touched, item.id)
 
-    const disableComponent = (item) => {
+    const renderComponent = (item) => {
       if (item.id === 'daml.postgres.secret' && formProps.values.aws.db.create === 'false'){
         return (
           <Field
+            dbId={isNew}
             name={ item.id }
             component={ utils.getComponent(item.component) }
             item={ item }
@@ -413,6 +416,7 @@ class FormWrapperInner extends React.Component {
       }
       return (
         <Field
+          dbId={isNew}
           name={ item.id }
           component={ utils.getComponent(item.component) }
           item={ item }
@@ -437,7 +441,7 @@ class FormWrapperInner extends React.Component {
         )}
       />
     ) : (
-      disableComponent(item)
+      renderComponent(item)
     )
   }
 
@@ -496,7 +500,7 @@ class FormWrapperInner extends React.Component {
       classes,
       validate,
     } = this.props
-
+    
     let isInitialValid = false
 
     const validationSchema = Validate(schema)
