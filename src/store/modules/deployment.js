@@ -13,6 +13,7 @@ import routerActions from './router'
 import clusterActions from './cluster'
 import userActions from './user'
 import snackbarActions from './snackbar'
+import authActions from './auth'
 
 const prefix = 'deployment'
 
@@ -264,6 +265,7 @@ const sideEffects = {
       dispatch(routerActions.navigateTo('deployments', {
         cluster,
       }))
+      dispatch(authActions.loadStatus())
     } catch(e) {
       dispatch(snackbarActions.setError(`error creating deployment: ${e.toString()}`))
       console.error(e)
