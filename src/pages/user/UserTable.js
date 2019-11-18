@@ -45,6 +45,7 @@ class UserTable extends React.Component {
       onAdd,
       onEdit,
       onDelete,
+      isSuperuser,
     } = this.props
 
     const {
@@ -87,6 +88,7 @@ class UserTable extends React.Component {
     const actions = [{
       title: 'Delete',
       icon: DeleteIcon,
+      disabled: isSuperuser ? false : true,
       handler: (item) => this.openDeleteDialog(item),
     }, {
       title: 'Edit',
