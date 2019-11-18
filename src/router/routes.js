@@ -163,6 +163,9 @@ const routes = [
         store.dispatch(deploymentActions.get(params.cluster, params.id))
         store.dispatch(deploymentActions.listTasks(params.cluster, params.id))
       },
+      deactivate: (store) => {
+        store.dispatch(networkActions.clearError('deployment.form'))
+      }
     },
   },
   {
