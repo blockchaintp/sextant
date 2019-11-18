@@ -15,6 +15,9 @@ const authHandlers = {
   superuser: (state) => selectors.auth.isSuperuser(state) ?
     null :
     'home',
+  superuserOrAdmin: (state) => selectors.auth.isSuperuser(state) || selectors.auth.isAdmin(state) ?
+    null :
+    'home'
 }
 
 const routes = [
@@ -55,7 +58,7 @@ const routes = [
   {
     name: 'users',
     path: '/users',
-    authorize: authHandlers.superuser,
+    authorize: authHandlers.superuserOrAdmin,
     trigger: {
       activate: (store) => store.dispatch(userActions.list()),
     },
@@ -63,7 +66,7 @@ const routes = [
   {
     name: 'user',
     path: '/user/:id',
-    authorize: authHandlers.superuser,
+    authorize: authHandlers.superuserOrAdmin,
     trigger: {
       activate: (store, params) => {
         if(params.id == 'new') return
