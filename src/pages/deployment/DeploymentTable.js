@@ -111,7 +111,7 @@ class DeploymentTable extends React.Component {
       user,
     } = this.props
 
-
+    
     const {
       deleteConfirmOpen,
       deleteConfirmItem,
@@ -208,14 +208,8 @@ class DeploymentTable extends React.Component {
       })
 
     const noActiveDeployments = () => {
-     const deploymentList = this.props.deployments
-     let status = true
-     deploymentList.forEach((deployment) => {
-       if (deployment.task && deployment.status === "provisioned" && deployment.task.status === "finished") {
-         status = false
-       }
-     })
-     return status
+      const active_deployments = parseInt(cluster.active_deployments, 10)
+      return active_deployments > 0 ? false : true
     }
 
       addButtonDisabled = (canWriteToCluster && noActiveDeployments()) ? false : true
