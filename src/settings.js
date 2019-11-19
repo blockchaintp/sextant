@@ -73,7 +73,7 @@ const settings = {
         icon: icons.deployment,
       }]
 
-      if(isSuperuser) {
+      if (isSuperuser || isAdmin) {
         pages.push({
           title: 'Users',
           handler: 'users',

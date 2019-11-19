@@ -10,6 +10,7 @@ import selectors from '../selectors'
 import routerActions from './router'
 import snackbarActions from './snackbar'
 import userActions from './user'
+import authActions from './auth'
 
 const prefix = 'cluster'
 
@@ -220,6 +221,7 @@ const sideEffects = {
       dispatch(actions.setTrackTask(task))
       dispatch(snackbarActions.setInfo(`cluster creating`))
       dispatch(routerActions.navigateTo('clusters'))
+      dispatch(authActions.loadStatus())
     } catch(e) {
       dispatch(snackbarActions.setError(`error creating cluster: ${e.toString()}`))
       console.error(e)

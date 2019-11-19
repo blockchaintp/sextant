@@ -14,6 +14,7 @@ const onDelete = (id) => userActions.delete(id)
 @connect(
   state => ({
     users: selectors.user.collection.list(state),
+    isSuperuser: selectors.auth.isSuperuser(state)
   }),
   {
     onAdd,
