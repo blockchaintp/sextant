@@ -208,7 +208,11 @@ class DeploymentTable extends React.Component {
       })
 
     const noActiveDeployments = () => {
+<<<<<<< HEAD
       if (cluster) {
+=======
+      if(cluster){
+>>>>>>> SXT-247 Fix render of add deployment button
         const active_deployments = parseInt(cluster.active_deployments, 10)
         return active_deployments > 0 ? false : true
       } else {
@@ -242,7 +246,6 @@ class DeploymentTable extends React.Component {
           <FormControlLabel
             control={
               <Checkbox
-                //checked={hideDeleted}
                 onChange={(event) => updatehideDeleted(event.target.checked)}
                 value="checkedB"
                 color="primary"
