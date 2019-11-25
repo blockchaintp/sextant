@@ -56,10 +56,10 @@ const styles = theme => ({
   clusterSelect: {
     marginRight: theme.spacing.unit * 2,
   },
-  showDeletedCheckbox: {
+  hideDeletedCheckbox: {
     marginRight: theme.spacing.unit * 2,
   },
-  showDeletedLabel: {
+  hideDeletedLabel: {
     whiteSpace: 'nowrap',
   },
   formControl: {
@@ -95,13 +95,13 @@ class DeploymentTable extends React.Component {
     const {
       classes,
       deployments,
-      showDeleted,
+      hideDeleted,
       onAdd,
       onEdit,
       onViewStatus,
       onViewSettings,
       onDelete,
-      updateShowDeleted,
+      updatehideDeleted,
       clusters,
       cluster,
       clusterId,
@@ -236,25 +236,30 @@ class DeploymentTable extends React.Component {
     )
 
     const headerActions = embedded ?
-      addButton :
+      (
+        <div>
+        < div className = { classes.hideDeletedCheckbox } >
+          <FormControlLabel
+            control={
+              <Checkbox
+                //checked={hideDeleted}
+                onChange={(event) => updatehideDeleted(event.target.checked)}
+                value="checkedB"
+                color="primary"
+              />
+            }
+            label="Hide Deleted?"
+            classes={{
+              label: classes.hideDeletedLabel,
+            }}
+          />
+        </div >
+          {addButton}
+        </div>
+      )
+      :
       (
         <div className={ classes.headerActions }>
-          <div className={ classes.showDeletedCheckbox }>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={ showDeleted }
-                  onChange={ (event) => updateShowDeleted(event.target.checked) }
-                  value="checkedB"
-                  color="primary"
-                />
-              }
-              label="Show Deleted?"
-              classes={{
-                label: classes.showDeletedLabel,
-              }}
-            />
-          </div>
           <div className={ classes.clusterSelect }>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="name-readonly">Cluster</InputLabel>

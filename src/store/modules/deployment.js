@@ -31,7 +31,7 @@ const initialState = {
     volumes: [],
   },
   summary: [],
-  showDeleted: false,
+  hideDeleted: false,
 
   // a task we are tracking the status of so we show snackbars
   // when it has finished or errored
@@ -57,8 +57,8 @@ const reducers = {
   setDeployment: (state, action) => {
     mergeEntities(state.deployments, normalize([action.payload], [deployment]))
   },
-  setShowDeleted: (state, action) => {
-    state.showDeleted = action.payload
+  sethideDeleted: (state, action) => {
+    state.hideDeleted = action.payload
   },
   setTrackTask: (state, action) => {
     state.trackTask = action.payload
@@ -85,11 +85,24 @@ const loaders = {
 
   list: ({
     cluster,
-    showDeleted,
+    hideDeleted,
     mode
   }) => axios.get(api.url(`/clusters/${cluster}/deployments`), {
     params: {
-      showDeleted: showDeleted ? 'y' : '',
+      showDeleted: hideDeleted ? '' : 'y',
+      withTasks: 'y',
+      mode: mode ? 'background' : 'foreground'
+    }
+  })
+    .then(api.process),
+
+  listWithOptions: ({
+    cluster,
+    hideDeleted,
+    mode
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments`), {
+    params: {
+      showDeleted: hideDeleted ? '' : 'y',
       withTasks: 'y',
       mode: mode ? 'background' : 'foreground'
     }
@@ -138,12 +151,12 @@ const loaders = {
 
 const sideEffects = {
 
-  updateShowDeleted: (value) => (dispatch, getState) => {
+  updatehideDeleted: (value) => (dispatch, getState) => {
 
     const routeParams = selectors.router.params(getState())
 
-    dispatch(actions.setShowDeleted(value))
-    dispatch(actions.list({
+    dispatch(actions.sethideDeleted(value))
+    dispatch(actions.listWithOptions({
       cluster: routeParams.cluster
     }))
   },
@@ -185,7 +198,21 @@ const sideEffects = {
     dispatch,
     loader: () => loaders.list({
       cluster,
-      showDeleted: selectors.deployment.showDeleted(getState()),
+      hideDeleted: false,
+      mode: background ? background : false
+    }),
+    prefix,
+    name: 'list',
+    dataAction: actions.updateDeploymentList,
+    snackbarError: true,
+  }),
+  listWithOptions: ({
+    cluster,
+  }, background = false) => (dispatch, getState) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listWithOptions({
+      cluster,
+      hideDeleted: selectors.deployment.hideDeleted(getState()),
       mode: background ? background : false
     }),
     prefix,

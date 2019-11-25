@@ -169,7 +169,7 @@ const sideEffects = {
   list: (opts = {}) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.list({
-      showDeleted: opts.noDeleted ? false : selectors.cluster.showDeleted(getState()),
+      showDeleted: opts.noDeleted ? false : true,
       mode: opts.background ? opts.background : false
     }),
     prefix,
