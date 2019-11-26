@@ -208,8 +208,12 @@ class DeploymentTable extends React.Component {
       })
 
     const noActiveDeployments = () => {
-      const active_deployments = parseInt(cluster.active_deployments, 10)
-      return active_deployments > 0 ? false : true
+      if (cluster) {
+        const active_deployments = parseInt(cluster.active_deployments, 10)
+        return active_deployments > 0 ? false : true
+      } else {
+        return false
+      }
     }
 
       addButtonDisabled = (canWriteToCluster && noActiveDeployments()) ? false : true
