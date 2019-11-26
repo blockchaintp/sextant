@@ -64,22 +64,22 @@ export const friendlyNameGenerator = (action) => {
   let name
   switch (action) {
     case 'cluster.create' :
-      name = 'add cluster'
+      name = 'add'
       break
     case 'cluster.update' :
-      name = 'reactivate cluster'
+      name = 'reactivate'
       break
     case 'cluster.delete' :
-      name = 'deactivate cluster'
+      name = 'deactivate'
       break
     case 'deployment.create' :
-      name = 'add deployment'
+      name = 'add'
       break
     case 'deployment.update' :
-      name = 'redeploy deployment'
+      name = 'redeploy'
       break
     case 'deployment.delete' :
-      name = 'undeploy deployment'
+      name = 'undeploy'
       break
     default :
       name = action

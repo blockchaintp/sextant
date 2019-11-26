@@ -364,7 +364,7 @@ class DeploymentTable extends React.Component {
         <SimpleTableDeleteDialog
           resource={deleteConfirmItem}
           open={deleteConfirmOpen}
-          title={deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${deleteConfirmItem.status == 'undeployed' ? ' permanently' : ''}` : null}
+          title={deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${deleteConfirmItem.status == 'undeployed' ? ' permanently' : ''}` : null}t
           onCancel={ () => this.closeDeleteDialog() }
           onConfirm={ () => {
             this.closeDeleteDialog()
