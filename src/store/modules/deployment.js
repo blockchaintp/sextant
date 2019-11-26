@@ -166,6 +166,7 @@ const sideEffects = {
   updateDeploymentList: (newData) => (dispatch, getState) => {
 
     const trackTask = getState().deployment.trackTask
+    
 
     if(trackTask) {
       const newTrackTask = newData
@@ -406,7 +407,11 @@ const sideEffects = {
     cluster,
   }, background = false) => async (dispatch, getState) => {
     const looping = getState().deployment.loops.deployment
+    
     if(!looping) return
+    if(typeof(cluster) === 'number') {
+      await dispatch(clusterActions.get(cluster))
+    }
     await dispatch(actions.list({
       cluster,
     }, background))
