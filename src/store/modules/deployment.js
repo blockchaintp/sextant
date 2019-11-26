@@ -413,6 +413,9 @@ const sideEffects = {
   }, background = false) => async (dispatch, getState) => {
     const looping = getState().deployment.loops.resources
     if(!looping) return
+    if (typeof (cluster) === 'number') {
+      await dispatch(clusterActions.get(cluster))
+    }
     await dispatch(actions.listResources(cluster, deployment, background))
     await new Promise(resolve => setTimeout(resolve, 1000))
     dispatch(actions.resourcesLoop({
