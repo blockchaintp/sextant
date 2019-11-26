@@ -12,7 +12,7 @@ export const friendlyMessageGenerator = (action) => {
       message = 'The cluster was updated sucessfully.'
       break
     case 'cluster.delete' :
-      message = 'The cluster was deleted sucessfully.'
+      message = 'The cluster was deleted/deactivated sucessfully.'
       break
     case 'deployment.create' :
       message = 'The deployment was added sucessfully.'
@@ -21,7 +21,7 @@ export const friendlyMessageGenerator = (action) => {
       message = 'The deployment was updated sucessfully.'
       break
     case 'deployment.delete' :
-      message = 'The deployment was deleted sucessfully.'
+      message = 'The deployment was deleted/undeployed sucessfully.'
       break
     default :
       message = action
@@ -41,7 +41,7 @@ export const friendlyErrorGenerator = (action) => {
       message = 'The update cluster task failed.'
       break
     case 'cluster.delete' :
-      message = 'The delete cluster task failed.'
+      message = 'The delete/deactivate cluster task failed.'
       break
     case 'deployment.create' :
       message = 'The add deployment task failed.'
@@ -50,7 +50,7 @@ export const friendlyErrorGenerator = (action) => {
       message = 'The update deployment task failed.'
       break
     case 'deployment.delete' :
-      message = 'The delete deployment task failed.'
+      message = 'The delete/undeploy deployment task failed.'
       break
     default :
       message = action
@@ -67,22 +67,138 @@ export const friendlyNameGenerator = (action) => {
       name = 'add cluster'
       break
     case 'cluster.update' :
-      name = 'update cluster'
+      name = 'reactivate cluster'
       break
     case 'cluster.delete' :
-      name = 'delete cluster'
+      name = 'deactivate cluster'
       break
     case 'deployment.create' :
       name = 'add deployment'
       break
     case 'deployment.update' :
-      name = 'update deployment'
+      name = 'redeploy deployment'
       break
     case 'deployment.delete' :
-      name = 'delete deployment'
+      name = 'undeploy deployment'
       break
     default :
       name = action
   }
   return name
+}
+
+const orderList = (list) => {
+  let result = list
+  list
+    .forEach( (item) => {
+      if (item.status === 'provisioned')
+    })
+}
+
+export const deploymentStatusTranslator = (status) => {
+  let translation = status
+  if (status === 'provisioned')
+    translation = 'deployed'
+
+  if (status === 'deleted')
+    translation = 'undeployed'
+
+  return translation
+}
+
+export const getDeploymentIcon = (status, settings) => {
+  let icon = settings.icons.remove
+
+  if (status === 'deployed') icon = settings.icons.remove
+
+  if (status === 'undeployed') icon = settings.icons.delete
+
+  if (status === 'error') icon = settings.icons.repeat
+
+  return icon
+}
+
+export const getDeploymentIconTitle = (status, settings) => {
+  let iconTitle = 'Remove'
+
+  if (status === 'deployed') iconTitle = 'Undeploy'
+
+  if (status === 'undeployed') iconTitle = 'Delete'
+
+  if (status === 'error') iconTitle = 'Try Again'
+
+  return iconTitle
+}
+
+export const getTaskIcon = (status, settings) => {
+  let icon = settings.icons.remove
+
+  if (status === 'deployed') icon = settings.icons.remove
+
+  if (status === 'undeployed') icon = settings.icons.delete
+
+  if (status === 'error') icon = settings.icons.repeat
+
+  return icon
+}
+
+export const clusterStatusTranslator = (status) => {
+  let translation = status
+  if (status === 'provisioned')
+    translation = 'active'
+
+  if (status === 'deleted')
+    translation = 'inactive'
+
+  return translation
+}
+
+export const getClusterIcon = (status, settings) => {
+  let icon = settings.icons.remove
+
+  if (status === 'active') icon = settings.icons.remove
+
+  if (status === 'inactive') icon = settings.icons.delete
+
+  if (status === 'error') icon = settings.icons.repeat
+
+  return icon
+}
+
+export const getClusterIconTitle = (status, settings) => {
+  let iconTitle = 'Remove'
+
+  if (status === 'active') iconTitle = 'Deactivate'
+
+  if (status === 'inactive') iconTitle = 'Delete'
+
+  if (status === 'error') iconTitle = 'Try Again'
+
+  return iconTitle
+}
+
+export const getDialogDeleteText = (status) => {
+  let text = {}
+
+  if (status === 'deployed') {
+    text.title = "Undeploy"
+    text.subtext = 'undeploy'
+  }
+
+  if (status === 'undeployed') {
+    text.title = "Delete"
+    text.subtext = 'delete'
+  }
+
+  if (status === 'active') {
+    text.title = "Deactivate"
+    text.subtext = 'deactivate'
+  }
+  
+  if (status === 'inactive') {
+    text.title = "Delete"
+    text.subtext = 'delete'
+  }
+
+  return text
 }
