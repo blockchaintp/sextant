@@ -20,7 +20,7 @@ import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
-import { friendlyNameGenerator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle} from '../../utils/friendlyFunctions'
+import { friendlyNameGenerator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle } from '../../utils/friendlyFunctions'
 
 
 import rbac from 'utils/rbac'
@@ -138,8 +138,6 @@ class DeploymentTable extends React.Component {
       fields = fields.filter(f => f.name != 'clusterName')
     }
 
-
-
     const data = deployments.map((deployment, index) => {
       return {
         id: deployment.id,
@@ -210,11 +208,7 @@ class DeploymentTable extends React.Component {
       })
 
     const noActiveDeployments = () => {
-<<<<<<< HEAD
-      if (cluster) {
-=======
       if(cluster){
->>>>>>> SXT-247 Fix render of add deployment button
         const active_deployments = parseInt(cluster.active_deployments, 10)
         return active_deployments > 0 ? false : true
       } else {
@@ -309,8 +303,8 @@ class DeploymentTable extends React.Component {
         }
       })) {
         buttons.push({
-          title: getDeploymentIconTitle(deployment.status, settings),
-          icon: getDeploymentIcon(deployment.status, settings),
+          title: 'Delete',
+          icon: DeleteIcon,
           handler: (item) => this.openDeleteDialog(item),
         })
         buttons.push({
@@ -320,14 +314,11 @@ class DeploymentTable extends React.Component {
         })
       }
 
-        buttons.push({
-          title: 'View',
-          icon: ViewIcon,
-          disabled: (deployment.status === 'undeployed'),
-          handler: (item) => onViewStatus(item.cluster, item.id),
-        })
-
-
+      buttons.push({
+        title: 'View',
+        icon: ViewIcon,
+        handler: (item) => onViewStatus(item.cluster, item.id),
+      })
 
       const buttonDeploymentType = deployment.deploymentData.deployment_type
       const buttonDeploymentVersion = deployment.deploymentData.deployment_version
@@ -372,8 +363,8 @@ class DeploymentTable extends React.Component {
         />
         <SimpleTableDeleteDialog
           resource={deleteConfirmItem}
-          open={ deleteConfirmOpen }
-          title={ deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${deleteConfirmItem.status == 'undeployed' ? ' permanently' : ''}` : null }
+          open={deleteConfirmOpen}
+          title={deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${deleteConfirmItem.status == 'undeployed' ? ' permanently' : ''}` : null}
           onCancel={ () => this.closeDeleteDialog() }
           onConfirm={ () => {
             this.closeDeleteDialog()
