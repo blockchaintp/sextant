@@ -87,14 +87,6 @@ export const friendlyNameGenerator = (action) => {
   return name
 }
 
-const orderList = (list) => {
-  let result = list
-  list
-    .forEach( (item) => {
-      if (item.status === 'provisioned')
-    })
-}
-
 export const deploymentStatusTranslator = (status) => {
   let translation = status
   if (status === 'provisioned')
