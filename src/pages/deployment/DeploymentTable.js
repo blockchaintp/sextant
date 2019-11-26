@@ -20,7 +20,7 @@ import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
-import { friendlyNameGenerator } from '../../utils/friendlyFunctions'
+import { friendlyNameGenerator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle} from '../../utils/friendlyFunctions'
 
 
 import rbac from 'utils/rbac'
@@ -138,6 +138,8 @@ class DeploymentTable extends React.Component {
       fields = fields.filter(f => f.name != 'clusterName')
     }
 
+
+
     const data = deployments.map((deployment, index) => {
       return {
         id: deployment.id,
@@ -147,7 +149,7 @@ class DeploymentTable extends React.Component {
         name: deployment.name,
         clusterName: deployment.clusterName,
         deployment_type: deployment.deployment_type,
-        status: deployment.status,
+        status: deploymentStatusTranslator(deployment.status),
         task: deployment.task ? (
           <div className={ classes.statusContainer }>
             <div className={ classes.statusIcon }>
@@ -241,7 +243,7 @@ class DeploymentTable extends React.Component {
 
     const headerActions = embedded ?
       (
-        <div>
+        <div className={classes.headerActions}>
         < div className = { classes.hideDeletedCheckbox } >
           <FormControlLabel
             control={
@@ -307,8 +309,8 @@ class DeploymentTable extends React.Component {
         }
       })) {
         buttons.push({
-          title: 'Delete',
-          icon: DeleteIcon,
+          title: getDeploymentIconTitle(deployment.status, settings),
+          icon: getDeploymentIcon(deployment.status, settings),
           handler: (item) => this.openDeleteDialog(item),
         })
         buttons.push({
@@ -318,11 +320,14 @@ class DeploymentTable extends React.Component {
         })
       }
 
-      buttons.push({
-        title: 'View',
-        icon: ViewIcon,
-        handler: (item) => onViewStatus(item.cluster, item.id),
-      })
+        buttons.push({
+          title: 'View',
+          icon: ViewIcon,
+          disabled: (deployment.status === 'undeployed'),
+          handler: (item) => onViewStatus(item.cluster, item.id),
+        })
+
+
 
       const buttonDeploymentType = deployment.deploymentData.deployment_type
       const buttonDeploymentVersion = deployment.deploymentData.deployment_version
@@ -366,8 +371,9 @@ class DeploymentTable extends React.Component {
           }}
         />
         <SimpleTableDeleteDialog
+          resource={deleteConfirmItem}
           open={ deleteConfirmOpen }
-          title={ deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${deleteConfirmItem.status == 'deleted' ? ' - this will be permenant' : ''}` : null }
+          title={ deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${deleteConfirmItem.status == 'undeployed' ? ' permanently' : ''}` : null }
           onCancel={ () => this.closeDeleteDialog() }
           onConfirm={ () => {
             this.closeDeleteDialog()
