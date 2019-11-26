@@ -197,7 +197,7 @@ DeploymentForm.propTypes = {
 
 DeploymentForm.defaultProps = {
   title: 'Deployment Details',
-  submitTitle: 'Submit',
+  submitTitle: 'Deploy',
 }
 
 export default withStyles(styles)(DeploymentForm)
