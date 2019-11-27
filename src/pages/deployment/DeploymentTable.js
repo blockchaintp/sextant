@@ -303,8 +303,8 @@ class DeploymentTable extends React.Component {
         }
       })) {
         buttons.push({
-          title: 'Delete',
-          icon: DeleteIcon,
+          title: getDeploymentIconTitle(deployment.status),
+          icon: getDeploymentIcon(deployment.status, settings),
           handler: (item) => this.openDeleteDialog(item),
         })
         buttons.push({
@@ -317,6 +317,7 @@ class DeploymentTable extends React.Component {
       buttons.push({
         title: 'View',
         icon: ViewIcon,
+        disabled: deployment.status === 'undeployed',
         handler: (item) => onViewStatus(item.cluster, item.id),
       })
 
