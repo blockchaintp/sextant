@@ -247,7 +247,7 @@ class DeploymentTable extends React.Component {
                 color="primary"
               />
             }
-            label="Hide Deleted?"
+            label="Hide Undeployed"
             classes={{
               label: classes.hideDeletedLabel,
             }}
