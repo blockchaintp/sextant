@@ -189,7 +189,7 @@ const sideEffects = {
         dispatch(actions.setTrackTask(null))
       }
     }
-
+    
     dispatch(actions.setDeployments(newData))
   },
 
@@ -283,6 +283,7 @@ const sideEffects = {
       const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.create(cluster, deployment),
+        setCluster: clusterActions.get(cluster),
         prefix,
         name: 'form',
         returnError: true,
@@ -323,6 +324,7 @@ const sideEffects = {
       const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.update(cluster, id, deploymentUpdate),
+        setCluster: clusterActions.get(cluster),
         prefix,
         name: 'form',
         returnError: true,
@@ -345,6 +347,7 @@ const sideEffects = {
         loader: () => loaders.delete(cluster, id),
         prefix,
         name: 'delete',
+        setCluster: clusterActions.get(cluster),
         returnError: true,
       })
 
@@ -354,7 +357,7 @@ const sideEffects = {
       }
       else {
         dispatch(actions.setTrackTask(task))
-        dispatch(snackbarActions.setInfo(`deployment deleting`))
+        dispatch(snackbarActions.setInfo(`deployment undeploying`))
       }
       dispatch(routerActions.navigateTo('deployments', {
         cluster,

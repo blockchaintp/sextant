@@ -30,7 +30,7 @@ const Store = (router, initialState = {}) => {
     router5Middleware(router),
     thunk,
     sagaMiddleware,
-    logger
+    //logger
   ]
 
   const storeEnhancers = [

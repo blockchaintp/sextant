@@ -25,6 +25,7 @@ const loaderSideEffect = ({
   loader,
   returnError,
   snackbarError,
+  setCluster
 }) => {
 
   const networkName =
@@ -39,6 +40,9 @@ const loaderSideEffect = ({
     .then(data => {
       if(dataAction) {
         dispatch(dataAction(data))
+      }
+      if(setCluster) {        
+        dispatch(setCluster)
       }
       dispatch(networkActions.stopLoading(networkName))
       return data
