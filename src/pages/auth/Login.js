@@ -46,6 +46,7 @@ class Login extends React.Component {
                     handleSubmit,
                   }) => (
                     <Button
+                      name='submit'
                       type="button"
                       variant="contained"
                       color="primary"

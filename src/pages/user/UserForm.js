@@ -41,7 +41,7 @@ class UserForm extends React.Component {
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <Paper className={ classes.paper }>
-              <Typography variant="h6" gutterBottom>
+              <Typography testId='formheader' variant="h6" gutterBottom>
                 { title }
               </Typography>
               <FormWrapper

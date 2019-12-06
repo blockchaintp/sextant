@@ -75,6 +75,7 @@ class UserTable extends React.Component {
 
     const addButton = (
       <Button 
+        testId='addbutton'
         className={classes.button} 
         variant="contained"
         color="secondary"

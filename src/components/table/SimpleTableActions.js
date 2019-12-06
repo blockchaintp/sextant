@@ -32,6 +32,7 @@ class SimpleTableActions extends React.Component {
 
               const button = (
                 <IconButton
+                  testId={title}
                   onClick={ (event) => {
                     event.stopPropagation()
                     if(action.handler) {
