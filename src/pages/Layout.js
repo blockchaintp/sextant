@@ -80,7 +80,7 @@ class Layout extends React.Component {
           <AppBar position="static">
             <Toolbar className={ classes.toolbar }>
               <SideMenu
-                testId='sidemenu'
+                testid='sidemenu'
                 user={ user }
                 items={ sideMenuItems }
                 openPage={ openPage }
