@@ -17,6 +17,8 @@ class SimpleTableActions extends React.Component {
 
   render() {
     const { classes, item, actions } = this.props
+    console.log("ITEM", item);
+    
     return (
       <div className={ classes.root }>
         {
@@ -32,7 +34,7 @@ class SimpleTableActions extends React.Component {
 
               const button = (
                 <IconButton
-                  testid={title}
+                  _ci={`${item.username}${title}`}
                   onClick={ (event) => {
                     event.stopPropagation()
                     if(action.handler) {

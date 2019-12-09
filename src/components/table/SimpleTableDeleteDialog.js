@@ -35,7 +35,7 @@ class SimpleTableDeleteDialog extends React.Component {
           <Button onClick={ onCancel }>
             Cancel
           </Button>
-          <Button onClick={ onConfirm } variant="contained" color="secondary" autoFocus>
+          <Button _ci='confirm' onClick={ onConfirm } variant="contained" color="secondary" autoFocus>
             Confirm
           </Button>
         </DialogActions>

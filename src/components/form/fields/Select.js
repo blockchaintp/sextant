@@ -48,7 +48,7 @@ class SelectField extends React.Component {
       <FormControl component="fieldset" className={ classes.root }>
         <FormLabel htmlFor={ name }>{ title }</FormLabel>
         <Select
-          testid={name}
+          _ci={name}
           value={ value || '' }
           onChange={ onChange }
           disabled={ disabled }
