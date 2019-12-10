@@ -126,7 +126,7 @@ class SimpleTable extends React.Component {
           </Table>
         </div>
         {
-          pagination && (
+          pagination && (data.length >= rowsPerPage) && (
             <TablePagination
               component="div"
               count={data.length}

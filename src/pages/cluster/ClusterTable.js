@@ -224,6 +224,7 @@ class ClusterTable extends React.Component {
           getActions={ () => headerActions }
         />
         <SimpleTable
+          pagination
           data={ data }
           fields={ fields }
           getActions={ (item) => {

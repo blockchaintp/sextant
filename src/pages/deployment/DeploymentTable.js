@@ -350,6 +350,7 @@ class DeploymentTable extends React.Component {
           className={ embedded ? classes.embeddedHeader : null }
         />
         <SimpleTable
+          pagination
           data={ data }
           fields={ fields }
           getActions={ (item) => {
