@@ -557,8 +557,7 @@ class FormWrapperInner extends React.Component {
                   {
                     renderButtons && (
                       <React.Fragment>
-                        <Grid item xs={12}></Grid>
-                        <Grid item xs={12}></Grid>
+                        {this.props.addSpaces ? <Grid item xs={12}></Grid> : null} 
                         <Grid item xs={12}>
                           {
                             renderButtons({

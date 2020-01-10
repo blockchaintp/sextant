@@ -194,7 +194,7 @@ class ClusterForm extends React.Component {
     if(initialValues.provision_type != 'remote') return null
 
     return (
-      <Paper className={ classes.paper } style={{maxHeight: '814px', overflow: 'auto'}}>
+      <Paper className={ classes.paper } style={{maxHeight: '792px', overflow: 'auto'}}>
         <Typography variant="h6" gutterBottom>
           Obtain Cluster Details
         </Typography>
@@ -299,6 +299,7 @@ class ClusterForm extends React.Component {
                 { title }
               </Typography>
               <FormWrapper
+                addSpaces={true}
                 schema={ schema }
                 initialValues={ initialValues }
                 error={ error }
