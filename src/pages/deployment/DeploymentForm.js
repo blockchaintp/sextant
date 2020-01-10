@@ -10,6 +10,7 @@ import TaskTable from 'components/task/TaskTable'
 import RoleTable from 'pages/role/RoleTable'
 
 import FormWrapper from 'components/form/Wrapper'
+import CustomizationPanel from 'components/deployment/CustomizationPanel'
 
 const styles = theme => ({
   root: {
@@ -29,15 +30,31 @@ const styles = theme => ({
   button: {
     marginRight: theme.spacing.unit * 2,
   },
+  panel: {
+    width: '49.2%',
+    marginBottom: theme.spacing.unit * 2,
+  },
   roleTableHeader: {
     paddingLeft: '0px',
   },
   spacer: {
-    height: theme.spacing.unit * 2,
+    height: theme.spacing.unit * 6,
   },
 })
 
 class DeploymentForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: ''
+    };
+    this.inputToState = this.inputToState.bind(this)
+  }
+
+
+  inputToState(payload) {
+    this.setState({ input: payload })
+  }
 
   getTaskTable() {
     const {
@@ -113,6 +130,9 @@ class DeploymentForm extends React.Component {
       validate,
       tasks,
       exists,
+      saveYamlInput,
+      yamlInput,
+      customYaml
     } = this.props
 
     return (
@@ -150,6 +170,10 @@ class DeploymentForm extends React.Component {
                     handleSubmit,
                   }) => (
                     <React.Fragment>
+                        <div className={classes.panel} >
+                          <CustomizationPanel inputToState={this.inputToState} saveYamlInput={saveYamlInput} customYaml={customYaml} yamlInput={yamlInput}></CustomizationPanel>
+                        </div>
+                        <div className={classes.spacer}></div>
                       {
                         onCancel && (
                           <Button

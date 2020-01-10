@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import routerActions from 'store/modules/router'
 import deploymentActions from 'store/modules/deployment'
 import userActions from 'store/modules/user'
+import customizationActions from 'store/modules/customization'
 import selectors from 'store/selectors'
 
 import DeploymentForm from 'pages/deployment/DeploymentForm'
@@ -27,6 +28,7 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
     const deploymentForms = selectors.config.forms.deployment(state)
     let initialValues = {}
     let schema = []
+    const deployment = state.deployment.deployments.entities.deployment
 
     // we are creating a new deployment
     if(id == 'new') {
@@ -59,6 +61,8 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
       accessControlLevel: selectors.user.accessControlLevel(state),
       accessControlSearch: selectors.user.accessControlSearch(state),
       accessControlUsers: selectors.user.accessControlResults(state),
+      yamlInput: selectors.customization.yamlInput(state),
+      customYaml: deployment ? deployment[id].custom_yaml : ''
     }
   },
   {
@@ -72,6 +76,8 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
     addRole: deploymentActions.addRole,
     deleteRole: deploymentActions.deleteRole,
     onCancelRoleForm: userActions.closeAccessControlForm,
+    saveYamlInput: customizationActions.saveYamlInput,
+    clearYamlInput: customizationActions.clearYamlInput
   },
 )
 class DeploymentFormContainer extends React.Component {
