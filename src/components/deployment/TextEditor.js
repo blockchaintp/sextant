@@ -49,7 +49,7 @@ class TextEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: this.props.customInput === 0 ? this.props.inputYaml : this.props.customInput
+      value: this.props.yamlInput === 0 ? this.props.customYaml : this.props.yamlInput
     };
     this.onChange = this.onChange.bind(this);
   }
@@ -59,7 +59,7 @@ class TextEditor extends Component {
       cancel,
       save,
       classes,
-      customInput
+      yamlInput
     } = this.props
 
     return (

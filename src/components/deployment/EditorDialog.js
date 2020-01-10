@@ -29,9 +29,9 @@ class EditorDialog extends React.Component {
       save,
       open,
       classes,
-      customInput,
+      yamlInput,
       inputToState,
-      inputYaml
+      customYaml
     } = this.props
     return (
       <div>
@@ -47,11 +47,11 @@ class EditorDialog extends React.Component {
               I'm a message about how advanced and scary this option is! I also have some vague instructions about how to use the editor.
             </Typography>
             <TextEditor
-              customInput={customInput}
+              yamlInput={yamlInput}
               cancel={cancel}
               save={save}
               inputToState={inputToState}
-              inputYaml={inputYaml}
+              customYaml={customYaml}
             >
             </TextEditor>
           </DialogContent>

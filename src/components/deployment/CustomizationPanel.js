@@ -28,9 +28,9 @@ class CustomizationPanel extends React.Component {
   render() {
     const {
       classes,
-      saveCustomInput,
-      customInput,
-      inputYaml,
+      saveYamlInput,
+      yamlInput,
+      customYaml,
       inputToState
     } = this.props
 
@@ -40,7 +40,7 @@ class CustomizationPanel extends React.Component {
           <Typography>Advanced Deployment Customization</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
-          <EditorButton inputToState={inputToState} saveCustomInput={saveCustomInput} customInput={customInput} inputYaml={inputYaml}>
+          <EditorButton inputToState={inputToState} saveYamlInput={saveYamlInput} yamlInput={yamlInput} customYaml={customYaml}>
           </EditorButton>
           <Typography className={classes.warning}>
             WARNING: I'm a cryptic message about how advanced and scary this option is !

@@ -36,15 +36,15 @@ class EditorButton extends React.Component {
   render() {
     const {
       classes,
-      customInput,
-      saveCustomInput,
+      yamlInput,
+      saveYamlInput,
       inputToState,
-      inputYaml
+      customYaml
     } = this.props
 
 
     const handleSave = (payload) => {
-      saveCustomInput(payload)
+      saveYamlInput(payload)
       inputToState(payload)
       this.handleClose()
     }
@@ -64,9 +64,9 @@ class EditorButton extends React.Component {
           cancel={this.handleClose}
           open={this.state.open}
           save={handleSave}
-          customInput={customInput}
+          yamlInput={yamlInput}
           inputToState={inputToState}
-          inputYaml={inputYaml}
+          customYaml={customYaml}
         >
         </EditorDialog>
       </div>
