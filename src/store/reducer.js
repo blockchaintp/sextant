@@ -10,6 +10,7 @@ import { reducer as deploymentSettings } from './modules/deploymentSettings'
 import { reducer as network } from './modules/network'
 import { reducer as config } from './modules/config'
 import { reducer as fileupload } from './modules/fileupload'
+import { reducer as customization } from './modules/customization'
 
 const reducers = {
   router,
@@ -22,6 +23,7 @@ const reducers = {
   network,
   config,
   fileupload,
+  customization
 }
 
 export default combineReducers(reducers)
