@@ -44,7 +44,7 @@ class EditorDialog extends React.Component {
           <DialogTitle >Additional YAML</DialogTitle>
           <DialogContent>
             <Typography className={classes.warning}>
-              I'm a message about how advanced and scary this option is! I also have some vague instructions about how to use the editor.
+              You can add custom yaml here which will be merged with Sextant's default deployment templates. Warning, this can break your deployment, use with care.
             </Typography>
             <TextEditor
               yamlInput={yamlInput}

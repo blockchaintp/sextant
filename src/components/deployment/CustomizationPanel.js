@@ -43,7 +43,7 @@ class CustomizationPanel extends React.Component {
           <EditorButton inputToState={inputToState} saveYamlInput={saveYamlInput} yamlInput={yamlInput} customYaml={customYaml}>
           </EditorButton>
           <Typography className={classes.warning}>
-            WARNING: I'm a cryptic message about how advanced and scary this option is !
+            WARNING: This will overwrite default template options!
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>
