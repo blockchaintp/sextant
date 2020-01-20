@@ -17,7 +17,6 @@ class SimpleTableActions extends React.Component {
 
   render() {
     const { classes, item, actions } = this.props
-    console.log("ITEM", item);
     
     return (
       <div className={ classes.root }>

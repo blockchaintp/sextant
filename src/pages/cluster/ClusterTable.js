@@ -232,7 +232,7 @@ class ClusterTable extends React.Component {
     }
 
     return (
-      <div id='clusterTable'>
+      <div _ci='clusterTable'>
         <SimpleTableHeader
           title='Clusters'
           getActions={ () => headerActions }

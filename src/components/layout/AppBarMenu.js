@@ -110,7 +110,7 @@ class AppBarMenu extends React.Component {
           {
             user ? (
               <UserAvatar
-                name='logout'
+                _ci='avatar'
                 user={ user }
               />
             ) : (

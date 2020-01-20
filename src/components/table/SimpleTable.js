@@ -56,7 +56,6 @@ class SimpleTable extends React.Component {
       hideHeader,
       hideHeaderIfEmpty,
     } = this.props
-    console.log("DATA", data);
 
     const {
       rowsPerPage,

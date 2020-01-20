@@ -183,14 +183,6 @@ class FormListInner extends React.Component {
     })
   }
 
-  keyPressed(event) {
-    if (event.target.keycode === 13) {
-      this.setState({
-        editOpen: false,
-      })
-    }
-  }
-
   swap(fromIndex, toIndex) {
     const arrayHelpers = this.props.arrayHelpers
     arrayHelpers.swap(fromIndex, toIndex)
@@ -351,7 +343,6 @@ class FormListInner extends React.Component {
           initialValues={ editItem || {} }
           onCancel={ this.onCancel }
           onSave={ this.onSave }
-          onKeyPress={this.keyPressed}
         />
       </div>
     )
@@ -580,7 +571,7 @@ class FormWrapperInner extends React.Component {
                   {
                     error && (
                       <FormHelperText
-                        name='errorHelperText'
+                        _ci='errorHelperText'
                         error={ true }
                       >
                         { error }
