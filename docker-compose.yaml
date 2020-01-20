@@ -9,6 +9,14 @@ services:
       args:
         EDITION_MODULE: dev.js
     image: sextant:${ISOLATION_ID}
+  frontend-test:
+    build:
+      context: .
+      dockerfile: Dockerfile.multistage
+      args:
+        EDITION_MODULE: dev.js
+        NPM_TARGET: build-test
+    image: sextant-test:${ISOLATION_ID}
   frontend-sfs:
     build:
       context: .
