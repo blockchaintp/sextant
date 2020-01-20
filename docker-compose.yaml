@@ -15,7 +15,7 @@ services:
       dockerfile: Dockerfile.multistage
       args:
         EDITION_MODULE: dev.js
-        NPM_TARGET: develop
+        NPM_TARGET: build-test
     image: sextant-test:${ISOLATION_ID}
   frontend-sfs:
     build:
