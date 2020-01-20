@@ -571,6 +571,7 @@ class FormWrapperInner extends React.Component {
                   {
                     error && (
                       <FormHelperText
+                        _ci='errorHelperText'
                         error={ true }
                       >
                         { error }

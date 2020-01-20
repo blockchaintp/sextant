@@ -91,7 +91,7 @@ class SimpleTable extends React.Component {
               )
             }
             <TableBody>
-              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(dataRow => {
+              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(dataRow => { 
                 return (
                   <TableRow
                     hover
@@ -101,6 +101,7 @@ class SimpleTable extends React.Component {
                     }}
                     tabIndex={-1}
                     key={dataRow.id}
+                    _ci={dataRow.username}
                   >
                     {
                       fields.map((field, i) => {

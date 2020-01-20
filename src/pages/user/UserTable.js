@@ -75,6 +75,7 @@ class UserTable extends React.Component {
 
     const addButton = (
       <Button 
+        _ci='addbutton'
         className={classes.button} 
         variant="contained"
         color="secondary"
@@ -103,6 +104,7 @@ class UserTable extends React.Component {
           getActions={ () => addButton }
         />
         <SimpleTable
+          pagination
           data={ data }
           fields={ fields }
           getActions={ (item) => (
