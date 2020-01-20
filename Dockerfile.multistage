@@ -18,7 +18,9 @@ COPY ./ /app/frontend
 ARG EDITION_MODULE=dev.js
 COPY ./editions/${EDITION_MODULE} /app/frontend/src/edition.js
 
-RUN npm run build
+ARG NPM_TARGET=build
+
+RUN npm run ${NPM_TARGET}
 
 FROM nginx:alpine
 
