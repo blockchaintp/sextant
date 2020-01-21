@@ -283,7 +283,8 @@ const sideEffects = {
       const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.create(cluster, deployment),
-        setCluster: clusterActions.get(cluster),
+        dataAction: actions.setDeployment,
+        //setCluster: clusterActions.get(cluster),
         prefix,
         name: 'form',
         returnError: true,
@@ -324,7 +325,8 @@ const sideEffects = {
       const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.update(cluster, id, deploymentUpdate),
-        setCluster: clusterActions.get(cluster),
+        dataAction: actions.setDeployment,
+        //setCluster: clusterActions.get(cluster),
         prefix,
         name: 'form',
         returnError: true,
@@ -347,7 +349,8 @@ const sideEffects = {
         loader: () => loaders.delete(cluster, id),
         prefix,
         name: 'delete',
-        setCluster: clusterActions.get(cluster),
+        dataAction: actions.setDeployment,
+        //setCluster: clusterActions.get(cluster),
         returnError: true,
       })
 
