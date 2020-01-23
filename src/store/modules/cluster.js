@@ -3,7 +3,7 @@ import { normalize, schema } from 'normalizr'
 import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
 import { mergeEntities, mergeAll } from '../utils/mergeNormalized'
-import { friendlyMessageGenerator, friendlyErrorGenerator } from '../../utils/friendlyFunctions'
+import { successMessageGenerator, errorMessageGenerator } from '../../utils/rosettaStone'
 import api from '../utils/api'
 
 import selectors from '../selectors'
@@ -149,16 +149,16 @@ const sideEffects = {
         // the tracked task has failed or finished
         if(newTrackTask.status == 'error' || newTrackTask.status == 'finished') {
           if(newTrackTask.status == 'error') {
-            dispatch(snackbarActions.setError(friendlyErrorGenerator(trackTask.action)))
+            dispatch(snackbarActions.setError(errorMessageGenerator(trackTask.action)))
           }
           else if(newTrackTask.status == 'finished') {
-            dispatch(snackbarActions.setSuccess(friendlyMessageGenerator(trackTask.action)))
+            dispatch(snackbarActions.setSuccess(successMessageGenerator(trackTask.action)))
           }
           dispatch(actions.setTrackTask(null))
         }
       }
       else if(trackTask.action == 'cluster.delete') {
-        dispatch(snackbarActions.setSuccess(friendlyMessageGenerator(trackTask.action)))
+        dispatch(snackbarActions.setSuccess(successMessageGenerator(trackTask.action)))
         dispatch(actions.setTrackTask(null))
       }
     }

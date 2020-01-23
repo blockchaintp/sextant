@@ -20,7 +20,7 @@ import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
-import { friendlyNameGenerator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle } from '../../utils/friendlyFunctions'
+import { actionNameTranslator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle } from '../../utils/rosettaStone'
 
 
 import rbac from 'utils/rbac'
@@ -156,7 +156,7 @@ class DeploymentTable extends React.Component {
               />
             </div>
             <div className={ classes.statusIcon }>
-              { friendlyNameGenerator(deployment.task.action) }
+              { actionNameTranslator(deployment.task.action) }
             </div>
             <div className={ classes.statusIcon }>
               <TaskStatusIcon
