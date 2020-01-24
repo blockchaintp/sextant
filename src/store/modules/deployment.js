@@ -5,7 +5,7 @@ import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
 import { mergeEntities, mergeAll } from '../utils/mergeNormalized'
 import api from '../utils/api'
-import { successMessageGenerator, errorMessageGenerator } from '../../utils/rosettaStone'
+import { successMessageGenerator, errorMessageGenerator } from '../../utils/translators'
 
 
 import selectors from '../selectors'
@@ -57,7 +57,7 @@ const reducers = {
   setDeployment: (state, action) => {
     mergeEntities(state.deployments, normalize([action.payload], [deployment]))
   },
-  sethideDeleted: (state, action) => {
+  setHideDeleted: (state, action) => {
     state.hideDeleted = action.payload
   },
   setTrackTask: (state, action) => {
@@ -151,11 +151,11 @@ const loaders = {
 
 const sideEffects = {
 
-  updatehideDeleted: (value) => (dispatch, getState) => {
+  updateHideDeleted: (value) => (dispatch, getState) => {
 
     const routeParams = selectors.router.params(getState())
 
-    dispatch(actions.sethideDeleted(value))
+    dispatch(actions.setHsideDeleted(value))
     dispatch(actions.listWithOptions({
       cluster: routeParams.cluster
     }))

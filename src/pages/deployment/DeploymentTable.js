@@ -20,7 +20,7 @@ import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
-import { actionNameTranslator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle } from '../../utils/rosettaStone'
+import { actionNameTranslator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle } from '../../utils/translators'
 
 
 import rbac from 'utils/rbac'
@@ -101,7 +101,7 @@ class DeploymentTable extends React.Component {
       onViewStatus,
       onViewSettings,
       onDelete,
-      updatehideDeleted,
+      updateHideDeleted,
       clusters,
       cluster,
       clusterId,
@@ -242,7 +242,7 @@ class DeploymentTable extends React.Component {
           <FormControlLabel
             control={
               <Checkbox
-                onChange={(event) => updatehideDeleted(event.target.checked)}
+                onChange={(event) => updateHideDeleted(event.target.checked)}
                 value="checkedB"
                 color="primary"
               />

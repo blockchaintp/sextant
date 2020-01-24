@@ -9,7 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
 
-import { getDialogDeleteText } from '../../utils/rosettaStone'
+import { getDialogDeleteText } from '../../utils/translators'
 
 const styles = theme => {
   return {

@@ -105,9 +105,7 @@ export const getDeploymentIcon = (status, settings) => {
 
   if (status === 'deployed') icon = settings.icons.remove
 
-  if (status === 'undeployed') icon = settings.icons.delete
-
-  if (status === 'error') icon = settings.icons.repeat
+  if (status === 'undeployed' || 'error') icon = settings.icons.delete
 
   return icon
 }
@@ -118,9 +116,7 @@ export const getDeploymentIconTitle = (status, settings) => {
 
   if (status === 'deployed') iconTitle = 'Undeploy'
 
-  if (status === 'undeployed') iconTitle = 'Delete'
-
-  if (status === 'error') iconTitle = 'Try Again'
+  if (status === 'undeployed' || 'error') iconTitle = 'Delete'
 
   return iconTitle
 }
@@ -131,9 +127,7 @@ export const getTaskIcon = (status, settings) => {
 
   if (status === 'deployed') icon = settings.icons.remove
 
-  if (status === 'undeployed') icon = settings.icons.delete
-
-  if (status === 'error') icon = settings.icons.repeat
+  if (status === 'undeployed' || 'error') icon = settings.icons.delete
 
   return icon
 }
@@ -156,9 +150,7 @@ export const getClusterIcon = (status, settings) => {
 
   if (status === 'active') icon = settings.icons.remove
 
-  if (status === 'inactive') icon = settings.icons.delete
-
-  if (status === 'error') icon = settings.icons.repeat
+  if (status === 'inactive' || 'error') icon = settings.icons.delete
 
   return icon
 }
@@ -169,9 +161,7 @@ export const getClusterIconTitle = (status, settings) => {
 
   if (status === 'active') iconTitle = 'Deactivate'
 
-  if (status === 'inactive') iconTitle = 'Delete'
-
-  if (status === 'error') iconTitle = 'Try Again'
+  if (status === 'inactive' || 'error' ) iconTitle = 'Delete'
 
   return iconTitle
 }

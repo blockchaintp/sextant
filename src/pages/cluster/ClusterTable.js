@@ -16,7 +16,7 @@ import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
-import { actionNameTranslator, clusterStatusTranslator, getClusterIcon, getClusterIconTitle } from '../../utils/rosettaStone'
+import { actionNameTranslator, clusterStatusTranslator, getClusterIcon, getClusterIconTitle } from '../../utils/translators'
 
 
 import rbac from 'utils/rbac'

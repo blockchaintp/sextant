@@ -3,7 +3,7 @@ import { normalize, schema } from 'normalizr'
 import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
 import { mergeEntities, mergeAll } from '../utils/mergeNormalized'
-import { successMessageGenerator, errorMessageGenerator } from '../../utils/rosettaStone'
+import { successMessageGenerator, errorMessageGenerator } from '../../utils/translators'
 import api from '../utils/api'
 
 import selectors from '../selectors'

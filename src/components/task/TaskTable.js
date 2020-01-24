@@ -6,7 +6,7 @@ import SimpleTable from 'components/table/SimpleTable'
 import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
-import { actionNameTranslator } from '../../utils/rosettaStone'
+import { actionNameTranslator } from '../../utils/translators'
 
 const styles = theme => {
   return {

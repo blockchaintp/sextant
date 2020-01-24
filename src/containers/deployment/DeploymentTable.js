@@ -18,7 +18,7 @@ const onViewSettings = (cluster, id, deployment_type, deployment_version, pageKe
   }
 }
 const onDelete = (cluster, id) => deploymentActions.delete(cluster, id)
-const updatehideDeleted = (value) => deploymentActions.updatehideDeleted(value)
+const updateHideDeleted = (value) => deploymentActions.updateHideDeleted(value)
 const updateClusterId = (cluster) => routerActions.navigateTo('deployments', { cluster })
 
 @connect(
@@ -41,7 +41,7 @@ const updateClusterId = (cluster) => routerActions.navigateTo('deployments', { c
     onViewStatus,
     onViewSettings,
     onDelete,
-    updatehideDeleted,
+    updateHideDeleted,
     updateClusterId,
   },
 )
