@@ -16,7 +16,7 @@ import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
-import { friendlyNameGenerator } from '../../utils/friendlyFunctions'
+import { actionNameTranslator, clusterStatusTranslator, getClusterIcon, getClusterIconTitle } from '../../utils/translators'
 
 
 import rbac from 'utils/rbac'
@@ -116,7 +116,7 @@ class ClusterTable extends React.Component {
         role: cluster.role,
         name: cluster.name,
         provision_type: cluster.provision_type,
-        status: cluster.status,
+        status: clusterStatusTranslator(cluster.status),
         task: cluster.task ? (
           <div className={ classes.statusContainer }>
             <div className={ classes.statusIcon }>
@@ -125,7 +125,7 @@ class ClusterTable extends React.Component {
               />
             </div>
             <div className={ classes.statusIcon }>
-              { friendlyNameGenerator(cluster.task.action) }
+              { actionNameTranslator(cluster.task.action) }
             </div>
             <div className={ classes.statusIcon }>
               <TaskStatusIcon
@@ -161,22 +161,6 @@ class ClusterTable extends React.Component {
 
     const headerActions = (
       <div className={ classes.headerActions }>
-        <div className={ classes.showDeletedCheckbox }>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={ showDeleted }
-                onChange={ (event) => updateShowDeleted(event.target.checked) }
-                value="checkedB"
-                color="primary"
-              />
-            }
-            label="Show Deleted?"
-            classes={{
-              label: classes.showDeletedLabel,
-            }}
-          />
-        </div>
         <div className={ classes.addButton }>
           <Button
             className={classes.button}
@@ -186,7 +170,7 @@ class ClusterTable extends React.Component {
             disabled={ !canCreateCluster }
           >
             Add
-            <AddIcon />
+          <AddIcon />
           </Button>
         </div>
       </div>
@@ -205,8 +189,8 @@ class ClusterTable extends React.Component {
         }
       })) {
         buttons.push({
-          title: 'Delete',
-          icon: DeleteIcon,
+          title: getClusterIconTitle(cluster.status, settings),
+          icon: getClusterIcon(cluster.status, settings),
           handler: (item) => this.openDeleteDialog(item),
         })
         buttons.push({
@@ -219,12 +203,14 @@ class ClusterTable extends React.Component {
       buttons.push({
         title: 'View',
         icon: ViewIcon,
+        disabled: cluster.status === 'inactive',
         handler: (item) => onViewStatus(item.id),
       })
 
       buttons.push({
         title: 'Deployments',
         icon: DeploymentIcon,
+        disabled: cluster.status === 'inactive',
         handler: (item) => viewDeployments(item.id),
       })
 
@@ -238,6 +224,7 @@ class ClusterTable extends React.Component {
           getActions={ () => headerActions }
         />
         <SimpleTable
+          pagination
           data={ data }
           fields={ fields }
           getActions={ (item) => {
@@ -251,8 +238,9 @@ class ClusterTable extends React.Component {
           }}
         />
         <SimpleTableDeleteDialog
+          resource={ deleteConfirmItem }
           open={ deleteConfirmOpen }
-          title={ deleteConfirmItem ? `the ${deleteConfirmItem.name} cluster ${deleteConfirmItem.status == 'deleted' ? ' - this will be permenant' : ''}` : null }
+          title={ deleteConfirmItem ? `the ${deleteConfirmItem.name} cluster ${deleteConfirmItem.status == 'inactive' ? ' permanently' : ''}` : null }
           onCancel={ () => this.closeDeleteDialog() }
           onConfirm={ () => {
             this.closeDeleteDialog()

@@ -296,7 +296,7 @@ const selectors = {
       entityName: 'role',
     }),
     ...props(deploymentStore, [
-      'showDeleted',
+      'hideDeleted',
       'resources',
       'summary',
     ]),

@@ -20,7 +20,7 @@ import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
-import { friendlyNameGenerator } from '../../utils/friendlyFunctions'
+import { actionNameTranslator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle } from '../../utils/translators'
 
 
 import rbac from 'utils/rbac'
@@ -56,10 +56,10 @@ const styles = theme => ({
   clusterSelect: {
     marginRight: theme.spacing.unit * 2,
   },
-  showDeletedCheckbox: {
+  hideDeletedCheckbox: {
     marginRight: theme.spacing.unit * 2,
   },
-  showDeletedLabel: {
+  hideDeletedLabel: {
     whiteSpace: 'nowrap',
   },
   formControl: {
@@ -95,13 +95,13 @@ class DeploymentTable extends React.Component {
     const {
       classes,
       deployments,
-      showDeleted,
+      hideDeleted,
       onAdd,
       onEdit,
       onViewStatus,
       onViewSettings,
       onDelete,
-      updateShowDeleted,
+      updateHideDeleted,
       clusters,
       cluster,
       clusterId,
@@ -147,7 +147,7 @@ class DeploymentTable extends React.Component {
         name: deployment.name,
         clusterName: deployment.clusterName,
         deployment_type: deployment.deployment_type,
-        status: deployment.status,
+        status: deploymentStatusTranslator(deployment.status),
         task: deployment.task ? (
           <div className={ classes.statusContainer }>
             <div className={ classes.statusIcon }>
@@ -156,7 +156,7 @@ class DeploymentTable extends React.Component {
               />
             </div>
             <div className={ classes.statusIcon }>
-              { friendlyNameGenerator(deployment.task.action) }
+              { actionNameTranslator(deployment.task.action) }
             </div>
             <div className={ classes.statusIcon }>
               <TaskStatusIcon
@@ -208,7 +208,7 @@ class DeploymentTable extends React.Component {
       })
 
     const noActiveDeployments = () => {
-      if (cluster) {
+      if(cluster){
         const active_deployments = parseInt(cluster.active_deployments, 10)
         return active_deployments > 0 ? false : true
       } else {
@@ -236,25 +236,29 @@ class DeploymentTable extends React.Component {
     )
 
     const headerActions = embedded ?
-      addButton :
+      (
+        <div className={classes.headerActions}>
+        < div className = { classes.hideDeletedCheckbox } >
+          <FormControlLabel
+            control={
+              <Checkbox
+                onChange={(event) => updateHideDeleted(event.target.checked)}
+                value="checkedB"
+                color="primary"
+              />
+            }
+            label="Hide Undeployed"
+            classes={{
+              label: classes.hideDeletedLabel,
+            }}
+          />
+        </div >
+          {addButton}
+        </div>
+      )
+      :
       (
         <div className={ classes.headerActions }>
-          <div className={ classes.showDeletedCheckbox }>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={ showDeleted }
-                  onChange={ (event) => updateShowDeleted(event.target.checked) }
-                  value="checkedB"
-                  color="primary"
-                />
-              }
-              label="Show Deleted?"
-              classes={{
-                label: classes.showDeletedLabel,
-              }}
-            />
-          </div>
           <div className={ classes.clusterSelect }>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="name-readonly">Cluster</InputLabel>
@@ -299,8 +303,8 @@ class DeploymentTable extends React.Component {
         }
       })) {
         buttons.push({
-          title: 'Delete',
-          icon: DeleteIcon,
+          title: getDeploymentIconTitle(deployment.status),
+          icon: getDeploymentIcon(deployment.status, settings),
           handler: (item) => this.openDeleteDialog(item),
         })
         buttons.push({
@@ -313,6 +317,7 @@ class DeploymentTable extends React.Component {
       buttons.push({
         title: 'View',
         icon: ViewIcon,
+        disabled: deployment.status === 'undeployed',
         handler: (item) => onViewStatus(item.cluster, item.id),
       })
 
@@ -345,6 +350,7 @@ class DeploymentTable extends React.Component {
           className={ embedded ? classes.embeddedHeader : null }
         />
         <SimpleTable
+          pagination
           data={ data }
           fields={ fields }
           getActions={ (item) => {
@@ -358,8 +364,9 @@ class DeploymentTable extends React.Component {
           }}
         />
         <SimpleTableDeleteDialog
-          open={ deleteConfirmOpen }
-          title={ deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${deleteConfirmItem.status == 'deleted' ? ' - this will be permenant' : ''}` : null }
+          resource={deleteConfirmItem}
+          open={deleteConfirmOpen}
+          title={deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${deleteConfirmItem.status == 'undeployed' ? ' permanently' : ''}` : null}t
           onCancel={ () => this.closeDeleteDialog() }
           onConfirm={ () => {
             this.closeDeleteDialog()

@@ -5,7 +5,7 @@ import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
 import { mergeEntities, mergeAll } from '../utils/mergeNormalized'
 import api from '../utils/api'
-import { friendlyMessageGenerator, friendlyErrorGenerator } from '../../utils/friendlyFunctions'
+import { successMessageGenerator, errorMessageGenerator } from '../../utils/translators'
 
 
 import selectors from '../selectors'
@@ -31,7 +31,7 @@ const initialState = {
     volumes: [],
   },
   summary: [],
-  showDeleted: false,
+  hideDeleted: false,
 
   // a task we are tracking the status of so we show snackbars
   // when it has finished or errored
@@ -57,8 +57,8 @@ const reducers = {
   setDeployment: (state, action) => {
     mergeEntities(state.deployments, normalize([action.payload], [deployment]))
   },
-  setShowDeleted: (state, action) => {
-    state.showDeleted = action.payload
+  setHideDeleted: (state, action) => {
+    state.hideDeleted = action.payload
   },
   setTrackTask: (state, action) => {
     state.trackTask = action.payload
@@ -85,11 +85,24 @@ const loaders = {
 
   list: ({
     cluster,
-    showDeleted,
+    hideDeleted,
     mode
   }) => axios.get(api.url(`/clusters/${cluster}/deployments`), {
     params: {
-      showDeleted: showDeleted ? 'y' : '',
+      showDeleted: hideDeleted ? '' : 'y',
+      withTasks: 'y',
+      mode: mode ? 'background' : 'foreground'
+    }
+  })
+    .then(api.process),
+
+  listWithOptions: ({
+    cluster,
+    hideDeleted,
+    mode
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments`), {
+    params: {
+      showDeleted: hideDeleted ? '' : 'y',
       withTasks: 'y',
       mode: mode ? 'background' : 'foreground'
     }
@@ -138,12 +151,12 @@ const loaders = {
 
 const sideEffects = {
 
-  updateShowDeleted: (value) => (dispatch, getState) => {
+  updateHideDeleted: (value) => (dispatch, getState) => {
 
     const routeParams = selectors.router.params(getState())
 
-    dispatch(actions.setShowDeleted(value))
-    dispatch(actions.list({
+    dispatch(actions.setHsideDeleted(value))
+    dispatch(actions.listWithOptions({
       cluster: routeParams.cluster
     }))
   },
@@ -153,6 +166,7 @@ const sideEffects = {
   updateDeploymentList: (newData) => (dispatch, getState) => {
 
     const trackTask = getState().deployment.trackTask
+    
 
     if(trackTask) {
       const newTrackTask = newData
@@ -162,20 +176,20 @@ const sideEffects = {
         // the tracked task has failed or finished
         if(newTrackTask.status == 'error' || newTrackTask.status == 'finished') {
           if(newTrackTask.status == 'error') {
-            dispatch(snackbarActions.setError(friendlyErrorGenerator(trackTask.action)))
+            dispatch(snackbarActions.setError(errorMessageGenerator(trackTask.action)))
           }
           else if(newTrackTask.status == 'finished') {
-            dispatch(snackbarActions.setSuccess(friendlyMessageGenerator(trackTask.action)))
+            dispatch(snackbarActions.setSuccess(successMessageGenerator(trackTask.action)))
           }
           dispatch(actions.setTrackTask(null))
         }
       }
       else if(trackTask.action == 'deployment.delete') {
-        dispatch(snackbarActions.setSuccess(friendlyMessageGenerator(trackTask.action)))
+        dispatch(snackbarActions.setSuccess(successMessageGenerator(trackTask.action)))
         dispatch(actions.setTrackTask(null))
       }
     }
-
+    
     dispatch(actions.setDeployments(newData))
   },
 
@@ -185,7 +199,21 @@ const sideEffects = {
     dispatch,
     loader: () => loaders.list({
       cluster,
-      showDeleted: selectors.deployment.showDeleted(getState()),
+      hideDeleted: false,
+      mode: background ? background : false
+    }),
+    prefix,
+    name: 'list',
+    dataAction: actions.updateDeploymentList,
+    snackbarError: true,
+  }),
+  listWithOptions: ({
+    cluster,
+  }, background = false) => (dispatch, getState) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listWithOptions({
+      cluster,
+      hideDeleted: selectors.deployment.hideDeleted(getState()),
       mode: background ? background : false
     }),
     prefix,
@@ -255,6 +283,8 @@ const sideEffects = {
       const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.create(cluster, deployment),
+        dataAction: actions.setDeployment,
+        //setCluster: clusterActions.get(cluster),
         prefix,
         name: 'form',
         returnError: true,
@@ -295,6 +325,8 @@ const sideEffects = {
       const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.update(cluster, id, deploymentUpdate),
+        dataAction: actions.setDeployment,
+        //setCluster: clusterActions.get(cluster),
         prefix,
         name: 'form',
         returnError: true,
@@ -317,6 +349,8 @@ const sideEffects = {
         loader: () => loaders.delete(cluster, id),
         prefix,
         name: 'delete',
+        dataAction: actions.setDeployment,
+        //setCluster: clusterActions.get(cluster),
         returnError: true,
       })
 
@@ -326,7 +360,7 @@ const sideEffects = {
       }
       else {
         dispatch(actions.setTrackTask(task))
-        dispatch(snackbarActions.setInfo(`deployment deleting`))
+        dispatch(snackbarActions.setInfo(`deployment undeploying`))
       }
       dispatch(routerActions.navigateTo('deployments', {
         cluster,
@@ -379,7 +413,11 @@ const sideEffects = {
     cluster,
   }, background = false) => async (dispatch, getState) => {
     const looping = getState().deployment.loops.deployment
+    
     if(!looping) return
+    if(typeof(cluster) === 'number') {
+      await dispatch(clusterActions.get(cluster))
+    }
     await dispatch(actions.list({
       cluster,
     }, background))

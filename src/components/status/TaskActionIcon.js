@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles'
 
-import AddIcon from '@material-ui/icons/Add'
+import AddIcon from '@material-ui/icons/AddCircle'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
+import RemoveIcon from '@material-ui/icons/RemoveCircle'
 
 const styles = theme => {
 
@@ -40,7 +41,7 @@ class TaskActionIcon extends React.Component {
     }
     else if(action == 'delete') {
       return (
-        <DeleteIcon 
+        <RemoveIcon 
           className={ classes.icon }
         />
       )

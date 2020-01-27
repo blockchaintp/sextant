@@ -373,7 +373,7 @@ ClusterForm.propTypes = {
 
 ClusterForm.defaultProps = {
   title: 'Cluster Details',
-  submitTitle: 'Submit',
+  submitTitle: 'Activate',
 }
 
 export default withStyles(styles)(ClusterForm)

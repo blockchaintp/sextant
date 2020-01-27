@@ -9,6 +9,8 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
 
+import { getDialogDeleteText } from '../../utils/translators'
+
 const styles = theme => {
   return {
   }
@@ -16,8 +18,10 @@ const styles = theme => {
 
 class SimpleTableDeleteDialog extends React.Component {
   render() {
-    const { classes, open, onCancel, onConfirm, title } = this.props
-
+    const { classes, open, onCancel, onConfirm, title, resource} = this.props
+    
+    const text = resource ? getDialogDeleteText(resource.status) : ''
+    
     return (
       <Dialog
         open={ open }
@@ -25,10 +29,10 @@ class SimpleTableDeleteDialog extends React.Component {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Delete { title }?</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{`${text.title} ${ title }`}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete { title }?
+            {`Are you sure you want to ${text.subtext} ${ title }?`}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

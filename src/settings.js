@@ -18,6 +18,8 @@ import UpArrowIcon from '@material-ui/icons/KeyboardArrowUp'
 import DownArrowIcon from '@material-ui/icons/KeyboardArrowDown'
 import UploadIcon from '@material-ui/icons/CloudUpload'
 import BuildIcon from '@material-ui/icons/Build'
+import RemoveIcon from '@material-ui/icons/RemoveCircle'
+import RepeatIcon from '@material-ui/icons/Repeat'
 
 import edition from './edition'
 
@@ -31,6 +33,8 @@ const icons = {
   add: AddIcon,
   edit: EditIcon,
   delete: DeleteIcon,
+  remove: RemoveIcon,
+  repeat: RepeatIcon,
   cluster: StorageIcon,
   deployment: DashboardIcon,
   view: ViewIcon,
