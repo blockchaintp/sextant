@@ -265,13 +265,13 @@ class FormListInner extends React.Component {
     const disableButton = () => {
       // only for image pull secrets field
       let disabled
-      if (item.id === "imagePullSecrets.value" && formProps.values.imagePullSecrets['enabled']) {
-        // links add-button's render to radio-button state
-        disabled = formProps.values.imagePullSecrets['enabled'] === 'false' ? true : false
-      } else if(item.id === "imagePullSecrets.value") {
-        // sets initial render of add-button to disabled
-        disabled = true
-      }
+      // if (item.id === "imagePullSecrets.value" && formProps.values.imagePullSecrets['enabled']) {
+      //   // links add-button's render to radio-button state
+      //   disabled = formProps.values.imagePullSecrets['enabled'] === 'false' ? true : false
+      // } else if(item.id === "imagePullSecrets.value") {
+      //   // sets initial render of add-button to disabled
+      //   disabled = true
+      // }
       return disabled
     }
 
@@ -363,6 +363,7 @@ class FormWrapperInner extends React.Component {
   }
 
   getItem(item, formProps) {
+
     if(typeof(item) == 'string') {
       return (
         <Typography
@@ -396,24 +397,52 @@ class FormWrapperInner extends React.Component {
 
     const error = dotty.get(formProps.errors, item.id)
     const touched = dotty.get(formProps.touched, item.id)
-
+     console.log("FORM PROPS", formProps );
+     
     const renderComponent = (item) => {
-      if (item.id === 'daml.postgres.secret' && formProps.values.aws.db.create === 'false'){
-        return (
-          <Field
-            dbId={isNew}
-            name={ item.id }
-            component={ utils.getComponent(item.component) }
-            item={ item }
-            disabled={ disableField() }
-            error={ error }
-            touched={ touched }
-            formProps={ formProps }
-          />
-        )
-      } else if (item.id === 'daml.postgres.secret') {
-          return ''
+      if (item.linked) {
+        const linkedId = item.linked.linkedId
+        console.log("LINKED ID", linkedId);
+        
+        const linkedComponentValue = dotty.get(formProps.values, linkedId)
+        console.log("LINKED VALUE", linkedComponentValue);
+        
+        if (linkedComponentValue === item.linked.visibilityParameter) {
+          return (
+            <Field
+              dbId={isNew}
+              name={item.id}
+              component={utils.getComponent(item.component)}
+              item={item}
+              disabled={disableField()}
+              error={error}
+              touched={touched}
+              formProps={formProps}
+            />
+          )
+        } else{ 
+          return (
+            `The linked component value is -- ${linkedComponentValue}`
+            )
+        }
       }
+
+      // if (item.id === 'daml.postgres.secret' && formProps.values.aws.db.create === 'false'){
+      //   return (
+      //     <Field
+      //       dbId={isNew}
+      //       name={ item.id }
+      //       component={ utils.getComponent(item.component) }
+      //       item={ item }
+      //       disabled={ disableField() }
+      //       error={ error }
+      //       touched={ touched }
+      //       formProps={ formProps }
+      //     />
+      //   )
+      // } else if (item.id === 'daml.postgres.secret') {
+      //     return ''
+      // }
       return (
         <Field
           dbId={isNew}
