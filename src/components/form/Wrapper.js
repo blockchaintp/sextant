@@ -545,7 +545,11 @@ class FormWrapperInner extends React.Component {
             const flatErrors = utils.flattenErrors(errors, utils.flattenSchema(schema))
 
             return (
-              <form onSubmit={ submitWrapper }>
+              <form onSubmit={submitWrapper} onKeyPress={event => {
+                if (event.key === '13') {
+                  event.preventDefault();
+                }
+              }}>
                 <Grid container spacing={ spacing || 24 }>
                   {
                     schema.map((item, i) => this.getRow(item, formProps, i))

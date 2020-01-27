@@ -30,12 +30,6 @@ class Text extends React.Component {
     const inputProps = item.inputProps || {}
     const extraProps = item.extraProps || {}
 
-    const onKeyDown = (e) => {
-      if (e.key === 'Enter') {
-        form.submitForm()
-      }
-    }
-
     return (
       item.hidden ? (
         <ExpansionPanel >
@@ -53,7 +47,7 @@ class Text extends React.Component {
               value={ value }
               onChange={ onChange }
               onBlur={ onBlur }
-              onKeyDown={ onKeyDown }
+              
               disabled={ disabled }
               { ...inputProps }
               { ...extraProps }
@@ -71,7 +65,7 @@ class Text extends React.Component {
           value={ value }
           onChange={ onChange }
           onBlur={ onBlur }
-          onKeyDown={ onKeyDown }
+          
           disabled={ disabled }
           { ...inputProps }
           { ...extraProps }
