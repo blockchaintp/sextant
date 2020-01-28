@@ -14,6 +14,7 @@ import clusterActions from './cluster'
 import userActions from './user'
 import snackbarActions from './snackbar'
 import authActions from './auth'
+import customizationActions from './customization'
 
 const prefix = 'deployment'
 
@@ -249,14 +250,22 @@ const sideEffects = {
       id,
       cluster,
     } = params
+
+    // get the non-zero custom input if there is any. Otherwise, pass an empty string
+    let custom_yaml
+    let yamlInput = selectors.customization.yamlInput(getState())
+    typeof yamlInput === 'string' ? custom_yaml = yamlInput : custom_yaml = ''
+
+    dispatch(customizationActions.clearYamlInput(0))
+
     if(id == 'new') {
-      dispatch(actions.create(cluster, payload))
+      dispatch(actions.create(cluster, payload, custom_yaml))
     }
     else {
-      dispatch(actions.save(cluster, id, payload))
+      dispatch(actions.save(cluster, id, payload, custom_yaml))
     }
   },
-  create: (cluster, payload) => async (dispatch, getState) => {
+  create: (cluster, payload, custom_yaml) => async (dispatch, getState) => {
     try {
 
       const routeParams = selectors.router.params(getState())
@@ -278,6 +287,7 @@ const sideEffects = {
         deployment_type,
         deployment_version,
         desired_state: payload,
+        custom_yaml
       }
 
       const task = await api.loaderSideEffect({
@@ -301,7 +311,7 @@ const sideEffects = {
       console.error(e)
     }
   },
-  save: (cluster, id, payload) => async (dispatch, getState) => {
+  save: (cluster, id, payload, custom_yaml) => async (dispatch, getState) => {
     try {
       const deploymentForms = selectors.config.forms.deployment(getState())
       const existingValues = selectors.deployment.collection.item(getState())
@@ -320,6 +330,7 @@ const sideEffects = {
       const deploymentUpdate = {
         name,
         desired_state: payload,
+        custom_yaml
       }
 
       const task = await api.loaderSideEffect({

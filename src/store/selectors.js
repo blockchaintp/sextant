@@ -169,6 +169,8 @@ const snackbarStore = state => state.snackbar
 
 const fileuploadStore = state => state.fileupload
 
+const customizationStore = state => state.customization
+
 const selectors = {
 
   router: {
@@ -363,6 +365,13 @@ const selectors = {
       'open',
       'text',
       'type',
+    ]),
+  },
+
+  customization: {
+    store: customizationStore,
+    ...props(customizationStore, [
+      'yamlInput',
     ]),
   },
 
