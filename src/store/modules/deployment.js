@@ -156,7 +156,7 @@ const sideEffects = {
 
     const routeParams = selectors.router.params(getState())
 
-    dispatch(actions.setHsideDeleted(value))
+    dispatch(actions.setHideDeleted(value))
     dispatch(actions.listWithOptions({
       cluster: routeParams.cluster
     }))
