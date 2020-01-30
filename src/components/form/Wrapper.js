@@ -262,19 +262,6 @@ class FormListInner extends React.Component {
       return ret
     })
 
-    const disableButton = () => {
-      // only for image pull secrets field
-      let disabled
-      if (item.id === "imagePullSecrets.value" && formProps.values.imagePullSecrets['enabled']) {
-        // links add-button's render to radio-button state
-        disabled = formProps.values.imagePullSecrets['enabled'] === 'false' ? true : false
-      } else if(item.id === "imagePullSecrets.value") {
-        // sets initial render of add-button to disabled
-        disabled = true
-      }
-      return disabled
-    }
-
     const addButton = (
       <div className={ classes.addButtonContainer }>
         <Button
@@ -282,7 +269,6 @@ class FormListInner extends React.Component {
           variant="contained"
           onClick={ this.onAdd }
           size="small"
-          disabled= {disableButton()}
         >
           Add
           <AddIcon />
@@ -363,6 +349,7 @@ class FormWrapperInner extends React.Component {
   }
 
   getItem(item, formProps) {
+
     if(typeof(item) == 'string') {
       return (
         <Typography
@@ -396,24 +383,30 @@ class FormWrapperInner extends React.Component {
 
     const error = dotty.get(formProps.errors, item.id)
     const touched = dotty.get(formProps.touched, item.id)
-
-    const renderComponent = (item) => {
-      if (item.id === 'daml.postgres.secret' && formProps.values.aws.db.create === 'false'){
-        return (
-          <Field
-            dbId={isNew}
-            name={ item.id }
-            component={ utils.getComponent(item.component) }
-            item={ item }
-            disabled={ disableField() }
-            error={ error }
-            touched={ touched }
-            formProps={ formProps }
-          />
-        )
-      } else if (item.id === 'daml.postgres.secret') {
-          return ''
-      }
+     
+    const renderField = (item) => {
+      if (item.linked) {
+        const linkedId = item.linked.linkedId        
+        const linkedComponentValue = dotty.get(formProps.values, linkedId)
+        
+        if (linkedComponentValue === item.linked.visibilityParameter) {
+          return (
+            <Field
+              dbId={isNew}
+              name={item.id}
+              component={utils.getComponent(item.component)}
+              item={item}
+              disabled={disableField()}
+              error={error}
+              touched={touched}
+              formProps={formProps}
+            />
+          )
+        } else {
+          // don't render the field 
+          return
+        }
+      } 
       return (
         <Field
           dbId={isNew}
@@ -428,21 +421,48 @@ class FormWrapperInner extends React.Component {
       )
     }
 
-    return item.list ? (
-      <FieldArray
-        name={ item.id }
-        render={arrayHelpers => (
-          <FormList
-            item={ item }
-            formProps={ formProps }
-            arrayHelpers={ arrayHelpers }
-            disabled={ disableField() }
-          />
-        )}
-      />
-    ) : (
-      renderComponent(item)
-    )
+    const renderFieldArray = (item) => {
+      if (item.linked) {
+        const linkedId = item.linked.linkedId
+        const linkedComponentValue = dotty.get(formProps.values, linkedId)
+
+        if (linkedComponentValue === item.linked.visibilityParameter) {
+          return (
+            <FieldArray
+              name={item.id}
+              render={arrayHelpers => (
+                <FormList
+                  item={item}
+                  formProps={formProps}
+                  arrayHelpers={arrayHelpers}
+                  disabled={disableField()}
+                />
+              )}
+            />
+          )
+        } else {
+          // don't render the fieldArray 
+          return
+        }
+      }
+      return (
+        <FieldArray
+          name={item.id}
+          render={arrayHelpers => (
+            <FormList
+              item={item}
+              formProps={formProps}
+              arrayHelpers={arrayHelpers}
+              disabled={disableField()}
+            />
+          )}
+        />
+      )
+    }
+
+    // if the field includes a list, render a field array, otherwise render a normal field
+    return item.list ? renderFieldArray(item) : renderField(item)
+    
   }
 
   // leave up to the user to put fields into columns
