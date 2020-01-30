@@ -4,7 +4,7 @@ import clusterActions from 'store/modules/cluster'
 import deploymentActions from 'store/modules/deployment'
 import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import networkActions from 'store/modules/network'
-import customizationAcations from 'store/modules/customization'
+import customizationActions from 'store/modules/customization'
 
 const authHandlers = {
   guest: (state) => selectors.auth.loggedIn(state) ?
@@ -166,7 +166,7 @@ const routes = [
       },
       deactivate: (store) => {
         store.dispatch(networkActions.clearError('deployment.form'))
-        store.dispatch(customizationAcations.clearYamlInput())
+        store.dispatch(customizationActions.clearYamlInput())
       }
     },
   },
@@ -187,7 +187,7 @@ const routes = [
       },
       deactivate: (store) => {
         store.dispatch(deploymentActions.stopResourcesLoop())
-        store.dispatch(extraActions.clearYamlInput(0))
+        store.dispatch(customizationActions.clearYamlInput(0))
       }
     },
   },

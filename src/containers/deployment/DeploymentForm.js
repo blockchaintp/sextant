@@ -62,7 +62,7 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
       accessControlSearch: selectors.user.accessControlSearch(state),
       accessControlUsers: selectors.user.accessControlResults(state),
       yamlInput: selectors.customization.yamlInput(state),
-      customYaml: deployment ? deployment[id].custom_yaml : ''
+      customYaml: (deployment && deployment[id]) ? deployment[id].custom_yaml : ''
     }
   },
   {

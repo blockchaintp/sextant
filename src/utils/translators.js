@@ -6,22 +6,22 @@ export const successMessageGenerator = (action) => {
   let message
   switch (action) {
     case 'cluster.create' :
-      message = 'The cluster was added sucessfully.'
+      message = 'The cluster was added successfully.'
       break
     case 'cluster.update' :
-      message = 'The cluster was updated sucessfully.'
+      message = 'The cluster was updated successfully.'
       break
     case 'cluster.delete' :
-      message = 'The cluster was deleted/deactivated sucessfully.'
+      message = 'The cluster was deleted/deactivated successfully.'
       break
     case 'deployment.create' :
-      message = 'The deployment was added sucessfully.'
+      message = 'The deployment was added successfully.'
       break
     case 'deployment.update' :
-      message = 'The deployment was updated sucessfully.'
+      message = 'The deployment was updated successfully.'
       break
     case 'deployment.delete' :
-      message = 'The deployment was deleted/undeployed sucessfully.'
+      message = 'The deployment was deleted/undeployed successfully.'
       break
     default :
       message = action
