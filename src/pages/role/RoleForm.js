@@ -115,7 +115,7 @@ class RoleForm extends React.Component {
             Cancel
           </Button>
           <Button onClick={ onConfirm } variant="contained" color="secondary" autoFocus>
-            Confirm
+            Save
           </Button>
         </DialogActions>
       </Dialog>

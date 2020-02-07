@@ -330,7 +330,7 @@ class ClusterForm extends React.Component {
                         disabled={ submitting }
                         onClick={ handleSubmit }
                       >
-                        { submitTitle }
+                          {id == 'new' ? 'Activate' : 'Save'}
                       </Button>
                     </React.Fragment>
 
@@ -374,7 +374,7 @@ ClusterForm.propTypes = {
 
 ClusterForm.defaultProps = {
   title: 'Cluster Details',
-  submitTitle: 'Activate',
+  submitTitle: 'activate',
 }
 
 export default withStyles(styles)(ClusterForm)

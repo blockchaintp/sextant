@@ -103,7 +103,7 @@ UserForm.propTypes = {
 
 UserForm.defaultProps = {
   title: 'User Details',
-  submitTitle: 'Submit',
+  submitTitle: 'Save',
 }
 
 export default withStyles(styles)(UserForm)

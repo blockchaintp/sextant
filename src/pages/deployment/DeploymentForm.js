@@ -194,7 +194,7 @@ class DeploymentForm extends React.Component {
                         disabled={ submitting }
                         onClick={ handleSubmit }
                       >
-                        { submitTitle }
+                          {id == 'new' ? 'deploy' : 're-deploy'  }
                       </Button>
                     </React.Fragment>
 
