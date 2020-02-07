@@ -275,7 +275,8 @@ class FormListInner extends React.Component {
         </Button>
       </div>
     )
-
+      console.log("ITEM", item);
+      
     const actions = [{
       title: 'Delete',
       icon: DeleteIcon,
