@@ -155,7 +155,7 @@ class DeploymentForm extends React.Component {
         }
           <Grid item xs={ 12}>
             <Paper className={ id != 'new' ? classes.scrolling : classes.paper }>
-              <Typography variant="h6" gutterBottom>
+              <Typography _ci='formheader' variant="h6" gutterBottom>
                 { title }
               </Typography>
               <FormWrapper

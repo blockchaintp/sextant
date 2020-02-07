@@ -392,6 +392,7 @@ class FormWrapperInner extends React.Component {
         if (linkedComponentValue === item.linked.visibilityParameter) {
           return (
             <Field
+              _ci={item.id}
               dbId={isNew}
               name={item.id}
               component={utils.getComponent(item.component)}
@@ -409,6 +410,7 @@ class FormWrapperInner extends React.Component {
       } 
       return (
         <Field
+          _ci={item.id}
           dbId={isNew}
           name={ item.id }
           component={ utils.getComponent(item.component) }
@@ -429,6 +431,7 @@ class FormWrapperInner extends React.Component {
         if (linkedComponentValue === item.linked.visibilityParameter) {
           return (
             <FieldArray
+              _ci={item.id}
               name={item.id}
               render={arrayHelpers => (
                 <FormList
@@ -447,6 +450,7 @@ class FormWrapperInner extends React.Component {
       }
       return (
         <FieldArray
+          _ci={item.id}
           name={item.id}
           render={arrayHelpers => (
             <FormList
@@ -565,7 +569,7 @@ class FormWrapperInner extends React.Component {
             const flatErrors = utils.flattenErrors(errors, utils.flattenSchema(schema))
 
             return (
-              <form onSubmit={submitWrapper} onKeyPress={event => {
+              <form _ci='form' onSubmit={submitWrapper} onKeyPress={event => {
                 if (event.key === '13') {
                   event.preventDefault();
                 }
