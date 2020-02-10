@@ -102,7 +102,6 @@ export const deploymentStatusTranslator = (status) => {
 // gets the correct icon depending on the status of the deployment
 export const getDeploymentIcon = (status, settings) => {
   let icon = settings.icons.delete
-  console.log("STATUS", status);
   
   if (status === 'deployed') icon = settings.icons.remove
 
