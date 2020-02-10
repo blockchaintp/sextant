@@ -293,6 +293,7 @@ class DeploymentTable extends React.Component {
       )
 
     const getActions = (deployment) => {
+      
       const buttons = []
       if(rbac({
         user,

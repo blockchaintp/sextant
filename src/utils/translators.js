@@ -101,33 +101,27 @@ export const deploymentStatusTranslator = (status) => {
 
 // gets the correct icon depending on the status of the deployment
 export const getDeploymentIcon = (status, settings) => {
-  let icon = settings.icons.remove
-
+  let icon = settings.icons.delete
+  
   if (status === 'deployed') icon = settings.icons.remove
-
-  if (status === 'undeployed' || 'error') icon = settings.icons.delete
 
   return icon
 }
 
 // gets the correct icon hover text depending on the status of the deployment
 export const getDeploymentIconTitle = (status, settings) => {
-  let iconTitle = 'Remove'
+  let iconTitle = 'Delete'
 
   if (status === 'deployed') iconTitle = 'Undeploy'
-
-  if (status === 'undeployed' || 'error') iconTitle = 'Delete'
 
   return iconTitle
 }
 
 // gets the correct icon depending on the status of the deployment
 export const getTaskIcon = (status, settings) => {
-  let icon = settings.icons.remove
+  let icon = settings.icons.delete
 
   if (status === 'deployed') icon = settings.icons.remove
-
-  if (status === 'undeployed' || 'error') icon = settings.icons.delete
 
   return icon
 }
@@ -146,22 +140,18 @@ export const clusterStatusTranslator = (status) => {
 
 // gets the correct icon depending on the status of the cluster
 export const getClusterIcon = (status, settings) => {
-  let icon = settings.icons.remove
+  let icon = settings.icons.delete
 
   if (status === 'active') icon = settings.icons.remove
-
-  if (status === 'inactive' || 'error') icon = settings.icons.delete
 
   return icon
 }
 
 // gets the correct icon depending on the status of the cluster
 export const getClusterIconTitle = (status, settings) => {
-  let iconTitle = 'Remove'
+  let iconTitle = 'Delete'
 
   if (status === 'active') iconTitle = 'Deactivate'
-
-  if (status === 'inactive' || 'error' ) iconTitle = 'Delete'
 
   return iconTitle
 }

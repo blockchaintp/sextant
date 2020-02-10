@@ -177,7 +177,7 @@ class ClusterTable extends React.Component {
     )
 
     const getActions = (cluster) => {
-
+  
       const buttons = []
 
       if(rbac({
@@ -203,7 +203,7 @@ class ClusterTable extends React.Component {
       buttons.push({
         title: 'View',
         icon: ViewIcon,
-        disabled: cluster.status === 'inactive',
+        disabled: (cluster.status === 'inactive' || cluster.status === 'error'),
         handler: (item) => onViewStatus(item.id),
       })
 
