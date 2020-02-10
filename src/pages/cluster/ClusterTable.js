@@ -177,8 +177,7 @@ class ClusterTable extends React.Component {
     )
 
     const getActions = (cluster) => {
-      console.log("CLUSTER", cluster);
-      
+  
       const buttons = []
 
       if(rbac({
