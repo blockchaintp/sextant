@@ -295,7 +295,7 @@ class ClusterForm extends React.Component {
         <Grid container spacing={24} >
           <Grid item xs={ id == 'new' ? 6 : 12 }>
             <Paper className={ classes.paper }>
-              <Typography variant="h6" gutterBottom>
+              <Typography _ci='formheader' variant="h6" gutterBottom>
                 { title }
               </Typography>
               <FormWrapper
@@ -323,6 +323,7 @@ class ClusterForm extends React.Component {
                         )
                       }
                       <Button
+                        _ci='submitButton'
                         className={ classes.button }
                         type="button"
                         variant="contained"

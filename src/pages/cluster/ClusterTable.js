@@ -163,6 +163,7 @@ class ClusterTable extends React.Component {
       <div className={ classes.headerActions }>
         <div className={ classes.addButton }>
           <Button
+            _ci='addbutton'
             className={classes.button}
             variant= 'contained'
             color= 'secondary'

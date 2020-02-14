@@ -101,12 +101,15 @@ class SimpleTable extends React.Component {
                     }}
                     tabIndex={-1}
                     key={dataRow.id}
-                    _ci={dataRow.username}
+                    _ci={dataRow.username || dataRow.name}
                   >
                     {
                       fields.map((field, i) => {
                         return (
-                          <TableCell key={ i } align={ field.numeric ? 'right' : 'left' } className={ classes.autoCell }>
+                          <TableCell 
+                            _ci={`${dataRow.username || dataRow.name}${dataRow[field.name]}`}
+                            key={ i } 
+                            align={ field.numeric ? 'right' : 'left' } className={ classes.autoCell }>
                             { dataRow[field.name] }
                           </TableCell>
                         )
