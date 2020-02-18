@@ -248,20 +248,7 @@ class DeploymentSettingsDamlParties extends React.Component {
 
     const publicKey = entry.publicKey
 
-    const actionButton = /*entry? (
-      <Button
-        className={ classes.smallButton }
-        size="small"
-        variant="outlined"
-        onClick={ () => rotateParticipantKey({
-          cluster,
-          id,
-          publicKey,
-        }) }
-      >
-        Rotate Keys <RefreshIcon className={ classes.iconSmall } />
-      </Button>
-    ) : */ (
+    const actionButton = (
       <Button
         className={ classes.smallButton }
         size="small"
@@ -291,8 +278,6 @@ class DeploymentSettingsDamlParties extends React.Component {
     return (
       <div>
         { toggleButton }
-        {/* { actionButton } */}
-        {/* Leave action button commented out for now. */}
       </div>
     )
   }
@@ -448,9 +433,6 @@ class DeploymentSettingsDamlParties extends React.Component {
                     <Typography className={ classes.smallText }>
                       Pubic Key: { publicKey }
                     </Typography>
-                    {/* <Typography className={ classes.smallText }>
-                      DAML ID: { entry.participant ? entry.participant.damlId : 'unregistered' }
-                    </Typography> */}
                   </Grid>
                 </Grid>
                 {
@@ -484,18 +466,7 @@ class DeploymentSettingsDamlParties extends React.Component {
       name: 'name',
     }]
 
-    let localParticipants = participants.filter(participant => {
-      return localKeyMap[participant.publicKey] ? true : false
-    })
-
-    localParticipants = [localParticipants[0]]
-    // This is currently not used but is left here for now
-    // To be pruned in due course
-    const remoteParticipants = participants.filter(participant => {
-      return localKeyMap[participant.publicKey] ? false : true
-    })
-
-    const allParticipants = localParticipants
+    const allParticipants = participants
     return (
       <React.Fragment>
         {
@@ -531,15 +502,6 @@ class DeploymentSettingsDamlParties extends React.Component {
             return (
               <div key={ i } className={ classes.denseTable }>
                 <div className={ classes.spacing }></div>
-                {/* <Typography variant="subtitle2">
-                { participant.publicKey.substring(0, 8) } - { localKeyMap[participant.publicKey] ? 'local' : 'remote' }
-                </Typography> */}
-                {/* <Typography className={ classes.smallText }>
-                  Public Key: { participant.publicKey }
-                </Typography> */}
-                {/* <Typography className={ classes.smallText }>
-                  DAML ID: { participant.damlId }
-                </Typography> */}
                   <div className={ classes.partyContainer }>
                   <SimpleTable
                     // hideHeader
