@@ -1,3 +1,9 @@
+/*
+ * Copyright © 2020 Blockchain Technology Partners Limited All Rights Reserved
+ *
+ * License: Product
+ */
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
@@ -423,16 +429,11 @@ class DeploymentSettingsDamlParties extends React.Component {
                 <Grid container spacing={24}>
                   <Grid item xs={ 6 }>
                     <Typography variant="subtitle2">
-                      { entry.damlId }
+                      { entry.participantId }
                     </Typography>
                   </Grid>
                   <Grid item xs={ 6 } className={ classes.alignRight }>
                     {this.getLocalParticipantActions(entry) }
-                  </Grid>
-                  <Grid item xs={ 12 }>
-                    <Typography className={ classes.smallText }>
-                      Pubic Key: { publicKey }
-                    </Typography>
                   </Grid>
                 </Grid>
                 {
