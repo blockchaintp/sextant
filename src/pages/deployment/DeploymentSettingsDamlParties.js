@@ -484,16 +484,14 @@ class DeploymentSettingsDamlParties extends React.Component {
       name: 'name',
     }]
 
-    let localParticipants = participants.filter(participant => {
-      return localKeyMap[participant.publicKey] ? true : false
-    })
+    let localParticipants = participants
 
-    localParticipants = [localParticipants[0]]
+    // localParticipants = [localParticipants[0]]
     // This is currently not used but is left here for now
     // To be pruned in due course
-    const remoteParticipants = participants.filter(participant => {
-      return localKeyMap[participant.publicKey] ? false : true
-    })
+    // const remoteParticipants = participants.filter(participant => {
+    //   return localKeyMap[participant.publicKey] ? false : true
+    // })
 
     const allParticipants = localParticipants
     return (
