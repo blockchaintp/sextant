@@ -158,7 +158,10 @@ export const getClusterIconTitle = (status, settings) => {
 
 // returns an object for unique text in the delete dialog depending on the status of the resource 
 export const getDialogDeleteText = (status) => {
-  let text = {}
+  let text = {
+    title: 'Delete',
+    subtext: 'delete'
+  }
 
   if (status === 'deployed') {
     text.title = "Undeploy"
