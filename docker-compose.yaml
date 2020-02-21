@@ -16,7 +16,7 @@ services:
       args:
         EDITION_MODULE: dev.js
         NPM_TARGET: build-test
-    image: sextant-test:${ISOLATION_ID}
+    image: sextant-ci:${ISOLATION_ID}
   frontend-sfs:
     build:
       context: .
