@@ -220,7 +220,7 @@ class DeploymentTable extends React.Component {
       }
     }
 
-    const clusterIsActive = cluster.status === "provisioned"
+    const clusterIsActive = cluster ? cluster.status === "provisioned" : true
 
       addButtonDisabled = (canWriteToCluster && noActiveDeployments() && clusterIsActive) ? false : true
     }
