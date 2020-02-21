@@ -373,6 +373,13 @@ const sideEffects = {
         dispatch(actions.setTrackTask(task))
         dispatch(snackbarActions.setInfo(`deployment undeploying`))
       }
+      // manualy dispatch actions instead of relying on route activation being triggered
+      dispatch(clusterActions.list({
+        noDeleted: true,
+      }))
+      dispatch(actions.startDeploymentLoop({
+        cluster
+      }))
       dispatch(routerActions.navigateTo('deployments', {
         cluster,
       }))
