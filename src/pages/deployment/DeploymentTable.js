@@ -328,11 +328,13 @@ class DeploymentTable extends React.Component {
       const buttonDeploymentType = deployment.deploymentData.deployment_type
       const buttonDeploymentVersion = deployment.deploymentData.deployment_version
       const features = getFeaturesForDeployment(deploymentForms, buttonDeploymentType, buttonDeploymentVersion)
+      // enabled was used as a constant for determining visibility of the settings wheel, but has been replaced by undeployed
       const enabled= features.length>0 ? false : true
+      const undeployed = deployment.status !== 'deployed'
       buttons.push({
         title: 'Settings',
         icon: SettingsIcon,
-        disabled: enabled,
+        disabled: undeployed,
         handler: (item) => {
           const pageKey=getFirstTagForDeployment(deploymentForms, item.deployment_type, item.deploymentData.deployment_version)
           return onViewSettings(item.cluster, item.id, item.deployment_type, item.deploymentData.deployment_version, pageKey)
