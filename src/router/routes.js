@@ -142,7 +142,9 @@ const routes = [
     authorize: authHandlers.user,
     trigger: {
       activate: (store, params) => {
-        store.dispatch(clusterActions.list())
+        store.dispatch(clusterActions.list({
+          noDeleted: true,
+        }))
         store.dispatch(deploymentActions.startDeploymentLoop({
           cluster: params.cluster,
         }))

@@ -220,9 +220,7 @@ class DeploymentTable extends React.Component {
       }
     }
 
-    const clusterIsActive = cluster ? cluster.status === "provisioned" : true
-
-      addButtonDisabled = (canWriteToCluster && noActiveDeployments() && clusterIsActive) ? false : true
+      addButtonDisabled = (canWriteToCluster && noActiveDeployments()) ? false : true
     }
 
     const addButton = (
@@ -276,7 +274,10 @@ class DeploymentTable extends React.Component {
                   [{
                     id: 'all',
                     name: 'all',
-                  }].concat(clusters)
+                  }].concat(
+                    clusters
+                      .filter(cluster => cluster.status == 'provisioned')
+                    )
                     .map((cluster, i) => {
                       return (
                         <MenuItem
