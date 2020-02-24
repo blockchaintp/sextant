@@ -111,7 +111,7 @@ class SimpleTable extends React.Component {
                             _ci={`${dataRow.username || dataRow.name}${dataRow[field.name]}`}
                             key={ i } 
                             align={ field.numeric ? 'right' : 'left' } className={ classes.autoCell }>
-                            { dataRow[field.name] || dataRow.deploymentData[field.name]}
+                            {dataRow[field.name] || (dataRow.deploymentData ? dataRow.deploymentData[field.name] : null)}
                           </TableCell>
                         )
                       })
