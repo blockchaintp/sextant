@@ -257,6 +257,30 @@ const routes = [
 
         }
       },
+    }, {
+      name: 'taekionKeys',
+      path: '/taekion/keys',
+      trigger: {
+        activate: (store, params) => {
+          
+        },
+      },
+    }, {
+      name: 'taekionVolumes',
+      path: '/taekion/volumes',
+      trigger: {
+        activate: (store, params) => {
+          
+        },
+      },
+    }, {
+      name: 'taekionSnapshots',
+      path: '/taekion/snapshots',
+      trigger: {
+        activate: (store, params) => {
+          
+        },
+      },
     }]
 
   },

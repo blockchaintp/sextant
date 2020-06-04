@@ -34,6 +34,11 @@ import DeploymentSettingsDamlParties from 'containers/deployment/DeploymentSetti
 import DeploymentSettingsDamlArchives from 'containers/deployment/DeploymentSettingsDamlArchives'
 import DeploymentSettingsDamlTimeService from 'containers/deployment/DeploymentSettingsDamlTimeService'
 
+import DeploymentSettingsTaekionKeys from 'containers/deployment/taekion/Keys'
+import DeploymentSettingsTaekionVolumes from 'containers/deployment/taekion/Volumes'
+import DeploymentSettingsTaekionSnapshots from 'containers/deployment/taekion/Snapshots'
+
+
 @connect(
   state => {
     return {
@@ -110,6 +115,15 @@ class Router extends React.Component {
               </Route>
               <Route segment="damlTimeService" exact>
                 <DeploymentSettingsDamlTimeService />
+              </Route>
+              <Route segment="taekionKeys" exact>
+                <DeploymentSettingsTaekionKeys />
+              </Route>
+              <Route segment="taekionVolumes" exact>
+                <DeploymentSettingsTaekionVolumes />
+              </Route>
+              <Route segment="taekionSnapshots" exact>
+                <DeploymentSettingsTaekionSnapshots />
               </Route>
             </DeploymentSettingsTabs>
           </Route>
