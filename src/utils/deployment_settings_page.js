@@ -1,39 +1,37 @@
-const getPages = function (features) {
-
-  let pages = []
-  let counter=0
-  if (features.includes("sawtooth.identity")) {
-    pages.push({
-      id: 'keys',
-      title: 'Sawtooth Identity',
-      index: counter++,
-    })
-  }
-  if (features.includes("daml.parties")) {
-    pages.push({
-      id: 'damlParties',
-      title: 'DAML Parties',
-      index: counter++,
-    })
-  }
-  if (features.includes("daml.archives")) {
-    pages.push({
-        id: 'damlArchives',
-        title: 'DAML Archives',
-        index: counter++,
-      })
-  }
-  if (features.includes("daml.timekeeper")) {
-    pages.push({
-      id: 'damlTimeService',
-        title: 'DAML Timekeeper',
-      index: counter++,
-    })
-  }
-
-  return pages;
+const FEATURE_TABS = {
+  'sawtooth.identity': {
+    id: 'keys',
+    title: 'Sawtooth Identity',
+  },
+  'daml.parties': {
+    id: 'damlParties',
+    title: 'DAML Parties',
+  },
+  'daml.archives': {
+    id: 'damlArchives',
+    title: 'DAML Archives',
+  },
+  'daml.timekeeper': {
+    id: 'damlTimeService',
+    title: 'DAML Timekeeper',
+  },
+  'taekion.keys': {
+    id: 'taekionKeys',
+    title: 'Taekion Keys',
+  },
+  'taekion.volumes': {
+    id: 'taekionVolumes',
+    title: 'Taekion Volumes',
+  },
+  'taekion.snapshots': {
+    id: 'taekionSnapshots',
+    title: 'Taekion Snapshots',
+  },
 }
 
+const getPages = function (features) {
+  return features.map(feature => FEATURE_TABS[feature])
+}
 
 const getFeaturesForDeployment = (deploymentForms, deployment_type, deployment_version) => {
     return deploymentForms[deployment_type].button.versions.find((item) => {
