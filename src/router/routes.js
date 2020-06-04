@@ -5,6 +5,7 @@ import deploymentActions from 'store/modules/deployment'
 import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import networkActions from 'store/modules/network'
 import customizationActions from 'store/modules/customization'
+import taekionActions from 'store/modules/taekion'
 
 const authHandlers = {
   guest: (state) => selectors.auth.loggedIn(state) ?
@@ -262,7 +263,10 @@ const routes = [
       path: '/taekion/keys',
       trigger: {
         activate: (store, params) => {
-          
+          store.dispatch(taekionActions.listKeys({
+            cluster: params.cluster,
+            deployment: params.id
+          }))
         },
       },
     }, {
@@ -270,7 +274,10 @@ const routes = [
       path: '/taekion/volumes',
       trigger: {
         activate: (store, params) => {
-          
+          store.dispatch(taekionActions.listVolumes({
+            cluster: params.cluster,
+            deployment: params.id
+          }))
         },
       },
     }, {
@@ -278,7 +285,7 @@ const routes = [
       path: '/taekion/snapshots',
       trigger: {
         activate: (store, params) => {
-          
+          // TBC how to get the volume name here
         },
       },
     }]
