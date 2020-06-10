@@ -12,6 +12,7 @@ const initialState = {
   volumes: [],
   snapshots: [],
   addKeyWindowOpen: false,
+  addKeyResult: null,
 }
 
 const reducers = {
@@ -27,6 +28,9 @@ const reducers = {
   setAddKeyWindowOpen: (state, action) => {
     state.addKeyWindowOpen = action.payload
   },
+  setAddKeyResult: (state, action) => {
+    state.addKeyResult = action.payload
+  },
 }
 
 const loaders = {
@@ -41,7 +45,7 @@ const loaders = {
     cluster,
     deployment,
     payload,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/keys`, payload))
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/keys`), payload)
     .then(api.process),
 
   listVolumes: ({
@@ -54,7 +58,7 @@ const loaders = {
     cluster,
     deployment,
     payload,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes`, payload))
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes`), payload)
     .then(api.process),
 
   listSnapshots: ({
@@ -69,7 +73,7 @@ const loaders = {
     deployment,
     volumeName,
     payload,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volumeName}/snapshots`, payload))
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volumeName}/snapshots`), payload)
     .then(api.process),
 
 
@@ -97,7 +101,7 @@ const sideEffects = {
   }) => async (dispatch, getState) => {
 
     try {
-      await api.loaderSideEffect({
+      const data = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.createKey({cluster, deployment, payload}),
         prefix,
@@ -109,6 +113,8 @@ const sideEffects = {
         deployment,
       }))
       dispatch(snackbarActions.setSuccess(`key added`))
+      dispatch(actions.setAddKeyResult(data))
+      dispatch(actions.setAddKeyWindowOpen(false))
     } catch(e) {
       dispatch(snackbarActions.setError(`error adding key: ${e.toString()}`))
       console.error(e)

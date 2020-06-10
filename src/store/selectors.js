@@ -347,6 +347,7 @@ const selectors = {
       'volumes',
       'snapshots',
       'addKeyWindowOpen',
+      'addKeyResult',
     ]),
   },
 
