@@ -27,6 +27,7 @@ import TaekionKeys from 'pages/deployment/taekion/Keys'
     onCloseAddKeyWindow: () => taekionActions.setAddKeyWindowOpen(false),
     onCloseKeyResultWindow: () => taekionActions.setAddKeyResult(null),
     onCreateKey:  taekionActions.createKey,
+    onDeleteKey:  taekionActions.deleteKey,
   },
 )
 class TaekionKeysContainer extends React.Component {
