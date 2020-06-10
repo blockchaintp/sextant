@@ -10,8 +10,10 @@ import SimpleTableActions from 'components/table/SimpleTableActions'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
+import CodeBlock from 'components/code/CodeBlock'
 import FormWrapper from 'components/form/Wrapper'
 
 import settings from 'settings'
@@ -56,16 +58,24 @@ class TaekionKeys extends React.Component {
   render() {
     const {
       classes,
+      cluster,
+      deployment,
       keys,
       addKeyWindowOpen,
+      addKeyResult,
+      addKeyError,
       onOpenAddKeyWindow,
       onCloseAddKeyWindow,
+      onCloseKeyResultWindow,
+      onCreateKey,
     } = this.props
 
-    const error = ''
-    const submitForm = (values) => {
-      console.log('--------------------------------------------')
-      console.dir(values)
+    const submitForm = (payload) => {
+      onCreateKey({
+        cluster,
+        deployment,
+        payload,
+      })
     }
 
     const data = keys.map((key, index) => {
@@ -96,10 +106,6 @@ class TaekionKeys extends React.Component {
     const getActions = () => {
   
       const buttons = [{
-        title: 'Edit',
-        icon: EditIcon,
-        handler: (item) => onEdit(item.id),
-      }, {
         title: 'Delete',
         icon: DeleteIcon,
         handler: (item) => onDelete(item.id),
@@ -132,7 +138,7 @@ class TaekionKeys extends React.Component {
             <FormWrapper
               schema={ FORM_SCHEMA }
               initialValues={ FORM_INITIAL_VALUES }
-              error={ error }
+              error={ addKeyError }
               onSubmit={ submitForm }
               renderForm={ ({
                 content,
@@ -161,6 +167,32 @@ class TaekionKeys extends React.Component {
                 )
               }}
             />
+          )
+        }
+        {
+          addKeyResult && (
+            <Dialog
+              open
+              onClose={ onCloseKeyResultWindow }
+              fullWidth
+              maxWidth="md"
+            >
+              <DialogTitle id="alert-dialog-title">Save your key</DialogTitle>
+              <DialogContent>
+                <DialogContentText>Your key has been created - please save it locally.</DialogContentText>
+                <DialogContentText><strong>IMPORTANT:</strong> this is the only time you will see this key so please keep it safe.</DialogContentText>
+                <CodeBlock
+                  code={ addKeyResult.key }
+                  clipboard={ true }
+                  snackbarMessage={ () => "Key copied to clipboard" }
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={ onCloseKeyResultWindow }>
+                  Close
+                </Button>
+              </DialogActions>
+            </Dialog>
           )
         }
       </div>
