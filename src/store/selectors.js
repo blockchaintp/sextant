@@ -346,6 +346,7 @@ const selectors = {
       'keys',
       'volumes',
       'snapshots',
+      'addKeyWindowOpen',
     ]),
   },
 

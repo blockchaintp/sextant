@@ -7,6 +7,13 @@ import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogTitle from '@material-ui/core/DialogTitle'
+
+import FormWrapper from 'components/form/Wrapper'
+
 import settings from 'settings'
 
 const AddIcon = settings.icons.add
@@ -19,7 +26,7 @@ const styles = theme => ({
   },
 })
 
-const FIELDS =[{
+const TABLE_FIELDS =[{
   title: 'Name',
   name: 'name',
 },{
@@ -27,13 +34,39 @@ const FIELDS =[{
   name: 'fingerprint',
 }]
 
+const FORM_SCHEMA = [ {
+  id: 'name',
+  title: 'Name',
+  helperText: 'The name of your key',
+  component: 'text',
+  validate: {
+    type: 'string',
+    methods: [
+      ['required', 'Required'],
+    ],
+  },
+}]
+
+const FORM_INITIAL_VALUES = {
+  name: '',
+}
+
 class TaekionKeys extends React.Component {
 
   render() {
     const {
       classes,
       keys,
+      addKeyWindowOpen,
+      onOpenAddKeyWindow,
+      onCloseAddKeyWindow,
     } = this.props
+
+    const error = ''
+    const submitForm = (values) => {
+      console.log('--------------------------------------------')
+      console.dir(values)
+    }
 
     const data = keys.map((key, index) => {
       return {
@@ -51,7 +84,7 @@ class TaekionKeys extends React.Component {
             className={ classes.button }
             variant= 'contained'
             color= 'secondary'
-            onClick={() => {}}
+            onClick={ onOpenAddKeyWindow }
           >
             Add
           <AddIcon />
@@ -84,7 +117,7 @@ class TaekionKeys extends React.Component {
         <SimpleTable
           pagination
           data={ data }
-          fields={ FIELDS }
+          fields={ TABLE_FIELDS }
           getActions={ (item) => {
             return (
               <SimpleTableActions
@@ -94,6 +127,42 @@ class TaekionKeys extends React.Component {
             )
           }}
         />
+        {
+          addKeyWindowOpen && (
+            <FormWrapper
+              schema={ FORM_SCHEMA }
+              initialValues={ FORM_INITIAL_VALUES }
+              error={ error }
+              onSubmit={ submitForm }
+              renderForm={ ({
+                content,
+                handleSubmit,
+              }) => {
+                return (
+                  <Dialog
+                    open
+                    onClose={ onCloseAddKeyWindow }
+                    fullWidth
+                    maxWidth="sm"
+                  >
+                    <DialogTitle id="alert-dialog-title">Add Key</DialogTitle>
+                    <DialogContent>
+                      { content }
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={ onCloseAddKeyWindow }>
+                        Cancel
+                      </Button>
+                      <Button onClick={ handleSubmit } variant="contained" color="secondary" autoFocus>
+                        Add
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                )
+              }}
+            />
+          )
+        }
       </div>
     )
   }
