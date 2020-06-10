@@ -55,6 +55,14 @@ const FORM_INITIAL_VALUES = {
 
 class TaekionKeys extends React.Component {
 
+  state = {
+    deleteItem: null,
+  }
+
+  constructor(props) {
+    super(props)
+  }
+
   render() {
     const {
       classes,
@@ -68,15 +76,39 @@ class TaekionKeys extends React.Component {
       onCloseAddKeyWindow,
       onCloseKeyResultWindow,
       onCreateKey,
+      onDeleteKey,
     } = this.props
 
-    const submitForm = (payload) => {
+    const {
+      deleteItem,
+    } = this.state
+
+    const onSubmitForm = (payload) => {
       onCreateKey({
         cluster,
         deployment,
         payload,
       })
     }
+
+    const onConfirmDeleteItem = () => {
+      this.setState({
+        deleteItem: null,
+      })
+      onDeleteKey({
+        cluster,
+        deployment,
+        id: deleteItem.id,
+      })
+    }
+
+    const onDeleteItem = (item) => this.setState({
+      deleteItem: item,
+    })
+
+    const onCancelDeleteItem = () => this.setState({
+      deleteItem: null,
+    })
 
     const data = keys.map((key, index) => {
       return {
@@ -108,7 +140,7 @@ class TaekionKeys extends React.Component {
       const buttons = [{
         title: 'Delete',
         icon: DeleteIcon,
-        handler: (item) => onDelete(item.id),
+        handler: onDeleteItem,
       }]
 
       return buttons
@@ -139,7 +171,7 @@ class TaekionKeys extends React.Component {
               schema={ FORM_SCHEMA }
               initialValues={ FORM_INITIAL_VALUES }
               error={ addKeyError }
-              onSubmit={ submitForm }
+              onSubmit={ onSubmitForm }
               renderForm={ ({
                 content,
                 handleSubmit,
@@ -190,6 +222,29 @@ class TaekionKeys extends React.Component {
               <DialogActions>
                 <Button onClick={ onCloseKeyResultWindow }>
                   Close
+                </Button>
+              </DialogActions>
+            </Dialog>
+          )
+        }
+        {
+          deleteItem && (
+            <Dialog
+              open
+              onClose={ onCancelDeleteItem }
+              fullWidth
+              maxWidth="sm"
+            >
+              <DialogTitle id="alert-dialog-title">Confirm delete</DialogTitle>
+              <DialogContent>
+                <DialogContentText>Are you absolutely sure you want to delete the { deleteItem.name } key?</DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={ onCancelDeleteItem }>
+                  Close
+                </Button>
+                <Button onClick={ onConfirmDeleteItem } variant="contained" color="secondary" autoFocus>
+                  Delete
                 </Button>
               </DialogActions>
             </Dialog>
