@@ -274,6 +274,10 @@ const routes = [
       path: '/taekion/volumes',
       trigger: {
         activate: (store, params) => {
+          store.dispatch(taekionActions.listKeys({
+            cluster: params.cluster,
+            deployment: params.id
+          }))
           store.dispatch(taekionActions.listVolumes({
             cluster: params.cluster,
             deployment: params.id
