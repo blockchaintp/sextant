@@ -13,6 +13,7 @@ const initialState = {
   snapshots: [],
   addKeyWindowOpen: false,
   addKeyResult: null,
+  addVolumeWindowOpen: false,
 }
 
 const reducers = {
@@ -30,6 +31,9 @@ const reducers = {
   },
   setAddKeyResult: (state, action) => {
     state.addKeyResult = action.payload
+  },
+  setAddVolumeWindowOpen: (state, action) => {
+    state.addVolumeWindowOpen = action.payload
   },
 }
 
