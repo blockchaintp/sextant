@@ -1,10 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import deploymentSettingsActions from 'store/modules/deploymentSettings'
-import snackbarActions from 'store/modules/snackbar'
 import selectors from 'store/selectors'
-
+import taekionActions from 'store/modules/taekion'
 import TaekionKeys from 'pages/deployment/taekion/Keys'
 
 @connect(
@@ -12,10 +10,12 @@ import TaekionKeys from 'pages/deployment/taekion/Keys'
 
     return {
       keys: selectors.taekion.keys(state),
+      addKeyWindowOpen: selectors.taekion.addKeyWindowOpen(state),
     }
   },
   {
-    
+    onOpenAddKeyWindow: () => taekionActions.setAddKeyWindowOpen(true),
+    onCloseAddKeyWindow: () => taekionActions.setAddKeyWindowOpen(false),
   },
 )
 class TaekionKeysContainer extends React.Component {

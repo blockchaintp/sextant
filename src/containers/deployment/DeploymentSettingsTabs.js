@@ -24,7 +24,6 @@ const onViewPage = (cluster, id, deployment_type, deployment_version, page) => r
 
     const versions = deploymentForms[deployment_type].button.versions
 
-    console.log(JSON.stringify(versions, null, 4))
     const features=versions.find((item) => {
       return (item.form === deployment_version)
     }).features
