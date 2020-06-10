@@ -48,6 +48,13 @@ const loaders = {
   }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/keys`), payload)
     .then(api.process),
 
+  deleteKey: ({
+    cluster,
+    deployment,
+    id,
+  }) => axios.delete(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/keys/${id}`))
+    .then(api.process),
+
   listVolumes: ({
     cluster,
     deployment,
@@ -93,7 +100,6 @@ const sideEffects = {
     snackbarError: true,
   }),
 
-
   createKey: ({
     cluster,
     deployment,
@@ -117,6 +123,31 @@ const sideEffects = {
       dispatch(actions.setAddKeyWindowOpen(false))
     } catch(e) {
       dispatch(snackbarActions.setError(`error adding key: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+
+  deleteKey: ({
+    cluster,
+    deployment,
+    id,
+  }) => async (dispatch, getState) => {
+
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.deleteKey({cluster, deployment, id}),
+        prefix,
+        name: 'deleteKey',
+        returnError: true,
+      })
+      dispatch(actions.listKeys({
+        cluster,
+        deployment,
+      }))
+      dispatch(snackbarActions.setSuccess(`key deleted`))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error deleting key: ${e.toString()}`))
       console.error(e)
     }
   },
