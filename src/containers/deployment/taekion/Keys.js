@@ -11,7 +11,7 @@ import TaekionKeys from 'pages/deployment/taekion/Keys'
   state => {
 
     return {
-      
+      keys: selectors.taekion.keys(state),
     }
   },
   {
