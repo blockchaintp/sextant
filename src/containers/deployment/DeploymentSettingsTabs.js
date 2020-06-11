@@ -23,6 +23,7 @@ const onViewPage = (cluster, id, deployment_type, deployment_version, page) => r
     } = routeParams
 
     const versions = deploymentForms[deployment_type].button.versions
+
     const features=versions.find((item) => {
       return (item.form === deployment_version)
     }).features

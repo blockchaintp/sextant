@@ -519,6 +519,7 @@ class FormWrapperInner extends React.Component {
       initialValues,
       spacing,
       renderButtons,
+      renderForm,
       onSubmit,
       error,
       classes,
@@ -568,7 +569,7 @@ class FormWrapperInner extends React.Component {
 
             const flatErrors = utils.flattenErrors(errors, utils.flattenSchema(schema))
 
-            return (
+            const content = (
               <form _ci='form' onSubmit={submitWrapper} onKeyPress={event => {
                 if (event.key === '13') {
                   event.preventDefault();
@@ -630,6 +631,16 @@ class FormWrapperInner extends React.Component {
                 }
               </form>
             )
+
+            return renderForm ?
+              renderForm({
+                isValid,
+                values,
+                handleSubmit: submitWrapper,
+                errors,
+                content,
+              }) :
+              content
           }
         }
       </Formik>
