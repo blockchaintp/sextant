@@ -14,6 +14,7 @@ const initialState = {
   addKeyWindowOpen: false,
   addKeyResult: null,
   addVolumeWindowOpen: false,
+  addSnapshotWindowOpen: false,
 }
 
 const reducers = {
@@ -34,6 +35,9 @@ const reducers = {
   },
   setAddVolumeWindowOpen: (state, action) => {
     state.addVolumeWindowOpen = action.payload
+  },
+  setAddSnapshotWindowOpen: (state, action) => {
+    state.addSnapshotWindowOpen = action.payload
   },
 }
 

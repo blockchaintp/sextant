@@ -28,10 +28,15 @@ const changeVolume = (volume, params) => routerActions.navigateTo('deployment_se
       volume,
       volumes: selectors.taekion.volumes(state),
       snapshots: selectors.taekion.snapshots(state),
+      addSnapshotWindowOpen: selectors.taekion.addSnapshotWindowOpen(state),
+      addSnapshotError: selectors.taekion.errors.createSnapshot(state),
     }
   },
   {
     onChangeVolume: changeVolume,
+    onOpenAddSnapshotWindow: () => taekionActions.setAddSnapshotWindowOpen(true),
+    onCloseAddSnapshotWindow: () => taekionActions.setAddSnapshotWindowOpen(false),
+    onCreateSnapshot: taekionActions.createSnapshot,
   },
 )
 class TaekionSnapshotsContainer extends React.Component {
