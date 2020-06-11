@@ -114,6 +114,7 @@ class TaekionVolumes extends React.Component {
 
   state = {
     deleteItem: null,
+    editVolume: null
   }
 
   constructor(props) {
@@ -133,6 +134,7 @@ class TaekionVolumes extends React.Component {
       onOpenAddVolumeWindow,
       onCloseAddVolumeWindow,
       onCreateVolume,
+      onUpdateVolume,
       onDeleteVolume,
       onViewSnapshots,
       onCreateSnapshot,
@@ -140,6 +142,7 @@ class TaekionVolumes extends React.Component {
 
     const {
       deleteItem,
+      editVolume,
     } = this.state
 
     const onSubmitForm = (payload) => {
@@ -147,6 +150,18 @@ class TaekionVolumes extends React.Component {
         cluster,
         deployment,
         payload,
+      })
+    }
+
+    const onSubmitEditedForm = (payload) => {
+      onUpdateVolume({
+        cluster,
+        deployment,
+        name: editVolume.name,
+        payload,
+      })
+      this.setState({
+        editVolume: null,
       })
     }
 
@@ -168,6 +183,17 @@ class TaekionVolumes extends React.Component {
     const onCancelDeleteItem = () => this.setState({
       deleteItem: null,
     })
+
+    const onEditVolume = (item) => this.setState({
+      editVolume: item,
+    })
+
+    const onCancelEditVolume = (item) => {
+      this.setState({
+        editVolume: null,
+      })
+      onCloseAddVolumeWindow()
+    }
 
     const data = volumes.map((volume, index) => {
       return {
@@ -210,12 +236,16 @@ class TaekionVolumes extends React.Component {
         title: 'Delete',
         icon: DeleteIcon,
         handler: onDeleteItem,
+      }, {
+        title: 'Edit',
+        icon: EditIcon,
+        handler: onEditVolume,
       }]
 
       return buttons
     }
 
-    const hooks = {
+    const hooks = {      
       validate: (values) => {
         const errors = {}
         if(values.encryption != 'none' && !values.fingerprint) {
@@ -244,10 +274,10 @@ class TaekionVolumes extends React.Component {
       hidden: ({
         item,
         values,
-      }) => {
+      }) => {        
         if(item.id == 'fingerprint') return values.encryption == 'none'
         return false
-      }
+      },
     }
 
     return (
@@ -327,6 +357,43 @@ class TaekionVolumes extends React.Component {
                 </Button>
               </DialogActions>
             </Dialog>
+          )
+        }
+        {
+          editVolume && (
+            <FormWrapper
+              schema={FORM_SCHEMA}
+              initialValues={FORM_INITIAL_VALUES}
+              error={addVolumeError}
+              onSubmit={onSubmitEditedForm}
+              hooks={hooks}
+              renderForm={({
+                content,
+                handleSubmit,
+              }) => {
+                return (
+                  <Dialog
+                    open
+                    onClose={onCancelEditVolume}
+                    fullWidth
+                    maxWidth="lg"
+                  >
+                    <DialogTitle id="alert-dialog-title">Add Volume</DialogTitle>
+                    <DialogContent>
+                      {content}
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={onCancelEditVolume}>
+                        Cancel
+                      </Button>
+                      <Button onClick={onSubmitEditedForm} variant="contained" color="secondary" autoFocus>
+                        Add
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                )
+              }}
+            />
           )
         }
       </div>
