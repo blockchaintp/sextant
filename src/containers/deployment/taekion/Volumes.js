@@ -27,6 +27,7 @@ import TaekionVolumes from 'pages/deployment/taekion/Volumes'
     onOpenAddVolumeWindow: () => taekionActions.setAddVolumeWindowOpen(true),
     onCloseAddVolumeWindow: () => taekionActions.setAddVolumeWindowOpen(false),
     onCreateVolume:  taekionActions.createVolume,
+    onDeleteVolume:  taekionActions.deleteVolume,
   },
 )
 class TaekionVolumesContainer extends React.Component {
