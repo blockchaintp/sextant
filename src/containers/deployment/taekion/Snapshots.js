@@ -21,6 +21,7 @@ const changeVolume = (volume, params) => routerActions.navigateTo('deployment_se
       volume,
     } = params
 
+<<<<<<< HEAD
     return {
       cluster,
       deployment: id,
@@ -31,6 +32,9 @@ const changeVolume = (volume, params) => routerActions.navigateTo('deployment_se
       addSnapshotWindowOpen: selectors.taekion.addSnapshotWindowOpen(state),
       addSnapshotError: selectors.taekion.errors.createSnapshot(state),
     }
+=======
+    return {}
+>>>>>>> dad4d4c... SXT-365: clean up brackets
   },
   {
     onChangeVolume: changeVolume,
