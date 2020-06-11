@@ -37,6 +37,7 @@ const changeVolume = (volume, params) => routerActions.navigateTo('deployment_se
     onOpenAddSnapshotWindow: () => taekionActions.setAddSnapshotWindowOpen(true),
     onCloseAddSnapshotWindow: () => taekionActions.setAddSnapshotWindowOpen(false),
     onCreateSnapshot: taekionActions.createSnapshot,
+    onDeleteSnapshot: taekionActions.deleteSnapshot,
   },
 )
 class TaekionSnapshotsContainer extends React.Component {
