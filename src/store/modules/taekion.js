@@ -14,6 +14,7 @@ const initialState = {
   addKeyWindowOpen: false,
   addKeyResult: null,
   addVolumeWindowOpen: false,
+  addSnapshotWindowOpen: false,
 }
 
 const reducers = {
@@ -34,6 +35,9 @@ const reducers = {
   },
   setAddVolumeWindowOpen: (state, action) => {
     state.addVolumeWindowOpen = action.payload
+  },
+  setAddSnapshotWindowOpen: (state, action) => {
+    state.addSnapshotWindowOpen = action.payload
   },
 }
 
@@ -295,6 +299,7 @@ const sideEffects = {
         volumeName,
       }))
       dispatch(snackbarActions.setSuccess(`snapshot added`))
+      dispatch(actions.setAddSnapshotWindowOpen(false))
     } catch(e) {
       dispatch(snackbarActions.setError(`error adding snapshot: ${e.toString()}`))
       console.error(e)

@@ -2,21 +2,34 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import taekionActions from 'store/modules/taekion'
+import routerActions from 'store/modules/router'
 import selectors from 'store/selectors'
 
 import TaekionVolumes from 'pages/deployment/taekion/Volumes'
 
+const viewSnapshots = (volume, params) => routerActions.navigateTo('deployment_settings.taekionSnapshots', Object.assign({}, params, {
+  volume,
+}))
+
+const createSnapshot = (volume, params) => routerActions.navigateTo('deployment_settings.taekionSnapshots', Object.assign({}, params, {
+  volume,
+  create: 'yes',
+}))
+
 @connect(
   state => {
+
+    const params = state.router.route.params
 
     const {
       cluster,
       id,
-    } = state.router.route.params
+    } = params
 
     return {
       cluster,
       deployment: id,
+      params,
       volumes: selectors.taekion.volumes(state),
       keys: selectors.taekion.keys(state),
       addVolumeWindowOpen: selectors.taekion.addVolumeWindowOpen(state),
@@ -29,6 +42,8 @@ import TaekionVolumes from 'pages/deployment/taekion/Volumes'
     onCloseAddVolumeWindow: () => taekionActions.setAddVolumeWindowOpen(false),
     onCreateVolume:  taekionActions.createVolume,
     onDeleteVolume:  taekionActions.deleteVolume,
+    onViewSnapshots: viewSnapshots,
+    onCreateSnapshot: createSnapshot,
     onUpdateVolume: taekionActions.updateVolume,
   },
 )
