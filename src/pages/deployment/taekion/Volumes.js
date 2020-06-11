@@ -22,6 +22,8 @@ import settings from 'settings'
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
+const ViewArchiveIcon = settings.icons.viewArchive
+const CreateArchiveIcon = settings.icons.createArchive
 
 const styles = theme => ({
   root: {
@@ -194,6 +196,14 @@ class TaekionVolumes extends React.Component {
     const getActions = () => {
   
       const buttons = [{
+        title: 'View Snapshots',
+        icon: ViewArchiveIcon,
+        handler: () => {},
+      },{
+        title: 'Create Snapshot',
+        icon: CreateArchiveIcon,
+        handler: () => {},
+      },{
         title: 'Delete',
         icon: DeleteIcon,
         handler: onDeleteItem,
