@@ -94,7 +94,7 @@ class TaekionSnapshots extends React.Component {
         id: `${snapshot.volume}-${snapshot.name}`,
         name: snapshot.name,
         volume: snapshot.volume,
-        date: snapshot.date,
+        date: new Date(snapshot.date).toLocaleString(),
       }
     })
 
