@@ -55,24 +55,6 @@ const FORM_SCHEMA = [{
     ],
   },
 }, [{
-  id: 'compression',
-  title: 'Compression',
-  helperText: 'Choose the type of compression you want for your volume',
-  component: 'select',
-  options: [{
-    title: 'None',
-    value: 'none',
-  },{
-    title: 'LZ4',
-    value: 'LZ4',
-  }],
-  validate: {
-    type: 'string',
-    methods: [
-      ['required', 'Required'],
-    ],
-  },
-}, ' '], [{
   id: 'encryption',
   title: 'Encryption',
   helperText: 'Choose the type of encryption you want for your volume',
@@ -101,12 +83,31 @@ const FORM_SCHEMA = [{
       ['required', 'Required'],
     ],
   },
-}]]
+}], [{
+  id: 'compression',
+  title: 'Compression',
+  helperText: 'Choose the type of compression you want for your volume',
+  component: 'select',
+  options: [{
+    title: 'None',
+    value: 'none',
+  },{
+    title: 'LZ4',
+    value: 'LZ4',
+  }],
+  validate: {
+    type: 'string',
+    methods: [
+      ['required', 'Required'],
+    ],
+  },
+}, ' ']]
 
 const FORM_INITIAL_VALUES = {
   name: '',
   compression: 'none',
   encryption: 'none',
+  fingerprint: '',
 }
 
 class TaekionVolumes extends React.Component {
@@ -210,6 +211,24 @@ class TaekionVolumes extends React.Component {
           errors.fingerprint = `You must select a key to use for encryption`
         }
         return errors
+      },
+      processItem: ({
+        item,
+        values,
+      }) => {
+        if(item.id == 'fingerprint') {
+          return Object.assign({}, item, {
+            options: keys.map(key => {
+              return {
+                title: key.name,
+                value: key.fingerprint,
+              }
+            })
+          })
+        }
+        else {
+          return item
+        }
       },
       hidden: ({
         item,
