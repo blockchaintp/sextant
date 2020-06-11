@@ -88,6 +88,24 @@ const FORM_INITIAL_VALUES = {
 
 class TaekionSnapshots extends React.Component {
 
+  // this for when we click the "create snapshot" button on the volumes page
+  // it redirects here with ?create=yes
+  // so we remove the "create" param and then trigger the add modal
+  componentDidMount() {
+    const {
+      params,
+      onChangeVolume,
+      onOpenAddSnapshotWindow,
+    } = this.props
+
+    if(params.create == 'yes') {
+      const newParams = Object.assign({}, params)
+      delete(newParams.create)
+      onChangeVolume(params.volume, newParams)
+      onOpenAddSnapshotWindow()
+    }
+  }
+
   render() {
     const {
       classes,
