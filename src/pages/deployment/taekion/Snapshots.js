@@ -82,9 +82,11 @@ class TaekionSnapshots extends React.Component {
       classes,
       cluster,
       deployment,
+      params,
       volume,
       volumes,
       snapshots,
+      onChangeVolume,
     } = this.props
 
     const data = snapshots.map((snapshot, index) => {
@@ -113,7 +115,7 @@ class TaekionSnapshots extends React.Component {
             <InputLabel htmlFor="name-readonly">Volume</InputLabel>
             <Select
               value={ volume }
-              onChange={ (ev) => console.log(ev.target.value) }
+              onChange={ (ev) => onChangeVolume(ev.target.value, params) }
             >
               {
                 volumeOptions
