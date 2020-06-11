@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/core/styles'
 
 import Button from '@material-ui/core/Button'
 import SimpleTable from 'components/table/SimpleTable'
-import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
