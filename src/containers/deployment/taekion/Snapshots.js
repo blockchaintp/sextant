@@ -10,9 +10,7 @@ import TaekionSnapshots from 'pages/deployment/taekion/Snapshots'
 @connect(
   state => {
 
-    return {
-      
-    }
+    return {}
   },
   {
     

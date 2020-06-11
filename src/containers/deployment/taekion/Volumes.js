@@ -10,9 +10,7 @@ import TaekionVolumes from 'pages/deployment/taekion/Volumes'
 @connect(
   state => {
 
-    return {
-      
-    }
+    return {}
   },
   {
     
