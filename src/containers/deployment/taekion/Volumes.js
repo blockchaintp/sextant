@@ -34,6 +34,7 @@ const createSnapshot = (volume, params) => routerActions.navigateTo('deployment_
       keys: selectors.taekion.keys(state),
       addVolumeWindowOpen: selectors.taekion.addVolumeWindowOpen(state),
       addVolumeError: selectors.taekion.errors.createVolume(state),
+      updateVolumeError: selectors.taekion.errors.updateVolume(state),
     }
   },
   {
@@ -43,6 +44,7 @@ const createSnapshot = (volume, params) => routerActions.navigateTo('deployment_
     onDeleteVolume:  taekionActions.deleteVolume,
     onViewSnapshots: viewSnapshots,
     onCreateSnapshot: createSnapshot,
+    onUpdateVolume: taekionActions.updateVolume,
   },
 )
 class TaekionVolumesContainer extends React.Component {
