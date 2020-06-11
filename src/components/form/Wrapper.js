@@ -365,6 +365,7 @@ class FormWrapperInner extends React.Component {
     } = this.props
 
     const isNew = this.props.dbId
+    const hooks = formProps.hooks || {}
 
     const disableField = () => {
       let disabled = false
@@ -376,6 +377,18 @@ class FormWrapperInner extends React.Component {
         else if(!item.editable.new && !exists) {
           disabled = true
         }
+      }
+
+      // this gives us a chance to dynamically disable fields
+      // based on the value of other fields
+      if(hooks.disabled) {
+        disabled = hooks.disabled({
+          item,
+          errors: formProps.errors,
+          touched: formProps.touched,
+          values: formProps.values,
+        })
+        console.log(disabled)
       }
 
       return disabled
@@ -464,8 +477,33 @@ class FormWrapperInner extends React.Component {
       )
     }
 
+    // this gives us a chance to dynamically inject props into
+    // a form field based on the values of other fields
+    // and outside context (like redux store state for example)
+    const processedItem = hooks.processItem ?
+      hooks.processItem({
+        item,
+        errors: formProps.errors,
+        touched: formProps.touched,
+        values: formProps.values,
+      }) :
+      item
+
+    // this gives us a change to dynamically hide items
+    // based on the current values and outside context
+    const hidden = hooks.hidden ?
+      hooks.hidden({
+        item,
+        errors: formProps.errors,
+        touched: formProps.touched,
+        values: formProps.values,
+      }) :
+      false
+
+    if(hidden) return null
+      
     // if the field includes a list, render a field array, otherwise render a normal field
-    return item.list ? renderFieldArray(item) : renderField(item)
+    return item.list ? renderFieldArray(processedItem) : renderField(processedItem)
     
   }
 
@@ -524,8 +562,9 @@ class FormWrapperInner extends React.Component {
       error,
       classes,
       validate,
+      hooks = {},
     } = this.props
-    
+
     let isInitialValid = false
 
     const validationSchema = Validate(schema)
@@ -545,7 +584,7 @@ class FormWrapperInner extends React.Component {
           const processedValues = utils.processValues(schema, values)
           onSubmit(processedValues)
         }}
-        validate={ validate }
+        validate={ validate || hooks.validate }
       >
         {
           ({
@@ -560,6 +599,7 @@ class FormWrapperInner extends React.Component {
               errors,
               touched,
               values,
+              hooks,
             }
 
             const submitWrapper = () => {
