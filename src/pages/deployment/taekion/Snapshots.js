@@ -11,6 +11,14 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Input from '@material-ui/core/Input'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+
+
+import FormWrapper from 'components/form/Wrapper'
 
 import settings from 'settings'
 
@@ -55,6 +63,9 @@ const FORM_SCHEMA = [{
   component: 'select',
   validate: {
     type: 'string',
+    methods: [
+      ['required', 'Required'],
+    ],
   },
 }, {
   id: 'name',
@@ -86,8 +97,17 @@ class TaekionSnapshots extends React.Component {
       volume,
       volumes,
       snapshots,
+      addSnapshotWindowOpen,
+      addSnapshotError,
       onChangeVolume,
+      onOpenAddSnapshotWindow,
+      onCloseAddSnapshotWindow,
     } = this.props
+
+    const onSubmitForm = (payload) => {
+      console.log('--------------------------------------------')
+      console.dir(payload)
+    }
 
     const data = snapshots.map((snapshot, index) => {
       return {
@@ -139,7 +159,7 @@ class TaekionSnapshots extends React.Component {
             className={ classes.button }
             variant= 'contained'
             color= 'secondary'
-            onClick={ () => {} }
+            onClick={ onOpenAddSnapshotWindow }
           >
             Add
           <AddIcon />
@@ -158,6 +178,35 @@ class TaekionSnapshots extends React.Component {
 
       return buttons
     }
+
+    const hooks = {
+      validate: (values) => {
+        const errors = {}
+        return errors
+      },
+      processItem: ({
+        item,
+        values,
+      }) => {
+        if(item.id == 'volume') {
+          return Object.assign({}, item, {
+            options: volumes.map(volume => {
+              return {
+                title: volume.name,
+                value: volume.name,
+              }
+            })
+          })
+        }
+        else {
+          return item
+        }
+      },
+    }
+
+    const useInitialValues = Object.assign({}, FORM_INITIAL_VALUES, {
+      volume,
+    })
 
     return (
       <div>
@@ -178,6 +227,43 @@ class TaekionSnapshots extends React.Component {
             )
           }}
         />
+        {
+          addSnapshotWindowOpen && (
+            <FormWrapper
+              schema={ FORM_SCHEMA }
+              initialValues={ useInitialValues }
+              error={ addSnapshotError }
+              onSubmit={ onSubmitForm }
+              hooks={ hooks }
+              renderForm={ ({
+                content,
+                handleSubmit,
+              }) => {
+                return (
+                  <Dialog
+                    open
+                    onClose={ onCloseAddSnapshotWindow }
+                    fullWidth
+                    maxWidth="lg"
+                  >
+                    <DialogTitle id="alert-dialog-title">Create Snapshot</DialogTitle>
+                    <DialogContent>
+                      { content }
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={ onCloseAddSnapshotWindow }>
+                        Cancel
+                      </Button>
+                      <Button onClick={ handleSubmit } variant="contained" color="secondary" autoFocus>
+                        Create
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                )
+              }}
+            />
+          )
+        }
       </div>
     )
   }
