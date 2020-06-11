@@ -5,6 +5,8 @@ import api from '../utils/api'
 
 import snackbarActions from './snackbar'
 
+import selectors from '../selectors'
+
 const prefix = 'taekion'
 
 const initialState = {
@@ -104,6 +106,14 @@ const loaders = {
     volumeName,
     payload,
   }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volumeName}/snapshots`), payload)
+    .then(api.process),
+
+  deleteSnapshot: ({
+    cluster,
+    deployment,
+    volumeName,
+    snapshotName,
+  }) => axios.delete(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volumeName}/snapshots/${snapshotName}`))
     .then(api.process),
 
 
@@ -302,6 +312,35 @@ const sideEffects = {
       dispatch(actions.setAddSnapshotWindowOpen(false))
     } catch(e) {
       dispatch(snackbarActions.setError(`error adding snapshot: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+
+  deleteSnapshot: ({
+    cluster,
+    deployment,
+    volumeName,
+    snapshotName,
+  }) => async (dispatch, getState) => {
+
+    const params = selectors.router.params(getState())
+
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.deleteSnapshot({cluster, deployment, volumeName, snapshotName}),
+        prefix,
+        name: 'deleteSnapshot',
+        returnError: true,
+      })
+      dispatch(actions.listSnapshots({
+        cluster,
+        deployment,
+        volumeName: params.volume,
+      }))
+      dispatch(snackbarActions.setSuccess(`snapshot deleted`))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error deleting snapshot: ${e.toString()}`))
       console.error(e)
     }
   },
