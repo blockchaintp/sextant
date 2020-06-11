@@ -21,6 +21,7 @@ import TaekionVolumes from 'pages/deployment/taekion/Volumes'
       keys: selectors.taekion.keys(state),
       addVolumeWindowOpen: selectors.taekion.addVolumeWindowOpen(state),
       addVolumeError: selectors.taekion.errors.createVolume(state),
+      updateVolumeError: selectors.taekion.errors.updateVolume(state),
     }
   },
   {
@@ -28,6 +29,7 @@ import TaekionVolumes from 'pages/deployment/taekion/Volumes'
     onCloseAddVolumeWindow: () => taekionActions.setAddVolumeWindowOpen(false),
     onCreateVolume:  taekionActions.createVolume,
     onDeleteVolume:  taekionActions.deleteVolume,
+    onUpdateVolume: taekionActions.updateVolume,
   },
 )
 class TaekionVolumesContainer extends React.Component {
