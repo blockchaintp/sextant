@@ -152,7 +152,7 @@ class TaekionVolumes extends React.Component {
       onDeleteVolume({
         cluster,
         deployment,
-        id: deleteItem.id,
+        name: deleteItem.name,
       })
     }
 
