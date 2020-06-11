@@ -43,7 +43,7 @@ const TABLE_FIELDS =[{
   name: 'key',
 }]
 
-const FORM_SCHEMA = [ {
+const FORM_SCHEMA = [{
   id: 'name',
   title: 'Name',
   helperText: 'The name of your volume',
@@ -54,10 +54,59 @@ const FORM_SCHEMA = [ {
       ['required', 'Required'],
     ],
   },
-}]
+}, [{
+  id: 'compression',
+  title: 'Compression',
+  helperText: 'Choose the type of compression you want for your volume',
+  component: 'select',
+  options: [{
+    title: 'None',
+    value: 'none',
+  },{
+    title: 'LZ4',
+    value: 'LZ4',
+  }],
+  validate: {
+    type: 'string',
+    methods: [
+      ['required', 'Required'],
+    ],
+  },
+}, ' '], [{
+  id: 'encryption',
+  title: 'Encryption',
+  helperText: 'Choose the type of encryption you want for your volume',
+  component: 'select',
+  options: [{
+    title: 'None',
+    value: 'none',
+  },{
+    title: 'AES_GCM',
+    value: 'AES_GCM',
+  }],
+  validate: {
+    type: 'string',
+    methods: [
+      ['required', 'Required'],
+    ],
+  },
+}, {
+  id: 'fingerprint',
+  title: 'Encryption Key',
+  helperText: 'Choose the key you want to use to encrypt this volume',
+  component: 'select',
+  validate: {
+    type: 'string',
+    methods: [
+      ['required', 'Required'],
+    ],
+  },
+}]]
 
 const FORM_INITIAL_VALUES = {
   name: '',
+  compression: 'none',
+  encryption: 'none',
 }
 
 class TaekionVolumes extends React.Component {
@@ -154,6 +203,23 @@ class TaekionVolumes extends React.Component {
       return buttons
     }
 
+    const hooks = {
+      validate: (values) => {
+        const errors = {}
+        if(values.encryption != 'none' && !values.fingerprint) {
+          errors.fingerprint = `You must select a key to use for encryption`
+        }
+        return errors
+      },
+      hidden: ({
+        item,
+        values,
+      }) => {
+        if(item.id == 'fingerprint') return values.encryption == 'none'
+        return false
+      }
+    }
+
     return (
       <div>
         <SimpleTableHeader
@@ -180,6 +246,7 @@ class TaekionVolumes extends React.Component {
               initialValues={ FORM_INITIAL_VALUES }
               error={ addVolumeError }
               onSubmit={ onSubmitForm }
+              hooks={ hooks }
               renderForm={ ({
                 content,
                 handleSubmit,
@@ -187,9 +254,9 @@ class TaekionVolumes extends React.Component {
                 return (
                   <Dialog
                     open
-                    onClose={ onCloseAddVolumeWindow }s
+                    onClose={ onCloseAddVolumeWindow }
                     fullWidth
-                    maxWidth="sm"
+                    maxWidth="lg"
                   >
                     <DialogTitle id="alert-dialog-title">Add Volume</DialogTitle>
                     <DialogContent>

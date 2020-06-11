@@ -180,7 +180,7 @@ class TaekionKeys extends React.Component {
                     open
                     onClose={ onCloseAddKeyWindow }
                     fullWidth
-                    maxWidth="sm"
+                    maxWidth="md"
                   >
                     <DialogTitle id="alert-dialog-title">Add Key</DialogTitle>
                     <DialogContent>
