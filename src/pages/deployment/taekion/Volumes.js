@@ -124,6 +124,7 @@ class TaekionVolumes extends React.Component {
     const {
       classes,
       cluster,
+      params,
       deployment,
       keys,
       volumes,
@@ -133,6 +134,8 @@ class TaekionVolumes extends React.Component {
       onCloseAddVolumeWindow,
       onCreateVolume,
       onDeleteVolume,
+      onViewSnapshots,
+      onCreateSnapshot,
     } = this.props
 
     const {
@@ -193,16 +196,16 @@ class TaekionVolumes extends React.Component {
       </div>
     )
 
-    const getActions = () => {
+    const getActions = (item) => {
   
       const buttons = [{
         title: 'View Snapshots',
         icon: ViewArchiveIcon,
-        handler: () => {},
+        handler: () => onViewSnapshots(item.name, params),
       },{
         title: 'Create Snapshot',
         icon: CreateArchiveIcon,
-        handler: () => {},
+        handler: () => onCreateSnapshot(item.name, params),
       },{
         title: 'Delete',
         icon: DeleteIcon,
