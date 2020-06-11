@@ -68,7 +68,7 @@ const FORM_SCHEMA = [{
     ],
   },
 }, {
-  id: 'name',
+  id: 'snapshotName',
   title: 'Name',
   helperText: 'The name of your snapshot (alphanumeric, no spaces or dashes)',
   component: 'text',
@@ -83,7 +83,7 @@ const FORM_SCHEMA = [{
 
 const FORM_INITIAL_VALUES = {
   volume: '',
-  name: '',
+  snapshotName: '',
 }
 
 class TaekionSnapshots extends React.Component {
@@ -120,11 +120,20 @@ class TaekionSnapshots extends React.Component {
       onChangeVolume,
       onOpenAddSnapshotWindow,
       onCloseAddSnapshotWindow,
+      onCreateSnapshot,
     } = this.props
 
     const onSubmitForm = (payload) => {
-      console.log('--------------------------------------------')
-      console.dir(payload)
+      const {
+        volume,
+        ...data
+      } = payload
+      onCreateSnapshot({
+        cluster,
+        deployment,
+        volumeName: volume,
+        payload: data,
+      })
     }
 
     const data = snapshots.map((snapshot, index) => {
