@@ -5,6 +5,12 @@ import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import Input from '@material-ui/core/Input'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import settings from 'settings'
 
@@ -15,6 +21,19 @@ const DeleteIcon = settings.icons.delete
 const styles = theme => ({
   root: {
     padding: theme.spacing.unit * 2,
+  },
+  headerActions: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'right',
+    alignItems: 'center',
+  },
+  volumeSelect: {
+    marginRight: theme.spacing.unit * 2,
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 200,
   },
 })
 
@@ -63,6 +82,7 @@ class TaekionSnapshots extends React.Component {
       classes,
       cluster,
       deployment,
+      volume,
       volumes,
       snapshots,
     } = this.props
@@ -76,8 +96,41 @@ class TaekionSnapshots extends React.Component {
       }
     })
 
+    const volumeOptions = [{
+      id: 'all',
+      name: 'All',
+    }].concat(volumes.map(volume => {
+      return {
+        id: volume.name,
+        name: volume.name,
+      }
+    }))
+
     const headerActions = (
       <div className={ classes.headerActions }>
+        <div className={ classes.volumeSelect }>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="name-readonly">Volume</InputLabel>
+            <Select
+              value={ volume }
+              onChange={ (ev) => console.log(ev.target.value) }
+            >
+              {
+                volumeOptions
+                  .map((volume, i) => {
+                    return (
+                      <MenuItem
+                        key={ i }
+                        value={ volume.id }
+                      >
+                        { volume.name }
+                      </MenuItem>
+                    )
+                  })
+              }
+            </Select>
+          </FormControl>
+        </div>
         <div className={ classes.addButton }>
           <Button
             _ci='addbutton'
