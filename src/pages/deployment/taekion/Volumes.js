@@ -46,12 +46,13 @@ const TABLE_FIELDS =[{
 const FORM_SCHEMA = [{
   id: 'name',
   title: 'Name',
-  helperText: 'The name of your volume',
+  helperText: 'The name of your volume (alphanumeric, no spaces or dashes)',
   component: 'text',
   validate: {
     type: 'string',
     methods: [
       ['required', 'Required'],
+      ['matches', ['^[\\w]{1,128}$'], "must be alphanumeric name, with no spaces or dashes and maximum 128 characters"]
     ],
   },
 }, [{
@@ -79,9 +80,6 @@ const FORM_SCHEMA = [{
   component: 'select',
   validate: {
     type: 'string',
-    methods: [
-      ['required', 'Required'],
-    ],
   },
 }], [{
   id: 'compression',
