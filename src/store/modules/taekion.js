@@ -264,6 +264,7 @@ const sideEffects = {
         volumeName,
       }))
       dispatch(snackbarActions.setSuccess(`snapshot added`))
+      dispatch(actions.setAddSnapshotWindowOpen(false))
     } catch(e) {
       dispatch(snackbarActions.setError(`error adding snapshot: ${e.toString()}`))
       console.error(e)
