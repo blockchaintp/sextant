@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import deploymentSettingsActions from 'store/modules/deploymentSettings'
-import snackbarActions from 'store/modules/snackbar'
+import taekionActions from 'store/modules/taekion'
 import selectors from 'store/selectors'
 
 import TaekionSnapshots from 'pages/deployment/taekion/Snapshots'
@@ -10,8 +9,16 @@ import TaekionSnapshots from 'pages/deployment/taekion/Snapshots'
 @connect(
   state => {
 
+    const {
+      cluster,
+      id,
+    } = state.router.route.params
+
     return {
-      
+      cluster,
+      deployment: id,
+      volumes: selectors.taekion.volumes(state),
+      snapshots: selectors.taekion.snapshots(state),
     }
   },
   {
