@@ -72,6 +72,13 @@ const loaders = {
   }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes`), payload)
     .then(api.process),
 
+  deleteVolume: ({
+    cluster,
+    deployment,
+    name,
+  }) => axios.delete(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${name}`))
+    .then(api.process),
+
   listSnapshots: ({
     cluster,
     deployment,
@@ -190,6 +197,31 @@ const sideEffects = {
       dispatch(actions.setAddVolumeWindowOpen(false))
     } catch(e) {
       dispatch(snackbarActions.setError(`error adding volume: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+
+  deleteVolume: ({
+    cluster,
+    deployment,
+    name,
+  }) => async (dispatch, getState) => {
+
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.deleteVolume({cluster, deployment, name}),
+        prefix,
+        name: 'deleteVolume',
+        returnError: true,
+      })
+      dispatch(actions.listVolumes({
+        cluster,
+        deployment,
+      }))
+      dispatch(snackbarActions.setSuccess(`volume deleted`))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error deleting volume: ${e.toString()}`))
       console.error(e)
     }
   },
