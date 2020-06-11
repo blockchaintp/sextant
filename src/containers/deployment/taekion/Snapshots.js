@@ -12,11 +12,13 @@ import TaekionSnapshots from 'pages/deployment/taekion/Snapshots'
     const {
       cluster,
       id,
+      volume,
     } = state.router.route.params
 
     return {
       cluster,
       deployment: id,
+      volume,
       volumes: selectors.taekion.volumes(state),
       snapshots: selectors.taekion.snapshots(state),
     }
