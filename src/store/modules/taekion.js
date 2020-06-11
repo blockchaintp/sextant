@@ -187,6 +187,7 @@ const sideEffects = {
         deployment,
       }))
       dispatch(snackbarActions.setSuccess(`volume added`))
+      dispatch(actions.setAddVolumeWindowOpen(false))
     } catch(e) {
       dispatch(snackbarActions.setError(`error adding volume: ${e.toString()}`))
       console.error(e)
