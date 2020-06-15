@@ -20,8 +20,8 @@ import UploadIcon from '@material-ui/icons/CloudUpload'
 import BuildIcon from '@material-ui/icons/Build'
 import RemoveIcon from '@material-ui/icons/RemoveCircle'
 import RepeatIcon from '@material-ui/icons/Repeat'
-import ViewArchiveIcon from '@material-ui/icons/Inbox'
-import CreateArchiveIcon from '@material-ui/icons/Archive'
+import ViewArchiveIcon from '@material-ui/icons/ViewModule'
+import CreateArchiveIcon from '@material-ui/icons/AddAPhoto'
 
 import edition from './edition'
 
