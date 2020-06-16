@@ -144,6 +144,24 @@ class TaekionKeys extends React.Component {
 
       return buttons
     }
+ 
+    const hooks = {
+      validate: (values,) => {
+        const errors = {}
+        const keys = this.props.keys        
+        let keyExists = false
+
+        keys.forEach(({ name }) => {
+          if(name === values.name) { keyExists = true}
+        })
+        
+        if (keyExists) {
+          errors.keys = `You must choose a unique key name`
+        }
+
+        return errors
+      },
+    }
 
     return (
       <div>
@@ -167,6 +185,8 @@ class TaekionKeys extends React.Component {
         {
           addKeyWindowOpen && (
             <FormWrapper
+              hooks={hooks}
+              keys={keys}
               schema={ FORM_SCHEMA }
               initialValues={ FORM_INITIAL_VALUES }
               error={ addKeyError }
