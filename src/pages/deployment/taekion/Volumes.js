@@ -304,7 +304,7 @@ class TaekionVolumes extends React.Component {
           addVolumeWindowOpen && (
             <FormWrapper
               schema={ FORM_SCHEMA }
-              initialValues={ values }
+              initialValues={ FORM_INITIAL_VALUES }
               error={ addVolumeError }
               onSubmit={ onSubmitForm }
               hooks={ hooks }
