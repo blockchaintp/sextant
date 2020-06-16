@@ -149,13 +149,8 @@ class TaekionKeys extends React.Component {
       validate: (values,) => {
         const errors = {}
         const keys = this.props.keys        
-        let keyExists = false
 
-        keys.forEach(({ name }) => {
-          if(name === values.name) { keyExists = true}
-        })
-        
-        if (keyExists) {
+        if (keys.find(({ name }) => name === values.name)) {
           errors.keys = `You must choose a unique key name`
         }
 
