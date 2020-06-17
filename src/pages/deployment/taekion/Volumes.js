@@ -304,7 +304,7 @@ class TaekionVolumes extends React.Component {
           addVolumeWindowOpen && (
             <FormWrapper
               schema={ FORM_SCHEMA }
-              initialValues={ values }
+              initialValues={ FORM_INITIAL_VALUES }
               error={ addVolumeError }
               onSubmit={ onSubmitForm }
               hooks={ hooks }
@@ -379,7 +379,7 @@ class TaekionVolumes extends React.Component {
                     fullWidth
                     maxWidth="lg"
                   >
-                    <DialogTitle id="alert-dialog-title">Add Volume</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">Edit Volume</DialogTitle>
                     <DialogContent>
                       {content}
                     </DialogContent>
@@ -388,7 +388,7 @@ class TaekionVolumes extends React.Component {
                         Cancel
                       </Button>
                       <Button onClick={handleSubmit} variant="contained" color="secondary" autoFocus>
-                        Add
+                        Edit
                       </Button>
                     </DialogActions>
                   </Dialog>
