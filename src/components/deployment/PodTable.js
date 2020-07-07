@@ -74,7 +74,7 @@ class PodTable extends React.Component {
           status,
           //age: timeago().format(pod.metadata.creationTimestamp).replace(' ago', ''),
           created: new Date(pod.metadata.creationTimestamp).toLocaleString(),
-          ip: pod.status.podIP,
+          ip: pod.status ? pod.status.podIP : '',
           externalIP: externalIP ? externalIP.address : ""
         }
       })

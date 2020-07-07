@@ -36,7 +36,7 @@ class ServiceTable extends React.Component {
     const tableData = data
       .map(service => {
         
-        const externalIp = service.status.loadBalancer && service.status.loadBalancer.ingress ? (
+        const externalIp = service.status.loadBalancer && service.status.loadBalancer.ingress && service.status.loadBalancer.ingress[0] ? (
           service.status.loadBalancer.ingress[0]['hostname'] || service.status.loadBalancer.ingress[0]['ip']
         ) : '<none>'
         return {
