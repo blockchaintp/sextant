@@ -26,6 +26,9 @@ const FEATURE_TABS = {
   'taekion.snapshots': {
     id: 'taekionSnapshots',
     title: 'Taekion Snapshots',
+    params: {
+      volume: 'all',
+    }
   },
 }
 

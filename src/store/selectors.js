@@ -132,6 +132,7 @@ const TAEKION_NETWORK_NAMES = networkProps('taekion', [
   'createKey',
   'listVolumes',
   'createVolume',
+  'updateVolume',
   'listSnapshots',
   'createSnapshot',
 ])
@@ -348,6 +349,8 @@ const selectors = {
       'snapshots',
       'addKeyWindowOpen',
       'addKeyResult',
+      'addVolumeWindowOpen',
+      'addSnapshotWindowOpen',
     ]),
   },
 

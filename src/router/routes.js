@@ -274,6 +274,10 @@ const routes = [
       path: '/taekion/volumes',
       trigger: {
         activate: (store, params) => {
+          store.dispatch(taekionActions.listKeys({
+            cluster: params.cluster,
+            deployment: params.id
+          }))
           store.dispatch(taekionActions.listVolumes({
             cluster: params.cluster,
             deployment: params.id
@@ -282,10 +286,18 @@ const routes = [
       },
     }, {
       name: 'taekionSnapshots',
-      path: '/taekion/snapshots',
+      path: '/taekion/snapshots/:volume',
       trigger: {
         activate: (store, params) => {
-          // TBC how to get the volume name here
+          store.dispatch(taekionActions.listVolumes({
+            cluster: params.cluster,
+            deployment: params.id
+          }))
+          store.dispatch(taekionActions.listSnapshots({
+            cluster: params.cluster,
+            deployment: params.id,
+            volumeName: params.volume,
+          }))
         },
       },
     }]

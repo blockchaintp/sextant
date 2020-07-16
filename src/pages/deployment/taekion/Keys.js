@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/core/styles'
 
 import Button from '@material-ui/core/Button'
 import SimpleTable from 'components/table/SimpleTable'
-import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
@@ -145,6 +144,19 @@ class TaekionKeys extends React.Component {
 
       return buttons
     }
+ 
+    const hooks = {
+      validate: (values,) => {
+        const errors = {}
+        const keys = this.props.keys        
+
+        if (keys.find(({ name }) => name === values.name)) {
+          errors.keys = `You must choose a unique key name`
+        }
+
+        return errors
+      },
+    }
 
     return (
       <div>
@@ -168,6 +180,8 @@ class TaekionKeys extends React.Component {
         {
           addKeyWindowOpen && (
             <FormWrapper
+              hooks={hooks}
+              keys={keys}
               schema={ FORM_SCHEMA }
               initialValues={ FORM_INITIAL_VALUES }
               error={ addKeyError }
@@ -181,7 +195,7 @@ class TaekionKeys extends React.Component {
                     open
                     onClose={ onCloseAddKeyWindow }
                     fullWidth
-                    maxWidth="sm"
+                    maxWidth="md"
                   >
                     <DialogTitle id="alert-dialog-title">Add Key</DialogTitle>
                     <DialogContent>

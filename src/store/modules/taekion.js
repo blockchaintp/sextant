@@ -5,6 +5,8 @@ import api from '../utils/api'
 
 import snackbarActions from './snackbar'
 
+import selectors from '../selectors'
+
 const prefix = 'taekion'
 
 const initialState = {
@@ -13,6 +15,8 @@ const initialState = {
   snapshots: [],
   addKeyWindowOpen: false,
   addKeyResult: null,
+  addVolumeWindowOpen: false,
+  addSnapshotWindowOpen: false,
 }
 
 const reducers = {
@@ -30,6 +34,12 @@ const reducers = {
   },
   setAddKeyResult: (state, action) => {
     state.addKeyResult = action.payload
+  },
+  setAddVolumeWindowOpen: (state, action) => {
+    state.addVolumeWindowOpen = action.payload
+  },
+  setAddSnapshotWindowOpen: (state, action) => {
+    state.addSnapshotWindowOpen = action.payload
   },
 }
 
@@ -68,6 +78,21 @@ const loaders = {
   }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes`), payload)
     .then(api.process),
 
+  updateVolume: ({
+    cluster,
+    deployment,
+    name,
+    payload,
+  }) => axios.put(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${name}`), payload)
+    .then(api.process),
+
+  deleteVolume: ({
+    cluster,
+    deployment,
+    name,
+  }) => axios.delete(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${name}`))
+    .then(api.process),
+
   listSnapshots: ({
     cluster,
     deployment,
@@ -81,6 +106,14 @@ const loaders = {
     volumeName,
     payload,
   }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volumeName}/snapshots`), payload)
+    .then(api.process),
+
+  deleteSnapshot: ({
+    cluster,
+    deployment,
+    volumeName,
+    snapshotName,
+  }) => axios.delete(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volumeName}/snapshots/${snapshotName}`))
     .then(api.process),
 
 
@@ -183,8 +216,61 @@ const sideEffects = {
         deployment,
       }))
       dispatch(snackbarActions.setSuccess(`volume added`))
+      dispatch(actions.setAddVolumeWindowOpen(false))
     } catch(e) {
       dispatch(snackbarActions.setError(`error adding volume: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+
+  updateVolume: ({
+    cluster,
+    deployment,
+    name,
+    payload,
+  }) => async (dispatch, getState) => {
+
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.updateVolume({ cluster, deployment, name, payload }),
+        prefix,
+        name: 'updateVolume',
+        returnError: true,
+      })
+      dispatch(actions.listVolumes({
+        cluster,
+        deployment,
+      }))
+      dispatch(snackbarActions.setSuccess(`volume updated`))
+      dispatch(actions.setAddVolumeWindowOpen(false))
+    } catch (e) {
+      dispatch(snackbarActions.setError(`error updating volume: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+
+  deleteVolume: ({
+    cluster,
+    deployment,
+    name,
+  }) => async (dispatch, getState) => {
+
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.deleteVolume({cluster, deployment, name}),
+        prefix,
+        name: 'deleteVolume',
+        returnError: true,
+      })
+      dispatch(actions.listVolumes({
+        cluster,
+        deployment,
+      }))
+      dispatch(snackbarActions.setSuccess(`volume deleted`))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error deleting volume: ${e.toString()}`))
       console.error(e)
     }
   },
@@ -223,8 +309,38 @@ const sideEffects = {
         volumeName,
       }))
       dispatch(snackbarActions.setSuccess(`snapshot added`))
+      dispatch(actions.setAddSnapshotWindowOpen(false))
     } catch(e) {
       dispatch(snackbarActions.setError(`error adding snapshot: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+
+  deleteSnapshot: ({
+    cluster,
+    deployment,
+    volumeName,
+    snapshotName,
+  }) => async (dispatch, getState) => {
+
+    const params = selectors.router.params(getState())
+
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.deleteSnapshot({cluster, deployment, volumeName, snapshotName}),
+        prefix,
+        name: 'deleteSnapshot',
+        returnError: true,
+      })
+      dispatch(actions.listSnapshots({
+        cluster,
+        deployment,
+        volumeName: params.volume,
+      }))
+      dispatch(snackbarActions.setSuccess(`snapshot deleted`))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error deleting snapshot: ${e.toString()}`))
       console.error(e)
     }
   },
