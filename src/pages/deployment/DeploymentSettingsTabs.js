@@ -53,7 +53,7 @@ class DeploymentSettings extends React.Component {
             value={currentIndex}
             onChange={(ev, value) => {
               const nextPage = pages[value]
-              onViewPage(cluster, id, deployment_type, deployment_version, nextPage.id)
+              onViewPage(cluster, id, deployment_type, deployment_version, nextPage.id, nextPage.params || {})
             }}
             indicatorColor="primary"
             textColor="primary"
