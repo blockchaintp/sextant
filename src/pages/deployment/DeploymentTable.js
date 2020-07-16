@@ -276,7 +276,6 @@ class DeploymentTable extends React.Component {
                     name: 'all',
                   }].concat(
                     clusters
-                      .filter(cluster => cluster.status == 'provisioned')
                     )
                     .map((cluster, i) => {
                       return (
