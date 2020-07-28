@@ -1,3 +1,9 @@
+/*
+ * Copyright © 2020 Blockchain Technology Partners Limited All Rights Reserved
+ *
+ * License: Product
+ */
+
 const FEATURE_TABS = {
   'sawtooth.identity': {
     id: 'keys',
@@ -17,15 +23,15 @@ const FEATURE_TABS = {
   },
   'taekion.keys': {
     id: 'taekionKeys',
-    title: 'Taekion Keys',
+    title: 'TFS Keys',
   },
   'taekion.volumes': {
     id: 'taekionVolumes',
-    title: 'Taekion Volumes',
+    title: 'TFS Volumes',
   },
   'taekion.snapshots': {
     id: 'taekionSnapshots',
-    title: 'Taekion Snapshots',
+    title: 'TFS Snapshots',
     params: {
       volume: 'all',
     }
@@ -37,14 +43,14 @@ const getPages = function (features) {
 }
 
 const getFeaturesForDeployment = (deploymentForms, deployment_type, deployment_version) => {
-    return deploymentForms[deployment_type].button.versions.find((item) => {
-      return (item.form === deployment_version)
-    }).features
+  return deploymentForms[deployment_type].button.versions.find((item) => {
+    return (item.form === deployment_version)
+  }).features
 }
 
 const getFirstTagForDeployment = (deploymentForms, deployment_type, deployment_version) => {
   const features = getFeaturesForDeployment(deploymentForms, deployment_type, deployment_version)
-  const pages=getPages(features)
+  const pages = getPages(features)
   if (pages.length > 0) {
     return pages[0].id
   } else {
