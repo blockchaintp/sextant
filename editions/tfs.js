@@ -9,7 +9,7 @@
 const edition = {
   header: {
     logo: "/large-full-whiteoutline-roundel.svg",
-    text: "TFS",
+    text: "TFS on Sawtooth",
   }
 }
 
