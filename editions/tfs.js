@@ -4,7 +4,7 @@
  * License: Product
  */
 
-// Edition object for dev-mode
+// Edition object for tfs
 
 const edition = {
   header: {
