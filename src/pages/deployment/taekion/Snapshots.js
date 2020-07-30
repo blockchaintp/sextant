@@ -178,7 +178,7 @@ class TaekionSnapshots extends React.Component {
         id: `${snapshot.volume}-${snapshot.name}`,
         name: snapshot.name,
         volume: snapshot.volume,
-        volume_name: volume.name,
+        volume_name: volume ? volume.name : '',
       }
     })
 
