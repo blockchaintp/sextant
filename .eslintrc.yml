@@ -8,4 +8,10 @@ parserOptions:
     jsx: true
   ecmaVersion: 11
   sourceType: module
-rules: { semi: 0 }
+rules:
+  semi: 0
+  react/jsx-filename-extension: 0
+  react/prefer-stateless-function: 1
+  react/prop-types: 0
+  react/no-array-index-key: 1
+  react/forbid-prop-types: 1
