@@ -81,9 +81,9 @@ const loaders = {
   updateVolume: ({
     cluster,
     deployment,
-    name,
+    volume,
     payload,
-  }) => axios.put(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${name}`), payload)
+  }) => axios.put(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volume}`), payload)
     .then(api.process),
 
   deleteVolume: ({
@@ -226,14 +226,14 @@ const sideEffects = {
   updateVolume: ({
     cluster,
     deployment,
-    name,
+    volume,
     payload,
   }) => async (dispatch, getState) => {
 
     try {
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.updateVolume({ cluster, deployment, name, payload }),
+        loader: () => loaders.updateVolume({ cluster, deployment, volume, payload }),
         prefix,
         name: 'updateVolume',
         returnError: true,
