@@ -228,11 +228,11 @@ class TaekionVolumes extends React.Component {
       const buttons = [{
         title: 'View Snapshots',
         icon: ViewArchiveIcon,
-        handler: () => onViewSnapshots(item.name, params),
+        handler: () => onViewSnapshots(item.id, params),
       },{
         title: 'Create Snapshot',
         icon: CreateArchiveIcon,
-        handler: () => onCreateSnapshot(item.name, params),
+        handler: () => onCreateSnapshot(item.id, params),
       },{
         title: 'Delete',
         icon: DeleteIcon,
