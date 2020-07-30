@@ -64,7 +64,7 @@ const FORM_SCHEMA = [{
   component: 'select',
   options: [{
     title: 'None',
-    value: 'none',
+    value: 'NONE',
   },{
     title: 'AES_GCM',
     value: 'AES_GCM',
@@ -90,7 +90,7 @@ const FORM_SCHEMA = [{
   component: 'select',
   options: [{
     title: 'None',
-    value: 'none',
+    value: 'NONE',
   },{
     title: 'LZ4',
     value: 'LZ4',
@@ -105,8 +105,8 @@ const FORM_SCHEMA = [{
 
 const FORM_INITIAL_VALUES = {
   name: '',
-  compression: 'none',
-  encryption: 'none',
+  compression: 'NONE',
+  encryption: 'NONE',
   fingerprint: '',
 }
 
@@ -158,7 +158,7 @@ class TaekionVolumes extends React.Component {
       onUpdateVolume({
         cluster,
         deployment,
-        name: editVolume.name,
+        volume: editVolume.id,
         payload,
       })
       this.setState({
@@ -198,7 +198,7 @@ class TaekionVolumes extends React.Component {
 
     const data = volumes.map((volume, index) => {
       return {
-        id: volume.name,
+        id: volume.uuid,
         name: volume.name,
         compression: volume.compression,
         encryption: volume.encryption,
@@ -249,7 +249,7 @@ class TaekionVolumes extends React.Component {
     const hooks = {      
       validate: (values) => {
         const errors = {}
-        if(values.encryption != 'none' && !values.fingerprint) {
+        if(values.encryption != 'NONE' && !values.fingerprint) {
           errors.fingerprint = `You must select a key to use for encryption`
         }
         return errors
@@ -276,9 +276,13 @@ class TaekionVolumes extends React.Component {
         item,
         values,
       }) => {        
-        if(item.id == 'fingerprint') return values.encryption == 'none'
+        if(item.id == 'fingerprint') return values.encryption == 'NONE'
         return false
       },
+      disabled: ({
+        item,
+        values,
+      }) => item.id != 'name' && values.id ? true : false,
     }
 
     return (
