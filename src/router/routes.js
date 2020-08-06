@@ -296,7 +296,7 @@ const routes = [
           store.dispatch(taekionActions.listSnapshots({
             cluster: params.cluster,
             deployment: params.id,
-            volumeName: params.volume,
+            volume: params.volume,
           }))
         },
       },

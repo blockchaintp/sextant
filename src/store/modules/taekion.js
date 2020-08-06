@@ -81,9 +81,9 @@ const loaders = {
   updateVolume: ({
     cluster,
     deployment,
-    name,
+    volume,
     payload,
-  }) => axios.put(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${name}`), payload)
+  }) => axios.put(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volume}`), payload)
     .then(api.process),
 
   deleteVolume: ({
@@ -96,24 +96,24 @@ const loaders = {
   listSnapshots: ({
     cluster,
     deployment,
-    volumeName,
-  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volumeName}/snapshots`))
+    volume,
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volume}/snapshots`))
     .then(api.process),
 
   createSnapshot: ({
     cluster,
     deployment,
-    volumeName,
+    volume,
     payload,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volumeName}/snapshots`), payload)
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volume}/snapshots`), payload)
     .then(api.process),
 
   deleteSnapshot: ({
     cluster,
     deployment,
-    volumeName,
+    volume,
     snapshotName,
-  }) => axios.delete(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volumeName}/snapshots/${snapshotName}`))
+  }) => axios.delete(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volume}/snapshots/${snapshotName}`))
     .then(api.process),
 
 
@@ -226,14 +226,14 @@ const sideEffects = {
   updateVolume: ({
     cluster,
     deployment,
-    name,
+    volume,
     payload,
   }) => async (dispatch, getState) => {
 
     try {
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.updateVolume({ cluster, deployment, name, payload }),
+        loader: () => loaders.updateVolume({ cluster, deployment, volume, payload }),
         prefix,
         name: 'updateVolume',
         returnError: true,
@@ -278,10 +278,10 @@ const sideEffects = {
   listSnapshots: ({
     cluster,
     deployment,
-    volumeName,
+    volume,
   }) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listSnapshots({cluster, deployment, volumeName}),
+    loader: () => loaders.listSnapshots({cluster, deployment, volume}),
     prefix,
     name: 'listSnapshots',
     dataAction: actions.setSnapshots,
@@ -291,14 +291,13 @@ const sideEffects = {
   createSnapshot: ({
     cluster,
     deployment,
-    volumeName,
+    volume,
     payload,
   }) => async (dispatch, getState) => {
-
     try {
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.createSnapshot({cluster, deployment, volumeName, payload}),
+        loader: () => loaders.createSnapshot({cluster, deployment, volume, payload}),
         prefix,
         name: 'createSnapshot',
         returnError: true,
@@ -306,7 +305,7 @@ const sideEffects = {
       dispatch(actions.listSnapshots({
         cluster,
         deployment,
-        volumeName,
+        volume,
       }))
       dispatch(snackbarActions.setSuccess(`snapshot added`))
       dispatch(actions.setAddSnapshotWindowOpen(false))
@@ -319,7 +318,7 @@ const sideEffects = {
   deleteSnapshot: ({
     cluster,
     deployment,
-    volumeName,
+    volume,
     snapshotName,
   }) => async (dispatch, getState) => {
 
@@ -328,7 +327,7 @@ const sideEffects = {
     try {
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.deleteSnapshot({cluster, deployment, volumeName, snapshotName}),
+        loader: () => loaders.deleteSnapshot({cluster, deployment, volume, snapshotName}),
         prefix,
         name: 'deleteSnapshot',
         returnError: true,
@@ -336,7 +335,7 @@ const sideEffects = {
       dispatch(actions.listSnapshots({
         cluster,
         deployment,
-        volumeName: params.volume,
+        volume: params.volume,
       }))
       dispatch(snackbarActions.setSuccess(`snapshot deleted`))
     } catch(e) {

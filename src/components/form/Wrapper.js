@@ -388,7 +388,6 @@ class FormWrapperInner extends React.Component {
           touched: formProps.touched,
           values: formProps.values,
         })
-        console.log(disabled)
       }
 
       return disabled

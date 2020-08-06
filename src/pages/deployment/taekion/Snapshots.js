@@ -47,13 +47,10 @@ const styles = theme => ({
 
 const TABLE_FIELDS =[{
   title: 'Volume',
-  name: 'volume',
+  name: 'volume_name',
 },{
   title: 'Name',
   name: 'name',
-},{
-  title: 'Date',
-  name: 'date',
 }]
 
 const FORM_SCHEMA = [{
@@ -68,7 +65,7 @@ const FORM_SCHEMA = [{
     ],
   },
 }, {
-  id: 'snapshotName',
+  id: 'name',
   title: 'Name',
   helperText: 'The name of your snapshot (alphanumeric, no spaces or dashes)',
   component: 'text',
@@ -83,7 +80,7 @@ const FORM_SCHEMA = [{
 
 const FORM_INITIAL_VALUES = {
   volume: '',
-  snapshotName: '',
+  name: '',
 }
 
 class TaekionSnapshots extends React.Component {
@@ -144,7 +141,7 @@ class TaekionSnapshots extends React.Component {
       onCreateSnapshot({
         cluster,
         deployment,
-        volumeName: volume,
+        volume,
         payload: data,
       })
     }
@@ -157,7 +154,7 @@ class TaekionSnapshots extends React.Component {
       onDeleteSnapshot({
         cluster,
         deployment,
-        volumeName: deleteItem.volume,
+        volume: deleteItem.volume,
         snapshotName: deleteItem.name,
       })
     }
@@ -170,12 +167,18 @@ class TaekionSnapshots extends React.Component {
       deleteItem: null,
     })
 
+    const volumesById = volumes.reduce((all, volume) => {
+      all[volume.uuid] = volume
+      return all
+    }, {})
+
     const data = snapshots.map((snapshot, index) => {
+      const volume = volumesById[snapshot.volume]
       return {
         id: `${snapshot.volume}-${snapshot.name}`,
         name: snapshot.name,
         volume: snapshot.volume,
-        date: new Date(snapshot.date).toLocaleString(),
+        volume_name: volume ? volume.name : '',
       }
     })
 
@@ -184,7 +187,7 @@ class TaekionSnapshots extends React.Component {
       name: 'All',
     }].concat(volumes.map(volume => {
       return {
-        id: volume.name,
+        id: volume.uuid,
         name: volume.name,
       }
     }))
@@ -243,6 +246,7 @@ class TaekionSnapshots extends React.Component {
     const hooks = {
       validate: (values) => {
         const errors = {}
+        if(values.volume == 'all') errors.volume = 'Please choose a volume'
         return errors
       },
       processItem: ({
@@ -254,7 +258,7 @@ class TaekionSnapshots extends React.Component {
             options: volumes.map(volume => {
               return {
                 title: volume.name,
-                value: volume.name,
+                value: volume.uuid,
               }
             })
           })
