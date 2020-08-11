@@ -17,6 +17,7 @@ import Layout from 'pages/Layout'
     user: selectors.auth.data(state),
     isSuperuser: selectors.auth.isSuperuser(state),
     isAdmin: selectors.auth.isAdmin(state),
+    globalLoading: state.network.globalLoading,
   }),
   {
     openPage: routerActions.navigateTo,
