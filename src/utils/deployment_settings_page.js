@@ -21,6 +21,10 @@ const FEATURE_TABS = {
     id: 'damlTimeService',
     title: 'DAML Timekeeper',
   },
+  'taekion.cli': {
+    id: 'taekionCli',
+    title: 'TFS CLI',
+  },
   'taekion.keys': {
     id: 'taekionKeys',
     title: 'TFS Keys',
