@@ -210,7 +210,6 @@ const sideEffects = {
 
     try {
       dispatch(networkActions.setGlobalLoading(true))
-      await Promise.delay(10000)
       await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.createVolume({cluster, deployment, payload}),
