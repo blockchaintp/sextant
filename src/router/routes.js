@@ -259,6 +259,14 @@ const routes = [
         }
       },
     }, {
+      name: 'taekionCli',
+      path: '/taekion/cli',
+      trigger: {
+        activate: (store, params) => {
+          store.dispatch(userActions.getAccessToken())
+        },
+      },
+    }, {
       name: 'taekionKeys',
       path: '/taekion/keys',
       trigger: {
