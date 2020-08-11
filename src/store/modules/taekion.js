@@ -210,6 +210,7 @@ const sideEffects = {
 
     try {
       dispatch(networkActions.setGlobalLoading(true))
+      await Promise.delay(10000)
       await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.createVolume({cluster, deployment, payload}),
@@ -217,7 +218,7 @@ const sideEffects = {
         name: 'createVolume',
         returnError: true,
       })
-      dispatch(actions.listVolumes({
+      await dispatch(actions.listVolumes({
         cluster,
         deployment,
       }))
@@ -247,7 +248,7 @@ const sideEffects = {
         name: 'updateVolume',
         returnError: true,
       })
-      dispatch(actions.listVolumes({
+      await dispatch(actions.listVolumes({
         cluster,
         deployment,
       }))
@@ -276,7 +277,7 @@ const sideEffects = {
         name: 'deleteVolume',
         returnError: true,
       })
-      dispatch(actions.listVolumes({
+      await dispatch(actions.listVolumes({
         cluster,
         deployment,
       }))
@@ -317,7 +318,7 @@ const sideEffects = {
         name: 'createSnapshot',
         returnError: true,
       })
-      dispatch(actions.listSnapshots({
+      await dispatch(actions.listSnapshots({
         cluster,
         deployment,
         volume,
@@ -350,7 +351,7 @@ const sideEffects = {
         name: 'deleteSnapshot',
         returnError: true,
       })
-      dispatch(actions.listSnapshots({
+      await dispatch(actions.listSnapshots({
         cluster,
         deployment,
         volume: params.volume,
