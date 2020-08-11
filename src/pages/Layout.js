@@ -69,10 +69,15 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 2000,
   },
   globalLoading: {
     width: '200px',
     textAlign: 'center',
+    backgroundColor: '#fff',
+    border: '1px solid #ccc',
+    borderRadius: '10px',
+    padding: '20px',
   }
 })
 
