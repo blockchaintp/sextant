@@ -6,8 +6,9 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
-import SideMenu from 'components/layout//SideMenu'
-import AppBarMenu from 'components/layout//AppBarMenu'
+import SideMenu from 'components/layout/SideMenu'
+import AppBarMenu from 'components/layout/AppBarMenu'
+import Loading from 'components/system/Loading'
 
 const styles = theme => ({
   root: {
@@ -58,6 +59,21 @@ const styles = theme => ({
     width: '100%',
     height: '4rem'
   },
+  globalLoadingContainer: {
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  globalLoading: {
+    width: '200px',
+    textAlign: 'center',
+  }
 })
 
 class Layout extends React.Component {
@@ -71,7 +87,8 @@ class Layout extends React.Component {
       appBarMenuItems,
       openPage,
       children,
-      header
+      header,
+      globalLoading,
     } = this.props
 
     return (
@@ -121,6 +138,15 @@ class Layout extends React.Component {
           </Toolbar>
         </div>
         </div>
+        {
+          globalLoading && (
+            <div className={ classes.globalLoadingContainer }>
+              <div className={ classes.globalLoading }>
+                <Loading />
+              </div>
+            </div>
+          )
+        }
       </div>
     )
   }
