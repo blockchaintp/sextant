@@ -34,6 +34,7 @@ import DeploymentSettingsDamlParties from 'containers/deployment/DeploymentSetti
 import DeploymentSettingsDamlArchives from 'containers/deployment/DeploymentSettingsDamlArchives'
 import DeploymentSettingsDamlTimeService from 'containers/deployment/DeploymentSettingsDamlTimeService'
 
+import DeploymentSettingsTaekionCli from 'containers/deployment/taekion/Cli'
 import DeploymentSettingsTaekionKeys from 'containers/deployment/taekion/Keys'
 import DeploymentSettingsTaekionVolumes from 'containers/deployment/taekion/Volumes'
 import DeploymentSettingsTaekionSnapshots from 'containers/deployment/taekion/Snapshots'
@@ -115,6 +116,9 @@ class Router extends React.Component {
               </Route>
               <Route segment="damlTimeService" exact>
                 <DeploymentSettingsDamlTimeService />
+              </Route>
+              <Route segment="taekionCli" exact>
+                <DeploymentSettingsTaekionCli />
               </Route>
               <Route segment="taekionKeys" exact>
                 <DeploymentSettingsTaekionKeys />
