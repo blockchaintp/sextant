@@ -8,9 +8,9 @@
 
 const edition = {
   header: {
-    logo: "/large-full-whiteoutline-roundel.svg",
-    text: "TFS on Sawtooth",
-  }
+    logo: '/large-full-whiteoutline-roundel.svg',
+    text: 'TFS',
+  },
 }
 
 export default edition
