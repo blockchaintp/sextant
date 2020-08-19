@@ -7,13 +7,11 @@ import selectors from 'store/selectors'
 
 import TaekionSnapshots from 'pages/deployment/taekion/Snapshots'
 
-const changeVolume = (volume, params) => routerActions.navigateTo('deployment_settings.taekionSnapshots', Object.assign({}, params, {
-  volume,
-}))
+const changeVolume = (volume, params) => routerActions.navigateTo('deployment_settings.taekionSnapshots', { ...params, ...{ volume } })
 
 @connect(
-  state => {
-    const params = state.router.route.params
+  (state) => {
+    const { params } = state.router.route
 
     const {
       cluster,
@@ -21,7 +19,6 @@ const changeVolume = (volume, params) => routerActions.navigateTo('deployment_se
       volume,
     } = params
 
-<<<<<<< HEAD
     return {
       cluster,
       deployment: id,
@@ -32,9 +29,6 @@ const changeVolume = (volume, params) => routerActions.navigateTo('deployment_se
       addSnapshotWindowOpen: selectors.taekion.addSnapshotWindowOpen(state),
       addSnapshotError: selectors.taekion.errors.createSnapshot(state),
     }
-=======
-    return {}
->>>>>>> dad4d4c... SXT-365: clean up brackets
   },
   {
     onChangeVolume: changeVolume,
@@ -45,10 +39,9 @@ const changeVolume = (volume, params) => routerActions.navigateTo('deployment_se
   },
 )
 class TaekionSnapshotsContainer extends React.Component {
-
   render() {
     return (
-      <TaekionSnapshots 
+      <TaekionSnapshots
         {...this.props}
       />
     )
