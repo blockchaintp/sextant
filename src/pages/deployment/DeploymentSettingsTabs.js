@@ -31,8 +31,10 @@ class DeploymentSettings extends React.Component {
       children,
     } = this.props
 
+    const pages = getPages(features)
+
     const [_, pageName] = route.name.split('.')
-    if (getPages(features).length === 0) {
+    if (pages.length === 0) {
       return (
         <div className={classes.root}>
         <AppBar position="static" color="default">
@@ -41,21 +43,23 @@ class DeploymentSettings extends React.Component {
       )
     }
 
-    const currentPage = getPages(features).find(p => p.id == pageName)
+    let currentIndex = pages.findIndex(p => p.id == pageName)
+    if(currentIndex < 0) currentIndex = 0
+
     return (
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
-            value={currentPage.index}
+            value={currentIndex}
             onChange={(ev, value) => {
-              const nextPage = getPages(features)[value]
-              onViewPage(cluster, id, deployment_type, deployment_version,nextPage.id)
+              const nextPage = pages[value]
+              onViewPage(cluster, id, deployment_type, deployment_version, nextPage.id, nextPage.params || {})
             }}
             indicatorColor="primary"
             textColor="primary"
           >
             {
-              getPages(features).map((page, i) => (
+              pages.map((page, i) => (
                 <Tab label={page.title} key={i} />
               ))
             }

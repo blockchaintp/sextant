@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  entry: './src/index.js',
+  entry: ['./src/index.js'],
   output: {
     path: path.resolve(__dirname, '..', 'dist'),
     filename: '[name].[hash].bundle.js',
@@ -24,13 +24,13 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: [path.resolve(__dirname, '..', 'src'), 'node_modules']
+    modules: [path.resolve(__dirname, '..', 'src'), 'node_modules'],
   },
   plugins: [
     new webpack.ProgressPlugin(),
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({ 
-      template: './src/index.html', 
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
       filename: './index.html',
       hash: true,
     }),

@@ -5,6 +5,7 @@ import deploymentActions from 'store/modules/deployment'
 import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import networkActions from 'store/modules/network'
 import customizationActions from 'store/modules/customization'
+import taekionActions from 'store/modules/taekion'
 
 const authHandlers = {
   guest: (state) => selectors.auth.loggedIn(state) ?
@@ -256,6 +257,56 @@ const routes = [
         deactivate: (store, params) => {
 
         }
+      },
+    }, {
+      name: 'taekionCli',
+      path: '/taekion/cli',
+      trigger: {
+        activate: (store, params) => {
+          store.dispatch(userActions.getAccessToken())
+        },
+      },
+    }, {
+      name: 'taekionKeys',
+      path: '/taekion/keys',
+      trigger: {
+        activate: (store, params) => {
+          store.dispatch(taekionActions.listKeys({
+            cluster: params.cluster,
+            deployment: params.id
+          }))
+        },
+      },
+    }, {
+      name: 'taekionVolumes',
+      path: '/taekion/volumes',
+      trigger: {
+        activate: (store, params) => {
+          store.dispatch(taekionActions.listKeys({
+            cluster: params.cluster,
+            deployment: params.id
+          }))
+          store.dispatch(taekionActions.listVolumes({
+            cluster: params.cluster,
+            deployment: params.id
+          }))
+        },
+      },
+    }, {
+      name: 'taekionSnapshots',
+      path: '/taekion/snapshots/:volume',
+      trigger: {
+        activate: (store, params) => {
+          store.dispatch(taekionActions.listVolumes({
+            cluster: params.cluster,
+            deployment: params.id
+          }))
+          store.dispatch(taekionActions.listSnapshots({
+            cluster: params.cluster,
+            deployment: params.id,
+            volume: params.volume,
+          }))
+        },
       },
     }]
 

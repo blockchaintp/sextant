@@ -6,7 +6,7 @@ import selectors from 'store/selectors'
 
 import DeploymentSettingsTabs from 'pages/deployment/DeploymentSettingsTabs'
 
-const onViewPage = (cluster, id, deployment_type, deployment_version, page) => routerActions.navigateTo(`deployment_settings.${page}`, { cluster, id, deployment_type, deployment_version, })
+const onViewPage = (cluster, id, deployment_type, deployment_version, page, params = {}) => routerActions.navigateTo(`deployment_settings.${page}`, { cluster, id, deployment_type, deployment_version, ...params})
 
 @connect(
   state => {
@@ -23,6 +23,7 @@ const onViewPage = (cluster, id, deployment_type, deployment_version, page) => r
     } = routeParams
 
     const versions = deploymentForms[deployment_type].button.versions
+
     const features=versions.find((item) => {
       return (item.form === deployment_version)
     }).features

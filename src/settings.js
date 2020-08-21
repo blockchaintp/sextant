@@ -20,6 +20,8 @@ import UploadIcon from '@material-ui/icons/CloudUpload'
 import BuildIcon from '@material-ui/icons/Build'
 import RemoveIcon from '@material-ui/icons/RemoveCircle'
 import RepeatIcon from '@material-ui/icons/Repeat'
+import ViewArchiveIcon from '@material-ui/icons/ViewModule'
+import CreateArchiveIcon from '@material-ui/icons/AddAPhoto'
 
 import edition from './edition'
 
@@ -46,6 +48,8 @@ const icons = {
   downArrow: DownArrowIcon,
   upload: UploadIcon,
   build: BuildIcon,
+  viewArchive: ViewArchiveIcon,
+  createArchive: CreateArchiveIcon,
 }
 
 const settings = {

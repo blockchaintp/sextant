@@ -125,6 +125,18 @@ const DEPLOYMENT_SETTINGS_NETWORK_NAMES = networkProps('deploymentSettings', [
   //'createRemoteKey',
 ])
 
+const taekionStore = state => state.taekion
+
+const TAEKION_NETWORK_NAMES = networkProps('taekion', [
+  'listKeys',
+  'createKey',
+  'listVolumes',
+  'createVolume',
+  'updateVolume',
+  'listSnapshots',
+  'createSnapshot',
+])
+
 const configStore = state => state.config
 const configData = prop(configStore, 'data')
 const forms = createSelector(
@@ -324,6 +336,21 @@ const selectors = {
       'addPartyName',
       'addPartyPublicKey',
       'uploadArchiveWindowOpen',
+    ]),
+  },
+
+  taekion: {
+    store: taekionStore,
+    errors: props(networkErrors, TAEKION_NETWORK_NAMES),
+    loading: props(networkLoading, TAEKION_NETWORK_NAMES),
+    ...props(taekionStore, [
+      'keys',
+      'volumes',
+      'snapshots',
+      'addKeyWindowOpen',
+      'addKeyResult',
+      'addVolumeWindowOpen',
+      'addSnapshotWindowOpen',
     ]),
   },
 

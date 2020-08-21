@@ -45,7 +45,7 @@ class SelectField extends React.Component {
     const extraProps = item.extraProps || {}
 
     return (
-      <FormControl component="fieldset" className={ classes.root }>
+      <FormControl component="fieldset" className={ classes.root } error={ touched && error ? true : false}>
         <FormLabel htmlFor={ name }>{ title }</FormLabel>
         <Select
           _ci={name}
@@ -76,10 +76,10 @@ class SelectField extends React.Component {
             })
           }
         </Select>
-        <HelperText helperText={ item.alternateText ? blurbText(formProps.values.sawtooth.consensus) : item.helperText }
+        <HelperText helperText={ error || (item.alternateText ? blurbText(formProps.values.sawtooth.consensus) : item.helperText) }
           error={ error ? true : false }
           touched={ touched }>
-          </HelperText>
+        </HelperText>
 
       </FormControl>
     )
