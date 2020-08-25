@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
@@ -5,7 +6,6 @@ import { withStyles } from '@material-ui/core/styles'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
-import Input from '@material-ui/core/Input'
 import Checkbox from '@material-ui/core/Checkbox'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -20,19 +20,19 @@ import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
 
 import settings from 'settings'
-import { actionNameTranslator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle } from '../../utils/translators'
-
 
 import rbac from 'utils/rbac'
-import { getFirstTagForDeployment, getFeaturesForDeployment } from 'utils/deployment_settings_page'
+import { getFirstTagForDeployment } from 'utils/deployment_settings_page'
+
+// eslint-disable-next-line object-curly-newline
+import { actionNameTranslator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle } from '../../utils/translators'
 
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
-const DeleteIcon = settings.icons.delete
 const ViewIcon = settings.icons.view
 const SettingsIcon = settings.icons.settings
 
-const styles = theme => ({
+const styles = (theme) => ({
   errorText: {
     color: theme.palette.error.main,
   },
@@ -72,7 +72,6 @@ const styles = theme => ({
 })
 
 class DeploymentTable extends React.Component {
-
   state = {
     deleteConfirmOpen: false,
     deleteConfirmItem: null,
@@ -95,7 +94,6 @@ class DeploymentTable extends React.Component {
     const {
       classes,
       deployments,
-      hideDeleted,
       onAdd,
       onEdit,
       onViewStatus,
@@ -111,22 +109,21 @@ class DeploymentTable extends React.Component {
       user,
     } = this.props
 
-    
     const {
       deleteConfirmOpen,
       deleteConfirmItem,
     } = this.state
 
-    let fields =[{
+    let fields = [{
       title: 'Name',
       name: 'name',
-    },{
+    }, {
       title: 'Cluster',
       name: 'clusterName',
-    },{
+    }, {
       title: 'Type',
       name: 'deployment_type',
-    },{
+    }, {
       title: 'Version',
       name: 'deployment_version',
     },
@@ -138,58 +135,57 @@ class DeploymentTable extends React.Component {
       name: 'task',
     }]
 
-    if(embedded) {
-      fields = fields.filter(f => f.name != 'clusterName')
+    if (embedded) {
+      fields = fields.filter((f) => f.name !== 'clusterName')
     }
 
-    const data = deployments.map((deployment, index) => {
-      return {
-        id: deployment.id,
-        cluster: deployment.cluster,
-        deploymentData: deployment,
-        role: deployment.role,
-        name: deployment.name,
-        clusterName: deployment.clusterName,
-        deployment_type: deployment.deployment_type,
-        status: deploymentStatusTranslator(deployment.status),
-        task: deployment.task ? (
-          <div className={ classes.statusContainer }>
-            <div className={ classes.statusIcon }>
-              <TaskActionIcon
-                action={ deployment.task.action.split('.')[1] }
-              />
-            </div>
-            <div className={ classes.statusIcon }>
-              { actionNameTranslator(deployment.task.action) }
-            </div>
-            <div className={ classes.statusIcon }>
-              <TaskStatusIcon
-                status={ deployment.task.status }
-              />
-            </div>
-            <div>
-              { !deployment.task.error && deployment.task.status }
-              {
+    const data = deployments.map((deployment) => ({
+      id: deployment.id,
+      cluster: deployment.cluster,
+      deploymentData: deployment,
+      role: deployment.role,
+      name: deployment.name,
+      clusterName: deployment.clusterName,
+      deployment_type: deployment.deployment_type,
+      status: deploymentStatusTranslator(deployment.status),
+      task: deployment.task ? (
+        <div className={classes.statusContainer}>
+          <div className={classes.statusIcon}>
+            <TaskActionIcon
+              action={deployment.task.action.split('.')[1]}
+            />
+          </div>
+          <div className={classes.statusIcon}>
+            { actionNameTranslator(deployment.task.action) }
+          </div>
+          <div className={classes.statusIcon}>
+            <TaskStatusIcon
+              status={deployment.task.status}
+            />
+          </div>
+          <div>
+            { !deployment.task.error && deployment.task.status }
+            {
                 deployment.task.error && (
-                  <div className={ classes.errorContainer }>
-                    <span className={ classes.errorText }>
+                  <div className={classes.errorContainer}>
+                    <span className={classes.errorText}>
                       { deployment.task.error }
                     </span>
                   </div>
                 )
               }
-            </div>
           </div>
-        ) : null,
-      }
-    })
+        </div>
+      ) : null,
+    }))
 
     // holds an array of deployment types
-    const addButtonItems = Object.keys(deploymentForms).map(deploymentType => {
+    const addButtonItems = Object.keys(deploymentForms).map((deploymentType) => {
       const formConfig = deploymentForms[deploymentType]
-      // versions is an array of objects. Each object contains data for a version of the deploymentType
+      // versions is an array of objects.
+      // Each object contains data for a version of the deploymentType
       return {
-        versions: formConfig.button.versions.map(version => ({
+        versions: formConfig.button.versions.map((version) => ({
           icon: version.icon,
           title: version.title,
           version: version.version,
@@ -201,92 +197,91 @@ class DeploymentTable extends React.Component {
 
     let addButtonDisabled = true
 
-    if(clusterId != 'all') {
+    if (clusterId !== 'all') {
       const canWriteToCluster = rbac({
         user,
         action: {
           resource_type: 'cluster',
           resource_id: clusterId,
           method: 'write',
-        }
+        },
       })
 
-    const noActiveDeployments = () => {
-      if(cluster){
-        const active_deployments = parseInt(cluster.active_deployments, 10)
-        return active_deployments > 0 ? false : true
-      } else {
+      // invoke this function as part of addButtonDisabled in order to limit
+      // the # of deployments on a cluster
+      // eslint-disable-next-line no-unused-vars
+      const noActiveDeployments = () => {
+        if (cluster) {
+          const activeDeployments = parseInt(cluster.active_deployments, 10)
+          return !(activeDeployments > 0)
+        }
         return false
       }
-    }
 
-      addButtonDisabled = (canWriteToCluster && noActiveDeployments()) ? false : true
+      addButtonDisabled = !(canWriteToCluster)
     }
 
     const addButton = (
-      <div className={ classes.addButton }>
+      <div className={classes.addButton}>
         <DialogButton
           className={classes.button}
           title="Add"
-          icon={ AddIcon }
+          icon={AddIcon}
           buttonProps={{
             variant: 'contained',
             color: 'secondary',
           }}
-          items={ addButtonItems }
-          disabled={ addButtonDisabled }
+          items={addButtonItems}
+          disabled={addButtonDisabled}
         />
       </div>
     )
 
-    const headerActions = embedded ?
-      (
+    const headerActions = embedded
+      ? (
         <div className={classes.headerActions}>
-        < div className = { classes.hideDeletedCheckbox } >
-          <FormControlLabel
-            control={
-              <Checkbox
-                onChange={(event) => updateHideDeleted(event.target.checked)}
-                value="checkedB"
-                color="primary"
-              />
-            }
-            label="Hide Undeployed"
-            classes={{
-              label: classes.hideDeletedLabel,
-            }}
-          />
-        </div >
+          <div className={classes.hideDeletedCheckbox}>
+            <FormControlLabel
+              control={(
+                <Checkbox
+                  onChange={(event) => updateHideDeleted(event.target.checked)}
+                  value="checkedB"
+                  color="primary"
+                />
+              )}
+              label="Hide Undeployed"
+              classes={{
+                label: classes.hideDeletedLabel,
+              }}
+            />
+          </div>
           {addButton}
         </div>
       )
-      :
-      (
-        <div className={ classes.headerActions }>
-          <div className={ classes.clusterSelect }>
+      : (
+        <div className={classes.headerActions}>
+          <div className={classes.clusterSelect}>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="name-readonly">Cluster</InputLabel>
               <Select
-                value={ clusterId }
-                onChange={ (ev) => updateClusterId(ev.target.value) }
+                value={clusterId}
+                onChange={(ev) => updateClusterId(ev.target.value)}
               >
                 {
                   [{
                     id: 'all',
                     name: 'all',
                   }].concat(
-                    clusters
-                    )
-                    .map((cluster, i) => {
-                      return (
-                        <MenuItem
-                          key={ i }
-                          value={ cluster.id }
-                        >
-                          { cluster.name }
-                        </MenuItem>
-                      )
-                    })
+                    clusters,
+                  )
+                    .map((eachCluster, i) => (
+                      <MenuItem
+                        key={i}
+                        value={eachCluster.id}
+                      >
+                        { eachCluster.name }
+                      </MenuItem>
+                    ))
                 }
               </Select>
             </FormControl>
@@ -296,15 +291,14 @@ class DeploymentTable extends React.Component {
       )
 
     const getActions = (deployment) => {
-      
       const buttons = []
-      if(rbac({
+      if (rbac({
         user,
         action: {
           resource_type: 'deployment',
           resource_id: deployment.id,
           method: 'write',
-        }
+        },
       })) {
         buttons.push({
           title: getDeploymentIconTitle(deployment.status),
@@ -325,18 +319,13 @@ class DeploymentTable extends React.Component {
         handler: (item) => onViewStatus(item.cluster, item.id),
       })
 
-      const buttonDeploymentType = deployment.deploymentData.deployment_type
-      const buttonDeploymentVersion = deployment.deploymentData.deployment_version
-      const features = getFeaturesForDeployment(deploymentForms, buttonDeploymentType, buttonDeploymentVersion)
-      // enabled was used as a constant for determining visibility of the settings wheel, but has been replaced by undeployed
-      const enabled= features.length>0 ? false : true
       const undeployed = deployment.status !== 'deployed'
       buttons.push({
         title: 'Settings',
         icon: SettingsIcon,
         disabled: undeployed,
         handler: (item) => {
-          const pageKey=getFirstTagForDeployment(deploymentForms, item.deployment_type, item.deploymentData.deployment_version)
+          const pageKey = getFirstTagForDeployment(deploymentForms, item.deployment_type, item.deploymentData.deployment_version)
           return onViewSettings(item.cluster, item.id, item.deployment_type, item.deploymentData.deployment_version, pageKey)
         },
       })
@@ -344,27 +333,25 @@ class DeploymentTable extends React.Component {
       return buttons
     }
 
-    const title = embedded ?
-      `Deployments` :
-      cluster ? cluster.name + ': Deployments' : 'Deployments'
-
+    const clusterTitle = cluster ? `${cluster.name}: Deployments` : 'Deployments'
+    const title = embedded ? 'Deployments' : clusterTitle
     return (
       <div>
         <SimpleTableHeader
-          title={ title }
-          getActions={ () => headerActions }
-          className={ embedded ? classes.embeddedHeader : null }
+          title={title}
+          getActions={() => headerActions}
+          className={embedded ? classes.embeddedHeader : null}
         />
         <SimpleTable
           pagination
-          data={ data }
-          fields={ fields }
-          getActions={ (item) => {
-            if(item.deploymentData.task && item.deploymentData.task.status == 'running') return null
+          data={data}
+          fields={fields}
+          getActions={(item) => {
+            if (item.deploymentData.task && item.deploymentData.task.status === 'running') return null
             return (
               <SimpleTableActions
-                item={ item }
-                actions={ getActions(item) }
+                item={item}
+                actions={getActions(item)}
               />
             )
           }}
@@ -372,9 +359,9 @@ class DeploymentTable extends React.Component {
         <SimpleTableDeleteDialog
           resource={deleteConfirmItem}
           open={deleteConfirmOpen}
-          title={deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${deleteConfirmItem.status == 'undeployed' ? ' permanently' : ''}` : null}t
-          onCancel={ () => this.closeDeleteDialog() }
-          onConfirm={ () => {
+          title={deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${deleteConfirmItem.status === 'undeployed' ? ' permanently' : ''}` : null}
+          onCancel={() => this.closeDeleteDialog()}
+          onConfirm={() => {
             this.closeDeleteDialog()
             onDelete(clusterId, deleteConfirmItem.id)
           }}

@@ -17,6 +17,7 @@ rules:
   react/no-array-index-key: 1
   react/forbid-prop-types: 1
   react/jsx-props-no-spreading: 1
+  react/state-in-constructor: 0
 settings:
   import/resolver:
     node:
