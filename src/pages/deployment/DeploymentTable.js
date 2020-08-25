@@ -218,7 +218,7 @@ class DeploymentTable extends React.Component {
         return false
       }
 
-      addButtonDisabled = !(canWriteToCluster || noActiveDeployments())
+      addButtonDisabled = !(canWriteToCluster)
     }
 
     const addButton = (
