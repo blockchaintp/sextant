@@ -44,10 +44,10 @@ function HorizontalCard(props) {
             <Typography component="h5" variant="h5">
               {optionTitle}
             </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
+            <Typography variant="subtitle1" align="left" color="textSecondary">
               {optionVersion}
             </Typography>
-            <Typography>
+            <Typography align="left">
               {versionSummary}
             </Typography>
           </CardContent>
