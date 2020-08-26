@@ -11,7 +11,7 @@ import ServiceTable from 'components/deployment/ServiceTable'
 import VolumeTable from 'components/deployment/VolumeTable'
 import SummaryValues from 'components/summary/SummaryValues'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     padding: theme.spacing.unit * 2,
   },
@@ -22,9 +22,8 @@ const styles = theme => ({
 })
 
 class DeploymentStatus extends React.Component {
-
   render() {
-    const { 
+    const {
       classes,
       resources,
       summary,
@@ -32,50 +31,50 @@ class DeploymentStatus extends React.Component {
     } = this.props
 
     return (
-      <div className={ classes.root }>
+      <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={ 8 }>
-            <Paper className={ classes.paper }>
+          <Grid item xs={8}>
+            <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
                 Pods
               </Typography>
               <PodTable
-                data={ resources.pods }
-                nodes={ resources.nodes }
+                data={resources.pods}
+                nodes={resources.nodes}
               />
             </Paper>
-            <Paper className={ classes.paper }>
+            <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
                 Services
               </Typography>
               <ServiceTable
-                data={ resources.services }
+                data={resources.services}
               />
             </Paper>
-            <Paper className={ classes.paper }>
+            <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
-                Volumes
+                Volume
               </Typography>
               <VolumeTable
-                data={ resources.volumes }
+                data={resources.volumes}
               />
             </Paper>
-            <Paper className={ classes.paper }>
+            <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
                 Tasks
               </Typography>
               <TaskTable
-                data={ tasks }
+                data={tasks}
               />
             </Paper>
           </Grid>
-          <Grid item xs={ 4 }>
-            <Paper className={ classes.paper }>
+          <Grid item xs={4}>
+            <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
                 Summary
               </Typography>
               <SummaryValues
-                data={ summary }
+                data={summary}
               />
             </Paper>
           </Grid>
@@ -90,7 +89,7 @@ DeploymentStatus.propTypes = {
 }
 
 DeploymentStatus.defaultProps = {
-  
+
 }
 
 export default withStyles(styles)(DeploymentStatus)
