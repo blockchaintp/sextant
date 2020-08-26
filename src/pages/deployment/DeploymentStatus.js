@@ -53,7 +53,7 @@ class DeploymentStatus extends React.Component {
             </Paper>
             <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
-                Volume
+                Persistent Volume Claims
               </Typography>
               <VolumeTable
                 data={resources.volumes}
