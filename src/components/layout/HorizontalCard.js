@@ -1,22 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({
+const styles = () => ({
   card: {
     display: 'flex',
   },
   titles: {
     display: 'flex',
     flex: '1 0 auto',
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
     flexDirection: 'column',
   },
   icon: {
@@ -27,21 +24,20 @@ const styles = theme => ({
 function HorizontalCard(props) {
   const {
     classes,
-    theme,
     optionIcon,
     optionTitle,
     optionVersion,
     versionSummary,
-    onClick
+    onClick,
   } = props;
 
   return (
     <Card className={classes.card}>
       <ButtonBase
-        onClick={ () => onClick(optionVersion) }
+        onClick={() => onClick(optionVersion)}
       >
         <CardContent>
-          <img src={optionIcon} className={ classes.icon } />
+          <img src={optionIcon} alt="" className={classes.icon} />
         </CardContent>
         <div>
           <CardContent className={classes.titles}>
@@ -51,7 +47,7 @@ function HorizontalCard(props) {
             <Typography variant="subtitle1" color="textSecondary">
               {optionVersion}
             </Typography>
-            <Typography >
+            <Typography>
               {versionSummary}
             </Typography>
           </CardContent>
@@ -63,7 +59,6 @@ function HorizontalCard(props) {
 
 HorizontalCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(HorizontalCard);
