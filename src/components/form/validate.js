@@ -3,6 +3,7 @@ import {
   object,
   string,
   number,
+  boolean,
   ref,
 } from 'yup'
 import dotty from 'dotty'
@@ -13,6 +14,7 @@ const validators = {
   object,
   string,
   number,
+  boolean,
 }
 
 // turn JSON values for validation functions into the actual type
