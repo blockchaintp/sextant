@@ -2,9 +2,9 @@
 
 const edition = {
   header: {
-    logo: "/large-full-whiteoutline-roundel.svg",
-    text: "Dev-Mode",
-  }
+    logo: '/large-full-whiteoutline-roundel.svg',
+    text: 'Engineering',
+  },
 }
 
 export default edition
