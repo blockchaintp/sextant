@@ -5,6 +5,7 @@ import api from '../utils/api'
 
 import routerActions from './router'
 import networkActions from './network'
+import configActions from './config'
 
 const prefix = 'auth'
 
@@ -52,6 +53,7 @@ const sideEffects = {
         returnError: true,
       })
       if(!result.ok) throw new Error('unexpected result from login')
+      await dispatch(configActions.loadData())
       await dispatch(actions.loadStatus())
       dispatch(routerActions.navigateTo('home'))
     } catch(err) {

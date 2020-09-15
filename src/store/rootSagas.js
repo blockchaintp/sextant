@@ -75,8 +75,15 @@ const RootSagas = ({
     const initialLoaderResults = yield all([
       call(loadAuthStatus),
       call(loadHasInitialUser),
-      call(loadConfig),
     ])
+
+
+    // the config route is now auth protected so only call it
+    // if we detect that the user is logged in
+    const isLoggedIn = yield select(selectors.auth.loggedIn)
+    if(isLoggedIn) {
+      yield call(loadConfig)
+    }
 
     const failedLoaders = initialLoaderResults.filter(result => !result)
 

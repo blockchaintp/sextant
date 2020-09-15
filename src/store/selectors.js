@@ -137,7 +137,7 @@ const configStore = (state) => state.config
 const configData = prop(configStore, 'data')
 const forms = createSelector(
   configData,
-  (configData) => configData.forms || {},
+  configData => configData ? configData.forms || {} : {},
 )
 const userForms = prop(forms, 'user')
 const clusterForms = prop(forms, 'cluster')
@@ -150,7 +150,11 @@ const userAccessFilter = (type) => createSelector(
   authData,
   userAccessLevels,
   (authData, userAccessLevels) => {
+<<<<<<< HEAD
     if (!authData) return false
+=======
+    if(!authData || !userAccessLevels) return false
+>>>>>>> dff2095... feat(disable-config): only request the config if or once we are logged in and move login form and initial user form into static config
     return userAccessLevels[authData.permission] >= userAccessLevels[type]
   },
 )

@@ -6,6 +6,10 @@ import authActions from 'store/modules/auth'
 import Login from 'pages/auth/Login'
 import selectors from 'store/selectors'
 
+import {
+  loginForm,
+} from '../../forms'
+
 const initialValues = {
   username: '',
   password: '',
@@ -15,7 +19,7 @@ const initialValues = {
   state => ({
     error: selectors.auth.errors.login(state),
     loading: selectors.auth.loading.login(state),
-    schema: selectors.config.forms.user.login(state),
+    schema: loginForm,
     initialValues,
   }),
   {
