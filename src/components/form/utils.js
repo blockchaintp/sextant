@@ -52,6 +52,36 @@ const getInitialValues = (schema, initialValues) => {
         dotty.put(all, field.id, field.default)
       }
     }
+    // explode a list of strings back into an array of objects
+    // with the value set on the "extractField" prop of the list
+    // this is so we can still use the form list editor
+    // for a list of strings rather than list of objects
+    else if(field.list && field.list.extractField) {
+      const valueArray = existing.map(primitiveValue => {
+        return {
+          [field.list.extractField]: primitiveValue,
+        }
+      })
+      dotty.put(all, field.id, valueArray)
+      return all
+    }
+    return all
+  }, Object.assign({}, initialValues))
+}
+
+const processInitialValues = (schema, initialValues) => {
+  const flatSchema = flattenSchema(schema)
+  return flatSchema.reduce((all, field) => {
+    const existing = dotty.get(all, field.id)
+    if(field.list && field.list.extractField) {
+      const valueArray = existing.map(primitiveValue => {
+        return {
+          [field.list.extractField]: primitiveValue,
+        }
+      })
+      dotty.put(all, field.id, valueArray)
+      return all
+    }
     return all
   }, Object.assign({}, initialValues))
 }
@@ -68,6 +98,13 @@ const processValues = (schema, values) => {
       dotty.put(all, field.id, value)
       return all
     }
+    // we are extracting a single field from each object in the list
+    else if(field.list && field.list.extractField) {
+      const objectValues = dotty.get(all, field.id)
+      const valueArray = objectValues.map(obj => obj[field.list.extractField])
+      dotty.put(all, field.id, valueArray)
+      return all
+    }
     else {
       return all
     }
@@ -79,6 +116,7 @@ const utils = {
   flattenErrors,
   getComponent,
   getInitialValues,
+  processInitialValues,
   processValues,
 }
 

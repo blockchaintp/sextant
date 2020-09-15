@@ -440,7 +440,22 @@ class FormWrapperInner extends React.Component {
         const linkedId = item.linked.linkedId
         const linkedComponentValue = dotty.get(formProps.values, linkedId)
 
+        let meetsVisibilityRequirement = false
+
         if (linkedComponentValue === item.linked.visibilityParameter) {
+          meetsVisibilityRequirement = true
+        }
+
+        // catch edge case where booleans are strings - not sure why this is happening
+        // TOOD: work out why in some cases:
+        //   * item.linked.visibilityParameter == "true"
+        //   * linkedComponentValue == true
+        // the two things match but because of === they do not pass the test above
+        if(item.linked.visibilityParameter === "true" && linkedComponentValue === true) {
+          meetsVisibilityRequirement = true
+        }
+
+        if (meetsVisibilityRequirement) {
           return (
             <FieldArray
               _ci={item.id}
@@ -500,7 +515,7 @@ class FormWrapperInner extends React.Component {
       false
 
     if(hidden) return null
-      
+
     // if the field includes a list, render a field array, otherwise render a normal field
     return item.list ? renderFieldArray(processedItem) : renderField(processedItem)
     

@@ -42,6 +42,7 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
       if(existingValues) {
         initialValues = JSON.parse(JSON.stringify(existingValues.desired_state))
         schema = deploymentForms[existingValues.deployment_type].forms[existingValues.deployment_version]
+        initialValues = formUtils.processInitialValues(schema, initialValues)
       }
     }
 
