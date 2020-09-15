@@ -45,8 +45,8 @@ class TaekionCli extends React.Component {
     return (
       <div className={ classes.root }>
         <Grid container spacing={24}>
-          <Grid item xs={4}></Grid>
-          <Grid item xs={4}>
+          <Grid item xs={0} md={2}></Grid>
+          <Grid item xs={12} md={8}>
             <Paper className={ classes.paper }>
               <Typography variant="h6" gutterBottom>
                 Taekion FS CLI
@@ -68,7 +68,7 @@ class TaekionCli extends React.Component {
               />
             </Paper>
           </Grid>
-          <Grid item xs={4}></Grid>
+          <Grid item xs={0} md={2}></Grid>
         </Grid>
       </div>
     )
