@@ -6,20 +6,21 @@ import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import networkActions from 'store/modules/network'
 import customizationActions from 'store/modules/customization'
 import taekionActions from 'store/modules/taekion'
+import administrationActions from 'store/modules/administration'
 
 const authHandlers = {
-  guest: (state) => selectors.auth.loggedIn(state) ?
-    'home' :
-    null,
-  user: (state) => selectors.auth.loggedIn(state) ?
-    null :
-    'login',
-  superuser: (state) => selectors.auth.isSuperuser(state) ?
-    null :
-    'home',
-  superuserOrAdmin: (state) => selectors.auth.isSuperuser(state) || selectors.auth.isAdmin(state) ?
-    null :
-    'home'
+  guest: (state) => (selectors.auth.loggedIn(state)
+    ? 'home'
+    : null),
+  user: (state) => (selectors.auth.loggedIn(state)
+    ? null
+    : 'login'),
+  superuser: (state) => (selectors.auth.isSuperuser(state)
+    ? null
+    : 'home'),
+  superuserOrAdmin: (state) => (selectors.auth.isSuperuser(state) || selectors.auth.isAdmin(state)
+    ? null
+    : 'home'),
 }
 
 const routes = [
@@ -33,6 +34,19 @@ const routes = [
     path: '/logout',
   },
   {
+    name: 'administration',
+    path: '/administration',
+    authorize: authHandlers.superuser,
+  },
+  {
+    name: 'administration_restart',
+    path: '/administration/restart',
+    authorize: authHandlers.superuser,
+    trigger: {
+      activate: (store) => store.dispatch(administrationActions.restart()),
+    },
+  },
+  {
     name: 'create-initial-user',
     path: '/create-initial-user',
     authorize: authHandlers.guest,
@@ -42,9 +56,9 @@ const routes = [
       // if we do have an initial user - we redirect to login
       // if the user is already logged in, the authorize
       // handler on the login route will get the to home
-      return hasInitialUser ?
-        'login' :
-        null
+      return hasInitialUser
+        ? 'login'
+        : null
     },
   },
   {
@@ -71,7 +85,7 @@ const routes = [
     authorize: authHandlers.superuserOrAdmin,
     trigger: {
       activate: (store, params) => {
-        if(params.id == 'new') return
+        if (params.id === 'new') return
         store.dispatch(userActions.get(params.id))
       },
     },
@@ -91,7 +105,7 @@ const routes = [
     path: '/accesstoken',
     authorize: authHandlers.user,
     trigger: {
-      activate: (store, params) => {
+      activate: (store) => {
         store.dispatch(userActions.getAccessToken())
       },
     },
@@ -112,7 +126,7 @@ const routes = [
     trigger: {
       activate: (store, params) => {
         store.dispatch(clusterActions.listRoles(params.id))
-        if(params.id == 'new') return
+        if (params.id === 'new') return
         store.dispatch(networkActions.startLoading('cluster.get'))
         store.dispatch(clusterActions.get(params.id))
         store.dispatch(clusterActions.listTasks(params.id))
@@ -131,7 +145,7 @@ const routes = [
         store.dispatch(clusterActions.getSummary(params.cluster))
         store.dispatch(clusterActions.startResourcesLoop(params.cluster))
         store.dispatch(deploymentActions.list({
-          cluster: params.cluster
+          cluster: params.cluster,
         }))
       },
       deactivate: (store) => store.dispatch(clusterActions.stopResourcesLoop()),
@@ -160,7 +174,7 @@ const routes = [
     trigger: {
       activate: (store, params) => {
         store.dispatch(deploymentActions.listRoles(params.cluster, params.id))
-        if(params.id == 'new') return
+        if (params.id === 'new') return
         store.dispatch(networkActions.startLoading('deployment.get'))
         store.dispatch(deploymentActions.get(params.cluster, params.id))
         store.dispatch(deploymentActions.listTasks(params.cluster, params.id))
@@ -168,7 +182,7 @@ const routes = [
       deactivate: (store) => {
         store.dispatch(networkActions.clearError('deployment.form'))
         store.dispatch(customizationActions.clearYamlInput())
-      }
+      },
     },
   },
   {
@@ -189,7 +203,7 @@ const routes = [
       deactivate: (store) => {
         store.dispatch(deploymentActions.stopResourcesLoop())
         store.dispatch(customizationActions.clearYamlInput(0))
-      }
+      },
     },
   },
   {
@@ -208,7 +222,7 @@ const routes = [
         activate: (store, params) => {
           store.dispatch(deploymentSettingsActions.listKeyManagerKeys({
             cluster: params.cluster,
-            id: params.id
+            id: params.id,
           }))
         },
       },
@@ -219,16 +233,13 @@ const routes = [
         activate: (store, params) => {
           store.dispatch(deploymentSettingsActions.listKeyManagerKeys({
             cluster: params.cluster,
-            id: params.id
+            id: params.id,
           }))
           store.dispatch(deploymentSettingsActions.listParticipants({
             cluster: params.cluster,
-            id: params.id
+            id: params.id,
           }))
         },
-        deactivate: (store, params) => {
-
-        }
       },
     }, {
       name: 'damlArchives',
@@ -237,12 +248,9 @@ const routes = [
         activate: (store, params) => {
           store.dispatch(deploymentSettingsActions.listArchives({
             cluster: params.cluster,
-            id: params.id
+            id: params.id,
           }))
         },
-        deactivate: (store, params) => {
-
-        }
       },
     }, {
       name: 'damlTimeService',
@@ -251,18 +259,15 @@ const routes = [
         activate: (store, params) => {
           store.dispatch(deploymentSettingsActions.listTimeServiceInfo({
             cluster: params.cluster,
-            id: params.id
+            id: params.id,
           }))
         },
-        deactivate: (store, params) => {
-
-        }
       },
     }, {
       name: 'taekionCli',
       path: '/taekion/cli',
       trigger: {
-        activate: (store, params) => {
+        activate: (store) => {
           store.dispatch(userActions.getAccessToken())
         },
       },
@@ -273,7 +278,7 @@ const routes = [
         activate: (store, params) => {
           store.dispatch(taekionActions.listKeys({
             cluster: params.cluster,
-            deployment: params.id
+            deployment: params.id,
           }))
         },
       },
@@ -284,11 +289,11 @@ const routes = [
         activate: (store, params) => {
           store.dispatch(taekionActions.listKeys({
             cluster: params.cluster,
-            deployment: params.id
+            deployment: params.id,
           }))
           store.dispatch(taekionActions.listVolumes({
             cluster: params.cluster,
-            deployment: params.id
+            deployment: params.id,
           }))
         },
       },
@@ -299,7 +304,7 @@ const routes = [
         activate: (store, params) => {
           store.dispatch(taekionActions.listVolumes({
             cluster: params.cluster,
-            deployment: params.id
+            deployment: params.id,
           }))
           store.dispatch(taekionActions.listSnapshots({
             cluster: params.cluster,
@@ -308,10 +313,9 @@ const routes = [
           }))
         },
       },
-    }]
+    }],
 
   },
 ]
-
 
 export default routes

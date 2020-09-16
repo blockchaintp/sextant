@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContext } from 'react-dnd'
@@ -7,9 +7,6 @@ import selectors from 'store/selectors'
 import Loading from 'components/system/Loading'
 
 import LayoutMain from 'containers/Layout'
-
-import Route from './Route'
-import RouteContext from './RouteContext'
 
 import NotFound from 'containers/NotFound'
 import Login from 'containers/auth/Login'
@@ -38,31 +35,31 @@ import DeploymentSettingsTaekionCli from 'containers/deployment/taekion/Cli'
 import DeploymentSettingsTaekionKeys from 'containers/deployment/taekion/Keys'
 import DeploymentSettingsTaekionVolumes from 'containers/deployment/taekion/Volumes'
 import DeploymentSettingsTaekionSnapshots from 'containers/deployment/taekion/Snapshots'
+import Administration from '../containers/Administration'
 
+import Route from './Route'
+import RouteContext from './RouteContext'
 
 @connect(
-  state => {
-    return {
-      userLoaded: selectors.auth.loaded(state),
-      route: selectors.router.route(state),
-    }
-  },
+  (state) => ({
+    userLoaded: selectors.auth.loaded(state),
+    route: selectors.router.route(state),
+  }),
   {
 
-  }
+  },
 )
 class Router extends React.Component {
-
   render() {
     const {
       userLoaded,
       route,
     } = this.props
 
-    if(!userLoaded || !route) return <Loading />
+    if (!userLoaded || !route) return <Loading />
 
     return (
-      <RouteContext.Provider value={ route.name }>
+      <RouteContext.Provider value={route.name}>
         <LayoutMain>
           <Route segment="notfound" exact>
             <NotFound />
@@ -130,6 +127,9 @@ class Router extends React.Component {
                 <DeploymentSettingsTaekionSnapshots />
               </Route>
             </DeploymentSettingsTabs>
+          </Route>
+          <Route segment="administration" exact>
+            <Administration />
           </Route>
         </LayoutMain>
       </RouteContext.Provider>
