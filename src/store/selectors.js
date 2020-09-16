@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable import/no-cycle */
 import { createSelector } from 'reselect'
 import routes from 'router/routes'
 import findRoute from 'router/utils/findRoute'
@@ -5,13 +7,13 @@ import findRoute from 'router/utils/findRoute'
 // pluck a single prop from a previous selector
 const prop = (baseSelector, propName) => createSelector(
   baseSelector,
-  data => (data || {})[propName],
+  (data) => (data || {})[propName],
 )
 
 // return an object of prop selectors given a base selector
 // and an array of prop names
 const props = (baseSelector, propNames) => propNames.reduce((all, propName) => {
-  if(typeof(propName) == 'string') {
+  if (typeof (propName) === 'string') {
     propName = {
       selectorName: propName,
       dataField: propName,
@@ -21,12 +23,10 @@ const props = (baseSelector, propNames) => propNames.reduce((all, propName) => {
   return all
 }, {})
 
-const networkProps = (prefix, fields) => fields.map(field => {
-  return {
-    selectorName: field,
-    dataField: [prefix, field].join('.'),
-  }
-})
+const networkProps = (prefix, fields) => fields.map((field) => ({
+  selectorName: field,
+  dataField: [prefix, field].join('.'),
+}))
 
 const entity = ({
   baseSelector,
@@ -34,25 +34,23 @@ const entity = ({
 }) => {
   const entities = createSelector(
     baseSelector,
-    baseStore => baseStore.entities[entityName] || {},
+    (baseStore) => baseStore.entities[entityName] || {},
   )
   const ids = createSelector(
     baseSelector,
-    baseStore => baseStore.result || [],
+    (baseStore) => baseStore.result || [],
   )
   const list = createSelector(
     entities,
     ids,
-    (entities, ids) => ids.map(id => entities[id])
+    (entities, ids) => ids.map((id) => entities[id]),
   )
   const item = createSelector(
     entities,
     routeParamId,
-    (entities, id) => {
-      return id == 'new' ?
-        {} :
-        entities[id]
-    },
+    (entities, id) => (id === 'new'
+      ? {}
+      : entities[id]),
   )
 
   return {
@@ -63,23 +61,23 @@ const entity = ({
   }
 }
 
-const networkErrors = state => state.network.errors
-const networkLoading = state => state.network.loading
+const networkErrors = (state) => state.network.errors
+const networkLoading = (state) => state.network.loading
 
-const route = state => state.router.route
-const previousRoute = state => state.router.previousRoute
+const route = (state) => state.router.route
+const previousRoute = (state) => state.router.previousRoute
 const routeParams = prop(route, 'params')
 const routeName = prop(route, 'name')
 const routeParamId = createSelector(
   routeParams,
-  params => params.id,
+  (params) => params.id,
 )
 const routeSegments = createSelector(
   routeName,
-  name => name.split('.'),
+  (name) => name.split('.'),
 )
 
-const authStore = state => state.auth
+const authStore = (state) => state.auth
 const authData = prop(authStore, 'data')
 
 const AUTH_NETWORK_NAMES = networkProps('auth', [
@@ -88,7 +86,7 @@ const AUTH_NETWORK_NAMES = networkProps('auth', [
   'logout',
 ])
 
-const userStore = state => state.user
+const userStore = (state) => state.user
 
 const USER_NETWORK_NAMES = networkProps('user', [
   'hasInitialUser',
@@ -99,7 +97,7 @@ const USER_NETWORK_NAMES = networkProps('user', [
   'get',
 ])
 
-const clusterStore = state => state.cluster
+const clusterStore = (state) => state.cluster
 
 const CLUSTER_NETWORK_NAMES = networkProps('cluster', [
   'form',
@@ -107,7 +105,7 @@ const CLUSTER_NETWORK_NAMES = networkProps('cluster', [
   'get',
 ])
 
-const deploymentStore = state => state.deployment
+const deploymentStore = (state) => state.deployment
 
 const DEPLOYMENT_NETWORK_NAMES = networkProps('deployment', [
   'form',
@@ -115,17 +113,15 @@ const DEPLOYMENT_NETWORK_NAMES = networkProps('deployment', [
   'get',
 ])
 
-const deploymentSettingsStore = state => state.deploymentSettings
+const deploymentSettingsStore = (state) => state.deploymentSettings
 
 const DEPLOYMENT_SETTINGS_NETWORK_NAMES = networkProps('deploymentSettings', [
   'listKeyManagerKeys',
   'listEnrolledKeys',
   'addEnrolledKey',
-  //'listDamlParticipants',
-  //'createRemoteKey',
 ])
 
-const taekionStore = state => state.taekion
+const taekionStore = (state) => state.taekion
 
 const TAEKION_NETWORK_NAMES = networkProps('taekion', [
   'listKeys',
@@ -137,11 +133,11 @@ const TAEKION_NETWORK_NAMES = networkProps('taekion', [
   'createSnapshot',
 ])
 
-const configStore = state => state.config
+const configStore = (state) => state.config
 const configData = prop(configStore, 'data')
 const forms = createSelector(
   configData,
-  configData => configData.forms || {},
+  (configData) => configData.forms || {},
 )
 const userForms = prop(forms, 'user')
 const clusterForms = prop(forms, 'cluster')
@@ -154,7 +150,7 @@ const userAccessFilter = (type) => createSelector(
   authData,
   userAccessLevels,
   (authData, userAccessLevels) => {
-    if(!authData) return false
+    if (!authData) return false
     return userAccessLevels[authData.permission] >= userAccessLevels[type]
   },
 )
@@ -165,23 +161,23 @@ const isAdmin = userAccessFilter('admin')
 const userAccessSummary = createSelector(
   isSuperuser,
   isAdmin,
-  (superuser, admin) => {
-    return {
-      superuser,
-      admin,
-    }
-  },
+  (superuser, admin) => ({
+    superuser,
+    admin,
+  }),
 )
 
 const CONFIG_NETWORK_NAMES = networkProps('config', [
   'data',
 ])
 
-const snackbarStore = state => state.snackbar
+const snackbarStore = (state) => state.snackbar
 
-const fileuploadStore = state => state.fileupload
+const fileuploadStore = (state) => state.fileupload
 
-const customizationStore = state => state.customization
+const customizationStore = (state) => state.customization
+
+const administrationStore = (state) => state.administration
 
 const selectors = {
 
@@ -233,7 +229,7 @@ const selectors = {
     segmentAfter: (state, segment) => {
       const parts = routeSegments(state)
       const segmentIndex = parts.indexOf(segment)
-      if(segmentIndex < 0) return null
+      if (segmentIndex < 0) return null
       return parts[segmentIndex + 1]
     },
   },
@@ -241,7 +237,8 @@ const selectors = {
   auth: {
     store: authStore,
     data: authData,
-    loggedIn: createSelector(authData, data => data ? true : false),
+    // eslint-disable-next-line no-unneeded-ternary
+    loggedIn: createSelector(authData, (data) => (data ? true : false)),
     errors: props(networkErrors, AUTH_NETWORK_NAMES),
     loading: props(networkLoading, AUTH_NETWORK_NAMES),
     isSuperuser,
@@ -399,6 +396,13 @@ const selectors = {
     store: customizationStore,
     ...props(customizationStore, [
       'yamlInput',
+    ]),
+  },
+
+  administration: {
+    store: administrationStore,
+    ...props(administrationStore, [
+      'restarting',
     ]),
   },
 
