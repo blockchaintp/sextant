@@ -40,7 +40,7 @@ const sideEffects = {
     try {
       await dispatch(actions.triggerRestart())
     } catch (error) {
-      console.log('trigger restart -ERROR\n', error);
+      error.log(error)
     }
 
     let hasRestarted = false
@@ -49,7 +49,7 @@ const sideEffects = {
         const currentCheck = await dispatch(actions.startTime())
         if (currentCheck !== initialStartTime) hasRestarted = true
       } catch (error) {
-        console.log('While loop -ERROR\n', error);
+        console.log(' server error expected during administration restart', error);
       }
     }
     dispatch(actions.setRestarting(false))
