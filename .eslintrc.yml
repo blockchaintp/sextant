@@ -18,6 +18,9 @@ rules:
   react/forbid-prop-types: 1
   react/jsx-props-no-spreading: 1
   react/state-in-constructor: 0
+  no-param-reassign: 0
+  no-use-before-define: 1
+  no-await-in-loop: 1
 settings:
   import/resolver:
     node:

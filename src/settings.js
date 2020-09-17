@@ -22,6 +22,7 @@ import RemoveIcon from '@material-ui/icons/RemoveCircle'
 import RepeatIcon from '@material-ui/icons/Repeat'
 import ViewArchiveIcon from '@material-ui/icons/ViewModule'
 import CreateArchiveIcon from '@material-ui/icons/AddAPhoto'
+import AdministrationIcon from '@material-ui/icons/BusinessCenter'
 
 import edition from './edition'
 
@@ -50,10 +51,11 @@ const icons = {
   build: BuildIcon,
   viewArchive: ViewArchiveIcon,
   createArchive: CreateArchiveIcon,
+  administration: AdministrationIcon,
 }
 
 const settings = {
-  edition: edition,
+  edition,
   title: 'Sextant',
   api: '/api/v1',
   devMode: process.env.NODE_ENV === 'development',
@@ -66,8 +68,7 @@ const settings = {
     isAdmin,
     handlers,
   }) => {
-    if(loggedIn) {
-
+    if (loggedIn) {
       const pages = [{
         title: 'Clusters',
         handler: 'clusters',
@@ -89,30 +90,35 @@ const settings = {
         })
       }
 
+      if (isSuperuser) {
+        pages.push({
+          title: 'Administration',
+          handler: 'administration',
+          icon: icons.administration,
+        })
+      }
+
       return pages.concat([
         '-',
         {
           title: 'Logout',
           handler: handlers.logout,
           icon: icons.logout,
-        }
+        },
       ])
     }
-    else {
-      return [{
-        title: 'Login',
-        handler: 'login',
-        icon: icons.login,
-      }]
-    }
+
+    return [{
+      title: 'Login',
+      handler: 'login',
+      icon: icons.login,
+    }]
   },
   appbarMenu: ({
     loggedIn,
-    isSuperuser,
-    isAdmin,
     handlers,
   }) => {
-    if(loggedIn) {
+    if (loggedIn) {
       return [{
         title: 'Account Details',
         handler: 'accountdetails',
@@ -127,13 +133,11 @@ const settings = {
         icon: icons.logout,
       }]
     }
-    else {
-      return [{
-        title: 'Login',
-        handler: 'login',
-        icon: icons.login,
-      }]
-    }
+    return [{
+      title: 'Login',
+      handler: 'login',
+      icon: icons.login,
+    }]
   },
 }
 

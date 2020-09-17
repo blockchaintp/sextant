@@ -12,6 +12,7 @@ import { reducer as config } from './modules/config'
 import { reducer as fileupload } from './modules/fileupload'
 import { reducer as customization } from './modules/customization'
 import { reducer as taekion } from './modules/taekion'
+import { reducer as administration } from './modules/administration'
 
 const reducers = {
   router,
@@ -26,6 +27,7 @@ const reducers = {
   fileupload,
   customization,
   taekion,
+  administration,
 }
 
 export default combineReducers(reducers)
