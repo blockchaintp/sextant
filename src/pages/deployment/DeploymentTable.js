@@ -108,7 +108,6 @@ class DeploymentTable extends React.Component {
       embedded,
       user,
     } = this.props
-
     const {
       deleteConfirmOpen,
       deleteConfirmItem,
@@ -185,6 +184,7 @@ class DeploymentTable extends React.Component {
       // versions is an array of objects.
       // Each object contains data for a version of the deploymentType
       return {
+        order: formConfig.order,
         versions: formConfig.button.versions.map((version) => ({
           icon: version.icon,
           title: version.title,
@@ -194,6 +194,11 @@ class DeploymentTable extends React.Component {
         })),
       }
     })
+    // remove charts that are not helm charts
+    const helmAddButtonItems = addButtonItems.filter((item) => item.order >= 0)
+
+    // sort the helm charts beased on the order value
+    helmAddButtonItems.sort((a, b) => ((a.order > b.order) ? 1 : -1))
 
     let addButtonDisabled = true
 
@@ -231,7 +236,7 @@ class DeploymentTable extends React.Component {
             variant: 'contained',
             color: 'secondary',
           }}
-          items={addButtonItems}
+          items={helmAddButtonItems}
           disabled={addButtonDisabled}
         />
       </div>
