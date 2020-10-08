@@ -34,9 +34,11 @@ class TaekionCli extends React.Component {
       snackbarMessage,
     } = this.props
 
+    const auth = `bearer:${accessToken}`
+
     const sextantApi = process.env.NODE_ENV == 'development' ?
-      `http://api` :
-      `${window.location.protocol}//${window.location.hostname}`
+      `http://${auth}@api` :
+      `${window.location.protocol}//${auth}@${window.location.hostname}`
 
     const devCommands = process.env.NODE_ENV == 'development' ?
       ` --network sextant-dev_default ` :
@@ -60,9 +62,8 @@ class TaekionCli extends React.Component {
   --privileged \\
   --init \\
   --device /dev/fuse \\
-  -e SEXTANT_API_KEY=${accessToken} \\
-  -e SEXTANT_API_URL=${sextantApi}/api/v1/clusters/${cluster}/deployments/${deployment}/taekion/rest_api \\
-  binocarlos/taekion-client-wrapper`}
+  -e TFS_URL=${sextantApi}/api/v1/clusters/${cluster}/deployments/${deployment}/taekion/rest_api \\
+  taekion/taekion-fs-client:latest`}
                 clipboard={ true }
                 snackbarMessage={ snackbarMessage }
               />
