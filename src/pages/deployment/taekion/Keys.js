@@ -112,7 +112,7 @@ class TaekionKeys extends React.Component {
     const data = keys.map((key, index) => {
       return {
         id: key.id,
-        name: key.name,
+        name: key.label,
         fingerprint: key.fingerprint,
       }
     })
@@ -136,13 +136,15 @@ class TaekionKeys extends React.Component {
 
     const getActions = () => {
   
-      const buttons = [{
-        title: 'Delete',
-        icon: DeleteIcon,
-        handler: onDeleteItem,
-      }]
+      // const buttons = [{
+      //   title: 'Delete',
+      //   icon: DeleteIcon,
+      //   handler: onDeleteItem,
+      // }]
 
-      return buttons
+      // return buttons
+
+      return []
     }
  
     const hooks = {
