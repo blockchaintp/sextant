@@ -6,6 +6,10 @@ import userActions from 'store/modules/user'
 import UserForm from 'pages/user/UserForm'
 import selectors from 'store/selectors'
 
+import {
+  initialUserForm,
+} from '../../forms'
+
 const initialValues = {
   username: '',
   permission: 'superuser',
@@ -17,7 +21,7 @@ const initialValues = {
   state => ({
     error: selectors.user.errors.form(state),
     loading: selectors.user.loading.form(state),
-    schema: selectors.config.forms.user.initialUser(state),
+    schema: initialUserForm,
     initialValues,
   }),
   {

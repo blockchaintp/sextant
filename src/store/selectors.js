@@ -137,7 +137,7 @@ const configStore = (state) => state.config
 const configData = prop(configStore, 'data')
 const forms = createSelector(
   configData,
-  (configData) => configData.forms || {},
+  (configData) => (configData ? configData.forms || {} : {}),
 )
 const userForms = prop(forms, 'user')
 const clusterForms = prop(forms, 'cluster')
@@ -150,7 +150,7 @@ const userAccessFilter = (type) => createSelector(
   authData,
   userAccessLevels,
   (authData, userAccessLevels) => {
-    if (!authData) return false
+    if (!authData || !userAccessLevels) return false
     return userAccessLevels[authData.permission] >= userAccessLevels[type]
   },
 )
