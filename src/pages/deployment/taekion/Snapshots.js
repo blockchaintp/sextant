@@ -1,14 +1,12 @@
+/* eslint-disable no-shadow */
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import SimpleTable from 'components/table/SimpleTable'
-import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
-import Input from '@material-ui/core/Input'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Dialog from '@material-ui/core/Dialog'
@@ -17,16 +15,14 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
-
 import FormWrapper from 'components/form/Wrapper'
 
 import settings from 'settings'
 
 const AddIcon = settings.icons.add
-const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     padding: theme.spacing.unit * 2,
   },
@@ -45,10 +41,10 @@ const styles = theme => ({
   },
 })
 
-const TABLE_FIELDS =[{
+const TABLE_FIELDS = [{
   title: 'Volume',
   name: 'volume_name',
-},{
+}, {
   title: 'Name',
   name: 'name',
 }]
@@ -73,7 +69,7 @@ const FORM_SCHEMA = [{
     type: 'string',
     methods: [
       ['required', 'Required'],
-      ['matches', ['^[\\w]{1,128}$'], "must be alphanumeric name, with no spaces or dashes and maximum 128 characters"]
+      ['matches', ['^[\\w]{1,128}$'], 'must be alphanumeric name, with no spaces or dashes and maximum 128 characters'],
     ],
   },
 }]
@@ -84,13 +80,8 @@ const FORM_INITIAL_VALUES = {
 }
 
 class TaekionSnapshots extends React.Component {
-
   state = {
     deleteItem: null,
-  }
-
-  constructor(props) {
-    super(props)
   }
 
   // this for when we click the "create snapshot" button on the volumes page
@@ -103,9 +94,9 @@ class TaekionSnapshots extends React.Component {
       onOpenAddSnapshotWindow,
     } = this.props
 
-    if(params.create == 'yes') {
-      const newParams = Object.assign({}, params)
-      delete(newParams.create)
+    if (params.create === 'yes') {
+      const newParams = { ...params }
+      delete (newParams.create)
       onChangeVolume(params.volume, newParams)
       onOpenAddSnapshotWindow()
     }
@@ -146,7 +137,6 @@ class TaekionSnapshots extends React.Component {
       })
     }
 
-
     const onConfirmDeleteItem = () => {
       this.setState({
         deleteItem: null,
@@ -172,7 +162,7 @@ class TaekionSnapshots extends React.Component {
       return all
     }, {})
 
-    const data = snapshots.map((snapshot, index) => {
+    const data = snapshots.map((snapshot) => {
       const volume = volumesById[snapshot.volume]
       return {
         id: `${snapshot.volume}-${snapshot.name}`,
@@ -185,55 +175,50 @@ class TaekionSnapshots extends React.Component {
     const volumeOptions = [{
       id: 'all',
       name: 'All',
-    }].concat(volumes.map(volume => {
-      return {
-        id: volume.uuid,
-        name: volume.name,
-      }
-    }))
+    }].concat(volumes.map((volume) => ({
+      id: volume.uuid,
+      name: volume.name,
+    })))
 
     const headerActions = (
-      <div className={ classes.headerActions }>
-        <div className={ classes.volumeSelect }>
+      <div className={classes.headerActions}>
+        <div className={classes.volumeSelect}>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="name-readonly">Volume</InputLabel>
             <Select
-              value={ volume }
-              onChange={ (ev) => onChangeVolume(ev.target.value, params) }
+              value={volume}
+              onChange={(ev) => onChangeVolume(ev.target.value, params)}
             >
               {
                 volumeOptions
-                  .map((volume, i) => {
-                    return (
-                      <MenuItem
-                        key={ i }
-                        value={ volume.id }
-                      >
-                        { volume.name }
-                      </MenuItem>
-                    )
-                  })
+                  .map((volume, i) => (
+                    <MenuItem
+                      key={i}
+                      value={volume.id}
+                    >
+                      { volume.name }
+                    </MenuItem>
+                  ))
               }
             </Select>
           </FormControl>
         </div>
-        <div className={ classes.addButton }>
+        <div className={classes.addButton}>
           <Button
-            _ci='addbutton'
-            className={ classes.button }
-            variant= 'contained'
-            color= 'secondary'
-            onClick={ onOpenAddSnapshotWindow }
+            _ci="addbutton"
+            className={classes.button}
+            variant="contained"
+            color="secondary"
+            onClick={onOpenAddSnapshotWindow}
           >
             Add
-          <AddIcon />
+            <AddIcon />
           </Button>
         </div>
       </div>
     )
 
     const getActions = () => {
-  
       const buttons = [{
         title: 'Delete',
         icon: DeleteIcon,
@@ -246,86 +231,76 @@ class TaekionSnapshots extends React.Component {
     const hooks = {
       validate: (values) => {
         const errors = {}
-        if(values.volume == 'all') errors.volume = 'Please choose a volume'
+        if (values.volume === 'all') errors.volume = 'Please choose a volume'
         return errors
       },
       processItem: ({
         item,
-        values,
       }) => {
-        if(item.id == 'volume') {
-          return Object.assign({}, item, {
-            options: volumes.map(volume => {
-              return {
-                title: volume.name,
-                value: volume.uuid,
-              }
-            })
-          })
+        if (item.id === 'volume') {
+          return {
+            ...item,
+            options: volumes.map((volume) => ({
+              title: volume.name,
+              value: volume.uuid,
+            })),
+          }
         }
-        else {
-          return item
-        }
+        return item
       },
     }
 
-    const useInitialValues = Object.assign({}, FORM_INITIAL_VALUES, {
-      volume,
-    })
+    const useInitialValues = { ...FORM_INITIAL_VALUES, volume }
 
     return (
       <div>
         <SimpleTableHeader
           title="Snapshots"
-          getActions={ () => headerActions }
+          getActions={() => headerActions}
         />
         <SimpleTable
           pagination
-          data={ data }
-          fields={ TABLE_FIELDS }
-          getActions={ (item) => {
-            return (
-              <SimpleTableActions
-                item={ item }
-                actions={ getActions(item) }
-              />
-            )
-          }}
+          data={data}
+          fields={TABLE_FIELDS}
+          getActions={(item) => (
+            <SimpleTableActions
+              item={item}
+              actions={getActions(item)}
+            />
+          )}
         />
         {
           addSnapshotWindowOpen && (
             <FormWrapper
-              schema={ FORM_SCHEMA }
-              initialValues={ useInitialValues }
-              error={ addSnapshotError }
-              onSubmit={ onSubmitForm }
-              hooks={ hooks }
-              renderForm={ ({
+              schema={FORM_SCHEMA}
+              initialValues={useInitialValues}
+              error={addSnapshotError}
+              onSubmit={onSubmitForm}
+              hooks={hooks}
+              renderForm={({
                 content,
                 handleSubmit,
-              }) => {
-                return (
-                  <Dialog
-                    open
-                    onClose={ onCloseAddSnapshotWindow }
-                    fullWidth
-                    maxWidth="lg"
-                  >
-                    <DialogTitle id="alert-dialog-title">Create Snapshot</DialogTitle>
-                    <DialogContent>
-                      { content }
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={ onCloseAddSnapshotWindow }>
-                        Cancel
-                      </Button>
-                      <Button onClick={ handleSubmit } variant="contained" color="secondary" autoFocus>
-                        Create
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                )
-              }}
+              }) => (
+                <Dialog
+                  open
+                  onClose={onCloseAddSnapshotWindow}
+                  fullWidth
+                  maxWidth="lg"
+                >
+                  <DialogTitle id="alert-dialog-title">Create Snapshot</DialogTitle>
+                  <DialogContent>
+                    { content }
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={onCloseAddSnapshotWindow}>
+                      Cancel
+                    </Button>
+                    <Button onClick={handleSubmit} variant="contained" color="secondary" autoFocus>
+                      Create
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              )}
             />
           )
         }
@@ -333,19 +308,23 @@ class TaekionSnapshots extends React.Component {
           deleteItem && (
             <Dialog
               open
-              onClose={ onCancelDeleteItem }
+              onClose={onCancelDeleteItem}
               fullWidth
               maxWidth="sm"
             >
               <DialogTitle id="alert-dialog-title">Confirm delete</DialogTitle>
               <DialogContent>
-                <DialogContentText>Are you absolutely sure you want to delete the { deleteItem.name } snapshot?</DialogContentText>
+                <DialogContentText>
+                  Are you absolutely sure you want to delete the
+                  { deleteItem.name }
+                  snapshot?
+                </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={ onCancelDeleteItem }>
+                <Button onClick={onCancelDeleteItem}>
                   Close
                 </Button>
-                <Button onClick={ onConfirmDeleteItem } variant="contained" color="secondary" autoFocus>
+                <Button onClick={onConfirmDeleteItem} variant="contained" color="secondary" autoFocus>
                   Delete
                 </Button>
               </DialogActions>
