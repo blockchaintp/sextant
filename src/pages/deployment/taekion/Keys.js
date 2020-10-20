@@ -186,6 +186,11 @@ class TaekionKeys extends React.Component {
                   onClose={onCloseAddKeyWindow}
                   fullWidth
                   maxWidth="md"
+                  onKeyPress={(ev) => {
+                    if (ev.key === 'Enter') {
+                      ev.preventDefault();
+                    }
+                  }}
                 >
                   <DialogTitle id="alert-dialog-title">Add Key</DialogTitle>
                   <DialogContent>
@@ -211,6 +216,11 @@ class TaekionKeys extends React.Component {
               onClose={onCloseKeyResultWindow}
               fullWidth
               maxWidth="md"
+              onKeyPress={(ev) => {
+                if (ev.key === 'Enter') {
+                  ev.preventDefault();
+                }
+              }}
             >
               <DialogTitle id="alert-dialog-title">Save your key</DialogTitle>
               <DialogContent>
@@ -242,6 +252,11 @@ class TaekionKeys extends React.Component {
               onClose={onCancelDeleteItem}
               fullWidth
               maxWidth="sm"
+              onKeyPress={(ev) => {
+                if (ev.key === 'Enter') {
+                  ev.preventDefault();
+                }
+              }}
             >
               <DialogTitle id="alert-dialog-title">Confirm delete</DialogTitle>
               <DialogContent>

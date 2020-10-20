@@ -310,6 +310,11 @@ class TaekionVolumes extends React.Component {
                   onClose={onCloseAddVolumeWindow}
                   fullWidth
                   maxWidth="lg"
+                  onKeyPress={(ev) => {
+                    if (ev.key === 'Enter') {
+                      ev.preventDefault();
+                    }
+                  }}
                 >
                   <DialogTitle id="alert-dialog-title">Add Volume</DialogTitle>
                   <DialogContent>
@@ -335,6 +340,11 @@ class TaekionVolumes extends React.Component {
               onClose={onCancelDeleteItem}
               fullWidth
               maxWidth="sm"
+              onKeyPress={(ev) => {
+                if (ev.key === 'Enter') {
+                  ev.preventDefault();
+                }
+              }}
             >
               <DialogTitle id="alert-dialog-title">Confirm delete</DialogTitle>
               <DialogContent>
@@ -372,6 +382,11 @@ class TaekionVolumes extends React.Component {
                   onClose={onCancelEditVolume}
                   fullWidth
                   maxWidth="lg"
+                  onKeyPress={(ev) => {
+                    if (ev.key === 'Enter') {
+                      ev.preventDefault();
+                    }
+                  }}
                 >
                   <DialogTitle id="alert-dialog-title">Edit Volume</DialogTitle>
                   <DialogContent>

@@ -286,6 +286,11 @@ class TaekionSnapshots extends React.Component {
                   onClose={onCloseAddSnapshotWindow}
                   fullWidth
                   maxWidth="lg"
+                  onKeyPress={(ev) => {
+                    if (ev.key === 'Enter') {
+                      ev.preventDefault();
+                    }
+                  }}
                 >
                   <DialogTitle id="alert-dialog-title">Create Snapshot</DialogTitle>
                   <DialogContent>
@@ -311,6 +316,11 @@ class TaekionSnapshots extends React.Component {
               onClose={onCancelDeleteItem}
               fullWidth
               maxWidth="sm"
+              onKeyPress={(ev) => {
+                if (ev.key === 'Enter') {
+                  ev.preventDefault();
+                }
+              }}
             >
               <DialogTitle id="alert-dialog-title">Confirm delete</DialogTitle>
               <DialogContent>
