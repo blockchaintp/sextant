@@ -163,7 +163,7 @@ class TaekionSnapshots extends React.Component {
     }, {})
 
     const data = snapshots.map((snapshot) => {
-      const volume = volumesById[snapshot.volume]
+      const volume = volumesById[snapshot.volumeuuid]
       return {
         id: `${snapshot.volume}-${snapshot.name}`,
         name: snapshot.name,
