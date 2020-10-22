@@ -18,24 +18,22 @@ import FormWrapper from 'components/form/Wrapper'
 import settings from 'settings'
 
 const AddIcon = settings.icons.add
-const EditIcon = settings.icons.edit
-const DeleteIcon = settings.icons.delete
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     padding: theme.spacing.unit * 2,
   },
 })
 
-const TABLE_FIELDS =[{
+const TABLE_FIELDS = [{
   title: 'Name',
   name: 'name',
-},{
+}, {
   title: 'Fingerprint',
   name: 'fingerprint',
 }]
 
-const FORM_SCHEMA = [ {
+const FORM_SCHEMA = [{
   id: 'name',
   title: 'Name',
   helperText: 'The name of your key',
@@ -53,13 +51,8 @@ const FORM_INITIAL_VALUES = {
 }
 
 class TaekionKeys extends React.Component {
-
   state = {
     deleteItem: null,
-  }
-
-  constructor(props) {
-    super(props)
   }
 
   render() {
@@ -101,6 +94,7 @@ class TaekionKeys extends React.Component {
       })
     }
 
+    // eslint-disable-next-line no-unused-vars
     const onDeleteItem = (item) => this.setState({
       deleteItem: item,
     })
@@ -109,33 +103,31 @@ class TaekionKeys extends React.Component {
       deleteItem: null,
     })
 
-    const data = keys.map((key, index) => {
-      return {
-        id: key.id,
-        name: key.label,
-        fingerprint: key.fingerprint,
-      }
-    })
+    const data = keys.map((key) => ({
+      id: key.id,
+      name: key.label,
+      fingerprint: key.fingerprint,
+    }))
 
     const headerActions = (
-      <div className={ classes.headerActions }>
-        <div className={ classes.addButton }>
+      <div className={classes.headerActions}>
+        <div className={classes.addButton}>
           <Button
-            _ci='addbutton'
-            className={ classes.button }
-            variant= 'contained'
-            color= 'secondary'
-            onClick={ onOpenAddKeyWindow }
+            _ci="addbutton"
+            className={classes.button}
+            variant="contained"
+            color="secondary"
+            onClick={onOpenAddKeyWindow}
           >
             Add
-          <AddIcon />
+            <AddIcon />
           </Button>
         </div>
       </div>
     )
 
+    // eslint-disable-next-line arrow-body-style
     const getActions = () => {
-  
       // const buttons = [{
       //   title: 'Delete',
       //   icon: DeleteIcon,
@@ -146,14 +138,13 @@ class TaekionKeys extends React.Component {
 
       return []
     }
- 
+
     const hooks = {
-      validate: (values,) => {
+      validate: (values) => {
         const errors = {}
-        const keys = this.props.keys        
 
         if (keys.find(({ name }) => name === values.name)) {
-          errors.keys = `You must choose a unique key name`
+          errors.keys = 'You must choose a unique key name'
         }
 
         return errors
@@ -164,56 +155,57 @@ class TaekionKeys extends React.Component {
       <div>
         <SimpleTableHeader
           title="Keys"
-          getActions={ () => headerActions }
+          getActions={() => headerActions}
         />
         <SimpleTable
           pagination
-          data={ data }
-          fields={ TABLE_FIELDS }
-          getActions={ (item) => {
-            return (
-              <SimpleTableActions
-                item={ item }
-                actions={ getActions(item) }
-              />
-            )
-          }}
+          data={data}
+          fields={TABLE_FIELDS}
+          getActions={(item) => (
+            <SimpleTableActions
+              item={item}
+              actions={getActions(item)}
+            />
+          )}
         />
         {
           addKeyWindowOpen && (
             <FormWrapper
               hooks={hooks}
               keys={keys}
-              schema={ FORM_SCHEMA }
-              initialValues={ FORM_INITIAL_VALUES }
-              error={ addKeyError }
-              onSubmit={ onSubmitForm }
-              renderForm={ ({
+              schema={FORM_SCHEMA}
+              initialValues={FORM_INITIAL_VALUES}
+              error={addKeyError}
+              onSubmit={onSubmitForm}
+              renderForm={({
                 content,
                 handleSubmit,
-              }) => {
-                return (
-                  <Dialog
-                    open
-                    onClose={ onCloseAddKeyWindow }
-                    fullWidth
-                    maxWidth="md"
-                  >
-                    <DialogTitle id="alert-dialog-title">Add Key</DialogTitle>
-                    <DialogContent>
-                      { content }
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={ onCloseAddKeyWindow }>
-                        Cancel
-                      </Button>
-                      <Button onClick={ handleSubmit } variant="contained" color="secondary" autoFocus>
-                        Add
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                )
-              }}
+              }) => (
+                <Dialog
+                  open
+                  onClose={onCloseAddKeyWindow}
+                  fullWidth
+                  maxWidth="md"
+                  onKeyPress={(ev) => {
+                    if (ev.key === 'Enter') {
+                      ev.preventDefault();
+                    }
+                  }}
+                >
+                  <DialogTitle id="alert-dialog-title">Add Key</DialogTitle>
+                  <DialogContent>
+                    { content }
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={onCloseAddKeyWindow}>
+                      Cancel
+                    </Button>
+                    <Button onClick={handleSubmit} variant="contained" color="secondary" autoFocus>
+                      Add
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              )}
             />
           )
         }
@@ -221,22 +213,32 @@ class TaekionKeys extends React.Component {
           addKeyResult && (
             <Dialog
               open
-              onClose={ onCloseKeyResultWindow }
+              onClose={onCloseKeyResultWindow}
               fullWidth
               maxWidth="md"
+              onKeyPress={(ev) => {
+                if (ev.key === 'Enter') {
+                  ev.preventDefault();
+                }
+              }}
             >
               <DialogTitle id="alert-dialog-title">Save your key</DialogTitle>
               <DialogContent>
-                <DialogContentText>Your key has been created - please save it locally.</DialogContentText>
-                <DialogContentText><strong>IMPORTANT:</strong> this is the only time you will see this key so please keep it safe.</DialogContentText>
+                <DialogContentText>
+                  Your key has been created - please save it locally.
+                </DialogContentText>
+                <DialogContentText>
+                  <strong>IMPORTANT:</strong>
+                  this is the only time you will see this key so please keep it safe.
+                </DialogContentText>
                 <CodeBlock
-                  code={ addKeyResult.key }
-                  clipboard={ true }
-                  snackbarMessage={ () => "Key copied to clipboard" }
+                  code={addKeyResult.key}
+                  clipboard
+                  snackbarMessage={() => 'Key copied to clipboard'}
                 />
               </DialogContent>
               <DialogActions>
-                <Button onClick={ onCloseKeyResultWindow }>
+                <Button onClick={onCloseKeyResultWindow}>
                   Close
                 </Button>
               </DialogActions>
@@ -247,19 +249,28 @@ class TaekionKeys extends React.Component {
           deleteItem && (
             <Dialog
               open
-              onClose={ onCancelDeleteItem }
+              onClose={onCancelDeleteItem}
               fullWidth
               maxWidth="sm"
+              onKeyPress={(ev) => {
+                if (ev.key === 'Enter') {
+                  ev.preventDefault();
+                }
+              }}
             >
               <DialogTitle id="alert-dialog-title">Confirm delete</DialogTitle>
               <DialogContent>
-                <DialogContentText>Are you absolutely sure you want to delete the { deleteItem.name } key?</DialogContentText>
+                <DialogContentText>
+                  Are you absolutely sure you want to delete the
+                  { deleteItem.name }
+                  key?
+                </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={ onCancelDeleteItem }>
+                <Button onClick={onCancelDeleteItem}>
                   Close
                 </Button>
-                <Button onClick={ onConfirmDeleteItem } variant="contained" color="secondary" autoFocus>
+                <Button onClick={onConfirmDeleteItem} variant="contained" color="secondary" autoFocus>
                   Delete
                 </Button>
               </DialogActions>
