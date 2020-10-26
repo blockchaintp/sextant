@@ -1,4 +1,7 @@
-import { call, take, put, all, takeEvery, fork, cancel, cancelled, race, delay, select } from 'redux-saga/effects'
+/* eslint-disable consistent-return */
+import {
+  call, take, put, all, takeEvery, fork, cancel, cancelled, race, delay, select,
+} from 'redux-saga/effects'
 import { eventChannel, END } from 'redux-saga'
 import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
@@ -8,7 +11,7 @@ import snackbarActions from './snackbar'
 
 const prefix = 'fileupload'
 
-const initialState = {  
+const initialState = {
 
   // are we currently uploading
   inProgress: false,
@@ -44,9 +47,8 @@ const reducers = {
 
   // create a upload status object for each of the files being uploaded
   startUploads: (state, action) => {
-
     resetState(state)
-    
+
     const {
       files,
       method,
@@ -63,8 +65,8 @@ const reducers = {
     state.inProgress = true
     state.error = null
 
-    state.status = files.reduce((all, file) => {
-      all[file.name] = {
+    state.status = files.reduce((allFiles, file) => {
+      allFiles[file.name] = {
         startTime: new Date().getTime(),
         size: file.size,
         uploadedBytes: 0,
@@ -72,7 +74,7 @@ const reducers = {
         percentDone: 0,
         remainingTime: 0,
       }
-      return all
+      return allFiles
     }, {})
   },
 
@@ -91,7 +93,7 @@ const reducers = {
     const percent = Math.floor((loaded / total) * 100)
 
     const status = state.status[filename] || {}
-    
+
     const timeUploading = (new Date().getTime()) - status.startTime
     const timePerPercent = percent > 0 ? timeUploading / percent : 0
     const percentLeft = 100 - percent
@@ -126,6 +128,7 @@ const reducers = {
   cancel: (state) => {
     state.inProgress = false
   },
+
 }
 
 const getFileUrlQuery = (file) => {
@@ -134,9 +137,7 @@ const getFileUrlQuery = (file) => {
     type: file.type,
     size: file.size,
   }
-  return Object.keys(params).map(key => {
-    return `${key}=${encodeURIComponent(params[key])}`
-  }).join('&')
+  return Object.keys(params).map((key) => `${key}=${encodeURIComponent(params[key])}`).join('&')
 }
 
 // upload a single file to the backend api
@@ -148,13 +149,12 @@ const apiUploader = ({
   onProgress,
   onComplete,
 }) => {
-
   const xhr = new XMLHttpRequest()
-  let cancelled = false
+  let cancelledStatus = false
 
   const loader = (resolve, reject) => {
     const eventOnProgress = (e) => {
-      if(cancelled) {
+      if (cancelledStatus) {
         return
       }
       if (e.lengthComputable) {
@@ -163,56 +163,55 @@ const apiUploader = ({
     }
 
     const eventOnFailure = (e) => {
-      if(cancelled) return
+      if (cancelledStatus) return
       onComplete()
       return reject(e)
     }
-    
+
     const eventOnSuccess = () => {
-      if(cancelled) return
+      if (cancelledStatus) return
       onComplete()
       return resolve()
     }
 
-    xhr.upload.addEventListener("progress", eventOnProgress, false)
-    xhr.upload.addEventListener("error", eventOnFailure)
-    xhr.upload.addEventListener("abort", eventOnSuccess)
+    xhr.upload.addEventListener('progress', eventOnProgress, false)
+    xhr.upload.addEventListener('error', eventOnFailure)
+    xhr.upload.addEventListener('abort', eventOnSuccess)
 
     xhr.onreadystatechange = () => {
-      if(cancelled) return
+      if (cancelledStatus) return
       const { readyState, status } = xhr
       if (readyState === 4) {
         const headers = xhr.getAllResponseHeaders()
-        const response = headers.indexOf('content-type: application/json') >= 0 ?
-          JSON.parse(xhr.response) : 
-          xhr.response
+        const response = headers.indexOf('content-type: application/json') >= 0
+          ? JSON.parse(xhr.response)
+          : xhr.response
 
         if (status < 400) {
           resolve(response)
-        }
-        else {
-          const bodyMessage = response.error ?
-            response.error :
-            response
+        } else {
+          const bodyMessage = response.error
+            ? response.error
+            : response
           eventOnFailure(`${status}: ${bodyMessage}`)
         }
       }
     }
 
     const queryParams = getFileUrlQuery(file)
-    const seperator = url.indexOf('?') >= 0 ?
-      '&' :
-      '?'
-    let useUrl = url + seperator + queryParams
+    const seperator = url.indexOf('?') >= 0
+      ? '&'
+      : '?'
+    const useUrl = url + seperator + queryParams
     xhr.open(method || 'POST', useUrl, true)
-    if(authHeader) {
+    if (authHeader) {
       xhr.setRequestHeader('Authorization', authHeader)
     }
     xhr.send(file)
   }
 
   loader.cancel = () => {
-    cancelled = true
+    cancelledStatus = true
     xhr.abort()
   }
 
@@ -246,7 +245,7 @@ const createUploader = ({
       })
       if (loaded >= total) emit(END)
     },
-    onComplete: () => emit(END)
+    onComplete: () => emit(END),
   })
 
   // return the uploader promise and progress channel
@@ -281,7 +280,7 @@ function* uploadFile({
   const {
     uploadPromise,
     loader,
-    chan
+    chan,
   } = yield call(createUploader, {
     file,
     method,
@@ -297,17 +296,15 @@ function* uploadFile({
       filename: file.name,
       data: result,
     }))
-  }
-  catch(e) {
+  } catch (e) {
     yield put(snackbarActions.setError(e))
     yield put(actions.setError(e))
-  }
-  finally {
+  } finally {
     if (yield cancelled()) {
       loader.cancel()
     }
   }
-  
+
   yield cancel(progressTask)
 }
 
@@ -322,7 +319,7 @@ function* uploadFiles(action) {
     onError,
   } = action.payload
 
-  const uploadSagas = files.map(file => call(uploadFile, {
+  const uploadSagas = files.map((file) => call(uploadFile, {
     file,
     method,
     url,
@@ -331,23 +328,24 @@ function* uploadFiles(action) {
 
   const {
     upload,
-    cancel,
+    // eslint-disable-next-line no-unused-vars
+    cancelUpload,
   } = yield race({
     upload: all(uploadSagas),
-    cancel: take(`${prefix}/cancel`),
+    cancelUpload: take(`${prefix}/cancel`),
   })
 
-  if(upload) {
+  if (upload) {
     yield delay(1000)
     const results = yield select(selectors.fileupload.results)
     const uploadError = yield select(selectors.fileupload.error)
-    if(uploadError) {
-      if(onError) onError(uploadError)
+    if (uploadError) {
+      if (onError) onError(uploadError)
+    } else {
+      // eslint-disable-next-line no-lonely-if
+      if (onComplete) onComplete(results)
     }
-    else {
-      if(onComplete) onComplete(results)
-    }
-    
+
     yield put(actions.finish())
   }
 }
