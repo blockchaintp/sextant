@@ -128,7 +128,9 @@ const reducers = {
   cancel: (state) => {
     state.inProgress = false
   },
-
+  clearError: (state) => {
+    state.error = null
+  },
 }
 
 const getFileUrlQuery = (file) => {
