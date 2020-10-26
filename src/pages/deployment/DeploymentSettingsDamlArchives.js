@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
@@ -23,7 +24,7 @@ import settings from 'settings'
 
 const UploadIcon = settings.icons.upload
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     padding: theme.spacing.unit * 2,
   },
@@ -53,11 +54,10 @@ const styles = theme => ({
   },
   centerAlign: {
     textAlign: 'center',
-  }
+  },
 })
 
 class DeploymentSettingsDamlArchives extends React.Component {
-
   getUploaderContent() {
     const {
       classes,
@@ -69,51 +69,55 @@ class DeploymentSettingsDamlArchives extends React.Component {
       uploadArchive,
     } = this.props
 
-    if(error) {
+    if (error) {
       return (
-        <DialogContentText className={ classes.errorText }>{ error }</DialogContentText>
+        <DialogContentText className={classes.errorText}>{ error }</DialogContentText>
       )
-    }
-    else if(inProgress) {
-
+    } else if (inProgress) {
       // we have limited the dropzone to single files so we are only dealing with
       // a single file
       const filename = Object.keys(status)[0]
       const uploadInfo = status[filename]
 
-      if(uploadInfo.percentDone >= 100) {
+      if (uploadInfo.percentDone >= 100) {
         return (
-          <div className={ classes.centerAlign }>
+          <div className={classes.centerAlign}>
             <Loading />
-            <DialogContentText>We are now packaging and uploading your archive to the DAML api server</DialogContentText>
+            <DialogContentText>
+              We are now packaging and uploading your archive to the DAML api server
+            </DialogContentText>
           </div>
         )
-      }
-      else {
+      } else {
         return (
           <UploadFileProgressBar
-            filename={ filename }
-            size={ uploadInfo.size }
-            percentDone={ uploadInfo.percentDone }
-            remainingTime={ uploadInfo.remainingTime }
-            uploadedBytes={ uploadInfo.uploadedBytes }
+            filename={filename}
+            size={uploadInfo.size}
+            percentDone={uploadInfo.percentDone}
+            remainingTime={uploadInfo.remainingTime}
+            uploadedBytes={uploadInfo.uploadedBytes}
             color="primary"
           />
         )
-      }      
-    }
-    else {
+      }
+    } else {
       return (
         <DropZone
           accept=".dar"
-          onDrop={ (files) => uploadArchive({
+          onDrop={(files) => uploadArchive({
             cluster,
             id,
             files,
-          }) }
+          })}
         >
-          <div className={ classes.dropzoneContent }>
-            <Typography>Drag files here or <span className={ classes.clickMe }>click</span> to select file</Typography>
+          <div className={classes.dropzoneContent}>
+            <Typography>
+              Drag files here or
+              <span className={classes.clickMe}>
+                click
+              </span>
+              to select file
+            </Typography>
           </div>
         </DropZone>
       )
@@ -121,7 +125,6 @@ class DeploymentSettingsDamlArchives extends React.Component {
   }
 
   getUploader() {
-
     const {
       uploadArchiveWindowOpen,
       setUploadArchiveWindowOpen,
@@ -131,10 +134,10 @@ class DeploymentSettingsDamlArchives extends React.Component {
 
     return (
       <Dialog
-        open={ uploadArchiveWindowOpen }
-        onClose={ () => setUploadArchiveWindowOpen(false) }
+        open={uploadArchiveWindowOpen}
+        onClose={() => setUploadArchiveWindowOpen(false)}
         fullWidth
-        maxWidth='md'
+        maxWidth="md"
       >
         <DialogTitle>Upload Package</DialogTitle>
         <DialogContent>
@@ -145,11 +148,11 @@ class DeploymentSettingsDamlArchives extends React.Component {
         <DialogActions>
           {
             inProgress ? (
-              <Button onClick={ onCancel }>
+              <Button onClick={onCancel}>
                 Cancel
               </Button>
             ) : (
-              <Button onClick={ () => setUploadArchiveWindowOpen(false) }>
+              <Button onClick={() => setUploadArchiveWindowOpen(false)}>
                 Close
               </Button>
             )
@@ -166,45 +169,43 @@ class DeploymentSettingsDamlArchives extends React.Component {
       setUploadArchiveWindowOpen,
     } = this.props
 
-    const fields =[{
+    const fields = [{
       title: 'Package Id',
       name: 'packageId',
-    },{
+    }, {
       title: 'Modules',
       name: 'modules',
     }]
 
-    const data = archives.map(archive => {
-      return Object.assign({}, archive, {
-        id: `archive.packageId-${Math.random()}`, // Needed to generate table rows
-        packageId: archive.packageId,
-        modules: archive.modules,
-      })
-    })
+    const data = archives.map((archive) => ({
+      ...archive,
+      id: `archive.packageId-${Math.random()}`, // Needed to generate table rows
+      packageId: archive.packageId,
+      modules: archive.modules,
+    }))
 
     return (
       <div>
         <SimpleTableHeader
           title="Packages"
-          getActions={ () => (
-            <Button 
+          getActions={() => (
+            <Button
               color="secondary"
               variant="contained"
-              onClick={ () => setUploadArchiveWindowOpen(true) }
+              onClick={() => setUploadArchiveWindowOpen(true)}
               disabled={false}
             >
               Upload
-              <UploadIcon className={ classes.buttonIcon } />
+              <UploadIcon className={classes.buttonIcon} />
             </Button>
-          ) }
+          )}
         />
         <DamlArchiveTable
-          data={ data }
-          fields={ fields }
+          data={data}
+          fields={fields}
         />
       </div>
     )
-                
   }
 
   render() {
@@ -213,10 +214,10 @@ class DeploymentSettingsDamlArchives extends React.Component {
     } = this.props
 
     return (
-      <div className={ classes.root }>
+      <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={ 12 }>
-            <Paper className={ classes.paper }>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
               { this.getPackages() }
             </Paper>
           </Grid>
