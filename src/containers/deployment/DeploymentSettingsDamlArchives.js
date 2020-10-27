@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import selectors from 'store/selectors'
+import fileuploadActions from 'store/modules/fileupload'
 
 import DeploymentSettingsDamlArchives from 'pages/deployment/DeploymentSettingsDamlArchives'
 
@@ -28,6 +29,7 @@ import DeploymentSettingsDamlArchives from 'pages/deployment/DeploymentSettingsD
   {
     setUploadArchiveWindowOpen: deploymentSettingsActions.setUploadArchiveWindowOpen,
     uploadArchive: deploymentSettingsActions.uploadArchive,
+    clearError: fileuploadActions.clearError,
   },
 )
 class DeploymentSettingsDamlArchivesContainer extends React.Component {
