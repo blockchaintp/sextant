@@ -193,12 +193,17 @@ class TaekionVolumes extends React.Component {
       onCloseAddVolumeWindow()
     }
 
+    const getKeyName = (fingerprintValue, allKeys) => {
+      const foundKey = allKeys.find((item) => item.fingerprint === fingerprintValue)
+      return foundKey.label
+    }
+
     const data = volumes.map((volume) => ({
       id: volume.uuid,
       name: volume.name,
       compression: volume.compression,
       encryption: volume.encryption,
-      key: volume.fingerprint,
+      key: getKeyName(volume.fingerprint, keys),
     }))
 
     const headerActions = (
