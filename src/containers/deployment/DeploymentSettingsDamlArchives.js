@@ -7,8 +7,7 @@ import selectors from 'store/selectors'
 import DeploymentSettingsDamlArchives from 'pages/deployment/DeploymentSettingsDamlArchives'
 
 @connect(
-  state => {
-
+  (state) => {
     const routeParams = selectors.router.params(state)
 
     const {
@@ -32,10 +31,9 @@ import DeploymentSettingsDamlArchives from 'pages/deployment/DeploymentSettingsD
   },
 )
 class DeploymentSettingsDamlArchivesContainer extends React.Component {
-
   render() {
     return (
-      <DeploymentSettingsDamlArchives 
+      <DeploymentSettingsDamlArchives
         {...this.props}
       />
     )
