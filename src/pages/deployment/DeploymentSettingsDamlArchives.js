@@ -51,6 +51,7 @@ const styles = (theme) => ({
   clickMe: {
     fontWeight: 'bold',
     color: theme.palette.primary.main,
+    margin: theme.spacing.unit,
   },
   centerAlign: {
     textAlign: 'center',
