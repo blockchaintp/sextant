@@ -130,7 +130,13 @@ class DeploymentSettingsDamlArchives extends React.Component {
       setUploadArchiveWindowOpen,
       inProgress,
       onCancel,
+      clearError,
     } = this.props
+
+    const closeAndClear = () => {
+      setUploadArchiveWindowOpen(false)
+      clearError()
+    }
 
     return (
       <Dialog
@@ -152,7 +158,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
                 Cancel
               </Button>
             ) : (
-              <Button onClick={() => setUploadArchiveWindowOpen(false)}>
+              <Button onClick={closeAndClear}>
                 Close
               </Button>
             )
