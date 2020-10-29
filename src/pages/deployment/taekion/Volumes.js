@@ -248,7 +248,7 @@ class TaekionVolumes extends React.Component {
     const hooks = {
       validate: (values) => {
         const errors = {}
-        if (values.encryption !== 'NONE' && !values.fingerprint) {
+        if (values.encryption !== 'NONE' && !values.fingerprint && !editVolume) {
           errors.fingerprint = 'You must select a key to use for encryption'
         }
         return errors
