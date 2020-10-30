@@ -19,7 +19,7 @@ import settings from 'settings'
 
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
-const DeleteIcon = settings.icons.delete
+// const DeleteIcon = settings.icons.delete
 const ViewArchiveIcon = settings.icons.viewArchive
 const CreateArchiveIcon = settings.icons.createArchive
 
@@ -174,9 +174,11 @@ class TaekionVolumes extends React.Component {
       })
     }
 
+    /*
     const onDeleteItem = (item) => this.setState({
       deleteItem: item,
     })
+    */
 
     const onCancelDeleteItem = () => this.setState({
       deleteItem: null,
@@ -232,11 +234,11 @@ class TaekionVolumes extends React.Component {
         title: 'Create Snapshot',
         icon: CreateArchiveIcon,
         handler: () => onCreateSnapshot(item.id, params),
-      }, {
+      }, /* {
         title: 'Delete',
         icon: DeleteIcon,
         handler: onDeleteItem,
-      }, {
+      }, */ {
         title: 'Edit',
         icon: EditIcon,
         handler: onEditVolume,

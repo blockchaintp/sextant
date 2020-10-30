@@ -20,7 +20,7 @@ import FormWrapper from 'components/form/Wrapper'
 import settings from 'settings'
 
 const AddIcon = settings.icons.add
-const DeleteIcon = settings.icons.delete
+// const DeleteIcon = settings.icons.delete
 
 const styles = (theme) => ({
   root: {
@@ -149,9 +149,11 @@ class TaekionSnapshots extends React.Component {
       })
     }
 
+    /*
     const onDeleteItem = (item) => this.setState({
       deleteItem: item,
     })
+    */
 
     const onCancelDeleteItem = () => this.setState({
       deleteItem: null,
@@ -219,11 +221,11 @@ class TaekionSnapshots extends React.Component {
     )
 
     const getActions = () => {
-      const buttons = [{
+      const buttons = [/* {
         title: 'Delete',
         icon: DeleteIcon,
         handler: onDeleteItem,
-      }]
+      } */]
 
       return buttons
     }

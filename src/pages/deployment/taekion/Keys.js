@@ -17,6 +17,8 @@ import FormWrapper from 'components/form/Wrapper'
 
 import settings from 'settings'
 
+// const DeleteIcon = settings.icons.delete
+
 const AddIcon = settings.icons.add
 
 const styles = (theme) => ({
@@ -94,10 +96,11 @@ class TaekionKeys extends React.Component {
       })
     }
 
-    // eslint-disable-next-line no-unused-vars
+    /*
     const onDeleteItem = (item) => this.setState({
       deleteItem: item,
     })
+    */
 
     const onCancelDeleteItem = () => this.setState({
       deleteItem: null,
@@ -128,15 +131,13 @@ class TaekionKeys extends React.Component {
 
     // eslint-disable-next-line arrow-body-style
     const getActions = () => {
-      // const buttons = [{
-      //   title: 'Delete',
-      //   icon: DeleteIcon,
-      //   handler: onDeleteItem,
-      // }]
+      const buttons = [/* {
+        title: 'Delete',
+        icon: DeleteIcon,
+        handler: onDeleteItem,
+      } */]
 
-      // return buttons
-
-      return []
+      return buttons
     }
 
     const hooks = {
