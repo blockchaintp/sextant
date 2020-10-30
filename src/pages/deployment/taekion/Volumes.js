@@ -10,7 +10,6 @@ import SimpleTableActions from 'components/table/SimpleTableActions'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
 import FormWrapper from 'components/form/Wrapper'
@@ -19,7 +18,6 @@ import settings from 'settings'
 
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
-const DeleteIcon = settings.icons.delete
 const ViewArchiveIcon = settings.icons.viewArchive
 const CreateArchiveIcon = settings.icons.createArchive
 
@@ -110,7 +108,6 @@ const FORM_INITIAL_VALUES = {
 
 class TaekionVolumes extends React.Component {
   state = {
-    deleteItem: null,
     editVolume: null,
   }
 
@@ -133,13 +130,11 @@ class TaekionVolumes extends React.Component {
       onCloseAddVolumeWindow,
       onCreateVolume,
       onUpdateVolume,
-      onDeleteVolume,
       onViewSnapshots,
       onCreateSnapshot,
     } = this.props
 
     const {
-      deleteItem,
       editVolume,
     } = this.state
 
@@ -162,25 +157,6 @@ class TaekionVolumes extends React.Component {
         editVolume: null,
       })
     }
-
-    const onConfirmDeleteItem = () => {
-      this.setState({
-        deleteItem: null,
-      })
-      onDeleteVolume({
-        cluster,
-        deployment,
-        name: deleteItem.name,
-      })
-    }
-
-    const onDeleteItem = (item) => this.setState({
-      deleteItem: item,
-    })
-
-    const onCancelDeleteItem = () => this.setState({
-      deleteItem: null,
-    })
 
     const onEditVolume = (item) => this.setState({
       editVolume: item,
@@ -232,10 +208,6 @@ class TaekionVolumes extends React.Component {
         title: 'Create Snapshot',
         icon: CreateArchiveIcon,
         handler: () => onCreateSnapshot(item.id, params),
-      }, {
-        title: 'Delete',
-        icon: DeleteIcon,
-        handler: onDeleteItem,
       }, {
         title: 'Edit',
         icon: EditIcon,
@@ -336,38 +308,6 @@ class TaekionVolumes extends React.Component {
                 </Dialog>
               )}
             />
-          )
-        }
-        {
-          deleteItem && (
-            <Dialog
-              open
-              onClose={onCancelDeleteItem}
-              fullWidth
-              maxWidth="sm"
-              onKeyPress={(ev) => {
-                if (ev.key === 'Enter') {
-                  ev.preventDefault();
-                }
-              }}
-            >
-              <DialogTitle id="alert-dialog-title">Confirm delete</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Are you absolutely sure you want to delete the
-                  { deleteItem.name }
-                  volume?
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={onCancelDeleteItem}>
-                  Close
-                </Button>
-                <Button onClick={onConfirmDeleteItem} variant="contained" color="secondary" autoFocus>
-                  Delete
-                </Button>
-              </DialogActions>
-            </Dialog>
           )
         }
         {

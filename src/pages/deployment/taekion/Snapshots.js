@@ -12,7 +12,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
 import FormWrapper from 'components/form/Wrapper'
@@ -20,7 +19,7 @@ import FormWrapper from 'components/form/Wrapper'
 import settings from 'settings'
 
 const AddIcon = settings.icons.add
-const DeleteIcon = settings.icons.delete
+// const DeleteIcon = settings.icons.delete
 
 const styles = (theme) => ({
   root: {
@@ -80,10 +79,6 @@ const FORM_INITIAL_VALUES = {
 }
 
 class TaekionSnapshots extends React.Component {
-  state = {
-    deleteItem: null,
-  }
-
   // this for when we click the "create snapshot" button on the volumes page
   // it redirects here with ?create=yes
   // so we remove the "create" param and then trigger the add modal
@@ -117,12 +112,7 @@ class TaekionSnapshots extends React.Component {
       onOpenAddSnapshotWindow,
       onCloseAddSnapshotWindow,
       onCreateSnapshot,
-      onDeleteSnapshot,
     } = this.props
-
-    const {
-      deleteItem,
-    } = this.state
 
     const onSubmitForm = (payload) => {
       const {
@@ -136,26 +126,6 @@ class TaekionSnapshots extends React.Component {
         payload: data,
       })
     }
-
-    const onConfirmDeleteItem = () => {
-      this.setState({
-        deleteItem: null,
-      })
-      onDeleteSnapshot({
-        cluster,
-        deployment,
-        volume: deleteItem.volume,
-        snapshotName: deleteItem.name,
-      })
-    }
-
-    const onDeleteItem = (item) => this.setState({
-      deleteItem: item,
-    })
-
-    const onCancelDeleteItem = () => this.setState({
-      deleteItem: null,
-    })
 
     const volumesById = volumes.reduce((all, volume) => {
       all[volume.uuid] = volume
@@ -219,11 +189,7 @@ class TaekionSnapshots extends React.Component {
     )
 
     const getActions = () => {
-      const buttons = [{
-        title: 'Delete',
-        icon: DeleteIcon,
-        handler: onDeleteItem,
-      }]
+      const buttons = []
 
       return buttons
     }
@@ -307,38 +273,6 @@ class TaekionSnapshots extends React.Component {
                 </Dialog>
               )}
             />
-          )
-        }
-        {
-          deleteItem && (
-            <Dialog
-              open
-              onClose={onCancelDeleteItem}
-              fullWidth
-              maxWidth="sm"
-              onKeyPress={(ev) => {
-                if (ev.key === 'Enter') {
-                  ev.preventDefault();
-                }
-              }}
-            >
-              <DialogTitle id="alert-dialog-title">Confirm delete</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Are you absolutely sure you want to delete the
-                  { deleteItem.name }
-                  snapshot?
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={onCancelDeleteItem}>
-                  Close
-                </Button>
-                <Button onClick={onConfirmDeleteItem} variant="contained" color="secondary" autoFocus>
-                  Delete
-                </Button>
-              </DialogActions>
-            </Dialog>
           )
         }
       </div>
