@@ -17,8 +17,6 @@ import FormWrapper from 'components/form/Wrapper'
 
 import settings from 'settings'
 
-// const DeleteIcon = settings.icons.delete
-
 const AddIcon = settings.icons.add
 
 const styles = (theme) => ({
@@ -53,10 +51,6 @@ const FORM_INITIAL_VALUES = {
 }
 
 class TaekionKeys extends React.Component {
-  state = {
-    deleteItem: null,
-  }
-
   render() {
     const {
       classes,
@@ -70,12 +64,7 @@ class TaekionKeys extends React.Component {
       onCloseAddKeyWindow,
       onCloseKeyResultWindow,
       onCreateKey,
-      onDeleteKey,
     } = this.props
-
-    const {
-      deleteItem,
-    } = this.state
 
     const onSubmitForm = (payload) => {
       onCreateKey({
@@ -84,27 +73,6 @@ class TaekionKeys extends React.Component {
         payload,
       })
     }
-
-    const onConfirmDeleteItem = () => {
-      this.setState({
-        deleteItem: null,
-      })
-      onDeleteKey({
-        cluster,
-        deployment,
-        id: deleteItem.id,
-      })
-    }
-
-    /*
-    const onDeleteItem = (item) => this.setState({
-      deleteItem: item,
-    })
-    */
-
-    const onCancelDeleteItem = () => this.setState({
-      deleteItem: null,
-    })
 
     const data = keys.map((key) => ({
       id: key.id,
@@ -241,38 +209,6 @@ class TaekionKeys extends React.Component {
               <DialogActions>
                 <Button onClick={onCloseKeyResultWindow}>
                   Close
-                </Button>
-              </DialogActions>
-            </Dialog>
-          )
-        }
-        {
-          deleteItem && (
-            <Dialog
-              open
-              onClose={onCancelDeleteItem}
-              fullWidth
-              maxWidth="sm"
-              onKeyPress={(ev) => {
-                if (ev.key === 'Enter') {
-                  ev.preventDefault();
-                }
-              }}
-            >
-              <DialogTitle id="alert-dialog-title">Confirm delete</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Are you absolutely sure you want to delete the
-                  { deleteItem.name }
-                  key?
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={onCancelDeleteItem}>
-                  Close
-                </Button>
-                <Button onClick={onConfirmDeleteItem} variant="contained" color="secondary" autoFocus>
-                  Delete
                 </Button>
               </DialogActions>
             </Dialog>
