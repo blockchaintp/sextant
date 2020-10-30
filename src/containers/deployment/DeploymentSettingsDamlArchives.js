@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 
 import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import selectors from 'store/selectors'
+import fileuploadActions from 'store/modules/fileupload'
 
 import DeploymentSettingsDamlArchives from 'pages/deployment/DeploymentSettingsDamlArchives'
 
 @connect(
-  state => {
-
+  (state) => {
     const routeParams = selectors.router.params(state)
 
     const {
@@ -29,13 +29,13 @@ import DeploymentSettingsDamlArchives from 'pages/deployment/DeploymentSettingsD
   {
     setUploadArchiveWindowOpen: deploymentSettingsActions.setUploadArchiveWindowOpen,
     uploadArchive: deploymentSettingsActions.uploadArchive,
+    clearError: fileuploadActions.clearError,
   },
 )
 class DeploymentSettingsDamlArchivesContainer extends React.Component {
-
   render() {
     return (
-      <DeploymentSettingsDamlArchives 
+      <DeploymentSettingsDamlArchives
         {...this.props}
       />
     )
