@@ -1,12 +1,13 @@
+/* eslint-disable no-shadow */
+/* eslint-disable camelcase */
 import axios from 'axios'
 import dotty from 'dotty'
 import { normalize, schema } from 'normalizr'
 import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
-import { mergeEntities, mergeAll } from '../utils/mergeNormalized'
+import { mergeEntities } from '../utils/mergeNormalized'
 import api from '../utils/api'
 import { successMessageGenerator, errorMessageGenerator } from '../../utils/translators'
-
 
 import selectors from '../selectors'
 import routerActions from './router'
@@ -42,7 +43,7 @@ const initialState = {
   loops: {
     deployments: null,
     resources: null,
-  }
+  },
 }
 
 const reducers = {
@@ -52,7 +53,7 @@ const reducers = {
   setRoles: (state, action) => {
     state.roles = normalize(action.payload, [role])
   },
-  resetRoles: (state, action) => {
+  resetRoles: (state) => {
     state.roles = normalize([], [role])
   },
   setDeployment: (state, action) => {
@@ -87,33 +88,33 @@ const loaders = {
   list: ({
     cluster,
     hideDeleted,
-    mode
+    mode,
   }) => axios.get(api.url(`/clusters/${cluster}/deployments`), {
     params: {
       showDeleted: hideDeleted ? '' : 'y',
       withTasks: 'y',
-      mode: mode ? 'background' : 'foreground'
-    }
+      mode: mode ? 'background' : 'foreground',
+    },
   })
     .then(api.process),
 
   listWithOptions: ({
     cluster,
     hideDeleted,
-    mode
+    mode,
   }) => axios.get(api.url(`/clusters/${cluster}/deployments`), {
     params: {
       showDeleted: hideDeleted ? '' : 'y',
       withTasks: 'y',
-      mode: mode ? 'background' : 'foreground'
-    }
+      mode: mode ? 'background' : 'foreground',
+    },
   })
     .then(api.process),
 
   get: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}`), {
     params: {
       withTask: 'y',
-    }
+    },
   })
     .then(api.process),
 
@@ -132,10 +133,10 @@ const loaders = {
   listTasks: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/tasks`))
     .then(api.process),
 
-  listResources: (cluster, id, background) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/resources`),{
+  listResources: (cluster, id, background) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/resources`), {
     params: {
-      mode: background ? 'background' : 'foreground'
-    }
+      mode: background ? 'background' : 'foreground',
+    },
   })
     .then(api.process),
 
@@ -153,55 +154,50 @@ const loaders = {
 const sideEffects = {
 
   updateHideDeleted: (value) => (dispatch, getState) => {
-
     const routeParams = selectors.router.params(getState())
 
     dispatch(actions.setHideDeleted(value))
     dispatch(actions.listWithOptions({
-      cluster: routeParams.cluster
+      cluster: routeParams.cluster,
     }))
   },
 
   // look to see if there have been any task changes to any deployments
   // and trigger a snackbar if there have
   updateDeploymentList: (newData) => (dispatch, getState) => {
+    const { trackTask } = getState().deployment
 
-    const trackTask = getState().deployment.trackTask
-    
-
-    if(trackTask) {
+    if (trackTask) {
       const newTrackTask = newData
-        .map(deployment => deployment.task)
-        .find(task => task.id == trackTask.id)
-      if(newTrackTask) {
+        .map((deployment) => deployment.task)
+        .find((task) => task.id === trackTask.id)
+      if (newTrackTask) {
         // the tracked task has failed or finished
-        if(newTrackTask.status == 'error' || newTrackTask.status == 'finished') {
-          if(newTrackTask.status == 'error') {
+        if (newTrackTask.status === 'error' || newTrackTask.status === 'finished') {
+          if (newTrackTask.status === 'error') {
             dispatch(snackbarActions.setError(errorMessageGenerator(trackTask.action)))
-          }
-          else if(newTrackTask.status == 'finished') {
+          } else if (newTrackTask.status === 'finished') {
             dispatch(snackbarActions.setSuccess(successMessageGenerator(trackTask.action)))
           }
           dispatch(actions.setTrackTask(null))
         }
-      }
-      else if(trackTask.action == 'deployment.delete') {
+      } else if (trackTask.action === 'deployment.delete') {
         dispatch(snackbarActions.setSuccess(successMessageGenerator(trackTask.action)))
         dispatch(actions.setTrackTask(null))
       }
     }
-    
+
     dispatch(actions.setDeployments(newData))
   },
 
   list: ({
     cluster,
-  }, background = false) => (dispatch, getState) => api.loaderSideEffect({
+  }, background = false) => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.list({
       cluster,
       hideDeleted: false,
-      mode: background ? background : false
+      mode: background || false,
     }),
     prefix,
     name: 'list',
@@ -215,7 +211,7 @@ const sideEffects = {
     loader: () => loaders.listWithOptions({
       cluster,
       hideDeleted: selectors.deployment.hideDeleted(getState()),
-      mode: background ? background : false
+      mode: background || false,
     }),
     prefix,
     name: 'list',
@@ -231,7 +227,7 @@ const sideEffects = {
     snackbarError: true,
   }),
   listRoles: (cluster, id) => async (dispatch) => {
-    if(id == 'new') {
+    if (id === 'new') {
       dispatch(actions.resetRoles())
       return
     }
@@ -252,22 +248,27 @@ const sideEffects = {
     } = params
 
     // get the non-zero custom input if there is any. Otherwise, pass an empty string
+    const deployment = getState().deployment.deployments.entities.deployment[id]
     let custom_yaml
-    let yamlInput = selectors.customization.yamlInput(getState())
-    typeof yamlInput === 'string' ? custom_yaml = yamlInput : custom_yaml = ''
+    const yamlInput = selectors.customization.yamlInput(getState())
+    if (id === 'new') {
+      // eslint-disable-next-line no-unused-expressions
+      typeof yamlInput === 'string' ? custom_yaml = yamlInput : custom_yaml = ''
+    } else {
+      // eslint-disable-next-line no-unused-expressions
+      typeof yamlInput === 'string' ? custom_yaml = yamlInput : custom_yaml = deployment.custom_yaml
+    }
 
     dispatch(customizationActions.clearYamlInput(0))
 
-    if(id == 'new') {
+    if (id === 'new') {
       dispatch(actions.create(cluster, payload, custom_yaml))
-    }
-    else {
+    } else {
       dispatch(actions.save(cluster, id, payload, custom_yaml))
     }
   },
   create: (cluster, payload, custom_yaml) => async (dispatch, getState) => {
     try {
-
       const routeParams = selectors.router.params(getState())
       const deploymentForms = selectors.config.forms.deployment(getState())
 
@@ -278,7 +279,7 @@ const sideEffects = {
 
       const paths = deploymentForms[deployment_type].paths[deployment_version]
 
-      if(!paths || !paths.name) throw new Error(`cannot find name path for deployment: ${deployment_type} ${deployment_version}`)
+      if (!paths || !paths.name) throw new Error(`cannot find name path for deployment: ${deployment_type} ${deployment_version}`)
 
       const name = dotty.get(payload, paths.name)
 
@@ -287,26 +288,25 @@ const sideEffects = {
         deployment_type,
         deployment_version,
         desired_state: payload,
-        custom_yaml
+        custom_yaml,
       }
 
       const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.create(cluster, deployment),
         dataAction: actions.setDeployment,
-        //setCluster: clusterActions.get(cluster),
         prefix,
         name: 'form',
         returnError: true,
       })
 
       dispatch(actions.setTrackTask(task))
-      dispatch(snackbarActions.setInfo(`deployment creating`))
+      dispatch(snackbarActions.setInfo('deployment creating'))
       dispatch(routerActions.navigateTo('deployments', {
         cluster,
       }))
       dispatch(authActions.loadStatus())
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error creating deployment: ${e.toString()}`))
       console.error(e)
     }
@@ -323,31 +323,30 @@ const sideEffects = {
 
       const paths = deploymentForms[deployment_type].paths[deployment_version]
 
-      if(!paths || !paths.name) throw new Error(`cannot find name path for deployment: ${deployment_type} ${deployment_version}`)
+      if (!paths || !paths.name) throw new Error(`cannot find name path for deployment: ${deployment_type} ${deployment_version}`)
 
       const name = dotty.get(payload, paths.name)
 
       const deploymentUpdate = {
         name,
         desired_state: payload,
-        custom_yaml
+        custom_yaml,
       }
 
       const task = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.update(cluster, id, deploymentUpdate),
         dataAction: actions.setDeployment,
-        //setCluster: clusterActions.get(cluster),
         prefix,
         name: 'form',
         returnError: true,
       })
       dispatch(actions.setTrackTask(task))
-      dispatch(snackbarActions.setInfo(`deployment saving`))
+      dispatch(snackbarActions.setInfo('deployment saving'))
       dispatch(routerActions.navigateTo('deployments', {
         cluster,
       }))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error saving deployment: ${e.toString()}`))
       console.error(e)
     }
@@ -361,29 +360,27 @@ const sideEffects = {
         prefix,
         name: 'delete',
         dataAction: actions.setDeployment,
-        //setCluster: clusterActions.get(cluster),
         returnError: true,
       })
 
       // this means we are doing a permenant delete
-      if(deployment.status == 'deleted') {
-        dispatch(snackbarActions.setSuccess(`deployment deleted`))
-      }
-      else {
+      if (deployment.status === 'deleted') {
+        dispatch(snackbarActions.setSuccess('deployment deleted'))
+      } else {
         dispatch(actions.setTrackTask(task))
-        dispatch(snackbarActions.setInfo(`deployment undeploying`))
+        dispatch(snackbarActions.setInfo('deployment undeploying'))
       }
       // manualy dispatch actions instead of relying on route activation being triggered
       dispatch(clusterActions.list({
         noDeleted: true,
       }))
       dispatch(actions.startDeploymentLoop({
-        cluster
+        cluster,
       }))
       dispatch(routerActions.navigateTo('deployments', {
         cluster,
       }))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error deleting deployment: ${e.toString()}`))
       console.error(e)
     }
@@ -396,29 +393,25 @@ const sideEffects = {
     dataAction: actions.setTasks,
     snackbarError: true,
   }),
-  listResources: (cluster, id, background) => (dispatch) => {
-    return api.loaderSideEffect({
-      dispatch,
-      loader: () => loaders.listResources(cluster, id, background),
-      prefix,
-      name: 'listResources',
-      dataAction: actions.setResources,
-      snackbarError: true,
-    })
-  },
-  getSummary: (cluster, id) => (dispatch) => {
-    return api.loaderSideEffect({
-      dispatch,
-      loader: () => loaders.getSummary(cluster, id),
-      prefix,
-      name: 'getSummary',
-      dataAction: actions.setSummary,
-      snackbarError: true,
-    })
-  },
+  listResources: (cluster, id, background) => (dispatch) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listResources(cluster, id, background),
+    prefix,
+    name: 'listResources',
+    dataAction: actions.setResources,
+    snackbarError: true,
+  }),
+  getSummary: (cluster, id) => (dispatch) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.getSummary(cluster, id),
+    prefix,
+    name: 'getSummary',
+    dataAction: actions.setSummary,
+    snackbarError: true,
+  }),
   startDeploymentLoop: ({
     cluster,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     dispatch(actions.setLoop({
       name: 'deployment',
       value: true,
@@ -431,20 +424,20 @@ const sideEffects = {
     cluster,
   }, background = false) => async (dispatch, getState) => {
     const looping = getState().deployment.loops.deployment
-    
-    if(!looping) return
-    if(typeof(cluster) === 'number') {
+
+    if (!looping) return
+    if (typeof (cluster) === 'number') {
       await dispatch(clusterActions.get(cluster))
     }
     await dispatch(actions.list({
       cluster,
     }, background))
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     dispatch(actions.deploymentLoop({
       cluster,
     }, background = true))
   },
-  stopDeploymentLoop: () => (dispatch, getState) => {
+  stopDeploymentLoop: () => (dispatch) => {
     dispatch(actions.setLoop({
       name: 'deployment',
       value: false,
@@ -453,7 +446,7 @@ const sideEffects = {
   startResourcesLoop: ({
     cluster,
     deployment,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     dispatch(actions.setLoop({
       name: 'resources',
       value: true,
@@ -468,18 +461,18 @@ const sideEffects = {
     deployment,
   }, background = false) => async (dispatch, getState) => {
     const looping = getState().deployment.loops.resources
-    if(!looping) return
+    if (!looping) return
     if (typeof (cluster) === 'number') {
       await dispatch(clusterActions.get(cluster))
     }
     await dispatch(actions.listResources(cluster, deployment, background))
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     dispatch(actions.resourcesLoop({
       cluster,
       deployment,
-    },background = false ))
+    }, background = false))
   },
-  stopResourcesLoop: () => (dispatch, getState) => {
+  stopResourcesLoop: () => (dispatch) => {
     dispatch(actions.setLoop({
       name: 'resources',
       value: false,
@@ -504,14 +497,14 @@ const sideEffects = {
         name: 'addRole',
         returnError: true,
       })
-      dispatch(snackbarActions.setSuccess(`role added`))
+      dispatch(snackbarActions.setSuccess('role added'))
       dispatch(actions.listRoles(cluster, id))
       dispatch(userActions.closeAccessControlForm())
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error adding role: ${e.toString()}`))
     }
   },
-  deleteRole: (userid) =>  async (dispatch, getState) => {
+  deleteRole: (userid) => async (dispatch, getState) => {
     const params = selectors.router.params(getState())
     const {
       cluster,
@@ -525,14 +518,13 @@ const sideEffects = {
         name: 'deleteRole',
         returnError: true,
       })
-      dispatch(snackbarActions.setSuccess(`role deleted`))
+      dispatch(snackbarActions.setSuccess('role deleted'))
       dispatch(actions.listRoles(cluster, id))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error deleting role: ${e.toString()}`))
     }
   },
 }
-
 
 const reducer = CreateReducer({
   initialState,
