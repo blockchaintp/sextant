@@ -179,9 +179,6 @@ class DeploymentSettingsDamlArchives extends React.Component {
     const fields = [{
       title: 'Package Id',
       name: 'packageId',
-    }, {
-      title: 'Modules',
-      name: 'modules',
     }]
 
     const data = archives.map((archive) => ({
