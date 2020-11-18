@@ -248,13 +248,13 @@ const sideEffects = {
     } = params
 
     // get the non-zero custom input if there is any. Otherwise, pass an empty string
-    const deployment = getState().deployment.deployments.entities.deployment[id]
     let custom_yaml
     const yamlInput = selectors.customization.yamlInput(getState())
     if (id === 'new') {
       // eslint-disable-next-line no-unused-expressions
       typeof yamlInput === 'string' ? custom_yaml = yamlInput : custom_yaml = ''
     } else {
+      const deployment = getState().deployment.deployments.entities.deployment[id]
       // eslint-disable-next-line no-unused-expressions
       typeof yamlInput === 'string' ? custom_yaml = yamlInput : custom_yaml = deployment.custom_yaml
     }
