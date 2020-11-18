@@ -254,9 +254,12 @@ const sideEffects = {
       // eslint-disable-next-line no-unused-expressions
       typeof yamlInput === 'string' ? custom_yaml = yamlInput : custom_yaml = ''
     } else {
-      const deployment = getState().deployment.deployments.entities.deployment[id]
+      // unpack the current deployment off state
+      const deploymentsOnState = getState().deployment.deployments
+      const { entities } = deploymentsOnState
+      const currentDeployment = entities.deployment[id]
       // eslint-disable-next-line no-unused-expressions
-      typeof yamlInput === 'string' ? custom_yaml = yamlInput : custom_yaml = deployment.custom_yaml
+      typeof yamlInput === 'string' ? custom_yaml = yamlInput : custom_yaml = currentDeployment.custom_yaml
     }
 
     dispatch(customizationActions.clearYamlInput(0))
