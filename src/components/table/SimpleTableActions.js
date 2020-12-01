@@ -5,25 +5,22 @@ import { withStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
 
-const styles = theme => {
-  return {
-    root: {
-      whiteSpace: 'nowrap',
-    }
-  }
-}
+const styles = () => ({
+  root: {
+    whiteSpace: 'nowrap',
+  },
+})
 
 class SimpleTableActions extends React.Component {
-
   render() {
     const { classes, item, actions } = this.props
-    
+
     return (
-      <div className={ classes.root }>
+      <div className={classes.root}>
         {
           actions
-            .filter(action => {
-              if(action.shouldDisplay) return action.shouldDisplay(item)
+            .filter((action) => {
+              if (action.shouldDisplay) return action.shouldDisplay(item)
               return true
             })
             .map((action, i) => {
@@ -33,10 +30,10 @@ class SimpleTableActions extends React.Component {
 
               const button = (
                 <IconButton
-                  _ci={`${item.username}${title}`}
-                  onClick={ (event) => {
+                  _ci={`${item.name}${title}`}
+                  onClick={(event) => {
                     event.stopPropagation()
-                    if(action.handler) {
+                    if (action.handler) {
                       action.handler(item)
                     }
                   }}
@@ -48,7 +45,7 @@ class SimpleTableActions extends React.Component {
 
               const renderButton = action.wrapButton ? action.wrapButton(button, item) : button
               return (
-                <Tooltip disableFocusListener key={ i } title={ title }>
+                <Tooltip disableFocusListener key={i} title={title}>
                   { renderButton }
                 </Tooltip>
               )
