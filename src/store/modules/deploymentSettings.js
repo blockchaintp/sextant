@@ -16,12 +16,14 @@ const initialState = {
   timeServiceInfo: [],
 
   visibleParticipant: null,
+  applicationId: '',
   selectedParties: {},
 
   addPartyWindowOpen: false,
   addPartyName: '',
   addPartyPublicKey: null,
 
+  tokenSettingsWindowParticipant: null,
   tokenWindowOpen: false,
   tokenValue: null,
 
@@ -82,6 +84,12 @@ const reducers = {
   },
   setTokenWindowOpen: (state, action) => {
     state.tokenWindowOpen = action.payload
+  },
+  setTokenSettingsWindowParticipant: (state, action) => {
+    state.tokenSettingsWindowParticipant = action.payload
+  },
+  setApplicationId: (state, action) => {
+    state.applicationId = action.payload
   },
   setToken: (state, action) => {
     state.tokenValue = action.payload

@@ -28,6 +28,8 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
       addPartyName: selectors.deploymentSettings.addPartyName(state),
       addPartyPublicKey: selectors.deploymentSettings.addPartyPublicKey(state),
       tokenWindowOpen: selectors.deploymentSettings.tokenWindowOpen(state),
+      tokenSettingsWindowParticipant: selectors.deploymentSettings.tokenSettingsWindowParticipant(state),
+      applicationId: selectors.deploymentSettings.applicationId(state),
       tokenValue: selectors.deploymentSettings.tokenValue(state),
     }
   },
@@ -46,6 +48,8 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
     setAddPartyPubicKey: deploymentSettingsActions.setAddPartyPubicKey,
     setToken: deploymentSettingsActions.setToken,
     setTokenWindowOpen: deploymentSettingsActions.setTokenWindowOpen,
+    setTokenSettingsWindowParticipant: deploymentSettingsActions.setTokenSettingsWindowParticipant,
+    setApplicationId: deploymentSettingsActions.setApplicationId,
     snackbarMessage: snackbarActions.setInfo,
   },
 )
