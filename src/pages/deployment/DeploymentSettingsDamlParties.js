@@ -395,8 +395,9 @@ class DeploymentSettingsDamlParties extends React.Component {
                 generatePartyToken({
                   cluster,
                   id,
-                  publicKey,
-                  partyNames,
+                  applicationId: 'apples',
+                  readAs: partyNames,
+                  actAs: partyNames,
                 })
               } }
             >

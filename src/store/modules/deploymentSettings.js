@@ -175,9 +175,14 @@ const loaders = {
   generatePartyToken: ({
     cluster,
     id,
-    publicKey,
-    partyNames,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/generatePartyToken`), {publicKey, partyNames})
+    applicationId,
+    readAs,
+    actAs,
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/generatePartyToken`), {
+    applicationId,
+    readAs,
+    actAs,
+  })
     .then(api.process),
 
 }
@@ -421,11 +426,16 @@ const sideEffects = {
   generatePartyToken: ({
     cluster,
     id,
-    publicKey,
-    partyNames,
+    applicationId,
+    readAs,
+    actAs,
   }) => async (dispatch, getState) => {
 
-    if(partyNames.length <= 0) {
+    if(!applicationId) {
+      dispatch(snackbarActions.setError(`please enter an application id to generate a token for`))
+      return
+    }
+    if(readAs.length <= 0 && actAs.length <= 0) {
       dispatch(snackbarActions.setError(`please select some parties to generate a token for`))
       return
     }
@@ -433,7 +443,13 @@ const sideEffects = {
     try {
       const res = await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.generatePartyToken({cluster, id, publicKey, partyNames}),
+        loader: () => loaders.generatePartyToken({
+          cluster,
+          id,
+          applicationId,
+          readAs,
+          actAs,
+        }),
         prefix,
         name: 'generatePartyToken',
         returnError: true,
@@ -442,7 +458,7 @@ const sideEffects = {
       dispatch(actions.setTokenWindowOpen(true))
       dispatch(snackbarActions.setSuccess(`token generated`))
     } catch(e) {
-      dispatch(snackbarActions.setError(`error removing parties: ${e.toString()}`))
+      dispatch(snackbarActions.setError(`error generating token: ${e.toString()}`))
       console.error(e)
     }
   },
