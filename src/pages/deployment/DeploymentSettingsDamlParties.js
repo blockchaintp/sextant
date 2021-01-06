@@ -526,6 +526,7 @@ class DeploymentSettingsDamlParties extends React.Component {
       setTokenSettingsWindowParticipant,
     } = this.props
 
+    
     const publicKey = entry.publicKey
     const {
       parties,
