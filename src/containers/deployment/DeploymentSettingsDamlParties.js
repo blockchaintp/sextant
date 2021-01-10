@@ -8,8 +8,7 @@ import selectors from 'store/selectors'
 import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDamlParties'
 
 @connect(
-  state => {
-
+  (state) => {
     const routeParams = selectors.router.params(state)
 
     const {
@@ -28,7 +27,8 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
       addPartyName: selectors.deploymentSettings.addPartyName(state),
       addPartyPublicKey: selectors.deploymentSettings.addPartyPublicKey(state),
       tokenWindowOpen: selectors.deploymentSettings.tokenWindowOpen(state),
-      tokenSettingsWindowParticipant: selectors.deploymentSettings.tokenSettingsWindowParticipant(state),
+      tokenSettingsWindowParticipant:
+        selectors.deploymentSettings.tokenSettingsWindowParticipant(state),
       applicationId: selectors.deploymentSettings.applicationId(state),
       tokenValue: selectors.deploymentSettings.tokenValue(state),
     }
@@ -54,10 +54,9 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
   },
 )
 class DeploymentSettingsDamlPartiesContainer extends React.Component {
-
   render() {
     return (
-      <DeploymentSettingsDamlParties 
+      <DeploymentSettingsDamlParties
         {...this.props}
       />
     )
