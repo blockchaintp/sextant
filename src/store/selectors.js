@@ -28,19 +28,6 @@ const networkProps = (prefix, fields) => fields.map((field) => ({
   dataField: [prefix, field].join('.'),
 }))
 
-const route = (state) => state.router.route
-const previousRoute = (state) => state.router.previousRoute
-const routeParams = prop(route, 'params')
-const routeName = prop(route, 'name')
-const routeSegments = createSelector(
-  routeName,
-  (name) => name.split('.'),
-)
-const routeParamId = createSelector(
-  routeParams,
-  (params) => params.id,
-)
-
 const entity = ({
   baseSelector,
   entityName,
@@ -76,6 +63,19 @@ const entity = ({
 
 const networkErrors = (state) => state.network.errors
 const networkLoading = (state) => state.network.loading
+
+const route = (state) => state.router.route
+const previousRoute = (state) => state.router.previousRoute
+const routeParams = prop(route, 'params')
+const routeName = prop(route, 'name')
+const routeParamId = createSelector(
+  routeParams,
+  (params) => params.id,
+)
+const routeSegments = createSelector(
+  routeName,
+  (name) => name.split('.'),
+)
 
 const authStore = (state) => state.auth
 const authData = prop(authStore, 'data')

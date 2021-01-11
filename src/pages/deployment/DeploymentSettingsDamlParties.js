@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /*
  * Copyright © 2020 Blockchain Technology Partners Limited All Rights Reserved
  *
@@ -27,10 +26,13 @@ import CodeBlock from 'components/code/CodeBlock'
 import settings from 'settings'
 
 const AddIcon = settings.icons.add
+const DeleteIcon = settings.icons.delete
+const RefreshIcon = settings.icons.refresh
+const UpArrowIcon = settings.icons.upArrow
 const DownArrowIcon = settings.icons.downArrow
 const KeyIcon = settings.icons.key
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     padding: theme.spacing.unit * 2,
   },
@@ -44,7 +46,7 @@ const styles = (theme) => ({
     },
     '& tr': {
       height: ['30px', '!important'],
-    },
+    }
   },
   spacing: {
     marginTop: theme.spacing.unit * 2,
@@ -78,20 +80,18 @@ const styles = (theme) => ({
   partyContainer: {
     marginTop: theme.spacing.unit * 2,
     padding: theme.spacing.unit * 2,
-    border: '1px dashed #e5e5e5',
+    border: '1px dashed #e5e5e5'
   },
   warningText: {
     color: '#cc0000',
-  },
+  }
 })
 
 class DeploymentSettingsDamlParties extends React.Component {
+
   state = {
-    // eslint-disable-next-line react/no-unused-state
     addWindowOpen: false,
-    // eslint-disable-next-line react/no-unused-state
     addWindowName: '',
-    // eslint-disable-next-line react/no-unused-state
     addWindowPublicKey: null,
   }
 
@@ -122,16 +122,34 @@ class DeploymentSettingsDamlParties extends React.Component {
     setAddPartyPubicKey(value ? publicKey : null)
   }
 
+  submitAddForm() {
+    const {
+      cluster,
+      id,
+      addParty,
+      addPartyPublicKey,
+      addPartyName,
+      setAddPartyWindowOpen,
+    } = this.props
+    setAddPartyWindowOpen(false)
+    addParty({
+      cluster,
+      id,
+      publicKey: addPartyPublicKey,
+      partyName: addPartyName,
+    })
+  }
+
   getAddPartyDialog() {
     const {
       addPartyWindowOpen,
       addPartyName,
-      setAddPartyName,
+      setAddPartyName
     } = this.props
     return (
       <Dialog
-        open={addPartyWindowOpen}
-        onClose={() => this.setFormOpen(false)}
+        open={ addPartyWindowOpen }
+        onClose={ () => this.setFormOpen(false) }
         fullWidth
         maxWidth="sm"
         aria-labelledby="alert-dialog-title"
@@ -148,469 +166,21 @@ class DeploymentSettingsDamlParties extends React.Component {
               helperText="Enter the name of the party you want to add to this participant"
               fullWidth
               margin="normal"
-              value={addPartyName}
-              onChange={(e) => setAddPartyName(e.target.value)}
+              value={ addPartyName }
+              onChange={ (e) => setAddPartyName(e.target.value) }
             />
           </div>
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => this.setAddFormOpen(false)}>
+          <Button onClick={ () => this.setAddFormOpen(false) }>
             Cancel
           </Button>
-          <Button onClick={() => this.submitAddForm()} variant="contained" color="secondary" autoFocus>
+          <Button onClick={ () => this.submitAddForm() } variant="contained" color="secondary" autoFocus>
             Save
           </Button>
         </DialogActions>
       </Dialog>
-    )
-  }
-
-  getTokenSettingsDialog() {
-    const {
-      classes,
-      cluster,
-      id,
-      tokenSettingsWindowParticipant,
-      setTokenSettingsWindowParticipant,
-      selectedParties,
-      applicationId,
-      setApplicationId,
-      setSelectedParty,
-      generatePartyToken,
-    } = this.props
-
-    if (!tokenSettingsWindowParticipant) return null
-
-    const {
-      parties,
-    } = tokenSettingsWindowParticipant
-
-    const hasMember = Object.keys(selectedParties).find((name) => selectedParties[name] === 'read' || selectedParties[name] === 'act')
-    const hasName = applicationId.match(/\w/)
-    const isValid = hasMember && hasName
-
-    return (
-      <Dialog
-        open={!!setTokenSettingsWindowParticipant}
-        onClose={() => this.closeTokenSettingsDialog()}
-        fullWidth
-        maxWidth="md"
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogContent>
-          <Grid container spacing={8}>
-            <Grid item xs={12}>
-              <Typography variant="h6">Party Access Token</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                id="application-id"
-                label="Application Id"
-                style={{ margin: 8 }}
-                helperText="Enter the application id for the token"
-                fullWidth
-                margin="normal"
-                value={applicationId}
-                onChange={(e) => setApplicationId(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="subtitle1">Read As</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="subtitle1">Act As</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              {
-                parties.map((party, j) => (
-                  <div key={j}>
-                    <FormControlLabel
-                      control={(
-                        <Checkbox
-                          className={classes.checkbox}
-                          checked={!!(selectedParties[party.name] === 'read' || selectedParties[party.name] === 'act')}
-                          onChange={(event) => {
-                            setSelectedParty({
-                              party: party.name,
-                              value: event.target.checked ? 'read' : 'none',
-                            })
-                          }}
-                          value={party.name}
-                        />
-                        )}
-                      label={party.name}
-                    />
-                  </div>
-                ))
-              }
-            </Grid>
-            <Grid item xs={6}>
-              {
-                parties.map((party, j) => (
-                  <div key={j}>
-                    <FormControlLabel
-                      control={(
-                        <Checkbox
-                          className={classes.checkbox}
-                          checked={selectedParties[party.name] === 'act'}
-                          onChange={(event) => {
-                            setSelectedParty({
-                              party: party.name,
-                              value: event.target.checked ? 'act' : 'none',
-                            })
-                          }}
-                          value={party.name}
-                        />
-                        )}
-                      label={party.name}
-                    />
-                  </div>
-                ))
-              }
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="caption">
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    parties.forEach((party) => {
-                      setSelectedParty({
-                        party: party.name,
-                        value: 'none',
-                      })
-                    })
-                    return false
-                  }}
-                >
-                  select none
-                </a>
-&nbsp;|&nbsp;
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    parties.forEach((party) => {
-                      setSelectedParty({
-                        party: party.name,
-                        value: 'read',
-                      })
-                    })
-                    return false
-                  }}
-                >
-                  select all
-                </a>
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="caption">
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    parties.forEach((party) => {
-                      setSelectedParty({
-                        party: party.name,
-                        value: 'none',
-                      })
-                    })
-                    return false
-                  }}
-                >
-                  select none
-                </a>
-&nbsp;|&nbsp;
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    parties.forEach((party) => {
-                      setSelectedParty({
-                        party: party.name,
-                        value: 'act',
-                      })
-                    })
-                    return false
-                  }}
-                >
-                  select all
-                </a>
-              </Typography>
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => this.closeTokenSettingsDialog()}>
-            Close
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            disabled={!isValid}
-            onClick={() => {
-              const readAs = []
-              const actAs = []
-              Object.keys(selectedParties).forEach((party) => {
-                if (selectedParties[party] === 'read') {
-                  readAs.push(party)
-                } else if (selectedParties[party] === 'act') {
-                  readAs.push(party)
-                  actAs.push(party)
-                }
-              })
-              this.closeTokenSettingsDialog()
-              generatePartyToken({
-                cluster,
-                id,
-                applicationId,
-                readAs,
-                actAs,
-              })
-            }}
-          >
-            Create Token
-            {' '}
-            <KeyIcon className={classes.iconSmall} />
-          </Button>
-        </DialogActions>
-      </Dialog>
-    )
-  }
-
-  getTokenDialog() {
-    const {
-      classes,
-      tokenWindowOpen,
-      tokenValue,
-      snackbarMessage,
-    } = this.props
-    return (
-      <Dialog
-        open={tokenWindowOpen}
-        onClose={() => this.closeTokenDialog()}
-        fullWidth
-        maxWidth="sm"
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Party Access Token</DialogTitle>
-        <DialogContent>
-          <Typography gutterBottom>
-            Your Access Token is shown below.
-          </Typography>
-          <Typography gutterBottom className={classes.warningText}>
-            <strong>Warning: </strong>
-            {' '}
-            you will not see this token again - make sure you keep it safe.
-          </Typography>
-          <CodeBlock
-            code={tokenValue || ''}
-            clipboard
-            snackbarMessage={snackbarMessage}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => this.closeTokenDialog()}>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    )
-  }
-
-  setVisibleParticipant(publicKey) {
-    const {
-      resetSelectedParties,
-      setVisibleParticipant,
-    } = this.props
-    setVisibleParticipant(publicKey)
-    resetSelectedParties()
-  }
-
-  getLocalParticipantActions(entry) {
-    const {
-      classes,
-    } = this.props
-
-    const { publicKey } = entry
-
-    const toggleButton = (
-      <Button
-        className={`${classes.smallButton} ${classes.buttonMargin}`}
-        size="small"
-        variant="outlined"
-        onClick={() => this.setVisibleParticipant(publicKey)}
-      >
-        <DownArrowIcon className={classes.iconSmall} />
-
-      </Button>
-    )
-
-    return (
-      <div>
-        { toggleButton }
-      </div>
-    )
-  }
-
-  getLocalParties(entry) {
-    const {
-      classes,
-      setTokenSettingsWindowParticipant,
-    } = this.props
-
-    const { publicKey } = entry
-    const {
-      parties,
-    } = entry
-
-    return (
-      <Grid container spacing={0}>
-        <Grid item xs={6}>
-          <div className={classes.partyContainer}>
-            {
-              parties.map((party, j) => (
-                <div key={j}>
-                  <Typography>{ party.name }</Typography>
-                </div>
-              ))
-            }
-          </div>
-        </Grid>
-        <Grid item xs={6}>
-          <div className={classes.partyButtons}>
-            <Button
-              className={`${classes.smallButton} ${classes.buttonBottomMargin}`}
-              size="small"
-              variant="outlined"
-              onClick={() => this.setAddFormOpen(true, publicKey)}
-            >
-              Add Party
-              {' '}
-              <AddIcon className={classes.iconSmall} />
-            </Button>
-            <br />
-            <Button
-              className={`${classes.smallButton} ${classes.buttonBottomMargin}`}
-              size="small"
-              variant="outlined"
-              onClick={() => {
-                setTokenSettingsWindowParticipant(entry)
-              }}
-            >
-              Generate Tokens
-              {' '}
-              <KeyIcon className={classes.iconSmall} />
-            </Button>
-          </div>
-        </Grid>
-      </Grid>
-    )
-  }
-
-  getLocalParticipants() {
-    const {
-      classes,
-      participants,
-      visibleParticipant,
-    } = this.props
-
-    return (
-      <>
-        {
-          participants.map((entry, i) => {
-            const { publicKey } = entry
-            const partiesVisible = publicKey === visibleParticipant
-
-            return (
-              <div key={i}>
-                <Grid container spacing={24}>
-                  <Grid item xs={6}>
-                    <Typography variant="subtitle2">
-                      { entry.participantId }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6} className={classes.alignRight}>
-                    {this.getLocalParticipantActions(entry) }
-                  </Grid>
-                </Grid>
-                {
-                  partiesVisible ? this.getLocalParties(entry) : null
-                }
-                <div className={classes.spacing} />
-                <Divider />
-                <div className={classes.spacing} />
-              </div>
-            )
-          })
-        }
-      </>
-    )
-  }
-
-  getPartiesByParticipant() {
-    const {
-      classes,
-      participants,
-    } = this.props
-
-    const fields = [{
-      title: 'Name',
-      name: 'name',
-    }]
-
-    const allParticipants = participants
-    return (
-      <>
-        {
-          allParticipants.map((participant, i) => {
-            const parties = participant ? participant.parties : []
-            parties.sort((a, b) => {
-              if (b.name.toLowerCase() === a.name.toLowerCase()) {
-                if (a.name > b.name) {
-                  return 1
-                }
-                if (b.name > a.name) {
-                  return -1
-                }
-              }
-
-              if (a.name.toLowerCase() > b.name.toLowerCase()) {
-                return 1;
-              }
-
-              if (b.name.toLowerCase() > a.name.toLowerCase()) {
-                return -1;
-              }
-
-              return 0;
-            })
-            const data = parties.map((party, j) => ({
-              id: j,
-              name: party.name,
-            }))
-            return (
-              <div key={i} className={classes.denseTable}>
-                <div className={classes.spacing} />
-                <div className={classes.partyContainer}>
-                  <SimpleTable
-                    // hideHeader
-                    data={data}
-                    fields={fields}
-                  />
-                </div>
-              </div>
-            )
-          })
-        }
-      </>
     )
   }
 
@@ -634,22 +204,484 @@ class DeploymentSettingsDamlParties extends React.Component {
     setTokenWindowOpen(false)
   }
 
-  submitAddForm() {
+  getTokenSettingsDialog() {
     const {
+      classes,
       cluster,
       id,
-      addParty,
-      addPartyPublicKey,
-      addPartyName,
-      setAddPartyWindowOpen,
+      tokenSettingsWindowParticipant,
+      setTokenSettingsWindowParticipant,
+      selectedParties,
+      applicationId,
+      setApplicationId,
+      setSelectedParty,
+      generatePartyToken,
     } = this.props
-    setAddPartyWindowOpen(false)
-    addParty({
+
+    if(!tokenSettingsWindowParticipant) return null
+
+    const {
+      parties,
+    } = tokenSettingsWindowParticipant
+
+    const hasMember = Object.keys(selectedParties).find(name => {
+      return selectedParties[name] == 'read' || selectedParties[name] == 'act'
+    })
+    const hasName = applicationId.match(/\w/)
+    const isValid = hasMember && hasName
+
+    return (
+      <Dialog
+        open={ setTokenSettingsWindowParticipant ? true : false }
+        onClose={ () => this.closeTokenSettingsDialog() }
+        fullWidth
+        maxWidth="md"
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <Grid container spacing={8}>
+            <Grid item xs={ 12 }>
+              <Typography variant="h6">Party Access Token</Typography>
+            </Grid>
+            <Grid item xs={ 12 }>
+              <TextField
+                id="application-id"
+                label="Application Id"
+                style={{ margin: 8 }}
+                helperText="Enter the application id for the token"
+                fullWidth
+                margin="normal"
+                value={ applicationId }
+                onChange={ (e) => setApplicationId(e.target.value) }
+              />
+            </Grid>
+            <Grid item xs={ 6 }>
+              <Typography variant="subtitle1">Read As</Typography>
+            </Grid>
+            <Grid item xs={ 6 }>
+              <Typography variant="subtitle1">Act As</Typography>
+            </Grid>
+            <Grid item xs={ 6 }>
+              {
+                parties.map((party, j) => {
+                  return (
+                    <div key={ j }>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            className={ classes.checkbox }
+                            checked={ selectedParties[party.name] == 'read' || selectedParties[party.name] == 'act' ? true : false }
+                            onChange={ (event) => {
+                              setSelectedParty({
+                                party: party.name,
+                                value: event.target.checked ? 'read' : 'none',
+                              })
+                            }}
+                            value={ party.name }
+                          />
+                        }
+                        label={ party.name }
+                      />
+                    </div>
+                  )
+                })
+              }
+            </Grid>
+            <Grid item xs={ 6 }>
+              {
+                parties.map((party, j) => {
+                  return (
+                    <div key={ j }>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            className={ classes.checkbox }
+                            checked={  selectedParties[party.name] == 'act' ? true : false }
+                            onChange={ (event) => {
+                              setSelectedParty({
+                                party: party.name,
+                                value: event.target.checked ? 'act' : 'none',
+                              })
+                            }}
+                            value={ party.name }
+                          />
+                        }
+                        label={ party.name }
+                      />
+                    </div>
+                  )
+                })
+              }
+            </Grid>    
+            <Grid item xs={ 6 }>
+              <Typography variant="caption">
+                <a
+                  href="#"
+                  onClick={ (e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    parties.forEach(party => {
+                      setSelectedParty({
+                        party: party.name,
+                        value: 'none'
+                      })
+                    })
+                    return false
+                  }}
+                >
+                  select none
+                </a>&nbsp;|&nbsp;
+                <a
+                  href="#"
+                  onClick={ (e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    parties.forEach(party => {
+                      setSelectedParty({
+                        party: party.name,
+                        value: 'read'
+                      })
+                    })
+                    return false
+                  }}
+                >
+                  select all
+                </a>
+              </Typography>
+            </Grid> 
+            <Grid item xs={ 6 }>
+              <Typography variant="caption">
+                <a
+                  href="#"
+                  onClick={ (e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    parties.forEach(party => {
+                      setSelectedParty({
+                        party: party.name,
+                        value: 'none'
+                      })
+                    })
+                    return false
+                  }}
+                >
+                  select none
+                </a>&nbsp;|&nbsp;
+                <a
+                  href="#"
+                  onClick={ (e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    parties.forEach(party => {
+                      setSelectedParty({
+                        party: party.name,
+                        value: 'act'
+                      })
+                    })
+                    return false
+                  }}
+                >
+                  select all
+                </a>
+              </Typography>
+            </Grid>     
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ () => this.closeTokenSettingsDialog() }>
+            Close
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            disabled={ isValid ? false : true }
+            onClick={ () => {
+              const readAs = []
+              const actAs = []
+              Object.keys(selectedParties).forEach(party => {
+                if(selectedParties[party] == 'read') {
+                  readAs.push(party)
+                }
+                else if(selectedParties[party] == 'act') {
+                  readAs.push(party)
+                  actAs.push(party)
+                }
+              })
+              this.closeTokenSettingsDialog()
+              generatePartyToken({
+                cluster,
+                id,
+                applicationId,
+                readAs,
+                actAs,
+              })
+            }}
+          >
+            Create Token <KeyIcon className={ classes.iconSmall } />
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+
+  getTokenDialog() {
+    const {
+      classes,
+      tokenWindowOpen,
+      tokenValue,
+      snackbarMessage,
+    } = this.props
+    return (
+      <Dialog
+        open={ tokenWindowOpen }
+        onClose={ () => this.closeTokenDialog() }
+        fullWidth
+        maxWidth="sm"
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Party Access Token</DialogTitle>
+        <DialogContent>
+          <Typography gutterBottom>
+            Your Access Token is shown below.
+          </Typography>
+          <Typography gutterBottom className={ classes.warningText }>
+            <strong>Warning: </strong> you will not see this token again - make sure you keep it safe.
+          </Typography>
+          <CodeBlock
+            code={ tokenValue || '' }
+            clipboard={ true }
+            snackbarMessage={ snackbarMessage }
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ () => this.closeTokenDialog() }>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+
+  setVisibleParticipant(publicKey) {
+    const {
+      resetSelectedParties,
+      visibleParticipant,
+      setVisibleParticipant,
+    } = this.props
+    setVisibleParticipant(publicKey)
+    resetSelectedParties()
+  }
+
+  getLocalParticipantActions(entry) {
+    const {
+      classes,
       cluster,
       id,
-      publicKey: addPartyPublicKey,
-      partyName: addPartyName,
-    })
+      registerParticipant,
+      rotateParticipantKey,
+      visibleParticipant,
+    } = this.props
+
+    const publicKey = entry.publicKey
+
+    const actionButton = (
+      <Button
+        className={ classes.smallButton }
+        size="small"
+        variant="outlined"
+        onClick={ () => registerParticipant({
+          cluster,
+          id,
+          publicKey,
+        }) }
+      >
+        Register <AddIcon className={ classes.iconSmall } />
+      </Button>
+    )
+
+    const toggleButton = (
+      <Button
+        className={ classes.smallButton + ' ' + classes.buttonMargin }
+        size="small"
+        variant="outlined"
+        onClick={ () => this.setVisibleParticipant(publicKey) }
+      >
+          <DownArrowIcon className={ classes.iconSmall } />
+
+      </Button>
+    )
+
+    return (
+      <div>
+        { toggleButton }
+      </div>
+    )
+  }
+
+  getLocalParties(entry) {
+    const {
+      classes,
+      setTokenSettingsWindowParticipant,
+    } = this.props
+
+    
+    const publicKey = entry.publicKey
+    const {
+      parties,
+    } = entry
+
+    return (
+      <Grid container spacing={0}>
+        <Grid item xs={ 6 }>
+          <div className={ classes.partyContainer }>
+            {
+              parties.map((party, j) => {
+                return (
+                  <div key={ j }>
+                    <Typography>{ party.name }</Typography>
+                  </div>
+                )
+              })
+            }
+          </div>
+        </Grid>
+        <Grid item xs={ 6 }>
+          <div className={ classes.partyButtons }>
+            <Button
+              className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
+              size="small"
+              variant="outlined"
+              onClick={ () => this.setAddFormOpen(true, publicKey) }
+            >
+              Add Party <AddIcon className={ classes.iconSmall } />
+            </Button>
+            <br />
+            <Button
+              className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
+              size="small"
+              variant="outlined"
+              onClick={ () => {
+                setTokenSettingsWindowParticipant(entry)
+              } }
+            >
+              Generate Tokens <KeyIcon className={ classes.iconSmall } />
+            </Button>
+          </div>
+        </Grid>
+      </Grid>
+    )
+  }
+
+  getLocalParticipants() {
+    const {
+      classes,
+      participants,
+      visibleParticipant,
+      keyManagerKeys,
+    } = this.props
+
+    return (
+      <React.Fragment>
+        {
+          participants.map((entry, i) => {
+
+            const publicKey = entry.publicKey
+            const partiesVisible = publicKey == visibleParticipant
+
+            return (
+              <div key={ i }>
+                <Grid container spacing={24}>
+                  <Grid item xs={ 6 }>
+                    <Typography variant="subtitle2">
+                      { entry.participantId }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={ 6 } className={ classes.alignRight }>
+                    {this.getLocalParticipantActions(entry) }
+                  </Grid>
+                </Grid>
+                {
+                  partiesVisible ? this.getLocalParties(entry) : null
+                }
+                <div className={ classes.spacing }></div>
+                <Divider />
+                <div className={ classes.spacing }></div>
+              </div>
+            )
+          })
+        }
+      </React.Fragment>
+    )
+  }
+
+  getPartiesByParticipant() {
+    const {
+      classes,
+      participants,
+      keyManagerKeys,
+    } = this.props
+
+    const localKeyMap = keyManagerKeys.reduce((all, entry) => {
+      all[entry.publicKey] = entry.name
+      return all
+    }, {})
+
+    const fields =[{
+      title: 'Name',
+      name: 'name',
+    }]
+
+    const allParticipants = participants
+    return (
+      <React.Fragment>
+        {
+          allParticipants.map((participant, i) => {
+            const parties = participant ? participant.parties : []
+            parties.sort((a,b)=> {
+
+              if (b.name.toLowerCase() === a.name.toLowerCase() ) {
+                if (a.name > b.name) {
+                  return 1
+                }
+                if (b.name > a.name) {
+                  return -1
+                }
+              }
+
+              if (a.name.toLowerCase() > b.name.toLowerCase()) {
+                return 1;
+              }
+
+              if (b.name.toLowerCase() > a.name.toLowerCase()) {
+                return -1;
+              }
+
+              return 0;
+            })
+            const data = parties.map((party, j) => {
+              return {
+                id: j,
+                name: party.name,
+              }
+            })
+            return (
+              <div key={ i } className={ classes.denseTable }>
+                <div className={ classes.spacing }></div>
+                  <div className={ classes.partyContainer }>
+                  <SimpleTable
+                    // hideHeader
+                    data={ data }
+                    fields={ fields }
+                  />
+                  </div>
+              </div>
+            )
+          })
+        }
+      </React.Fragment>
+    )
   }
 
   render() {
@@ -658,29 +690,29 @@ class DeploymentSettingsDamlParties extends React.Component {
     } = this.props
 
     return (
-      <div className={classes.root}>
+      <div className={ classes.root }>
         <Grid container spacing={24}>
-          <Grid item xs={6}>
-            <Paper className={classes.paper}>
+          <Grid item xs={ 6 }>
+            <Paper className={ classes.paper }>
               <Typography variant="h6">
                 Local Participants
               </Typography>
-              <div className={classes.spacing} />
+              <div className={ classes.spacing }></div>
               {
                 this.getLocalParticipants()
               }
             </Paper>
           </Grid>
-          <Grid item xs={6}>
-            <Paper className={classes.paper}>
-              <Typography variant="h6">
-                All Parties
-              </Typography>
-              {
+          <Grid item xs={ 6 }>
+              <Paper className={ classes.paper }>
+                <Typography variant="h6">
+                  All Parties
+                </Typography>
+                {
                   this.getPartiesByParticipant()
                 }
-            </Paper>
-          </Grid>
+              </Paper>
+            </Grid>
         </Grid>
         { this.getAddPartyDialog() }
         { this.getTokenSettingsDialog() }
