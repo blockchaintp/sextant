@@ -395,7 +395,12 @@ class FormWrapperInner extends React.Component {
       return linkedComponentValue === visibilityParameter || (visibilityParameter === 'true' && linkedComponentValue === true)
     }
 
-    const meetsVisibilityRequirement = (conditions) => conditions.every(checkCondition)
+    const meetsVisibilityRequirement = (conditions) => {
+      if (Array.isArray(conditions)) {
+        return conditions.every(checkCondition)
+      }
+      return checkCondition(conditions)
+    }
 
     const renderField = (item) => {
       if (item.linked) {
