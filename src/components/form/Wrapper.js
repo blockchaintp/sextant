@@ -389,12 +389,17 @@ class FormWrapperInner extends React.Component {
     const error = dotty.get(formProps.errors, item.id)
     const touched = dotty.get(formProps.touched, item.id)
 
+    const checkCondition = (condition) => {
+      const { linkedId, visibilityParameter } = condition
+      const linkedComponentValue = dotty.get(formProps.values, linkedId)
+      return linkedComponentValue === visibilityParameter || (visibilityParameter === 'true' && linkedComponentValue === true)
+    }
+
+    const meetsVisibilityRequirement = (conditions) => conditions.every(checkCondition)
+
     const renderField = (item) => {
       if (item.linked) {
-        const { linkedId } = item.linked
-        const linkedComponentValue = dotty.get(formProps.values, linkedId)
-
-        if (linkedComponentValue === item.linked.visibilityParameter) {
+        if (meetsVisibilityRequirement(item.linked)) {
           return (
             <Field
               _ci={item.id}
@@ -429,25 +434,7 @@ class FormWrapperInner extends React.Component {
 
     const renderFieldArray = (item) => {
       if (item.linked) {
-        const { linkedId } = item.linked
-        const linkedComponentValue = dotty.get(formProps.values, linkedId)
-
-        let meetsVisibilityRequirement = false
-
-        if (linkedComponentValue === item.linked.visibilityParameter) {
-          meetsVisibilityRequirement = true
-        }
-
-        // catch edge case where booleans are strings - not sure why this is happening
-        // TOOD: work out why in some cases:
-        //   * item.linked.visibilityParameter == "true"
-        //   * linkedComponentValue == true
-        // the two things match but because of === they do not pass the test above
-        if (item.linked.visibilityParameter === 'true' && linkedComponentValue === true) {
-          meetsVisibilityRequirement = true
-        }
-
-        if (meetsVisibilityRequirement) {
+        if (meetsVisibilityRequirement(item.linked)) {
           return (
             <FieldArray
               _ci={item.id}
