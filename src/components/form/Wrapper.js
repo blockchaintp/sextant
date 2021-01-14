@@ -1,3 +1,9 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-fragments */
+/* eslint-disable max-classes-per-file */
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Formik, Field, FieldArray } from 'formik'
@@ -27,38 +33,36 @@ import Draggable from 'components/dragdrop/Draggable'
 import utils from './utils'
 import Validate from './validate'
 
-const styles = theme => {
-  return {
-    errorContainer: {
-      marginTop: theme.spacing.unit * 2,
-    },
-    errorText: {
-      color: theme.palette.error.main,
-    },
-    button: {
-      marginRight: theme.spacing.unit * 2,
-    },
-    listTableTitle: {
-      color: theme.palette.text.secondary,
-      flex: 'flexGrow'
-    },
-    listTable: {
-      marginTop: theme.spacing.unit * 2,
-      marginBottom: theme.spacing.unit * 2,
-    },
-    divider: {
-      marginTop: '20px',
-      marginBottom: '20px',
-    },
-    addButtonContainer: {
-      marginTop: theme.spacing.unit * 2,
-    },
-    listTableHeader: {
-      paddingLeft: '0px',
-      display:"flex"
-    },
-  }
-}
+const styles = (theme) => ({
+  errorContainer: {
+    marginTop: theme.spacing.unit * 2,
+  },
+  errorText: {
+    color: theme.palette.error.main,
+  },
+  button: {
+    marginRight: theme.spacing.unit * 2,
+  },
+  listTableTitle: {
+    color: theme.palette.text.secondary,
+    flex: 'flexGrow',
+  },
+  listTable: {
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
+  },
+  divider: {
+    marginTop: '20px',
+    marginBottom: '20px',
+  },
+  addButtonContainer: {
+    marginTop: theme.spacing.unit * 2,
+  },
+  listTableHeader: {
+    paddingLeft: '0px',
+    display: 'flex',
+  },
+})
 
 class FormListDialogInner extends React.Component {
   render() {
@@ -74,44 +78,42 @@ class FormListDialogInner extends React.Component {
 
     return (
       <Dialog
-        open={ open }
-        onClose={ onCancel }
+        open={open}
+        onClose={onCancel}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">{ title }</DialogTitle>
         <DialogContent>
           <FormWrapper
-            schema={ schema }
-            initialValues={ initialValues }
-            onSubmit={ onSave }
+            schema={schema}
+            initialValues={initialValues}
+            onSubmit={onSave}
             renderButtons={
               ({
                 handleSubmit,
-              }) => {
-                return (
-                  <React.Fragment>
-                    <Button
-                      className={ classes.button }
-                      type="button"
-                      variant="contained"
-                      onClick={ onCancel }
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      className={ classes.button }
-                      type="button"
-                      variant="contained"
-                      color="primary"
-                      disabled={ false }
-                      onClick={ handleSubmit }
-                    >
-                      Save
-                    </Button>
-                  </React.Fragment>
-                )
-              }
+              }) => (
+                <React.Fragment>
+                  <Button
+                    className={classes.button}
+                    type="button"
+                    variant="contained"
+                    onClick={onCancel}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    className={classes.button}
+                    type="button"
+                    variant="contained"
+                    color="primary"
+                    disabled={false}
+                    onClick={handleSubmit}
+                  >
+                    Save
+                  </Button>
+                </React.Fragment>
+              )
             }
           />
         </DialogContent>
@@ -123,7 +125,6 @@ class FormListDialogInner extends React.Component {
 const FormListDialog = withStyles(styles)(FormListDialogInner)
 
 class FormListInner extends React.Component {
-
   state = {
     editOpen: false,
     editItem: null,
@@ -163,18 +164,17 @@ class FormListInner extends React.Component {
   }
 
   delete(id) {
-    const arrayHelpers = this.props.arrayHelpers
+    const { arrayHelpers } = this.props
     arrayHelpers.remove(id)
   }
 
   save(values) {
-    const arrayHelpers = this.props.arrayHelpers
-    const editItem = this.state.editItem
+    const { arrayHelpers } = this.props
+    const { editItem } = this.state
 
-    if(editItem) {
+    if (editItem) {
       arrayHelpers.replace(editItem.id, values)
-    }
-    else {
+    } else {
       arrayHelpers.push(values)
     }
     this.setState({
@@ -184,7 +184,7 @@ class FormListInner extends React.Component {
   }
 
   swap(fromIndex, toIndex) {
-    const arrayHelpers = this.props.arrayHelpers
+    const { arrayHelpers } = this.props
     arrayHelpers.swap(fromIndex, toIndex)
   }
 
@@ -205,7 +205,6 @@ class FormListInner extends React.Component {
     const {
       item,
       formProps,
-      arrayHelpers,
       classes,
       disabled,
     } = this.props
@@ -220,28 +219,28 @@ class FormListInner extends React.Component {
     const value = dotty.get(formProps.values, item.id)
 
     const fields = item.list.table
-    const mainField = item.list.mainField
+    const { mainField } = item.list
 
     const data = value.map((item, index) => {
       const ret = fields.reduce((all, field) => {
-        const baseRenderValue = field.render ?
-          field.render(item) :
-          item[field.name]
+        const baseRenderValue = field.render
+          ? field.render(item)
+          : item[field.name]
 
         let renderValue = baseRenderValue
 
-        if(field.sortable && !disabled) {
+        if (field.sortable && !disabled) {
           renderValue = (
             <Sortable
-              id={ index }
-              index={ index }
-              reorderDrag={ this.onSwap }
+              id={index}
+              index={index}
+              reorderDrag={this.onSwap}
               render={({
                 isDragging,
               }) => (
                 <div>
                   <Draggable
-                    isDragging={ isDragging }
+                    isDragging={isDragging}
                   >
                     { baseRenderValue }
                   </Draggable>
@@ -255,19 +254,20 @@ class FormListInner extends React.Component {
       }, {})
       ret.id = index
       ret.index = index
-      ret._item = Object.assign({}, item, {
+      ret._item = {
+        ...item,
         id: index,
-        index: index,
-      })
+        index,
+      }
       return ret
     })
 
     const addButton = (
-      <div className={ classes.addButtonContainer }>
+      <div className={classes.addButtonContainer}>
         <Button
-          className={ classes.button }
+          className={classes.button}
           variant="contained"
-          onClick={ this.onAdd }
+          onClick={this.onAdd}
           size="small"
         >
           Add
@@ -275,7 +275,7 @@ class FormListInner extends React.Component {
         </Button>
       </div>
     )
-      
+
     const actions = [{
       title: 'Delete',
       icon: DeleteIcon,
@@ -287,25 +287,25 @@ class FormListInner extends React.Component {
     }]
 
     return (
-      <div className={ classes.listTable }>
+      <div className={classes.listTable}>
         <SimpleTableHeader
-          className={ classes.listTableHeader }
-          getTitle={ () => (
+          className={classes.listTableHeader}
+          getTitle={() => (
             <React.Fragment>
-              <Typography noWrap={true} className={ classes.listTableTitle } variant='subtitle1'>{ item.skip ? null : (item.title || item.id) }</Typography>
-              <Typography className={ classes.listTableTitle } variant='caption'>{ item.helperText }</Typography>
+              <Typography noWrap className={classes.listTableTitle} variant="subtitle1">{ item.skip ? null : (item.title || item.id) }</Typography>
+              <Typography className={classes.listTableTitle} variant="caption">{ item.helperText }</Typography>
             </React.Fragment>
           )}
         />
         <SimpleTable
-          data={ data }
-          fields={ fields }
-          getActions={ (item) => {
-            if(disabled) return null
+          data={data}
+          fields={fields}
+          getActions={(item) => {
+            if (disabled) return null
             return (
               <SimpleTableActions
-                item={ item }
-                actions={ actions }
+                item={item}
+                actions={actions}
               />
             )
           }}
@@ -313,22 +313,22 @@ class FormListInner extends React.Component {
         />
         { disabled ? null : addButton }
         <SimpleTableDeleteDialog
-          open={ deleteConfirmOpen }
-          title={ deleteConfirmItem ? deleteConfirmItem[mainField] : null }
-          onCancel={ () => this.closeDeleteDialog() }
-          onConfirm={ () => {
+          open={deleteConfirmOpen}
+          title={deleteConfirmItem ? deleteConfirmItem[mainField] : null}
+          onCancel={() => this.closeDeleteDialog()}
+          onConfirm={() => {
             this.onDelete(deleteConfirmItem.id)
             this.closeDeleteDialog()
           }}
         />
 
         <FormListDialog
-          title={ item.title || item.id }
-          schema={ item.list.schema }
-          open={ editOpen }
-          initialValues={ editItem || {} }
-          onCancel={ this.onCancel }
-          onSave={ this.onSave }
+          title={item.title || item.id}
+          schema={item.list.schema}
+          open={editOpen}
+          initialValues={editItem || {}}
+          onCancel={this.onCancel}
+          onSave={this.onSave}
         />
       </div>
     )
@@ -339,21 +339,14 @@ const FormList = withStyles(styles)(FormListInner)
 
 class FormWrapperInner extends React.Component {
   state = {
-    hasSubmitted: false
-  }
-
-  flagSubmitted() {
-    this.setState({
-      hasSubmitted: true,
-    })
+    hasSubmitted: false,
   }
 
   getItem(item, formProps) {
-
-    if(typeof(item) == 'string') {
+    if (typeof (item) === 'string') {
       return (
         <Typography
-          variant='subtitle1'
+          variant="subtitle1"
         >
           { item }
         </Typography>
@@ -364,24 +357,24 @@ class FormWrapperInner extends React.Component {
       exists,
     } = this.props
 
+    // eslint-disable-next-line react/destructuring-assignment
     const isNew = this.props.dbId
     const hooks = formProps.hooks || {}
 
     const disableField = () => {
       let disabled = false
 
-      if(item.editable && typeof(item.editable.new) == 'boolean') {
-        if(item.editable.new && exists) {
+      if (item.editable && typeof (item.editable.new) === 'boolean') {
+        if (item.editable.new && exists) {
           disabled = true
-        }
-        else if(!item.editable.new && !exists) {
+        } else if (!item.editable.new && !exists) {
           disabled = true
         }
       }
 
       // this gives us a chance to dynamically disable fields
       // based on the value of other fields
-      if(hooks.disabled) {
+      if (hooks.disabled) {
         disabled = hooks.disabled({
           item,
           errors: formProps.errors,
@@ -395,13 +388,23 @@ class FormWrapperInner extends React.Component {
 
     const error = dotty.get(formProps.errors, item.id)
     const touched = dotty.get(formProps.touched, item.id)
-     
+
+    const checkCondition = (condition) => {
+      const { linkedId, visibilityParameter } = condition
+      const linkedComponentValue = dotty.get(formProps.values, linkedId)
+      return linkedComponentValue === visibilityParameter || (visibilityParameter === 'true' && linkedComponentValue === true)
+    }
+
+    const meetsVisibilityRequirement = (conditions) => {
+      if (Array.isArray(conditions)) {
+        return conditions.every(checkCondition)
+      }
+      return checkCondition(conditions)
+    }
+
     const renderField = (item) => {
       if (item.linked) {
-        const linkedId = item.linked.linkedId        
-        const linkedComponentValue = dotty.get(formProps.values, linkedId)
-        
-        if (linkedComponentValue === item.linked.visibilityParameter) {
+        if (meetsVisibilityRequirement(item.linked)) {
           return (
             <Field
               _ci={item.id}
@@ -415,52 +418,33 @@ class FormWrapperInner extends React.Component {
               formProps={formProps}
             />
           )
-        } else {
-          // don't render the field 
-          return
         }
-      } 
+        // don't render the field
+        return undefined
+      }
       return (
         <Field
           _ci={item.id}
           dbId={isNew}
-          name={ item.id }
-          component={ utils.getComponent(item.component) }
-          item={ item }
-          disabled={ disableField() }
-          error={ error }
-          touched={ touched }
-          formProps={ formProps }
+          name={item.id}
+          component={utils.getComponent(item.component)}
+          item={item}
+          disabled={disableField()}
+          error={error}
+          touched={touched}
+          formProps={formProps}
         />
       )
     }
 
     const renderFieldArray = (item) => {
       if (item.linked) {
-        const linkedId = item.linked.linkedId
-        const linkedComponentValue = dotty.get(formProps.values, linkedId)
-
-        let meetsVisibilityRequirement = false
-
-        if (linkedComponentValue === item.linked.visibilityParameter) {
-          meetsVisibilityRequirement = true
-        }
-
-        // catch edge case where booleans are strings - not sure why this is happening
-        // TOOD: work out why in some cases:
-        //   * item.linked.visibilityParameter == "true"
-        //   * linkedComponentValue == true
-        // the two things match but because of === they do not pass the test above
-        if(item.linked.visibilityParameter === "true" && linkedComponentValue === true) {
-          meetsVisibilityRequirement = true
-        }
-
-        if (meetsVisibilityRequirement) {
+        if (meetsVisibilityRequirement(item.linked)) {
           return (
             <FieldArray
               _ci={item.id}
               name={item.id}
-              render={arrayHelpers => (
+              render={(arrayHelpers) => (
                 <FormList
                   item={item}
                   formProps={formProps}
@@ -470,16 +454,15 @@ class FormWrapperInner extends React.Component {
               )}
             />
           )
-        } else {
-          // don't render the fieldArray 
-          return
         }
+        // don't render the fieldArray
+        return undefined
       }
       return (
         <FieldArray
           _ci={item.id}
           name={item.id}
-          render={arrayHelpers => (
+          render={(arrayHelpers) => (
             <FormList
               item={item}
               formProps={formProps}
@@ -494,50 +477,48 @@ class FormWrapperInner extends React.Component {
     // this gives us a chance to dynamically inject props into
     // a form field based on the values of other fields
     // and outside context (like redux store state for example)
-    const processedItem = hooks.processItem ?
-      hooks.processItem({
+    const processedItem = hooks.processItem
+      ? hooks.processItem({
         item,
         errors: formProps.errors,
         touched: formProps.touched,
         values: formProps.values,
-      }) :
-      item
+      })
+      : item
 
     // this gives us a change to dynamically hide items
     // based on the current values and outside context
-    const hidden = hooks.hidden ?
-      hooks.hidden({
+    const hidden = hooks.hidden
+      ? hooks.hidden({
         item,
         errors: formProps.errors,
         touched: formProps.touched,
         values: formProps.values,
-      }) :
-      false
+      })
+      : false
 
-    if(hidden) return null
+    if (hidden) return null
 
     // if the field includes a list, render a field array, otherwise render a normal field
     return item.list ? renderFieldArray(processedItem) : renderField(processedItem)
-    
   }
 
   // leave up to the user to put fields into columns
   // that divide nicely into 12
   getRow(row, formProps, i) {
-
     const {
       classes,
     } = this.props
 
-    if(typeof(row) === 'string') {
+    if (typeof (row) === 'string') {
       return (
-        <Grid item xs={ 12 } key={ i }>
-          <Divider className={ classes.divider } />
+        <Grid item xs={12} key={i}>
+          <Divider className={classes.divider} />
 
           {
             row !== '-' && (
               <Typography
-                variant='subtitle1'
+                variant="subtitle1"
               >
                 { row }
               </Typography>
@@ -547,22 +528,25 @@ class FormWrapperInner extends React.Component {
         </Grid>
       )
     }
-
-    else if (row.constructor === Array) {
+    if (row.constructor === Array) {
       const colSize = Math.floor(12 / row.length)
       return row.map((item, i) => (
-        <Grid item xs={ 12 } sm={ colSize } key={ i }>
+        <Grid item xs={12} sm={colSize} key={i}>
           { this.getItem(item, formProps) }
         </Grid>
       ))
     }
-    else {
-      return (
-        <Grid item xs={12} key={ i }>
-          { this.getItem(row, formProps) }
-        </Grid>
-      )
-    }
+    return (
+      <Grid item xs={12} key={i}>
+        { this.getItem(row, formProps) }
+      </Grid>
+    )
+  }
+
+  flagSubmitted() {
+    this.setState({
+      hasSubmitted: true,
+    })
   }
 
   render() {
@@ -585,20 +569,20 @@ class FormWrapperInner extends React.Component {
 
     try {
       isInitialValid = validationSchema.validateSync(initialValues)
-    } catch(e) {
-
+    } catch (e) {
+      console.error(e)
     }
 
     return (
       <Formik
-        initialValues={ initialValues }
-        validationSchema={ validationSchema }
-        isInitialValid={ isInitialValid }
-        onSubmit={ (values) => {
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        isInitialValid={isInitialValid}
+        onSubmit={(values) => {
           const processedValues = utils.processValues(schema, values)
           onSubmit(processedValues)
         }}
-        validate={ validate || hooks.validate }
+        validate={validate || hooks.validate}
       >
         {
           ({
@@ -608,7 +592,6 @@ class FormWrapperInner extends React.Component {
             errors,
             touched,
           }) => {
-
             const formProps = {
               errors,
               touched,
@@ -624,19 +607,23 @@ class FormWrapperInner extends React.Component {
             const flatErrors = utils.flattenErrors(errors, utils.flattenSchema(schema))
 
             const content = (
-              <form _ci='form' onSubmit={submitWrapper} onKeyPress={event => {
-                if (event.key === '13') {
-                  event.preventDefault();
-                }
-              }}>
-                <Grid container spacing={ spacing || 24 }>
+              <form
+                _ci="form"
+                onSubmit={submitWrapper}
+                onKeyPress={(event) => {
+                  if (event.key === '13') {
+                    event.preventDefault();
+                  }
+                }}
+              >
+                <Grid container spacing={spacing || 24}>
                   {
                     schema.map((item, i) => this.getRow(item, formProps, i))
                   }
                   {
                     renderButtons && (
                       <React.Fragment>
-                        {this.props.addSpaces ? <Grid item xs={12}></Grid> : null} 
+                        {this.props.addSpaces ? <Grid item xs={12} /> : null}
                         <Grid item xs={12}>
                           {
                             renderButtons({
@@ -653,8 +640,8 @@ class FormWrapperInner extends React.Component {
                   {
                     error && (
                       <FormHelperText
-                        _ci='errorHelperText'
-                        error={ true }
+                        _ci="errorHelperText"
+                        error
                       >
                         { error }
                       </FormHelperText>
@@ -663,21 +650,22 @@ class FormWrapperInner extends React.Component {
                 </Grid>
                 {
                   this.state.hasSubmitted && Object.keys(errors).length > 0 && (
-                    <div className={ classes.errorContainer }>
-                      <Typography className={ classes.errorText }>
+                    <div className={classes.errorContainer}>
+                      <Typography className={classes.errorText}>
                         There are errors in the form:
                       </Typography>
-                      <ul className={ classes.errorText }>
+                      <ul className={classes.errorText}>
                         {
-                          Object.keys(flatErrors).map((key, i) => {
-                            return (
-                              <li key={ i }>
-                                <Typography className={ classes.errorText }>
-                                  { key }: { flatErrors[key] }
-                                </Typography>
-                              </li>
-                            )
-                          })
+                          Object.keys(flatErrors).map((key, i) => (
+                            <li key={i}>
+                              <Typography className={classes.errorText}>
+                                { key }
+                                :
+                                {' '}
+                                { flatErrors[key] }
+                              </Typography>
+                            </li>
+                          ))
                         }
                       </ul>
                     </div>
@@ -686,15 +674,15 @@ class FormWrapperInner extends React.Component {
               </form>
             )
 
-            return renderForm ?
-              renderForm({
+            return renderForm
+              ? renderForm({
                 isValid,
                 values,
                 handleSubmit: submitWrapper,
                 errors,
                 content,
-              }) :
-              content
+              })
+              : content
           }
         }
       </Formik>
