@@ -325,15 +325,21 @@ class DeploymentTable extends React.Component {
       })
 
       const undeployed = deployment.status !== 'deployed'
-      buttons.push({
-        title: 'Settings',
-        icon: SettingsIcon,
-        disabled: undeployed,
-        handler: (item) => {
-          const pageKey = getFirstTagForDeployment(deploymentForms, item.deployment_type, item.deploymentData.deployment_version)
-          return onViewSettings(item.cluster, item.id, item.deployment_type, item.deploymentData.deployment_version, pageKey)
-        },
-      })
+      // eslint-disable-next-line camelcase
+      const { deployment_type } = deployment
+      const deploymentsWithSettings = ['daml-on-sawtooth', 'daml-on-besu', 'daml-on-qldb', 'daml-on-postgres', 'tfs-on-sawtooth']
+
+      if (deploymentsWithSettings.includes(deployment_type)) {
+        buttons.push({
+          title: 'Settings',
+          icon: SettingsIcon,
+          disabled: undeployed,
+          handler: (item) => {
+            const pageKey = getFirstTagForDeployment(deploymentForms, item.deployment_type, item.deploymentData.deployment_version)
+            return onViewSettings(item.cluster, item.id, item.deployment_type, item.deploymentData.deployment_version, pageKey)
+          },
+        })
+      }
 
       return buttons
     }
