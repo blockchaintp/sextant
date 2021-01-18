@@ -216,15 +216,17 @@ class DeploymentSettingsDamlParties extends React.Component {
       setApplicationId,
       setSelectedParty,
       generatePartyToken,
+      generateAdminToken,
     } = this.props
 
     if(!tokenSettingsWindowParticipant) return null
 
     const {
+      admin,
       parties,
     } = tokenSettingsWindowParticipant
 
-    const hasMember = Object.keys(selectedParties).find(name => {
+    const hasMember = admin ? true : Object.keys(selectedParties).find(name => {
       return selectedParties[name] == 'read' || selectedParties[name] == 'act'
     })
     const hasName = applicationId.match(/\w/)
@@ -242,7 +244,7 @@ class DeploymentSettingsDamlParties extends React.Component {
         <DialogContent>
           <Grid container spacing={8}>
             <Grid item xs={ 12 }>
-              <Typography variant="h6">Party Access Token</Typography>
+              <Typography variant="h6">{ admin ? 'Admin' : 'Party' } Access Token</Typography>
             </Grid>
             <Grid item xs={ 12 }>
               <TextField
@@ -256,136 +258,142 @@ class DeploymentSettingsDamlParties extends React.Component {
                 onChange={ (e) => setApplicationId(e.target.value) }
               />
             </Grid>
-            <Grid item xs={ 6 }>
-              <Typography variant="subtitle1">Read As</Typography>
-            </Grid>
-            <Grid item xs={ 6 }>
-              <Typography variant="subtitle1">Act As</Typography>
-            </Grid>
-            <Grid item xs={ 6 }>
-              {
-                parties.map((party, j) => {
-                  return (
-                    <div key={ j }>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            className={ classes.checkbox }
-                            checked={ selectedParties[party.name] == 'read' || selectedParties[party.name] == 'act' ? true : false }
-                            onChange={ (event) => {
-                              setSelectedParty({
-                                party: party.name,
-                                value: event.target.checked ? 'read' : 'none',
-                              })
-                            }}
-                            value={ party.name }
-                          />
-                        }
-                        label={ party.name }
-                      />
-                    </div>
-                  )
-                })
-              }
-            </Grid>
-            <Grid item xs={ 6 }>
-              {
-                parties.map((party, j) => {
-                  return (
-                    <div key={ j }>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            className={ classes.checkbox }
-                            checked={  selectedParties[party.name] == 'act' ? true : false }
-                            onChange={ (event) => {
-                              setSelectedParty({
-                                party: party.name,
-                                value: event.target.checked ? 'act' : 'none',
-                              })
-                            }}
-                            value={ party.name }
-                          />
-                        }
-                        label={ party.name }
-                      />
-                    </div>
-                  )
-                })
-              }
-            </Grid>    
-            <Grid item xs={ 6 }>
-              <Typography variant="caption">
-                <a
-                  href="#"
-                  onClick={ (e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    parties.forEach(party => {
-                      setSelectedParty({
-                        party: party.name,
-                        value: 'none'
+            {
+              admin ? null : (
+                <>
+                  <Grid item xs={ 6 }>
+                    <Typography variant="subtitle1">Read As</Typography>
+                  </Grid>
+                  <Grid item xs={ 6 }>
+                    <Typography variant="subtitle1">Act As</Typography>
+                  </Grid>
+                  <Grid item xs={ 6 }>
+                    {
+                      parties.map((party, j) => {
+                        return (
+                          <div key={ j }>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  className={ classes.checkbox }
+                                  checked={ selectedParties[party.name] == 'read' || selectedParties[party.name] == 'act' ? true : false }
+                                  onChange={ (event) => {
+                                    setSelectedParty({
+                                      party: party.name,
+                                      value: event.target.checked ? 'read' : 'none',
+                                    })
+                                  }}
+                                  value={ party.name }
+                                />
+                              }
+                              label={ party.name }
+                            />
+                          </div>
+                        )
                       })
-                    })
-                    return false
-                  }}
-                >
-                  select none
-                </a>&nbsp;|&nbsp;
-                <a
-                  href="#"
-                  onClick={ (e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    parties.forEach(party => {
-                      setSelectedParty({
-                        party: party.name,
-                        value: 'read'
+                    }
+                  </Grid>
+                  <Grid item xs={ 6 }>
+                    {
+                      parties.map((party, j) => {
+                        return (
+                          <div key={ j }>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  className={ classes.checkbox }
+                                  checked={  selectedParties[party.name] == 'act' ? true : false }
+                                  onChange={ (event) => {
+                                    setSelectedParty({
+                                      party: party.name,
+                                      value: event.target.checked ? 'act' : 'none',
+                                    })
+                                  }}
+                                  value={ party.name }
+                                />
+                              }
+                              label={ party.name }
+                            />
+                          </div>
+                        )
                       })
-                    })
-                    return false
-                  }}
-                >
-                  select all
-                </a>
-              </Typography>
-            </Grid> 
-            <Grid item xs={ 6 }>
-              <Typography variant="caption">
-                <a
-                  href="#"
-                  onClick={ (e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    parties.forEach(party => {
-                      setSelectedParty({
-                        party: party.name,
-                        value: 'none'
-                      })
-                    })
-                    return false
-                  }}
-                >
-                  select none
-                </a>&nbsp;|&nbsp;
-                <a
-                  href="#"
-                  onClick={ (e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    parties.forEach(party => {
-                      setSelectedParty({
-                        party: party.name,
-                        value: 'act'
-                      })
-                    })
-                    return false
-                  }}
-                >
-                  select all
-                </a>
-              </Typography>
-            </Grid>     
+                    }
+                  </Grid>
+                  <Grid item xs={ 6 }>
+                    <Typography variant="caption">
+                      <a
+                        href="#"
+                        onClick={ (e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          parties.forEach(party => {
+                            setSelectedParty({
+                              party: party.name,
+                              value: 'none'
+                            })
+                          })
+                          return false
+                        }}
+                      >
+                        select none
+                      </a>&nbsp;|&nbsp;
+                      <a
+                        href="#"
+                        onClick={ (e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          parties.forEach(party => {
+                            setSelectedParty({
+                              party: party.name,
+                              value: 'read'
+                            })
+                          })
+                          return false
+                        }}
+                      >
+                        select all
+                      </a>
+                    </Typography>
+                  </Grid> 
+                  <Grid item xs={ 6 }>
+                    <Typography variant="caption">
+                      <a
+                        href="#"
+                        onClick={ (e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          parties.forEach(party => {
+                            setSelectedParty({
+                              party: party.name,
+                              value: 'none'
+                            })
+                          })
+                          return false
+                        }}
+                      >
+                        select none
+                      </a>&nbsp;|&nbsp;
+                      <a
+                        href="#"
+                        onClick={ (e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          parties.forEach(party => {
+                            setSelectedParty({
+                              party: party.name,
+                              value: 'act'
+                            })
+                          })
+                          return false
+                        }}
+                      >
+                        select all
+                      </a>
+                    </Typography>
+                  </Grid>    
+                </>
+              )
+            }
           </Grid>
         </DialogContent>
         <DialogActions>
@@ -397,25 +405,37 @@ class DeploymentSettingsDamlParties extends React.Component {
             color="secondary"
             disabled={ isValid ? false : true }
             onClick={ () => {
-              const readAs = []
-              const actAs = []
-              Object.keys(selectedParties).forEach(party => {
-                if(selectedParties[party] == 'read') {
-                  readAs.push(party)
-                }
-                else if(selectedParties[party] == 'act') {
-                  readAs.push(party)
-                  actAs.push(party)
-                }
-              })
-              this.closeTokenSettingsDialog()
-              generatePartyToken({
-                cluster,
-                id,
-                applicationId,
-                readAs,
-                actAs,
-              })
+
+              if(admin) {
+                this.closeTokenSettingsDialog()
+                generateAdminToken({
+                  cluster,
+                  id,
+                  applicationId,
+                })
+              }
+              else {
+                const readAs = []
+                const actAs = []
+                Object.keys(selectedParties).forEach(party => {
+                  if(selectedParties[party] == 'read') {
+                    readAs.push(party)
+                  }
+                  else if(selectedParties[party] == 'act') {
+                    readAs.push(party)
+                    actAs.push(party)
+                  }
+                })
+                this.closeTokenSettingsDialog()
+                generatePartyToken({
+                  cluster,
+                  id,
+                  applicationId,
+                  readAs,
+                  actAs,
+                })
+              }
+              
             }}
           >
             Create Token <KeyIcon className={ classes.iconSmall } />
@@ -687,12 +707,13 @@ class DeploymentSettingsDamlParties extends React.Component {
   render() {
     const {
       classes,
+      setTokenSettingsWindowParticipant,
     } = this.props
 
     return (
       <div className={ classes.root }>
         <Grid container spacing={24}>
-          <Grid item xs={ 6 }>
+          <Grid item xs={ 4 }>
             <Paper className={ classes.paper }>
               <Typography variant="h6">
                 Local Participants
@@ -703,16 +724,36 @@ class DeploymentSettingsDamlParties extends React.Component {
               }
             </Paper>
           </Grid>
-          <Grid item xs={ 6 }>
-              <Paper className={ classes.paper }>
-                <Typography variant="h6">
-                  All Parties
-                </Typography>
-                {
-                  this.getPartiesByParticipant()
-                }
-              </Paper>
-            </Grid>
+          <Grid item xs={ 4 }>
+            <Paper className={ classes.paper }>
+              <Typography variant="h6">
+                All Parties
+              </Typography>
+              {
+                this.getPartiesByParticipant()
+              }
+            </Paper>
+          </Grid>
+          <Grid item xs={ 4 }>
+            <Paper className={ classes.paper }>
+              <Typography variant="h6">
+                Admin
+              </Typography>
+              <Button
+                className={ classes.smallButton + ' ' + classes.buttonBottomMargin }
+                size="small"
+                variant="outlined"
+                onClick={ () => {
+                  setTokenSettingsWindowParticipant({
+                    admin: true,
+                    parties: [],
+                  })
+                } }
+              >
+                Generate Admin Token <KeyIcon className={ classes.iconSmall } />
+              </Button>
+            </Paper>
+          </Grid>
         </Grid>
         { this.getAddPartyDialog() }
         { this.getTokenSettingsDialog() }

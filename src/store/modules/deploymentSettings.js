@@ -193,6 +193,15 @@ const loaders = {
   })
     .then(api.process),
 
+  generateAdminToken: ({
+    cluster,
+    id,
+    applicationId,
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/generateAdminToken`), {
+    applicationId,
+  })
+    .then(api.process),
+
 }
 
 const sideEffects = {
@@ -460,6 +469,38 @@ const sideEffects = {
         }),
         prefix,
         name: 'generatePartyToken',
+        returnError: true,
+      })
+      dispatch(actions.setToken(res.token))
+      dispatch(actions.setTokenWindowOpen(true))
+      dispatch(snackbarActions.setSuccess(`token generated`))
+    } catch(e) {
+      dispatch(snackbarActions.setError(`error generating token: ${e.toString()}`))
+      console.error(e)
+    }
+  },
+
+  generateAdminToken: ({
+    cluster,
+    id,
+    applicationId,
+  }) => async (dispatch, getState) => {
+
+    if(!applicationId) {
+      dispatch(snackbarActions.setError(`please enter an application id to generate a token for`))
+      return
+    }
+
+    try {
+      const res = await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.generateAdminToken({
+          cluster,
+          id,
+          applicationId,
+        }),
+        prefix,
+        name: 'generateAdminToken',
         returnError: true,
       })
       dispatch(actions.setToken(res.token))
