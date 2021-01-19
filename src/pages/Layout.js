@@ -140,7 +140,7 @@ class Layout extends React.Component {
           <div>
             <Toolbar className={classes.footer}>
               <Typography variant="caption" color="textSecondary">
-                &copy; 2018-2020
+                &copy; 2018-2021
                 {' '}
                 <a href="https://blockchaintp.com/" target="_blank" rel="noreferrer">Blockchain Technology Partners</a>
                 {' '}
