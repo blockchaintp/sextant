@@ -114,20 +114,20 @@ const loaders = {
   listKeyManagerKeys: ({
     cluster,
     id,
-  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/keyManagerKeys`))
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/daml/keyManagerKeys`))
     .then(api.process),
 
   listEnrolledKeys: ({
     cluster,
     id,
-  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/enrolledKeys`))
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/daml/enrolledKeys`))
     .then(api.process),
 
   addEnrolledKey: ({
     cluster,
     id,
     publicKey,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/enrolledKeys`), {
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/daml/enrolledKeys`), {
     publicKey,
   })
     .then(api.process),
@@ -135,33 +135,33 @@ const loaders = {
   listParticipants: ({
     cluster,
     id,
-  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/participants`))
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/daml/participants`))
     .then(api.process),
 
   listArchives: ({
     cluster,
     id,
-  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/archives`))
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/daml/archives`))
     .then(api.process),
 
   listTimeServiceInfo: ({
     cluster,
     id,
-  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/timeServiceInfo`))
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/daml/timeServiceInfo`))
     .then(api.process),
 
   registerParticipant: ({
     cluster,
     id,
     publicKey,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/registerParticipant`), {publicKey})
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/daml/registerParticipant`), {publicKey})
     .then(api.process),
 
   rotateParticipantKey: ({
     cluster,
     id,
     publicKey,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/rotateKeys`), {publicKey})
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/daml/rotateKeys`), {publicKey})
     .then(api.process),
 
   addParty: ({
@@ -169,7 +169,7 @@ const loaders = {
     id,
     publicKey,
     partyName,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/addParty`), {publicKey, partyName})
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/daml/addParty`), {publicKey, partyName})
     .then(api.process),
 
   removeParties: ({
@@ -177,7 +177,7 @@ const loaders = {
     id,
     publicKey,
     partyNames,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/removeParties`), {publicKey, partyNames})
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/daml/removeParties`), {publicKey, partyNames})
     .then(api.process),
 
   generatePartyToken: ({
@@ -186,7 +186,7 @@ const loaders = {
     applicationId,
     readAs,
     actAs,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/generatePartyToken`), {
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/daml/generatePartyToken`), {
     applicationId,
     readAs,
     actAs,
@@ -197,7 +197,7 @@ const loaders = {
     cluster,
     id,
     applicationId,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/generateAdminToken`), {
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/daml/generateAdminToken`), {
     applicationId,
   })
     .then(api.process),
