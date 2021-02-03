@@ -171,9 +171,8 @@ class TaekionVolumes extends React.Component {
 
     const getKeyName = (fingerprintValue, allKeys) => {
       const foundKey = allKeys.find((item) => item.fingerprint === fingerprintValue)
-      return foundKey.label
+      return foundKey ? foundKey.label : 'NONE'
     }
-
     const data = volumes.map((volume) => ({
       id: volume.uuid,
       name: volume.name,
