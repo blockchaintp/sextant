@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* feat(assets): update tfs logo [view commit](https://github.com/catenasys/sextant/commit/85af60eccf40201e843b50adaac5526bd42f8e31)
 
 ## v2.1.0
 
