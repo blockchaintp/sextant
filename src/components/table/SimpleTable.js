@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
@@ -9,23 +10,20 @@ import TableHead from '@material-ui/core/TableHead'
 import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 
-const styles = theme => {
-  return {
-    root: {
-      width: '100%',
-    },
-    table: {
-      
-    },
-    tableWrapper: {
-      overflowX: 'auto',
-    },
-    autoCell: {
-      width: 'auto'
-    },
-  }
+const styles = () => ({
+  root: {
+    width: '100%',
+  },
+  table: {
 
-}
+  },
+  tableWrapper: {
+    overflowX: 'auto',
+  },
+  autoCell: {
+    width: 'auto',
+  },
+})
 
 class SimpleTable extends React.Component {
   constructor(props, context) {
@@ -40,17 +38,16 @@ class SimpleTable extends React.Component {
     this.setState({ page })
   }
 
-  handleChangeRowsPerPage = event => {
+  handleChangeRowsPerPage = (event) => {
     this.setState({ rowsPerPage: event.target.value })
   }
 
   render() {
-    const { 
+    const {
       classes,
-      selected,
       data,
       fields,
-      getActions, 
+      getActions,
       onRowClick,
       pagination,
       hideHeader,
@@ -71,17 +68,15 @@ class SimpleTable extends React.Component {
                 <TableHead>
                   <TableRow>
                     {
-                      fields.map((field, i) => {
-                        return (
-                          <TableCell key={ i } align={ field.numeric ? 'right' : 'left' }>
-                            { field.title }
-                          </TableCell>
-                        )
-                      })
+                      fields.map((field, i) => (
+                        <TableCell key={i} align={field.numeric ? 'right' : 'left'}>
+                          { field.title }
+                        </TableCell>
+                      ))
                     }
                     {
                       getActions ? (
-                        <TableCell align='right'>
+                        <TableCell align="right">
                           Actions
                         </TableCell>
                       ) : null
@@ -91,41 +86,38 @@ class SimpleTable extends React.Component {
               )
             }
             <TableBody>
-              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(dataRow => { 
-                
-                return (
-                  <TableRow
-                    hover
-                    onClick={event => {
-                      if(!onRowClick) return
-                      onRowClick(event, dataRow.id)
-                    }}
-                    tabIndex={-1}
-                    key={dataRow.id}
-                    _ci={dataRow.username || dataRow.name}
-                  >
-                    {
-                      fields.map((field, i) => {
-                        return (
-                          <TableCell 
-                            _ci={`${dataRow.username || dataRow.name}${dataRow[field.name]}`}
-                            key={ i } 
-                            align={ field.numeric ? 'right' : 'left' } className={ classes.autoCell }>
-                            {dataRow[field.name] || (dataRow.deploymentData ? dataRow.deploymentData[field.name] : null)}
-                          </TableCell>
-                        )
-                      })
+              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((dataRow) => (
+                <TableRow
+                  hover
+                  onClick={(event) => {
+                    if (!onRowClick) return
+                    onRowClick(event, dataRow.id)
+                  }}
+                  tabIndex={-1}
+                  key={dataRow.id}
+                  _ci={dataRow.username || dataRow.name}
+                >
+                  {
+                      fields.map((field, i) => (
+                        <TableCell
+                          _ci={`${dataRow.username || dataRow.name}${dataRow[field.name]}`}
+                          key={i}
+                          align={field.numeric ? 'right' : 'left'}
+                          className={classes.autoCell}
+                        >
+                          {dataRow[field.name] || (dataRow.deploymentData ? dataRow.deploymentData[field.name] : null)}
+                        </TableCell>
+                      ))
                     }
-                    {
+                  {
                       getActions ? (
-                        <TableCell align='right'>
+                        <TableCell align="right">
                           { getActions(dataRow) }
                         </TableCell>
                       ) : null
                     }
-                  </TableRow>
-                );
-              })}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
