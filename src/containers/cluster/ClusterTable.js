@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -15,7 +16,7 @@ const onDelete = (id) => clusterActions.delete(id)
 const updateShowDeleted = (value) => clusterActions.updateShowDeleted(value)
 
 @connect(
-  state => ({
+  (state) => ({
     clusters: selectors.cluster.collection.list(state),
     showDeleted: selectors.cluster.showDeleted(state),
     user: selectors.auth.data(state),
@@ -30,11 +31,10 @@ const updateShowDeleted = (value) => clusterActions.updateShowDeleted(value)
   },
 )
 class ClusterTableContainer extends React.Component {
-
   render() {
     return (
       <ClusterTable {...this.props} />
-    )    
+    )
   }
 }
 
