@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:11.12
+FROM mhart/alpine-node:12
 
 RUN apk update && apk upgrade
 
