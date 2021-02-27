@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v2.1.1
 
 * feat(simple-table): add sort functionality to columns [view commit](https://github.com/catenasys/sextant/commit/d768558793f0edd9a467ebe12a4a884ea0d935ad)
 * style(deployment-table-components): linting [view commit](https://github.com/catenasys/sextant/commit/c13bc3f7d1ff30b0439b6a73387880b0f3d57c8f)
