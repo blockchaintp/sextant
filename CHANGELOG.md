@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Unreleased
+
+
 ## v2.1.1
 
 * feat(simple-table): add sort functionality to columns [view commit](https://github.com/catenasys/sextant/commit/d768558793f0edd9a467ebe12a4a884ea0d935ad)
