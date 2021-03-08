@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable camelcase */
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -31,8 +33,7 @@ const onCancel = () => routerActions.navigateTo('clusters')
 const clearAccessControlResults = () => userActions.setAccessControlResults([])
 
 @connect(
-  state => {
-
+  (state) => {
     const routeParams = selectors.router.params(state)
 
     const {
@@ -42,16 +43,16 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
 
     const clusterForms = selectors.config.forms.cluster(state)
 
-    const initialValues = id == 'new' ?
-      clusterInitialValues[provision_type] :
-      JSON.parse(JSON.stringify(selectors.cluster.collection.item(state) || {}))
+    const initialValues = id === 'new'
+      ? clusterInitialValues[provision_type]
+      : JSON.parse(JSON.stringify(selectors.cluster.collection.item(state) || {}))
 
-    const schema = id == 'new' ?
-      clusterForms[provision_type].add :
-      (
-        initialValues.provision_type ?
-        clusterForms[initialValues.provision_type].edit :
-        []
+    const schema = id === 'new'
+      ? clusterForms[provision_type].add
+      : (
+        initialValues.provision_type
+          ? clusterForms[initialValues.provision_type].edit
+          : []
       )
 
     return {
@@ -59,7 +60,7 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
       error: selectors.cluster.errors.form(state),
       submitting: selectors.cluster.loading.form(state),
       loading: selectors.cluster.loading.get(state),
-      schema: schema,
+      schema,
       initialValues,
       provision_type: initialValues ? initialValues.provision_type : null,
       tasks: selectors.cluster.taskCollection.list(state),
@@ -81,22 +82,21 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
     addRole: clusterActions.addRole,
     deleteRole: clusterActions.deleteRole,
     onCancelRoleForm: userActions.closeAccessControlForm,
-    onCancel, 
+    onCancel,
   },
 )
 class ClusterFormContainer extends React.Component {
-
   render() {
     const {
       loading,
     } = this.props
 
-    if(loading) {
+    if (loading) {
       return <Loading />
     }
 
     return (
-      <ClusterForm 
+      <ClusterForm
         {...this.props}
       />
     )
