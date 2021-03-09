@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* fix(dockerfile): bump node version to twelve [view commit](https://github.com/catenasys/sextant/commit/5cc41c314d5d305e7dab8a9c8cdb8508b8561f50)
 
 ## v2.1.1
 
