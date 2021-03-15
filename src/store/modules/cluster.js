@@ -1,8 +1,10 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import { normalize, schema } from 'normalizr'
 import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
-import { mergeEntities, mergeAll } from '../utils/mergeNormalized'
+import { mergeEntities } from '../utils/mergeNormalized'
 import { successMessageGenerator, errorMessageGenerator } from '../../utils/translators'
 import api from '../utils/api'
 
@@ -35,7 +37,7 @@ const initialState = {
   loops: {
     cluster: null,
     resources: null,
-  }
+  },
 }
 
 const reducers = {
@@ -78,27 +80,27 @@ const reducers = {
 const loaders = {
 
   list: ({
-    showDeleted, mode
-  }) => axios.get(api.url(`/clusters`), {
+    showDeleted, mode,
+  }) => axios.get(api.url('/clusters'), {
     params: {
       showDeleted: showDeleted ? 'y' : '',
       withTasks: 'y',
-      mode: mode ? "background" : 'foreground'
-    }
+      mode: mode ? 'background' : 'foreground',
+    },
   })
     .then(api.process),
 
   get: (id) => axios.get(api.url(`/clusters/${id}`), {
     params: {
       withTask: 'y',
-    }
+    },
   })
     .then(api.process),
 
   listRoles: (id) => axios.get(api.url(`/clusters/${id}/roles`))
     .then(api.process),
 
-  create: (payload) => axios.post(api.url(`/clusters`), payload)
+  create: (payload) => axios.post(api.url('/clusters'), payload)
     .then(api.process),
 
   update: (id, payload) => axios.put(api.url(`/clusters/${id}`), payload)
@@ -110,10 +112,10 @@ const loaders = {
   listTasks: (id) => axios.get(api.url(`/clusters/${id}/tasks`))
     .then(api.process),
 
-  listResources: (id, {mode}) => axios.get(api.url(`/clusters/${id}/resources`), {
+  listResources: (id, { mode }) => axios.get(api.url(`/clusters/${id}/resources`), {
     params: {
-      mode: mode ? "background" : 'foreground'
-    }
+      mode: mode ? 'background' : 'foreground',
+    },
   })
     .then(api.process),
 
@@ -138,26 +140,23 @@ const sideEffects = {
   // look to see if there have been any task changes to any clusters
   // and trigger a snackbar if there have
   updateClusterList: (newData) => (dispatch, getState) => {
+    const { trackTask } = getState().cluster
 
-    const trackTask = getState().cluster.trackTask
-
-    if(trackTask) {
+    if (trackTask) {
       const newTrackTask = newData
-        .map(cluster => cluster.task)
-        .find(task => task.id == trackTask.id)
-      if(newTrackTask) {
+        .map((cluster) => cluster.task)
+        .find((task) => task.id === trackTask.id)
+      if (newTrackTask) {
         // the tracked task has failed or finished
-        if(newTrackTask.status == 'error' || newTrackTask.status == 'finished') {
-          if(newTrackTask.status == 'error') {
+        if (newTrackTask.status === 'error' || newTrackTask.status === 'finished') {
+          if (newTrackTask.status === 'error') {
             dispatch(snackbarActions.setError(errorMessageGenerator(trackTask.action)))
-          }
-          else if(newTrackTask.status == 'finished') {
+          } else if (newTrackTask.status === 'finished') {
             dispatch(snackbarActions.setSuccess(successMessageGenerator(trackTask.action)))
           }
           dispatch(actions.setTrackTask(null))
         }
-      }
-      else if(trackTask.action == 'cluster.delete') {
+      } else if (trackTask.action === 'cluster.delete') {
         dispatch(snackbarActions.setSuccess(successMessageGenerator(trackTask.action)))
         dispatch(actions.setTrackTask(null))
       }
@@ -169,8 +168,9 @@ const sideEffects = {
   list: (opts = {}) => (dispatch, getState) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.list({
+      // eslint-disable-next-line no-unneeded-ternary
       showDeleted: opts.noDeleted ? false : true,
-      mode: opts.background ? opts.background : false
+      mode: opts.background ? opts.background : false,
     }),
     prefix,
     name: 'list',
@@ -186,7 +186,7 @@ const sideEffects = {
     snackbarError: true,
   }),
   listRoles: (id) => async (dispatch) => {
-    if(id == 'new') {
+    if (id === 'new') {
       dispatch(actions.resetRoles())
       return
     }
@@ -201,10 +201,9 @@ const sideEffects = {
   },
   submitForm: (payload) => (dispatch, getState) => {
     const id = selectors.router.idParam(getState())
-    if(id == 'new') {
+    if (id === 'new') {
       dispatch(actions.create(payload))
-    }
-    else {
+    } else {
       dispatch(actions.save(id, payload))
     }
   },
@@ -219,10 +218,10 @@ const sideEffects = {
       })
 
       dispatch(actions.setTrackTask(task))
-      dispatch(snackbarActions.setInfo(`cluster creating`))
+      dispatch(snackbarActions.setInfo('cluster creating'))
       dispatch(routerActions.navigateTo('clusters'))
       dispatch(authActions.loadStatus())
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error creating cluster: ${e.toString()}`))
       console.error(e)
     }
@@ -237,9 +236,9 @@ const sideEffects = {
         returnError: true,
       })
       dispatch(actions.setTrackTask(task))
-      dispatch(snackbarActions.setInfo(`cluster saving`))
+      dispatch(snackbarActions.setInfo('cluster saving'))
       dispatch(routerActions.navigateTo('clusters'))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error saving cluster: ${e.toString()}`))
       console.error(e)
     }
@@ -254,15 +253,14 @@ const sideEffects = {
         name: 'delete',
         returnError: true,
       })
-      if(cluster.status == 'deleted') {
-        dispatch(snackbarActions.setSuccess(`cluster deleted`))
-      }
-      else {
+      if (cluster.status === 'deleted') {
+        dispatch(snackbarActions.setSuccess('cluster deleted'))
+      } else {
         dispatch(actions.setTrackTask(task))
-        dispatch(snackbarActions.setInfo(`cluster deleting`))
+        dispatch(snackbarActions.setInfo('cluster deleting'))
       }
       dispatch(routerActions.navigateTo('clusters'))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error deleting cluster: ${e.toString()}`))
       console.error(e)
     }
@@ -275,32 +273,28 @@ const sideEffects = {
     dataAction: actions.setTasks,
     snackbarError: true,
   }),
-  listResources: (id, opts = {}) => (dispatch) => {
-    return api.loaderSideEffect({
-      dispatch,
-      loader: () => loaders.listResources(id, {
-        mode: opts.background ? opts.background : false
-      }),
-      prefix,
-      name: 'listResources',
-      dataAction: actions.setResources,
-      snackbarError: true,
-    })
-  },
-  getSummary: (id) => (dispatch) => {
-    return api.loaderSideEffect({
-      dispatch,
-      loader: () => loaders.getSummary(id),
-      prefix,
-      name: 'getSummary',
-      dataAction: actions.setSummary,
-      snackbarError: true,
-    })
-  },
+  listResources: (id, opts = {}) => (dispatch) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listResources(id, {
+      mode: opts.background ? opts.background : false,
+    }),
+    prefix,
+    name: 'listResources',
+    dataAction: actions.setResources,
+    snackbarError: true,
+  }),
+  getSummary: (id) => (dispatch) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.getSummary(id),
+    prefix,
+    name: 'getSummary',
+    dataAction: actions.setSummary,
+    snackbarError: true,
+  }),
   startClusterLoop: () => async (dispatch, getState) => {
     await dispatch(actions.list())
     const intervalTask = setInterval(() => {
-      dispatch(actions.list({background: true}))
+      dispatch(actions.list({ background: true }))
     }, 1000)
     dispatch(actions.setLoop({
       name: 'cluster',
@@ -324,10 +318,10 @@ const sideEffects = {
   },
   resourcesLoop: (id) => async (dispatch, getState) => {
     const looping = getState().cluster.loops.resources
-    if(!looping) return
+    if (!looping) return
     await dispatch(actions.listResources(id))
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    dispatch(actions.resourcesLoop(id, {background: true}))
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    dispatch(actions.resourcesLoop(id, { background: true }))
   },
   stopResourcesLoop: () => (dispatch, getState) => {
     dispatch(actions.setLoop({
@@ -350,14 +344,14 @@ const sideEffects = {
         name: 'addRole',
         returnError: true,
       })
-      dispatch(snackbarActions.setSuccess(`role added`))
+      dispatch(snackbarActions.setSuccess('role added'))
       dispatch(actions.listRoles(id))
       dispatch(userActions.closeAccessControlForm())
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error adding role: ${e.toString()}`))
     }
   },
-  deleteRole: (userid) =>  async (dispatch, getState) => {
+  deleteRole: (userid) => async (dispatch, getState) => {
     const id = selectors.router.idParam(getState())
     try {
       await api.loaderSideEffect({
@@ -367,14 +361,13 @@ const sideEffects = {
         name: 'deleteRole',
         returnError: true,
       })
-      dispatch(snackbarActions.setSuccess(`role deleted`))
+      dispatch(snackbarActions.setSuccess('role deleted'))
       dispatch(actions.listRoles(id))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error deleting role: ${e.toString()}`))
     }
   },
 }
-
 
 const reducer = CreateReducer({
   initialState,
