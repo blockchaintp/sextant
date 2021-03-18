@@ -351,6 +351,39 @@ const sideEffects = {
       dispatch(snackbarActions.setError(`error adding role: ${e.toString()}`))
     }
   },
+  editRole: (userid) => async (dispatch, getState) => {
+    const id = selectors.router.idParam(getState())
+    const username = selectors.user.accessControlSearch(getState())
+    const permission = selectors.user.accessControlLevel(getState())
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.deleteRole(id, userid),
+        prefix,
+        name: 'deleteRole',
+        returnError: true,
+      })
+    } catch (e) {
+      dispatch(snackbarActions.setError(`error editing role: ${e.toString()}`))
+    }
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.createRole(id, {
+          username,
+          permission,
+        }),
+        prefix,
+        name: 'addRole',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setSuccess('role edited'))
+      dispatch(actions.listRoles(id))
+      dispatch(userActions.closeAccessControlForm())
+    } catch (e) {
+      dispatch(snackbarActions.setError(`error editing role: ${e.toString()}`))
+    }
+  },
   deleteRole: (userid) => async (dispatch, getState) => {
     const id = selectors.router.idParam(getState())
     try {
