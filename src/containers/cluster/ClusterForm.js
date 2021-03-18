@@ -80,6 +80,7 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
     loadAccessControlResults: userActions.loadAccessControlResults,
     clearAccessControlResults,
     addRole: clusterActions.addRole,
+    editRole: clusterActions.editRole,
     deleteRole: clusterActions.deleteRole,
     onCancelRoleForm: userActions.closeAccessControlForm,
     onCancel,

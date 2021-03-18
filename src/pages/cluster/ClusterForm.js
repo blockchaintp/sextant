@@ -152,6 +152,7 @@ class ClusterForm extends React.Component {
       loadAccessControlResults,
       clearAccessControlResults,
       addRole,
+      editRole,
       deleteRole,
       onCancelRoleForm,
       classes,
@@ -162,6 +163,7 @@ class ClusterForm extends React.Component {
         <RoleTable
           roles={roles}
           onAdd={addRole}
+          onEdit={editRole}
           onDelete={deleteRole}
           onCancel={onCancelRoleForm}
           title="Access Control"
