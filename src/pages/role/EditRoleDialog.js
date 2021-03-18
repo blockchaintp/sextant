@@ -24,10 +24,25 @@ const styles = (theme) => ({
 })
 
 class EditRoleDialog extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      role: props.level,
+    }
+    this.setLevel = this.setRole.bind(this)
+  }
+
+  setRole(role) {
+    this.setState({ role })
+    const { setLevel } = this.props
+    setLevel(role)
+  }
+
   render() {
     const {
-      classes, open, onCancel, onConfirm, level, setLevel,
+      classes, open, onCancel, onConfirm,
     } = this.props
+    const { role } = this.state
     return (
       <Dialog
         open={open}
@@ -45,8 +60,8 @@ class EditRoleDialog extends React.Component {
               Access Level
             </InputLabel>
             <Select
-              value={level}
-              onChange={(e) => setLevel(e.target.value)}
+              value={role}
+              onChange={(e) => this.setRole(e.target.value)}
               displayEmpty
               name="accessLevel"
             >

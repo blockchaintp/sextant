@@ -197,7 +197,7 @@ class RoleTable extends React.Component {
           }}
         />
         <EditRoleDialog
-          level={level}
+          level={editConfirmItem ? editConfirmItem.role : level}
           setLevel={setLevel}
           open={editConfirmOpen}
           onCancel={() => { onCancel(); this.closeEditDialog() }}
