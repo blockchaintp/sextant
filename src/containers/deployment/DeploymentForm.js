@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -12,12 +13,11 @@ import Loading from 'components/system/Loading'
 
 import formUtils from 'components/form/utils'
 
-const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
+const onCancel = (cluster) => routerActions.navigateTo('deployments', { cluster })
 const clearAccessControlResults = () => userActions.setAccessControlResults([])
 
 @connect(
-  state => {
-
+  (state) => {
     const routeParams = selectors.router.params(state)
     const {
       id,
@@ -28,27 +28,27 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
     const deploymentForms = selectors.config.forms.deployment(state)
     let initialValues = {}
     let schema = []
-    const deployment = state.deployment.deployments.entities.deployment
+    const { deployment } = state.deployment.deployments.entities
 
     // we are creating a new deployment
-    if(id == 'new') {
+    if (id === 'new') {
       schema = deploymentForms[deployment_type].forms[deployment_version]
       initialValues = formUtils.getInitialValues(schema, {})
-    }
-    // it's an existing deployment
-    else {
+    } else {
       const existingValues = selectors.deployment.collection.item(state)
 
-      if(existingValues) {
+      if (existingValues) {
         initialValues = JSON.parse(JSON.stringify(existingValues.desired_state))
-        schema = deploymentForms[existingValues.deployment_type].forms[existingValues.deployment_version]
+        // eslint-disable-next-line no-shadow
+        const { deployment_version, deployment_type } = existingValues
+        schema = deploymentForms[deployment_type].forms[deployment_version]
         initialValues = formUtils.processInitialValues(schema, initialValues)
       }
     }
 
     return {
       id,
-      exists: id == 'new' ? false : true,
+      exists: id !== 'new',
       clusterId: state.router.route.params.cluster,
       error: selectors.deployment.errors.form(state),
       submitting: selectors.deployment.loading.form(state),
@@ -63,7 +63,7 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
       accessControlSearch: selectors.user.accessControlSearch(state),
       accessControlUsers: selectors.user.accessControlResults(state),
       yamlInput: selectors.customization.yamlInput(state),
-      customYaml: (deployment && deployment[id]) ? deployment[id].custom_yaml : ''
+      customYaml: (deployment && deployment[id]) ? deployment[id].custom_yaml : '',
     }
   },
   {
@@ -76,19 +76,19 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
     clearAccessControlResults,
     addRole: deploymentActions.addRole,
     deleteRole: deploymentActions.deleteRole,
+    editRole: deploymentActions.editRole,
     onCancelRoleForm: userActions.closeAccessControlForm,
     saveYamlInput: customizationActions.saveYamlInput,
-    clearYamlInput: customizationActions.clearYamlInput
+    clearYamlInput: customizationActions.clearYamlInput,
   },
 )
 class DeploymentFormContainer extends React.Component {
-
   render() {
     const {
       loading,
     } = this.props
 
-    if(loading) {
+    if (loading) {
       return <Loading />
     }
 

@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unused-state */
+/* eslint-disable react/jsx-fragments */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
@@ -12,7 +14,7 @@ import RoleTable from 'pages/role/RoleTable'
 import FormWrapper from 'components/form/Wrapper'
 import CustomizationPanel from 'components/deployment/CustomizationPanel'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     padding: theme.spacing.unit * 2,
   },
@@ -22,7 +24,7 @@ const styles = theme => ({
   scrolling: {
     padding: theme.spacing.unit * 5,
     height: '68vh',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   dateTime: {
     whiteSpace: 'nowrap',
@@ -46,14 +48,9 @@ class DeploymentForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: ''
+      input: '',
     };
     this.inputToState = this.inputToState.bind(this)
-  }
-
-
-  inputToState(payload) {
-    this.setState({ input: payload })
   }
 
   getTaskTable() {
@@ -62,12 +59,12 @@ class DeploymentForm extends React.Component {
       classes,
     } = this.props
     return (
-      <Paper className={ classes.paper }>
+      <Paper className={classes.paper}>
         <Typography variant="h6" gutterBottom>
           Tasks
         </Typography>
         <TaskTable
-          data={ tasks }
+          data={tasks}
         />
       </Paper>
     )
@@ -87,31 +84,37 @@ class DeploymentForm extends React.Component {
       clearAccessControlResults,
       addRole,
       deleteRole,
+      editRole,
       onCancelRoleForm,
       classes,
     } = this.props
 
     return (
-      <Paper className={ classes.paper }>
+      <Paper className={classes.paper}>
         <RoleTable
-          roles={ roles }
-          onAdd={ addRole }
-          onDelete={ deleteRole }
-          onCancel={ onCancelRoleForm }
+          roles={roles}
+          onAdd={addRole}
+          onDelete={deleteRole}
+          onEdit={editRole}
+          onCancel={onCancelRoleForm}
           title="Access Control"
-          headerClassname={ classes.roleTableHeader }
-          open={ accessControlFormOpen }
-          search={ accessControlSearch }
-          level={ accessControlLevel }
-          users={ accessControlUsers }
-          setOpen={ setAccessControlFormOpen }
-          setLevel={ setAccessControlLevel }
-          setSearch={ setAccessControlSearch }
-          loadUsers={ loadAccessControlResults }
-          clearUsers={ clearAccessControlResults }
+          headerClassname={classes.roleTableHeader}
+          open={accessControlFormOpen}
+          search={accessControlSearch}
+          level={accessControlLevel}
+          users={accessControlUsers}
+          setOpen={setAccessControlFormOpen}
+          setLevel={setAccessControlLevel}
+          setSearch={setAccessControlSearch}
+          loadUsers={loadAccessControlResults}
+          clearUsers={clearAccessControlResults}
         />
       </Paper>
     )
+  }
+
+  inputToState(payload) {
+    this.setState({ input: payload })
   }
 
   render() {
@@ -119,7 +122,6 @@ class DeploymentForm extends React.Component {
       id,
       classes,
       title,
-      submitTitle,
       submitForm,
       schema,
       initialValues,
@@ -128,24 +130,23 @@ class DeploymentForm extends React.Component {
       onCancel,
       clusterId,
       validate,
-      tasks,
       exists,
       saveYamlInput,
       yamlInput,
-      customYaml
+      customYaml,
     } = this.props
 
     return (
-      <div className={ classes.root }>
+      <div className={classes.root}>
         <Grid container spacing={24}>
-        {
-          id != 'new' && (
-            <Grid item xs={ 12 }>
+          {
+          id !== 'new' && (
+            <Grid item xs={12}>
               <div>
                 {
                   this.getRoleTable()
                 }
-                <div className={ classes.spacer } />
+                <div className={classes.spacer} />
                 {
                   this.getTaskTable()
                 }
@@ -153,48 +154,53 @@ class DeploymentForm extends React.Component {
             </Grid>
           )
         }
-          <Grid item xs={ 12}>
-            <Paper className={ id != 'new' ? classes.scrolling : classes.paper }>
-              <Typography _ci='formheader' variant="h6" gutterBottom>
+          <Grid item xs={12}>
+            <Paper className={id !== 'new' ? classes.scrolling : classes.paper}>
+              <Typography _ci="formheader" variant="h6" gutterBottom>
                 { title }
               </Typography>
               <FormWrapper
-                schema={ schema }
-                initialValues={ initialValues }
-                error={ error }
-                onSubmit={ submitForm }
-                validate={ validate }
-                exists={ exists }
+                schema={schema}
+                initialValues={initialValues}
+                error={error}
+                onSubmit={submitForm}
+                validate={validate}
+                exists={exists}
                 renderButtons={
                   ({
                     handleSubmit,
                   }) => (
                     <React.Fragment>
-                        <div className={classes.panel} >
-                          <CustomizationPanel inputToState={this.inputToState} saveYamlInput={saveYamlInput} customYaml={customYaml} yamlInput={yamlInput}></CustomizationPanel>
-                        </div>
-                        <div className={classes.spacer}></div>
+                      <div className={classes.panel}>
+                        <CustomizationPanel
+                          inputToState={this.inputToState}
+                          saveYamlInput={saveYamlInput}
+                          customYaml={customYaml}
+                          yamlInput={yamlInput}
+                        />
+                      </div>
+                      <div className={classes.spacer} />
                       {
                         onCancel && (
                           <Button
-                            className={ classes.button }
+                            className={classes.button}
                             type="button"
                             variant="contained"
-                            onClick={ () => onCancel(clusterId) }
+                            onClick={() => onCancel(clusterId)}
                           >
                             Cancel
                           </Button>
                         )
                       }
                       <Button
-                        className={ classes.button }
+                        className={classes.button}
                         type="button"
                         variant="contained"
                         color="primary"
-                        disabled={ submitting }
-                        onClick={ handleSubmit }
+                        disabled={submitting}
+                        onClick={handleSubmit}
                       >
-                          {id == 'new' ? 'deploy' : 're-deploy'  }
+                        {id === 'new' ? 'deploy' : 're-deploy' }
                       </Button>
                     </React.Fragment>
 
@@ -213,15 +219,11 @@ DeploymentForm.propTypes = {
   classes: PropTypes.object.isRequired,
   submitForm: PropTypes.func.isRequired,
   initialValues: PropTypes.object.isRequired,
-  error: PropTypes.string,
   title: PropTypes.string,
-  submitTitle: PropTypes.string,
-  onCancel: PropTypes.func,
 }
 
 DeploymentForm.defaultProps = {
   title: 'Deployment Details',
-  submitTitle: 'Deploy',
 }
 
 export default withStyles(styles)(DeploymentForm)
