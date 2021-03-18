@@ -7,13 +7,27 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormHelperText from '@material-ui/core/FormHelperText'
+
+const styles = (theme) => ({
+  formControl: {
+    width: '100%',
+    margin: theme.spacing.unit,
+  },
+  spacer: {
+    height: theme.spacing.unit * 4,
+  },
+})
 
 class EditRoleDialog extends React.Component {
   render() {
     const {
-      open, onCancel, onConfirm,
+      classes, open, onCancel, onConfirm, level, setLevel,
     } = this.props
-
     return (
       <Dialog
         open={open}
@@ -24,8 +38,23 @@ class EditRoleDialog extends React.Component {
         <DialogTitle id="alert-dialog-title">Edit Role</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            You may only edit the role, not the name.
+            You may only edit the role.
           </DialogContentText>
+          <FormControl className={classes.formControl}>
+            <InputLabel>
+              Access Level
+            </InputLabel>
+            <Select
+              value={level}
+              onChange={(e) => setLevel(e.target.value)}
+              displayEmpty
+              name="accessLevel"
+            >
+              <MenuItem value="read">Read</MenuItem>
+              <MenuItem value="write">Write</MenuItem>
+            </Select>
+            <FormHelperText>Choose the level of access you want to give this user</FormHelperText>
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={onCancel}>
@@ -40,4 +69,4 @@ class EditRoleDialog extends React.Component {
   }
 }
 
-export default withStyles()(EditRoleDialog)
+export default withStyles(styles)(EditRoleDialog)
