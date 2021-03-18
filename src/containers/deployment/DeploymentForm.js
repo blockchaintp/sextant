@@ -76,6 +76,7 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
     clearAccessControlResults,
     addRole: deploymentActions.addRole,
     deleteRole: deploymentActions.deleteRole,
+    editRole: deploymentActions.editRole,
     onCancelRoleForm: userActions.closeAccessControlForm,
     saveYamlInput: customizationActions.saveYamlInput,
     clearYamlInput: customizationActions.clearYamlInput,

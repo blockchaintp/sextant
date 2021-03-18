@@ -84,6 +84,7 @@ class DeploymentForm extends React.Component {
       clearAccessControlResults,
       addRole,
       deleteRole,
+      editRole,
       onCancelRoleForm,
       classes,
     } = this.props
@@ -94,6 +95,7 @@ class DeploymentForm extends React.Component {
           roles={roles}
           onAdd={addRole}
           onDelete={deleteRole}
+          onEdit={editRole}
           onCancel={onCancelRoleForm}
           title="Access Control"
           headerClassname={classes.roleTableHeader}
