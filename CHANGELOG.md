@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+* fix(edit-role-dialog): drop down menu renders original value and changes [view commit](https://github.com/catenasys/sextant/commit/7a4d0aac7787f66542032c1aaa0b742fa33aba6d)
+* feat(edit-role-dialog): create and connect edit role dialog component [view commit](https://github.com/catenasys/sextant/commit/58af86e0ca2ecf40d052b756584ac8b8e80c9cc4)
+* feat(role-table): render edit role dialog in role table component [view commit](https://github.com/catenasys/sextant/commit/8265aab5dfbd37f393799fe8ae6ee776394c16b6)
+* feat(cluster-forms): add edit role methods to cluster form state and props [view commit](https://github.com/catenasys/sextant/commit/1fda779d68cd18bcc3b438f9cc2d4154ec657ae2)
+* feat(deployment-forms): add edit role methods to deployment form state and props [view commit](https://github.com/catenasys/sextant/commit/fdfbdbf42f39529fc16780bfc176930c8663419f)
+* feat(cluster-actions): add edit role to cluster actions [view commit](https://github.com/catenasys/sextant/commit/73cfe2391816c91dfd16b40040b04b9c764944b8)
+* feat(deployment-actions): add edit role to list of actions [view commit](https://github.com/catenasys/sextant/commit/c6082ddc0bdc9a07c044c35d5813bd404a6d813e)
+* style(cluster-actions): linting [view commit](https://github.com/catenasys/sextant/commit/c3fd0ce61e7eebceba89dea64a83dbece3cf9ea3)
+* fix(table-components-and-forms): linting [view commit](https://github.com/catenasys/sextant/commit/75fcc9740fd623df12e6056d7ab8e12178ee4251)
+* feat(role-table): add edit option dialog components and lint existing components [view commit](https://github.com/catenasys/sextant/commit/10e471071f704f18c2afd23197dd3072717c8a48)
 * fix(dockerfile): bump node version to twelve [view commit](https://github.com/catenasys/sextant/commit/5cc41c314d5d305e7dab8a9c8cdb8508b8561f50)
 
 ## v2.1.1
