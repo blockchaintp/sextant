@@ -1,35 +1,30 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
 import SimpleTable from 'components/table/SimpleTable'
 
-const styles = theme => {
-  return {}
-}
+const styles = () => ({})
 
-const fields =[{
+const fields = [{
   title: 'Name',
   name: 'name',
-},{
+}, {
   title: 'Ready',
   name: 'ready',
-},{
+}, {
   title: 'Status',
   name: 'status',
-},{
+}, {
   title: 'Pod IP',
   name: 'ip',
-},{
+}, {
   title: 'Node IP',
   name: 'externalIP',
 }]
 
 class PodTable extends React.Component {
-
   render() {
     const {
-      classes,
       data,
       nodes,
     } = this.props
@@ -40,31 +35,24 @@ class PodTable extends React.Component {
     }, {})
 
     const tableData = data
-      .map(pod => {
-
+      .map((pod) => {
         const containerStatuses = pod.status.containerStatuses || []
         const containerCount = containerStatuses.length
-        const containersReady = containerStatuses.filter(status => status.ready).length
-        const containersCrashLoopBackoff = containerStatuses.filter(status => {
-          return status.state.waiting && status.state.waiting.reason == 'CrashLoopBackOff'
-        }).length
-        const containersPodInitializing = containerStatuses.filter(status => {
-          return status.state.waiting && status.state.waiting.reason == 'PodInitializing'
-        }).length
-        const containersImagePullBackOff = containerStatuses.filter(status => {
-          return status.state.waiting && status.state.waiting.reason == 'ImagePullBackOff'
-        }).length
+        const containersReady = containerStatuses.filter((status) => status.ready).length
+        const containersCrashLoopBackoff = containerStatuses.filter((status) => status.state.waiting && status.state.waiting.reason === 'CrashLoopBackOff').length
+        const containersPodInitializing = containerStatuses.filter((status) => status.state.waiting && status.state.waiting.reason === 'PodInitializing').length
+        const containersImagePullBackOff = containerStatuses.filter((status) => status.state.waiting && status.state.waiting.reason === 'ImagePullBackOff').length
 
         let status = pod.status.phase
 
-        if(containersPodInitializing > 0) status = 'PodInitializing'
-        if(containersImagePullBackOff > 0) status = 'ImagePullBackOff'
-        if(containersCrashLoopBackoff > 0) status = 'CrashLoopBackOff'
-        if(pod.metadata.deletionTimestamp) status = 'Terminating'
+        if (containersPodInitializing > 0) status = 'PodInitializing'
+        if (containersImagePullBackOff > 0) status = 'ImagePullBackOff'
+        if (containersCrashLoopBackoff > 0) status = 'CrashLoopBackOff'
+        if (pod.metadata.deletionTimestamp) status = 'Terminating'
 
         const node = nodesByName[pod.spec.nodeName]
-        const externalIP = node ?
-          node.status.addresses.find(address => address.type == 'ExternalIP')
+        const externalIP = node
+          ? node.status.addresses.find((address) => address.type === 'ExternalIP')
           : {}
 
         return {
@@ -72,24 +60,20 @@ class PodTable extends React.Component {
           name: pod.metadata.name,
           ready: `${containersReady}/${containerCount}`,
           status,
-          //age: timeago().format(pod.metadata.creationTimestamp).replace(' ago', ''),
+          // age: timeago().format(pod.metadata.creationTimestamp).replace(' ago', ''),
           created: new Date(pod.metadata.creationTimestamp).toLocaleString(),
           ip: pod.status ? pod.status.podIP : '',
-          externalIP: externalIP ? externalIP.address : ""
+          externalIP: externalIP ? externalIP.address : '',
         }
       })
 
     return (
       <SimpleTable
-        data={ tableData }
-        fields={ fields }
+        data={tableData}
+        fields={fields}
       />
     )
   }
-}
-
-PodTable.propTypes = {
-  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(PodTable)
