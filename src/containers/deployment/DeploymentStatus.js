@@ -8,10 +8,9 @@ import selectors from 'store/selectors'
 import DeploymentStatus from 'pages/deployment/DeploymentStatus'
 import Loading from 'components/system/Loading'
 
-const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
-
+const onCancel = (cluster) => routerActions.navigateTo('deployments', { cluster })
 @connect(
-  state => {
+  (state) => {
     const routeParams = selectors.router.params(state)
 
     const {
@@ -30,22 +29,22 @@ const onCancel = (cluster) => routerActions.navigateTo('deployments', {cluster})
     }
   },
   {
-    onCancel, 
+    onCancel,
+    onDeletePod: deploymentActions.deletePod,
   },
 )
 class DeploymentStatusContainer extends React.Component {
-
   render() {
     const {
       loading,
     } = this.props
 
-    if(loading) {
+    if (loading) {
       return <Loading />
     }
 
     return (
-      <DeploymentStatus 
+      <DeploymentStatus
         {...this.props}
       />
     )
