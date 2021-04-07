@@ -7,7 +7,7 @@ import SimpleTableActions from 'components/table/SimpleTableActions'
 
 import settings from 'settings'
 
-const RefreshIcon = settings.icons.refresh
+const DeleteIcon = settings.icons.delete
 
 const styles = () => ({})
 
@@ -100,8 +100,8 @@ class PodTable extends React.Component {
     const getActions = (item) => {
       const baseActions = [
         {
-          title: 'Refresh',
-          icon: RefreshIcon,
+          title: 'Delete',
+          icon: DeleteIcon,
           handler: (pod) => this.openDeleteDialog(pod),
         },
       ]
