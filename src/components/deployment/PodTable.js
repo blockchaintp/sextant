@@ -2,6 +2,12 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 
 import SimpleTable from 'components/table/SimpleTable'
+import DeletePodDialog from 'components/table/DeletePodDialog'
+import SimpleTableActions from 'components/table/SimpleTableActions'
+
+import settings from 'settings'
+
+const RefreshIcon = settings.icons.refresh
 
 const styles = () => ({})
 
@@ -23,11 +29,34 @@ const fields = [{
 }]
 
 class PodTable extends React.Component {
+  state = {
+    deleteConfirmOpen: false,
+    selectedPod: null,
+  }
+
+  openDeleteDialog(selectedPod) {
+    this.setState({
+      deleteConfirmOpen: true,
+      selectedPod,
+    })
+  }
+
+  closeDeleteDialog() {
+    this.setState({
+      deleteConfirmOpen: false,
+    })
+  }
+
   render() {
     const {
       data,
       nodes,
+      onDeletePod,
     } = this.props
+    const {
+      deleteConfirmOpen,
+      selectedPod,
+    } = this.state
 
     const nodesByName = (nodes || []).reduce((all, node) => {
       all[node.metadata.name] = node
@@ -67,11 +96,40 @@ class PodTable extends React.Component {
         }
       })
 
+    // eslint-disable-next-line no-unused-vars
+    const getActions = (item) => {
+      const baseActions = [
+        {
+          title: 'Refresh',
+          icon: RefreshIcon,
+          handler: (pod) => this.openDeleteDialog(pod),
+        },
+      ]
+      return baseActions
+    }
+
     return (
-      <SimpleTable
-        data={tableData}
-        fields={fields}
-      />
+      <div>
+        <SimpleTable
+          data={tableData}
+          fields={fields}
+          getActions={(item) => (
+            <SimpleTableActions
+              item={item}
+              actions={getActions(item)}
+            />
+          )}
+        />
+        <DeletePodDialog
+          open={deleteConfirmOpen}
+          title={selectedPod ? `${selectedPod.name}` : null}
+          onCancel={() => this.closeDeleteDialog()}
+          onConfirm={() => {
+            this.closeDeleteDialog()
+            onDeletePod(selectedPod.name)
+          }}
+        />
+      </div>
     )
   }
 }
