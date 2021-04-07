@@ -140,6 +140,9 @@ const loaders = {
   })
     .then(api.process),
 
+  deletePod: (cluster, id, pod) => axios.delete(api.url(`/clusters/${cluster}/deployments/${id}/pod/${pod}`))
+    .then(api.process),
+
   getSummary: (cluster, id) => axios.get(api.url(`/clusters/${cluster}/deployments/${id}/summary`))
     .then(api.process),
 
@@ -480,6 +483,24 @@ const sideEffects = {
       name: 'resources',
       value: false,
     }))
+  },
+  deletePod: (pod) => async (dispatch, getState) => {
+    const params = selectors.router.params(getState())
+    const {
+      cluster,
+      id,
+    } = params
+    try {
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.deletePod(cluster, id, pod),
+        prefix,
+        name: 'deletePod',
+        returnError: true,
+      })
+    } catch (e) {
+      dispatch(snackbarActions.setError(`error deleting role: ${e.toString()}`))
+    }
   },
   addRole: () => async (dispatch, getState) => {
     const params = selectors.router.params(getState())
