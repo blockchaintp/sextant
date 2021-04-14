@@ -28,6 +28,7 @@ class DeploymentStatus extends React.Component {
       resources,
       summary,
       tasks,
+      onDeletePod,
     } = this.props
 
     return (
@@ -41,6 +42,7 @@ class DeploymentStatus extends React.Component {
               <PodTable
                 data={resources.pods}
                 nodes={resources.nodes}
+                onDeletePod={onDeletePod}
               />
             </Paper>
             <Paper className={classes.paper}>
