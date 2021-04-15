@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+* fix(podtable): use delete icon instead of refresh [view commit](https://github.com/catenasys/sextant/commit/5c4d5d27120e024a9f996af31f1dbeb982b55170)
+* feat(pod-table): allow a user to delete a pod from the table [view commit](https://github.com/catenasys/sextant/commit/a050c8c899b83f1b452532d0a2ab80e0b5b2252c)
+* feat(deployment-status): connect delete pod action to props and state [view commit](https://github.com/catenasys/sextant/commit/b17721980a2af23cff31ddc10875ec7888c1f8bc)
+* feat(deployment-actions): add delete pod actions to deployment actions [view commit](https://github.com/catenasys/sextant/commit/bd787882b163f1fc9ceaf194bfa6a26b50ac5e80)
+* feat(components): add a delete pod dialog [view commit](https://github.com/catenasys/sextant/commit/76d3ad423bb99dfee642cc1ff025b0a4f902244e)
+* style(pod-table): linting [view commit](https://github.com/catenasys/sextant/commit/ef52056529f2441577e35de1150eefd42b730da4)
 * fix(edit-role-dialog): drop down menu renders original value and changes [view commit](https://github.com/catenasys/sextant/commit/7a4d0aac7787f66542032c1aaa0b742fa33aba6d)
 * feat(edit-role-dialog): create and connect edit role dialog component [view commit](https://github.com/catenasys/sextant/commit/58af86e0ca2ecf40d052b756584ac8b8e80c9cc4)
 * feat(role-table): render edit role dialog in role table component [view commit](https://github.com/catenasys/sextant/commit/8265aab5dfbd37f393799fe8ae6ee776394c16b6)
