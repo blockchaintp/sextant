@@ -6,7 +6,7 @@ import deploymentActions from '../modules/deployment'
 import networkActions from '../modules/network'
 import snackbarActions from '../modules/snackbar'
 
-const url = (path) => [settings.api, path].join('/').replace(/\/+/g, '/')
+const url = (path) => [window.SEXTANT_ROOT_PATH, settings.api, path].join('/').replace(/\/+/g, '/')
 
 // catch bad status codes and run an error handler
 // otherwise return the data property of the response

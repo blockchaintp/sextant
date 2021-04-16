@@ -2,7 +2,7 @@
 
 const edition = {
   header: {
-    logo: '/large-full-whiteoutline-roundel.svg',
+    logo: './large-full-whiteoutline-roundel.svg',
     text: 'Engineering',
   },
 }

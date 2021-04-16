@@ -1,3 +1,5 @@
+__webpack_public_path__ = window.SEXTANT_ROOT_BASE_PATH
+import './assets/index.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
