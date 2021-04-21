@@ -2,9 +2,9 @@
 
 const edition = {
   header: {
-    logo: "./large-full-whiteoutline-roundel.svg",
-    text: "DAML",
-  }
+    logo: 'large-full-whiteoutline-roundel.svg',
+    text: 'DAML',
+  },
 }
 
 export default edition
