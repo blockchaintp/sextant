@@ -10,13 +10,8 @@ import triggerMiddleware from './middleware/trigger'
 import processRoutePath from './utils/processRoutePath'
 
 const Router = () => {
-  
   // remap the top-level routes to include the sub-path
-  const mappedRoutes = routes.map(route => {
-    return Object.assign({}, route, {
-      path: processRoutePath(route.path)
-    })
-  })
+  const mappedRoutes = routes.map((route) => ({ ...route, path: processRoutePath(route.path) }))
 
   const router = createRouter(mappedRoutes, {
     defaultRoute: 'notfound',

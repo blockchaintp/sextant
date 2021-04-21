@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import {Helmet} from 'react-helmet'
+import { Helmet } from 'react-helmet'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -101,7 +101,7 @@ class Layout extends React.Component {
     return (
       <div className={classes.root}>
         <Helmet>
-          <link rel="shortcut icon" type="image/png" href={ favIcon } />
+          <link rel="shortcut icon" type="image/png" href={favIcon} />
         </Helmet>
         <div className={classes.appbar}>
           <AppBar position="static">

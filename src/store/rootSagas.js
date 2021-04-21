@@ -1,4 +1,4 @@
-import { 
+import {
   call,
   race,
   take,
@@ -16,9 +16,8 @@ import processRoutePath from '../router/utils/processRoutePath'
 import selectors from './selectors'
 
 const errorFilter = (name) => (action) => {
-  const match = 
-    action.type == networkActions.setError.type &&
-    action.payload.name == name
+  const match = action.type === networkActions.setError.type
+    && action.payload.name === name
   return match
 }
 
@@ -29,23 +28,21 @@ const initialLoader = ({
   title,
 }) => function* loadInitialData() {
   yield put(getLoaderAction())
+  // eslint-disable-next-line no-unused-vars
   const { dataAction, errorAction } = yield race({
     dataAction: take(setDataAction.type),
-    errorAction: take(errorFilter(networkName))
+    errorAction: take(errorFilter(networkName)),
   })
-  if(errorAction) {
+  if (errorAction) {
     yield put(snackbarActions.setError(`${title} error: ${errorAction.payload.value}`))
     return false
   }
-  else {
-    return true
-  }
+  return true
 }
 
 const RootSagas = ({
   router,
 }) => {
-
   const loadAuthStatus = initialLoader({
     getLoaderAction: () => authActions.loadStatus(),
     setDataAction: authActions.setData,
@@ -71,26 +68,24 @@ const RootSagas = ({
   // initializes the loading of initial data from the server
   // is expected to call .start() on the router when we are ready
   function* initialize() {
-
     const initialLoaderResults = yield all([
       call(loadAuthStatus),
       call(loadHasInitialUser),
     ])
 
-
     // the config route is now auth protected so only call it
     // if we detect that the user is logged in
     const isLoggedIn = yield select(selectors.auth.loggedIn)
-    if(isLoggedIn) {
+    if (isLoggedIn) {
       yield call(loadConfig)
     }
 
-    const failedLoaders = initialLoaderResults.filter(result => !result)
+    const failedLoaders = initialLoaderResults.filter((result) => !result)
 
     // one of the loaders has failed - it will have displayed a snackbar error
     // don't carry on - this is most likely a network failure back to the api server
-    if(failedLoaders.length > 0) return
-    
+    if (failedLoaders.length > 0) return
+
     // do we have an initial user?
     // this decides if we force the app to the create-initial-user route
     const hasInitialUser = yield select(selectors.user.hasInitialUser)
@@ -98,10 +93,9 @@ const RootSagas = ({
     // we have the result of the user status
     // this means we can start the router and it will look after
     // router authentication
-    if(hasInitialUser) {
+    if (hasInitialUser) {
       router.start()
-    }
-    else {
+    } else {
       router.start(processRoutePath('/create-initial-user'))
     }
   }

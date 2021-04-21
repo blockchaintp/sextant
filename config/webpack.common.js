@@ -26,9 +26,9 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i, 
+        test: /\.(jpe?g|png|gif|svg)$/i,
         loader: 'file-loader',
-      }
+      },
     ],
   },
   resolve: {
@@ -41,8 +41,7 @@ module.exports = {
       inject: false,
       hash: true,
       filename: './index.html',
-      templateContent: function(params) {
-        //<link rel="shortcut icon" type="image/png" href="./logo.png" />
+      templateContent(params) {
         return `
 <!doctype html>
 <html lang="en">
@@ -116,7 +115,7 @@ module.exports = {
   </body>
 </html>
         `
-      }
+      },
     }),
     new CopyWebpackPlugin([{
       from: 'src/assets',
