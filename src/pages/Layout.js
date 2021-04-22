@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-
+import { Helmet } from 'react-helmet'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography'
 import SideMenu from 'components/layout/SideMenu'
 import AppBarMenu from 'components/layout/AppBarMenu'
 import Loading from 'components/system/Loading'
+
+import favIcon from '../assets/small-logo-blue.png'
 
 const styles = (theme) => ({
   root: {
@@ -98,6 +100,9 @@ class Layout extends React.Component {
 
     return (
       <div className={classes.root}>
+        <Helmet>
+          <link rel="shortcut icon" type="image/png" href={favIcon} />
+        </Helmet>
         <div className={classes.appbar}>
           <AppBar position="static">
             <Toolbar className={classes.toolbar}>
