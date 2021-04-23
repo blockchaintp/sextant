@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* style(src): linting [view commit](https://github.com/catenasys/sextant/commit/c87095e7e11f05c7158b270294e562d9f951b631)
+* fix(editions): remove relative path change for logo [view commit](https://github.com/catenasys/sextant/commit/dbb78cbd3257b87d1b1855387984dda9ea8cf2cb)
+* fix(webpack): deal with double / in base path [view commit](https://github.com/catenasys/sextant/commit/2b491efa2e529a91aaa3bd17f03553470e710377)
+* feat(nginx): example of running under a sub-path [view commit](https://github.com/catenasys/sextant/commit/9af0c0ac047a3767b92d2237873d8252d6d3c1d9)
 * fix(podtable): use delete icon instead of refresh [view commit](https://github.com/catenasys/sextant/commit/5c4d5d27120e024a9f996af31f1dbeb982b55170)
 * feat(pod-table): allow a user to delete a pod from the table [view commit](https://github.com/catenasys/sextant/commit/a050c8c899b83f1b452532d0a2ab80e0b5b2252c)
 * feat(deployment-status): connect delete pod action to props and state [view commit](https://github.com/catenasys/sextant/commit/b17721980a2af23cff31ddc10875ec7888c1f8bc)
