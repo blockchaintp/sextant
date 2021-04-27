@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
 import Dialog from '@material-ui/core/Dialog'
@@ -11,45 +10,41 @@ import Button from '@material-ui/core/Button'
 
 import { getDialogDeleteText } from '../../utils/translators'
 
-const styles = theme => {
-  return {
-  }
-}
+const styles = () => ({
+})
 
 class SimpleTableDeleteDialog extends React.Component {
   render() {
-    const { classes, open, onCancel, onConfirm, title, resource} = this.props
-    
+    const {
+      open, onCancel, onConfirm, title, resource,
+    } = this.props
+
     const text = resource ? getDialogDeleteText(resource.status) : ''
-    
+
     return (
       <Dialog
-        open={ open }
-        onClose={ onCancel }
+        open={open}
+        onClose={onCancel}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{`${text.title} ${ title }`}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{`${text.title} ${title}`}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {`Are you sure you want to ${text.subtext} ${ title }?`}
+            {`Are you sure you want to ${text.subtext} ${title}?`}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={ onCancel }>
+          <Button onClick={onCancel}>
             Cancel
           </Button>
-          <Button _ci='confirm' onClick={ onConfirm } variant="contained" color="secondary" autoFocus>
+          <Button _ci="confirm" onClick={onConfirm} variant="contained" color="secondary" autoFocus>
             Confirm
           </Button>
         </DialogActions>
       </Dialog>
     )
   }
-}
-
-SimpleTableDeleteDialog.propTypes = {
-  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(SimpleTableDeleteDialog)
