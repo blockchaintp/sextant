@@ -41,7 +41,9 @@ class DeletePodDialog extends React.Component {
         <DialogTitle id="alert-dialog-title">{`Are you sure you want to delete ${title}?`}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Deleting this pod will trigger another to be built in its place.
+            Deleting this pod will remove it from the cluster.
+            It may be recreated automatically if it is part of a
+            StatefulSet, ReplicaSet, DaemonSet, or DaemonSet.
           </DialogContentText>
           <TextField
             helperText="Type the name of the resource you want to delete."
