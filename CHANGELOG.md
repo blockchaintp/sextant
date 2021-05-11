@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* fix(delete-pod-dialog): make helper text more informative [view commit](https://github.com/catenasys/sextant/commit/0ef191ed1d99cef01f2194f26498e6fb69afc826)
+* feat(tables): configure cluster and deployment table to use new delete dialog feature [view commit](https://github.com/catenasys/sextant/commit/057dcc1ceb0c57e5ce4d9c96ebd83cdb28e80c68)
+* feat(delete-dialog): add text field to delete resource dialog [view commit](https://github.com/catenasys/sextant/commit/27fd56c47db957a2020331936e7a4fc396f9d03f)
+* style(delte-dialog): linting [view commit](https://github.com/catenasys/sextant/commit/57644a5e478f9a553a0dde7f4cdd1e29d8c51e6b)
 * style(src): linting [view commit](https://github.com/catenasys/sextant/commit/c87095e7e11f05c7158b270294e562d9f951b631)
 * fix(editions): remove relative path change for logo [view commit](https://github.com/catenasys/sextant/commit/dbb78cbd3257b87d1b1855387984dda9ea8cf2cb)
 * fix(webpack): deal with double / in base path [view commit](https://github.com/catenasys/sextant/commit/2b491efa2e529a91aaa3bd17f03553470e710377)
