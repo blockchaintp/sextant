@@ -125,6 +125,8 @@ class DeploymentSettingsDamlParties extends React.Component {
     const {
       addPartyWindowOpen,
       addPartyName,
+      addPartyIdHint,
+      setAddPartyIdHint,
       setAddPartyName,
     } = this.props
     return (
@@ -149,6 +151,17 @@ class DeploymentSettingsDamlParties extends React.Component {
               margin="normal"
               value={addPartyName}
               onChange={(e) => setAddPartyName(e.target.value)}
+            />
+            <TextField
+              id="party-id-hint"
+              label="Party Id Hint"
+              style={{ margin: 8 }}
+              placeholder="Type the party ID hint here"
+              helperText="Adding a party ID hint is optional."
+              fullWidth
+              margin="normal"
+              value={addPartyIdHint}
+              onChange={(e) => setAddPartyIdHint(e.target.value)}
             />
           </div>
 
@@ -662,6 +675,7 @@ class DeploymentSettingsDamlParties extends React.Component {
       addParty,
       addPartyPublicKey,
       addPartyName,
+      addPartyIdHint,
       setAddPartyWindowOpen,
     } = this.props
     setAddPartyWindowOpen(false)
@@ -670,6 +684,7 @@ class DeploymentSettingsDamlParties extends React.Component {
       id,
       publicKey: addPartyPublicKey,
       partyName: addPartyName,
+      partyIdHInt: addPartyIdHint,
     })
   }
 
