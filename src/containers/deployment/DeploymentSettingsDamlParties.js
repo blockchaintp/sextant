@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -8,8 +9,7 @@ import selectors from 'store/selectors'
 import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDamlParties'
 
 @connect(
-  state => {
-
+  (state) => {
     const routeParams = selectors.router.params(state)
 
     const {
@@ -55,10 +55,9 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
   },
 )
 class DeploymentSettingsDamlPartiesContainer extends React.Component {
-
   render() {
     return (
-      <DeploymentSettingsDamlParties 
+      <DeploymentSettingsDamlParties
         {...this.props}
       />
     )
