@@ -333,6 +333,7 @@ const selectors = {
       'addEnrolledKeyValue',
       'addPartyWindowOpen',
       'addPartyName',
+      'addPartyIdHint',
       'addPartyPublicKey',
       'uploadArchiveWindowOpen',
     ]),
