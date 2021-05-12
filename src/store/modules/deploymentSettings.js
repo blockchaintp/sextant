@@ -22,6 +22,7 @@ const initialState = {
 
   addPartyWindowOpen: false,
   addPartyName: '',
+  addPartyIdHint: null,
   addPartyPublicKey: null,
 
   tokenSettingsWindowParticipant: null,
@@ -79,6 +80,9 @@ const reducers = {
   },
   setAddPartyName: (state, action) => {
     state.addPartyName = action.payload
+  },
+  setAddPartyIdHint: (state, action) => {
+    state.addPartyIdHint = action.payload
   },
   setAddPartyPubicKey: (state, action) => {
     state.addPartyPublicKey = action.payload
@@ -170,7 +174,8 @@ const loaders = {
     id,
     publicKey,
     partyName,
-  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/daml/addParty`), { publicKey, partyName })
+    partyIdHint,
+  }) => axios.post(api.url(`/clusters/${cluster}/deployments/${id}/daml/addParty`), { publicKey, partyName, partyIdHint })
     .then(api.process),
 
   removeParties: ({
@@ -379,6 +384,7 @@ const sideEffects = {
     id,
     publicKey,
     partyName,
+    partyIdHint,
   }) => async (dispatch, getState) => {
     if (!partyName) {
       dispatch(snackbarActions.setError('please enter a party name'))
@@ -389,7 +395,7 @@ const sideEffects = {
       await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.addParty({
-          cluster, id, publicKey, partyName,
+          cluster, id, publicKey, partyName, partyIdHint,
         }),
         prefix,
         name: 'addParty',
@@ -402,6 +408,7 @@ const sideEffects = {
       dispatch(snackbarActions.setSuccess('party added'))
       dispatch(actions.setAddPartyWindowOpen(false))
       dispatch(actions.setAddPartyName(''))
+      dispatch(actions.setAddPartyIdHint(null))
       dispatch(actions.setAddPartyPubicKey(null))
     } catch (e) {
       dispatch(snackbarActions.setError(`error adding party: ${e.toString()}`))
