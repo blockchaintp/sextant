@@ -313,6 +313,17 @@ const routes = [
           }))
         },
       },
+    }, {
+      name: 'taekionExplorer',
+      path: '/taekion/explorer/:volume/:inode',
+      trigger: {
+        activate: (store, params) => {
+          store.dispatch(taekionActions.listVolumes({
+            cluster: params.cluster,
+            deployment: params.id,
+          }))
+        },
+      },
     }],
 
   },

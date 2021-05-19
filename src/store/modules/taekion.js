@@ -18,6 +18,7 @@ const initialState = {
   addKeyResult: null,
   addVolumeWindowOpen: false,
   addSnapshotWindowOpen: false,
+  explorerDirectories: {},
 }
 
 const reducers = {
@@ -41,6 +42,16 @@ const reducers = {
   },
   setAddSnapshotWindowOpen: (state, action) => {
     state.addSnapshotWindowOpen = action.payload
+  },
+  resetExplorerDirectories: (state, action) => {
+    state.explorerDirectories = {}
+  },
+  setExplorerDirectory: (state, action) => {
+    const {
+      id,
+      data,
+    } = action.payload
+    state.explorerDirectories[id] = data
   },
 }
 
@@ -116,6 +127,15 @@ const loaders = {
     snapshotName,
   }) => axios.delete(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volume}/snapshots/${snapshotName}`))
     .then(api.process),
+
+  explorerListDirectory: ({
+    cluster,
+    deployment,
+    volume,
+    inode,
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/explorer/${volume}/dir/${inode}`))
+    .then(api.process),
+
 
 }
 
@@ -396,6 +416,33 @@ const sideEffects = {
           volume: params.volume,
         }))
         dispatch(snackbarActions.setSuccess(`snapshot deleted`))
+      }
+    })
+  },
+
+  explorerListDirectory: ({
+    cluster,
+    deployment,
+    volume,
+    inode,
+  }) => async (dispatch, getState) => {
+
+    await taekionApiWrapper({
+      name: 'explorer list directory',
+      globalLoading: false,
+      dispatch,
+      apiHandler: async () => {
+        const data = await api.loaderSideEffect({
+          dispatch,
+          loader: () => loaders.explorerListDirectory({cluster, deployment, volume, inode}),
+          prefix,
+          name: 'explorerListDirectory',
+          returnError: true,
+        })
+        dispatch(actions.setExplorerDirectory({
+          id: inode,
+          data,
+        }))
       }
     })
   },

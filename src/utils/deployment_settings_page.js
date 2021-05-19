@@ -40,6 +40,14 @@ const FEATURE_TABS = {
       volume: 'all',
     }
   },
+  'taekion.explorer': {
+    id: 'taekionExplorer',
+    title: 'TFS Explorer',
+    params: {
+      volume: 'any',
+      inode: 'root',
+    }
+  },
 }
 
 const getPages = function (features) {
