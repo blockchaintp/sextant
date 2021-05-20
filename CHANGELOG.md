@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* build: update gitignore [view commit](https://github.com/catenasys/sextant/commit/5c8a3711e25809a425a1aee57f28c5ab506b64e7)
+* build: remove unnecessary files [view commit](https://github.com/catenasys/sextant/commit/d5d4517b5dc6daca7db4605f05bb67fdfbc2696f)
 * fix(delete-pod-dialog): make helper text more informative [view commit](https://github.com/catenasys/sextant/commit/0ef191ed1d99cef01f2194f26498e6fb69afc826)
 * feat(tables): configure cluster and deployment table to use new delete dialog feature [view commit](https://github.com/catenasys/sextant/commit/057dcc1ceb0c57e5ce4d9c96ebd83cdb28e80c68)
 * feat(delete-dialog): add text field to delete resource dialog [view commit](https://github.com/catenasys/sextant/commit/27fd56c47db957a2020331936e7a4fc396f9d03f)
