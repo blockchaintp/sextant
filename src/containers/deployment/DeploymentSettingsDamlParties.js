@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -8,8 +9,7 @@ import selectors from 'store/selectors'
 import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDamlParties'
 
 @connect(
-  state => {
-
+  (state) => {
     const routeParams = selectors.router.params(state)
 
     const {
@@ -26,6 +26,7 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
       selectedParties: selectors.deploymentSettings.selectedParties(state),
       addPartyWindowOpen: selectors.deploymentSettings.addPartyWindowOpen(state),
       addPartyName: selectors.deploymentSettings.addPartyName(state),
+      addPartyIdHint: selectors.deploymentSettings.addPartyIdHint(state),
       addPartyPublicKey: selectors.deploymentSettings.addPartyPublicKey(state),
       tokenWindowOpen: selectors.deploymentSettings.tokenWindowOpen(state),
       tokenSettingsWindowParticipant: selectors.deploymentSettings.tokenSettingsWindowParticipant(state),
@@ -46,6 +47,7 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
     generateAdminToken: deploymentSettingsActions.generateAdminToken,
     setAddPartyWindowOpen: deploymentSettingsActions.setAddPartyWindowOpen,
     setAddPartyName: deploymentSettingsActions.setAddPartyName,
+    setAddPartyIdHint: deploymentSettingsActions.setAddPartyIdHint,
     setAddPartyPubicKey: deploymentSettingsActions.setAddPartyPubicKey,
     setToken: deploymentSettingsActions.setToken,
     setTokenWindowOpen: deploymentSettingsActions.setTokenWindowOpen,
@@ -55,10 +57,9 @@ import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDa
   },
 )
 class DeploymentSettingsDamlPartiesContainer extends React.Component {
-
   render() {
     return (
-      <DeploymentSettingsDamlParties 
+      <DeploymentSettingsDamlParties
         {...this.props}
       />
     )
