@@ -1,16 +1,9 @@
 /* eslint-disable no-shadow */
-import React, { useMemo, useCallback, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import SimpleTableHeader from 'components/table/SimpleTableHeader'
-import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel'
-import Select from '@material-ui/core/Select'
-import MenuItem from '@material-ui/core/MenuItem'
-import selectors from 'store/selectors'
-import taekionActions from 'store/modules/taekion'
-import routerActions from 'store/modules/router'
 import useFileExplorer from 'hooks/useFileExplorer'
+
+import ExplorerSidebar from 'components/fileexplorer/Sidebar'
 
 // TODO: upgrade material ui so we can use `makeStyles` and not have to decorate the component
 const styles = theme => ({
@@ -83,72 +76,14 @@ const TaekionExplorer = ({
     onChangeVolume,
   } = useFileExplorer()
 
-  const changeVolumeSelect = useMemo(() => {
-    return volume ? (
-      <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="name-readonly">Volume</InputLabel>
-        <Select
-          value={volume.uuid}
-          onChange={(ev) => onChangeVolume(ev.target.value)}
-        >
-          {
-            volumes
-              .map((v, i) => (
-                <MenuItem
-                  key={i}
-                  value={v.uuid}
-                >
-                  { v.name }
-                </MenuItem>
-              ))
-          }
-        </Select>
-      </FormControl>
-    ) : null
-  }, [
-    classes,
-    volume,
-    volumes,
-  ])
-
   return (
     <div className={ classes.root }>
       <div className={ classes.sidebar }>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
-        <p>sidebar</p>
+        <ExplorerSidebar
+          volume={ volume }
+          volumes={ volumes }
+          onChangeVolume={ onChangeVolume }
+        />
       </div>
       <div className={ classes.content }>
         <p>content</p>
