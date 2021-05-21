@@ -72,6 +72,13 @@ const TaekionExplorer = ({
 
   const explorer = useFileExplorer()
 
+  const {
+    inode_id,
+    explorerDirectories,
+  } = explorer
+
+  const entries = explorerDirectories[inode_id] || []
+
   return (
     <div className={ classes.root }>
       <div className={ classes.sidebar }>
@@ -80,41 +87,15 @@ const TaekionExplorer = ({
         />
       </div>
       <div className={ classes.content }>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
-        <p>content</p>
+        {
+          entries.map((entry, i) => {
+            return (
+              <p key={i}>
+                { entry.filename }
+              </p>
+            )
+          })
+        }
       </div>
     </div>
   )
