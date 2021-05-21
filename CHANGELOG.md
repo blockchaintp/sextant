@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+* feat(deployment-settings-daml-parties): add ability to set party-id-hint when adding a party [view commit](https://github.com/catenasys/sextant/commit/6237e4cf132ea5e13da315b3088ff2829f0ff7e0)
+* feat(deployment-settings-daml-parties): add ability to set party-id-hint when adding a party [view commit](https://github.com/catenasys/sextant/commit/1b34a72a43d5864e82d9aac97bc90d5e00df117f)
+* feat(selectors): added add-party-id-hint to deployment settings selector [view commit](https://github.com/catenasys/sextant/commit/acd39c3d9a19afa5428baaab7b1db8812950ff15)
+* style(daml-parties-container): linting [view commit](https://github.com/catenasys/sextant/commit/cead04412c93302e7a5ceb5c4967c3534d984ff5)
+* feat(deployment-settings-store): add set-party-id-hint action and add hint arg to add-party actions [view commit](https://github.com/catenasys/sextant/commit/6b06ad84849deb2c92b47d4d4571ea2f4f2c19f7)
+* style(deployment-settings-store): linting [view commit](https://github.com/catenasys/sextant/commit/703cea92572d48a7787f7c3ef39299aebce7221e)
+* style(daml-parties): linting [view commit](https://github.com/catenasys/sextant/commit/e25ca6d54d592e8b941d10a3f3b99b354b4df675)
 * build: update gitignore [view commit](https://github.com/catenasys/sextant/commit/5c8a3711e25809a425a1aee57f28c5ab506b64e7)
 * build: remove unnecessary files [view commit](https://github.com/catenasys/sextant/commit/d5d4517b5dc6daca7db4605f05bb67fdfbc2696f)
 * fix(delete-pod-dialog): make helper text more informative [view commit](https://github.com/catenasys/sextant/commit/0ef191ed1d99cef01f2194f26498e6fb69afc826)
