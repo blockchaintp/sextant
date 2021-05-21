@@ -2,9 +2,9 @@
 import React, { useMemo } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import FolderTree from './FolderTree'
 
 const styles = theme => ({
   root: {
@@ -19,6 +19,8 @@ const styles = theme => ({
   },
   folders: {
     flexGrow: 1,
+    overflowY: 'auto',
+    width: '100%',
   },
   formControl: {
     padding: theme.spacing.unit,
@@ -28,10 +30,18 @@ const styles = theme => ({
 
 const ExplorerSidebar = ({
   classes,
-  volume,
-  volumes,
-  onChangeVolume,
+  explorer,
 }) => {
+
+  const {
+    volume,
+    volumes,
+    folderTree,
+    expanded,
+    loading,
+    onChangeVolume,
+    onSetExpanded,
+  } = explorer
 
   const changeVolumeSelect = useMemo(() => {
     return volume ? (
@@ -65,7 +75,11 @@ const ExplorerSidebar = ({
       <div className={ classes.volumeSelect }>
         { changeVolumeSelect }
       </div>
-      <div className={ classes.folders }></div>
+      <div className={ classes.folders }>
+        <FolderTree
+          explorer={ explorer }
+        />
+      </div>
     </div>
   )
 }

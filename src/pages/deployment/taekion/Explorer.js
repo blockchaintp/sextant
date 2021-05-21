@@ -70,19 +70,13 @@ const TaekionExplorer = ({
   classes,
 }) => {
 
-  const {
-    volume,
-    volumes,
-    onChangeVolume,
-  } = useFileExplorer()
+  const explorer = useFileExplorer()
 
   return (
     <div className={ classes.root }>
       <div className={ classes.sidebar }>
         <ExplorerSidebar
-          volume={ volume }
-          volumes={ volumes }
-          onChangeVolume={ onChangeVolume }
+          explorer={ explorer }
         />
       </div>
       <div className={ classes.content }>

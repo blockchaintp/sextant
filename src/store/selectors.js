@@ -349,6 +349,7 @@ const selectors = {
       'snapshots',
       'explorerNodes',
       'explorerDirectories',
+      'explorerNodesLoading',
       'addKeyWindowOpen',
       'addKeyResult',
       'addVolumeWindowOpen',

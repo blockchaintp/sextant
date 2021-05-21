@@ -14,7 +14,7 @@ const extractFolderTree = ({
     .map(entry => {
       return Object.assign({}, entry, {
         children: extractFolderTree({
-          id: entry.uuid,
+          id: entry.inodeid,
           explorerDirectories,
         })
       })
@@ -23,12 +23,15 @@ const extractFolderTree = ({
 
 const useFileExplorer = () => {
   const dispatch = useDispatch()
+
+  const [ explorerNodesExpanded, setExplorerNodesExpanded ] = useState({})
   
-  const [ expanded, setExpanded ] = useState({})
   const params = useSelector(selectors.router.params)
   const volumes = useSelector(selectors.taekion.volumes)
   const explorerNodes = useSelector(selectors.taekion.explorerNodes)
   const explorerDirectories = useSelector(selectors.taekion.explorerDirectories)
+  const explorerNodesLoading = useSelector(selectors.taekion.explorerNodesLoading)
+  
   
   // MEMO
 
@@ -53,18 +56,36 @@ const useFileExplorer = () => {
     explorerDirectories,
   ])
 
-  console.dir(folderTree)
-
   // CALLBACK
 
+  const onUpdateRoute = useCallback((newParams) => {
+    dispatch(routerActions.navigateTo('deployment_settings.taekionExplorer', Object.assign({}, params, newParams)))
+  }, [
+    params,
+  ])
+
   const onChangeVolume = useCallback((id) => {
-    const newParams = Object.assign({}, params, {
+    setExplorerNodesExpanded({})
+    dispatch(taekionActions.resetExplorer())
+    onUpdateRoute({
       volume: id,
       inode: 'root',
     })
-    dispatch(routerActions.navigateTo('deployment_settings.taekionExplorer', newParams))
   }, [
-    params,
+    onUpdateRoute,
+  ])
+
+  const clickFolderTree = useCallback((id) => {
+    const value = explorerNodesExpanded[id] ? false : true
+    setExplorerNodesExpanded(Object.assign({}, explorerNodesExpanded, {
+      [id]: value,
+    }))
+    onUpdateRoute({
+      inode: id,
+    })
+  }, [
+    explorerNodesExpanded,
+    onUpdateRoute,
   ])
 
   // EFFECT
@@ -92,7 +113,13 @@ const useFileExplorer = () => {
     inode_id: params.inode,
     volumes,
     volume,
+    explorerNodes,
+    explorerDirectories,
+    folderTree,
+    expanded: explorerNodesExpanded,
+    loading: explorerNodesLoading,
     onChangeVolume,
+    clickFolderTree,
   }
 
 }

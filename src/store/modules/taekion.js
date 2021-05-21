@@ -18,8 +18,9 @@ const initialState = {
   addKeyResult: null,
   addVolumeWindowOpen: false,
   addSnapshotWindowOpen: false,
-  explorerNodes: {},
   explorerDirectories: {},
+  explorerNodes: {},
+  explorerNodesLoading: {},
 }
 
 const reducers = {
@@ -44,8 +45,10 @@ const reducers = {
   setAddSnapshotWindowOpen: (state, action) => {
     state.addSnapshotWindowOpen = action.payload
   },
-  resetExplorerDirectories: (state, action) => {
+  resetExplorer: (state, action) => {
+    state.explorerNodes = {}
     state.explorerDirectories = {}
+    state.explorerNodesLoading = {}
   },
   setExplorerDirectory: (state, action) => {
     const {
@@ -56,6 +59,13 @@ const reducers = {
       state.explorerNodes[node.inodeid] = node
     })
     state.explorerDirectories[id] = data
+  },
+  setExplorerNodeLoading: (state, action) => {
+    const {
+      id,
+      value,
+    } = action.payload
+    state.explorerNodesLoading[id] = value
   },
 }
 
@@ -436,6 +446,10 @@ const sideEffects = {
       globalLoading: false,
       dispatch,
       apiHandler: async () => {
+        dispatch(actions.setExplorerNodeLoading({
+          id: inode,
+          value: true,
+        }))
         const data = await api.loaderSideEffect({
           dispatch,
           loader: () => loaders.explorerListDirectory({cluster, deployment, volume, inode}),
@@ -446,6 +460,10 @@ const sideEffects = {
         dispatch(actions.setExplorerDirectory({
           id: inode,
           data,
+        }))
+        dispatch(actions.setExplorerNodeLoading({
+          id: inode,
+          value: false,
         }))
       }
     })
