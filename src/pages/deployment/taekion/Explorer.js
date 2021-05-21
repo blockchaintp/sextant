@@ -10,20 +10,62 @@ import MenuItem from '@material-ui/core/MenuItem'
 import selectors from 'store/selectors'
 import taekionActions from 'store/modules/taekion'
 import routerActions from 'store/modules/router'
+import useFileExplorer from 'hooks/useFileExplorer'
 
 // TODO: upgrade material ui so we can use `makeStyles` and not have to decorate the component
 const styles = theme => ({
-  root: {
-    padding: theme.spacing.unit * 2,
+
+  // adjust the global layout so we can have full height file explorer
+  // even if there is not much content
+  '@global': {
+    '.main-layout-root': {
+      height: '100%',
+      minHeight: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    '.main-layout-appbar': {
+      flexGrow: 0,
+    },
+    '.main-layout-box': {
+      flexGrow: 1,
+      height: 'calc(100% - 180px)',
+      minHeight: 'calc(100% - 180px)',
+      maxHeight: 'calc(100% - 180px)',
+      paddingBottom: '0px',
+    },
+    '.main-layout-content': {
+      height: '100%',
+      minHeight: '100%',
+    },
+    '.deployment-settings-root': {
+      height: '100%',
+      minHeight: '100%',
+    }
   },
-  headerActions: {
+  root: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'right',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    height: '100%',
+    minHeight: '100%',
   },
-  volumeSelect: {
-    marginRight: theme.spacing.unit * 2,
+  sidebar: {
+    width: '300px',
+    borderRight: '1px solid #ccc',
+    flexGrow: 0,
+    height: '100%',
+    minHeight: '100%',
+    overflowY: 'auto',
+  },
+  content: {
+    flexGrow: 1,
+    paddingLeft: '20px',
+    height: '100%',
+    height: '100%',
+    minHeight: '100%',
+    overflowY: 'auto',
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -34,77 +76,117 @@ const styles = theme => ({
 const TaekionExplorer = ({
   classes,
 }) => {
-  const dispatch = useDispatch()
-  
-  const params = useSelector(selectors.router.params)
-  const volumes = useSelector(selectors.taekion.volumes)
-  const volume = useMemo(() => {
-    let volume = volumes[0]
-    if(params.volume) {
-      const idVolume = volumes.find(v => v.uuid == params.volume)
-      volume = idVolume || volume
-    }
-    return volume
-  }, [
-    volumes,
-    params.volume,
-  ])
 
-  const onChangeVolume = useCallback((id) => {
-    const newParams = Object.assign({}, params, {
-      volume: id,
-      inode: 'root',
-    })
-    dispatch(routerActions.navigateTo('deployment_settings.taekionExplorer', newParams))
-  }, [
-    params,
-  ])
-
-  useEffect(() => {
-    if(!volume) return
-    dispatch(taekionActions.explorerListDirectory({
-      cluster: params.cluster,
-      deployment: params.id,
-      volume: volume.uuid,
-      inode: params.inode,
-    }))
-  }, [
+  const {
     volume,
-    params.inode,
-  ])
+    volumes,
+    onChangeVolume,
+  } = useFileExplorer()
 
-  const headerActions = volume ? (
-    <div className={classes.headerActions}>
-      <div className={classes.volumeSelect}>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="name-readonly">Volume</InputLabel>
-          <Select
-            value={volume.uuid}
-            onChange={(ev) => onChangeVolume(ev.target.value)}
-          >
-            {
-              volumes
-                .map((v, i) => (
-                  <MenuItem
-                    key={i}
-                    value={v.uuid}
-                  >
-                    { v.name }
-                  </MenuItem>
-                ))
-            }
-          </Select>
-        </FormControl>
-      </div>
-    </div>
-  ) : null
+  const changeVolumeSelect = useMemo(() => {
+    return volume ? (
+      <FormControl className={classes.formControl}>
+        <InputLabel htmlFor="name-readonly">Volume</InputLabel>
+        <Select
+          value={volume.uuid}
+          onChange={(ev) => onChangeVolume(ev.target.value)}
+        >
+          {
+            volumes
+              .map((v, i) => (
+                <MenuItem
+                  key={i}
+                  value={v.uuid}
+                >
+                  { v.name }
+                </MenuItem>
+              ))
+          }
+        </Select>
+      </FormControl>
+    ) : null
+  }, [
+    classes,
+    volume,
+    volumes,
+  ])
 
   return (
-    <div>
-      <SimpleTableHeader
-        title="Explorer"
-        getActions={() => headerActions}
-      />
+    <div className={ classes.root }>
+      <div className={ classes.sidebar }>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+        <p>sidebar</p>
+      </div>
+      <div className={ classes.content }>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+        <p>content</p>
+      </div>
     </div>
   )
 }

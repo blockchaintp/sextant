@@ -347,6 +347,8 @@ const selectors = {
       'keys',
       'volumes',
       'snapshots',
+      'explorerNodes',
+      'explorerDirectories',
       'addKeyWindowOpen',
       'addKeyResult',
       'addVolumeWindowOpen',

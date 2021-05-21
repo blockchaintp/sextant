@@ -18,6 +18,7 @@ const initialState = {
   addKeyResult: null,
   addVolumeWindowOpen: false,
   addSnapshotWindowOpen: false,
+  explorerNodes: {},
   explorerDirectories: {},
 }
 
@@ -51,6 +52,9 @@ const reducers = {
       id,
       data,
     } = action.payload
+    data.forEach(node => {
+      state.explorerNodes[node.inodeid] = node
+    })
     state.explorerDirectories[id] = data
   },
 }
