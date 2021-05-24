@@ -530,8 +530,8 @@ class FormWrapperInner extends React.Component {
     }
     if (row.constructor === Array) {
       const colSize = Math.floor(12 / row.length)
-      return row.map((item, iter) => (
-        <Grid item xs={12} sm={colSize} key={iter}>
+      return row.map((item, index) => (
+        <Grid item xs={12} sm={colSize} key={index}>
           { this.getItem(item, formProps) }
         </Grid>
       ))
