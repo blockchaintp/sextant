@@ -14,7 +14,7 @@ const flattenErrors = (errors, schema, baseKeys = []) => {
     const fullKey = baseKeys.concat(key).join('.')
 
     if (typeof (value) === 'string') {
-      const field = schema.find((field) => field.id === fullKey)
+      const field = schema.find((currentField) => currentField.id === fullKey)
       const errorKey = field ? field.title : fullKey
       flatErrors[errorKey] = value
     } else {
