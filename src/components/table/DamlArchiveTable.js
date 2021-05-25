@@ -10,23 +10,20 @@ import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
 
-const styles = theme => {
-  return {
-    root: {
-      width: '100%',
-    },
-    tableWrapper: {
-      overflowX: 'auto',
-      height: '68vh',
-      overflow: 'auto'
-    },
-    autoCell: {
-      width: 'auto',
-      wordWrap: 'break-word',
-    },
-  }
-
-}
+const styles = () => ({
+  root: {
+    width: '100%',
+  },
+  tableWrapper: {
+    overflowX: 'auto',
+    height: '68vh',
+    overflow: 'auto',
+  },
+  autoCell: {
+    width: 'auto',
+    wordWrap: 'break-word',
+  },
+})
 
 class DamlArchiveTable extends React.Component {
   constructor(props, context) {
@@ -41,13 +38,14 @@ class DamlArchiveTable extends React.Component {
     this.setState({ page })
   }
 
-  handleChangeRowsPerPage = event => {
+  handleChangeRowsPerPage = (event) => {
     this.setState({ rowsPerPage: event.target.value })
   }
 
   render() {
     const {
       classes,
+      // eslint-disable-next-line no-unused-vars
       selected,
       data,
       fields,
@@ -70,19 +68,17 @@ class DamlArchiveTable extends React.Component {
             {
               (!hideHeader && (!hideHeaderIfEmpty || data.length > 0)) && (
                 <TableHead>
-                  <TableRow >
+                  <TableRow>
                     {
-                      fields.map((field, i) => {
-                        return (
-                          <TableCell key={ i } align={ field.numeric ? 'right' : 'left' }>
-                            { field.title }
-                          </TableCell>
-                        )
-                      })
+                      fields.map((field, i) => (
+                        <TableCell key={i} align={field.numeric ? 'right' : 'left'}>
+                          { field.title }
+                        </TableCell>
+                      ))
                     }
                     {
                       getActions ? (
-                        <TableCell align='right'>
+                        <TableCell align="right">
                           Actions
                         </TableCell>
                       ) : null
@@ -92,53 +88,48 @@ class DamlArchiveTable extends React.Component {
               )
             }
             <TableBody>
-              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(dataRow => {
-                return (
-                  <TableRow
-                    hover
-                    onClick={event => {
-                      if(!onRowClick) return
-                      onRowClick(event, dataRow.id)
-                    }}
-                    tabIndex={-1}
-                    key={dataRow.id}
-                  >
-                    {
+              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((dataRow) => (
+                <TableRow
+                  hover
+                  onClick={(event) => {
+                    if (!onRowClick) return
+                    onRowClick(event, dataRow.id)
+                  }}
+                  tabIndex={-1}
+                  key={dataRow.id}
+                >
+                  {
                       fields.map((field, i) => {
-                        if (typeof(dataRow[field.name]) === 'string'){
+                        if (typeof (dataRow[field.name]) === 'string') {
                           return (
-                            <TableCell key={ i } align={ field.numeric ? 'right' : 'left' } className={ classes.autoCell }>
+                            <TableCell key={i} align={field.numeric ? 'right' : 'left'} className={classes.autoCell}>
                               {dataRow[field.name]}
                             </TableCell>
                           )
-                        } else {
-                          dataRow[field.name].sort()
-                          return(
-                            <TableCell key={ i } align={ field.numeric ? 'right' : 'left' } className={ classes.autoCell }>
+                        }
+                        dataRow[field.name].sort()
+                        return (
+                          <TableCell key={i} align={field.numeric ? 'right' : 'left'} className={classes.autoCell}>
                             {
-                              dataRow[field.name].map( item => {
-                                return(
-                                  <Typography key={item} variant={'inherit' } className={ classes.autoCell }>
-                                    {item}
-                                  </Typography>
-                                )
-                              })
+                              dataRow[field.name].map((item) => (
+                                <Typography key={item} variant="inherit" className={classes.autoCell}>
+                                  {item}
+                                </Typography>
+                              ))
                             }
                           </TableCell>
-                          )
-                        }
+                        )
                       })
                     }
-                    {
+                  {
                       getActions ? (
-                        <TableCell align='right'>
+                        <TableCell align="right">
                           { getActions(dataRow) }
                         </TableCell>
                       ) : null
                     }
-                  </TableRow>
-                );
-              })}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
