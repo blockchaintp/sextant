@@ -437,7 +437,6 @@ class FormWrapperInner extends React.Component {
     }
 
     const renderFieldArray = (currentItem) => {
-      console.log(currentItem)
       if (currentItem.linked) {
         if (meetsVisibilityRequirement(currentItem.linked)) {
           return (
