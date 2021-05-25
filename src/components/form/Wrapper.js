@@ -221,12 +221,11 @@ class FormListInner extends React.Component {
     const fields = item.list.table
     const { mainField } = item.list
 
-    const data = value.map((item, index) => {
+    const data = value.map((currentItem, index) => {
       const ret = fields.reduce((all, field) => {
         const baseRenderValue = field.render
-          ? field.render(item)
-          : item[field.name]
-
+          ? field.render(currentItem)
+          : currentItem[field.name]
         let renderValue = baseRenderValue
 
         if (field.sortable && !disabled) {
@@ -255,7 +254,7 @@ class FormListInner extends React.Component {
       ret.id = index
       ret.index = index
       ret._item = {
-        ...item,
+        ...currentItem,
         id: index,
         index,
       }
@@ -279,11 +278,11 @@ class FormListInner extends React.Component {
     const actions = [{
       title: 'Delete',
       icon: DeleteIcon,
-      handler: (data) => this.openDeleteDialog(data._item),
+      handler: (currentData) => this.openDeleteDialog(currentData._item),
     }, {
       title: 'Edit',
       icon: EditIcon,
-      handler: (data) => this.onEdit(data._item),
+      handler: (currentData) => this.onEdit(currentData._item),
     }]
 
     return (
@@ -300,11 +299,11 @@ class FormListInner extends React.Component {
         <SimpleTable
           data={data}
           fields={fields}
-          getActions={(item) => {
+          getActions={(currentItem) => {
             if (disabled) return null
             return (
               <SimpleTableActions
-                item={item}
+                item={currentItem}
                 actions={actions}
               />
             )
@@ -402,16 +401,16 @@ class FormWrapperInner extends React.Component {
       return checkCondition(conditions)
     }
 
-    const renderField = (item) => {
-      if (item.linked) {
-        if (meetsVisibilityRequirement(item.linked)) {
+    const renderField = (currentItem) => {
+      if (currentItem.linked) {
+        if (meetsVisibilityRequirement(currentItem.linked)) {
           return (
             <Field
-              _ci={item.id}
+              _ci={currentItem.id}
               dbId={isNew}
-              name={item.id}
+              name={currentItem.id}
               component={utils.getComponent(item.component)}
-              item={item}
+              item={currentItem}
               disabled={disableField()}
               error={error}
               touched={touched}
@@ -437,16 +436,16 @@ class FormWrapperInner extends React.Component {
       )
     }
 
-    const renderFieldArray = (item) => {
-      if (item.linked) {
-        if (meetsVisibilityRequirement(item.linked)) {
+    const renderFieldArray = (currentItem) => {
+      if (currentItem.linked) {
+        if (meetsVisibilityRequirement(currentItem.linked)) {
           return (
             <FieldArray
-              _ci={item.id}
-              name={item.id}
+              _ci={currentItem.id}
+              name={currentItem.id}
               render={(arrayHelpers) => (
                 <FormList
-                  item={item}
+                  item={currentItem}
                   formProps={formProps}
                   arrayHelpers={arrayHelpers}
                   disabled={disableField()}
@@ -530,8 +529,8 @@ class FormWrapperInner extends React.Component {
     }
     if (row.constructor === Array) {
       const colSize = Math.floor(12 / row.length)
-      return row.map((item, i) => (
-        <Grid item xs={12} sm={colSize} key={i}>
+      return row.map((item, index) => (
+        <Grid item xs={12} sm={colSize} key={index}>
           { this.getItem(item, formProps) }
         </Grid>
       ))

@@ -67,10 +67,10 @@ class PodTable extends React.Component {
       .map((pod) => {
         const containerStatuses = pod.status.containerStatuses || []
         const containerCount = containerStatuses.length
-        const containersReady = containerStatuses.filter((status) => status.ready).length
-        const containersCrashLoopBackoff = containerStatuses.filter((status) => status.state.waiting && status.state.waiting.reason === 'CrashLoopBackOff').length
-        const containersPodInitializing = containerStatuses.filter((status) => status.state.waiting && status.state.waiting.reason === 'PodInitializing').length
-        const containersImagePullBackOff = containerStatuses.filter((status) => status.state.waiting && status.state.waiting.reason === 'ImagePullBackOff').length
+        const containersReady = containerStatuses.filter((currentStatus) => currentStatus.ready).length
+        const containersCrashLoopBackoff = containerStatuses.filter((currentStatus) => currentStatus.state.waiting && currentStatus.state.waiting.reason === 'CrashLoopBackOff').length
+        const containersPodInitializing = containerStatuses.filter((currentStatus) => currentStatus.state.waiting && currentStatus.state.waiting.reason === 'PodInitializing').length
+        const containersImagePullBackOff = containerStatuses.filter((currentStatus) => currentStatus.state.waiting && currentStatus.state.waiting.reason === 'ImagePullBackOff').length
 
         let status = pod.status.phase
 
