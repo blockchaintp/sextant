@@ -22,8 +22,6 @@ class RadioField extends React.Component {
         name,
         value,
         onChange,
-        // eslint-disable-next-line no-unused-vars
-        onBlur,
       },
       error,
       touched,

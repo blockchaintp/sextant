@@ -23,8 +23,6 @@ class UploadFileProgressBar extends React.Component {
       filename,
       size,
       uploadedBytes,
-      // eslint-disable-next-line no-unused-vars
-      totalBytes,
       percentDone,
       remainingTime,
     } = this.props

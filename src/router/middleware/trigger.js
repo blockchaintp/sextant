@@ -8,10 +8,9 @@ const runTriggers = ({
   propName,
 }) => {
   const allTriggers = routes.reduce((all, route) => {
-    let triggers = route.trigger || {}
+    const triggers = route.trigger || {}
     const toRun = triggers[propName]
     if (!toRun) return all
-    if (typeof (toRun) === 'function') triggers = [toRun]
     return all.concat(toRun)
   }, [])
   allTriggers.forEach((trigger) => trigger(store, params))

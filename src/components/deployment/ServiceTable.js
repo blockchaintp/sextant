@@ -1,9 +1,7 @@
 /* eslint-disable max-len */
 import React from 'react'
-import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
-// eslint-disable-next-line import/no-unresolved
 import SimpleTable from 'components/table/SimpleTable'
 
 const styles = () => ({})
@@ -28,8 +26,6 @@ const fields = [{
 class ServiceTable extends React.Component {
   render() {
     const {
-      // eslint-disable-next-line no-unused-vars
-      classes,
       data,
     } = this.props
 
@@ -59,7 +55,4 @@ class ServiceTable extends React.Component {
   }
 }
 
-ServiceTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
 export default withStyles(styles)(ServiceTable)

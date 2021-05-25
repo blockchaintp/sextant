@@ -45,8 +45,6 @@ class DamlArchiveTable extends React.Component {
   render() {
     const {
       classes,
-      // eslint-disable-next-line no-unused-vars
-      selected,
       data,
       fields,
       getActions,

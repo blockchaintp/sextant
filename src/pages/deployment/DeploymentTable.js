@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 /* eslint-disable max-len */
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -25,8 +24,9 @@ import settings from 'settings'
 import rbac from 'utils/rbac'
 import { getFirstTagForDeployment } from 'utils/deployment_settings_page'
 
-// eslint-disable-next-line object-curly-newline
-import { actionNameTranslator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle } from '../../utils/translators'
+import {
+  actionNameTranslator, deploymentStatusTranslator, getDeploymentIcon, getDeploymentIconTitle,
+} from '../../utils/translators'
 
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
@@ -212,17 +212,6 @@ class DeploymentTable extends React.Component {
           method: 'write',
         },
       })
-
-      // invoke this function as part of addButtonDisabled in order to limit
-      // the # of deployments on a cluster
-      // eslint-disable-next-line no-unused-vars
-      const noActiveDeployments = () => {
-        if (cluster) {
-          const activeDeployments = parseInt(cluster.active_deployments, 10)
-          return !(activeDeployments > 0)
-        }
-        return false
-      }
 
       addButtonDisabled = !(canWriteToCluster)
     }

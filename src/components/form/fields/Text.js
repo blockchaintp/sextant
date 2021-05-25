@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 
 import TextField from '@material-ui/core/TextField'
@@ -18,13 +17,10 @@ class Text extends React.Component {
         onChange,
         onBlur,
       },
-      form,
       error,
       touched,
       item,
       disabled,
-      classes,
-      dbId,
     } = this.props
 
     const inputProps = item.inputProps || {}
