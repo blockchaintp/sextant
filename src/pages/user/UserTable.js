@@ -14,12 +14,11 @@ const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
 
-const styles = theme => ({
-  
+const styles = () => ({
+
 })
 
 class UserTable extends React.Component {
-
   state = {
     deleteConfirmOpen: false,
     deleteConfirmItem: null,
@@ -39,7 +38,7 @@ class UserTable extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       classes,
       users,
       onAdd,
@@ -53,35 +52,33 @@ class UserTable extends React.Component {
       deleteConfirmItem,
     } = this.state
 
-    const fields =[{
+    const fields = [{
       title: 'Username',
       name: 'username',
-    },{
+    }, {
       title: 'Permission',
       name: 'permission',
-    },{
+    }, {
       title: 'Created',
       name: 'created',
     }]
 
-    const data = users.map((user, index) => {
-      return {
-        id: user.id,
-        username: user.username,
-        permission: user.permission,
-        created: new Date(user.created_at).toLocaleString(),
-      }
-    })
+    const data = users.map((user) => ({
+      id: user.id,
+      username: user.username,
+      permission: user.permission,
+      created: new Date(user.created_at).toLocaleString(),
+    }))
 
     const addButton = (
-      <Button 
-        _ci='addbutton'
-        className={classes.button} 
+      <Button
+        _ci="addbutton"
+        className={classes.button}
         variant="contained"
         color="secondary"
-        onClick={ onAdd }
+        onClick={onAdd}
       >
-        Add 
+        Add
         <AddIcon />
       </Button>
     )
@@ -89,7 +86,7 @@ class UserTable extends React.Component {
     const actions = [{
       title: 'Delete',
       icon: DeleteIcon,
-      disabled: isSuperuser ? false : true,
+      disabled: !isSuperuser,
       handler: (item) => this.openDeleteDialog(item),
     }, {
       title: 'Edit',
@@ -100,25 +97,25 @@ class UserTable extends React.Component {
     return (
       <div>
         <SimpleTableHeader
-          title='Users'
-          getActions={ () => addButton }
+          title="Users"
+          getActions={() => addButton}
         />
         <SimpleTable
           pagination
-          data={ data }
-          fields={ fields }
-          getActions={ (item) => (
+          data={data}
+          fields={fields}
+          getActions={(item) => (
             <SimpleTableActions
-              item={ item }
-              actions={ actions }
+              item={item}
+              actions={actions}
             />
           )}
         />
         <SimpleTableDeleteDialog
-          open={ deleteConfirmOpen }
-          title={ deleteConfirmItem ? `the ${deleteConfirmItem.username} user` : null }
-          onCancel={ () => this.closeDeleteDialog() }
-          onConfirm={ () => {
+          open={deleteConfirmOpen}
+          title={deleteConfirmItem ? `the ${deleteConfirmItem.username} user` : null}
+          onCancel={() => this.closeDeleteDialog()}
+          onConfirm={() => {
             this.closeDeleteDialog()
             onDelete(deleteConfirmItem.id)
           }}
@@ -137,4 +134,3 @@ UserTable.propTypes = {
 }
 
 export default withStyles(styles)(UserTable)
-
