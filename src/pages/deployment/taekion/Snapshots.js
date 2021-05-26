@@ -231,7 +231,7 @@ class TaekionSnapshots extends React.Component {
           getActions={(item) => (
             <SimpleTableActions
               item={item}
-              actions={getActions(item)}
+              actions={getActions()}
             />
           )}
         />
