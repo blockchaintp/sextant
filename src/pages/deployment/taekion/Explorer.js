@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React from 'react'
+import React, { useCallback } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import useFileExplorer from 'hooks/useFileExplorer'
 
@@ -79,6 +79,18 @@ const TaekionExplorer = ({
 
   const entries = explorerDirectories[inode_id] || []
 
+  const clickEntry = (e, entry) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    if(entry.isDirectory) {
+      explorer.openFolder(entry.inodeid)
+    }
+    else {
+      explorer.openFile(entry.inodeid)
+    }
+  }
+
   return (
     <div className={ classes.root }>
       <div className={ classes.sidebar }>
@@ -91,7 +103,9 @@ const TaekionExplorer = ({
           entries.map((entry, i) => {
             return (
               <p key={i}>
-                { entry.filename }
+                <a href="#" onClick={ (e) => clickEntry(e, entry) }>
+                  { entry.filename }
+                </a>
               </p>
             )
           })

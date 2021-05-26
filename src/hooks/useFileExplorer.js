@@ -1,9 +1,11 @@
 /* eslint-disable no-shadow */
 import React, { useMemo, useCallback, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import settings from 'settings'
 import selectors from 'store/selectors'
 import taekionActions from 'store/modules/taekion'
 import routerActions from 'store/modules/router'
+import userActions from 'store/modules/user'
 
 const extractFolderTree = ({
   id,
@@ -26,6 +28,7 @@ const useFileExplorer = () => {
 
   const [ explorerNodesExpanded, setExplorerNodesExpanded ] = useState({})
   
+  const accessToken = useSelector(selectors.user.accessToken)
   const params = useSelector(selectors.router.params)
   const volumes = useSelector(selectors.taekion.volumes)
   const explorerNodes = useSelector(selectors.taekion.explorerNodes)
@@ -88,6 +91,27 @@ const useFileExplorer = () => {
     onUpdateRoute,
   ])
 
+  const openFolder = useCallback((id) => {
+    setExplorerNodesExpanded(Object.assign({}, explorerNodesExpanded, {
+      [id]: true,
+    }))
+    onUpdateRoute({
+      inode: id,
+    })
+  }, [
+    explorerNodesExpanded,
+    onUpdateRoute,
+  ])
+
+  const openFile = useCallback((id) => {
+    const url = `${settings.api}/clusters/${params.cluster}/deployments/${params.id}/taekion/explorer/${volume.uuid}/file/${id}?token=${accessToken}`
+    window.open(url)
+  }, [
+    volume,
+    params,
+    accessToken,
+  ])
+
   // EFFECT
 
   useEffect(() => {
@@ -108,6 +132,10 @@ const useFileExplorer = () => {
     params.inode,
   ])
 
+  useEffect(() => {
+    dispatch(userActions.getAccessToken())
+  }, [])
+
   return {
     volume_id: params.volume,
     inode_id: params.inode,
@@ -119,6 +147,8 @@ const useFileExplorer = () => {
     expanded: explorerNodesExpanded,
     loading: explorerNodesLoading,
     onChangeVolume,
+    openFolder,
+    openFile,
     clickFolderTree,
   }
 
