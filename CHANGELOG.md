@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+* refactor(wrapper): removes logging [view commit](https://github.com/catenasys/sextant/commit/9a203296f97be12d2a05a958035fcaaba375a03e)
+* refactor(utils): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/fc002431cea947049400571c0c4565a0fa7c7a01)
+* refactor(utils): linting [view commit](https://github.com/catenasys/sextant/commit/148b18c02bd288b0b77aabfed66fc41a5d07394a)
+* refactor(wrapper): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/a977922706f66f555cedae923d2ea8a9dcfe7cc2)
+* fix(wrapper): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/637e895182fed99d5fd8bd7ca0dba9cfe9d5893a)
+* fix(podtable): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/370ce5304a1e2d06f680fe2c854ebd55983343b0)
+* build(gitignore): ignore package-lock [view commit](https://github.com/catenasys/sextant/commit/43809965727874fa46f18789a1e5ea5935268bd7)
+* build(eslintrc): disables max-len [view commit](https://github.com/catenasys/sextant/commit/f80410426b432e0b5868c6404e903bd8bf472c81)
 * feat(deployment-settings-daml-parties): add ability to set party-id-hint when adding a party [view commit](https://github.com/catenasys/sextant/commit/6237e4cf132ea5e13da315b3088ff2829f0ff7e0)
 * feat(deployment-settings-daml-parties): add ability to set party-id-hint when adding a party [view commit](https://github.com/catenasys/sextant/commit/1b34a72a43d5864e82d9aac97bc90d5e00df117f)
 * feat(selectors): added add-party-id-hint to deployment settings selector [view commit](https://github.com/catenasys/sextant/commit/acd39c3d9a19afa5428baaab7b1db8812950ff15)
