@@ -11,7 +11,7 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 
 import SimpleTable from 'components/table/SimpleTable'
-import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
+import SimpleTableTripleDeleteDialog from 'components/table/SimpleTableTripleDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
@@ -334,6 +334,8 @@ class DeploymentTable extends React.Component {
       return buttons
     }
 
+    const getItemStatus = (item) => (item.status === 'undeployed' ? ' permanently' : '')
+
     const clusterTitle = cluster ? `${cluster.name}: Deployments` : 'Deployments'
     const title = embedded ? 'Deployments' : clusterTitle
     return (
@@ -357,11 +359,11 @@ class DeploymentTable extends React.Component {
             )
           }}
         />
-        <SimpleTableDeleteDialog
+        <SimpleTableTripleDeleteDialog
           resourceType="deployment"
           resource={deleteConfirmItem}
           open={deleteConfirmOpen}
-          title={deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${deleteConfirmItem.status === 'undeployed' ? ' permanently' : ''}` : null}
+          title={deleteConfirmItem ? `the ${deleteConfirmItem.name} deployment ${getItemStatus(deleteConfirmItem)}` : null}
           onCancel={() => this.closeDeleteDialog()}
           onConfirm={() => {
             this.closeDeleteDialog()
