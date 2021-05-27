@@ -8,7 +8,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 import HelperText from './HelperText'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     display: 'flex',
     marginTop: theme.spacing.unit * 2,
@@ -22,7 +22,6 @@ class RadioField extends React.Component {
         name,
         value,
         onChange,
-        onBlur
       },
       error,
       touched,
@@ -35,43 +34,43 @@ class RadioField extends React.Component {
     const extraProps = item.extraProps || {}
 
     return (
-      <FormControl component="fieldset" className={ classes.root }>
+      <FormControl component="fieldset" className={classes.root}>
         <FormLabel component="legend">{ title }</FormLabel>
         <RadioGroup
-          aria-label={ title }
-          name={ name }
-          value={ value }
-          onChange={ onChange }
-          row={ item.row ? true : false }
+          aria-label={title}
+          name={name}
+          value={value}
+          onChange={onChange}
+          row={!!item.row}
         >
           {
             (item.options || []).map((option, i) => {
-              option = typeof(option) === 'string' ? {
+              option = typeof (option) === 'string' ? {
                 title: option,
                 value: option,
               } : option
 
               return (
                 <FormControlLabel
-                  key={ i }
-                  label={ option.title }
-                  control={
+                  key={i}
+                  label={option.title}
+                  control={(
                     <Radio
-                      checked={ option.value.toString() === value.toString() }
-                      value={ option.value }
-                      disabled={ disabled }
-                      { ...extraProps }
+                      checked={option.value.toString() === value.toString()}
+                      value={option.value}
+                      disabled={disabled}
+                      {...extraProps}
                     />
-                  }
+                  )}
                 />
               )
             })
           }
         </RadioGroup>
         <HelperText
-          helperText={ item.helperText }
-          error={ error ? true : false }
-          touched={ touched }
+          helperText={item.helperText}
+          error={!!error}
+          touched={touched}
         />
       </FormControl>
     )
