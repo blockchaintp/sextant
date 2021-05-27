@@ -141,8 +141,8 @@ class RoleTable extends React.Component {
     )
 
     // eslint-disable-next-line no-unused-vars
-    const getActions = (item) => {
-      const baseActions = [
+    const getActions = (item) => (
+      [
         {
           title: 'Delete',
           icon: DeleteIcon,
@@ -154,8 +154,7 @@ class RoleTable extends React.Component {
           handler: (currentItem) => this.openEditDialog(currentItem),
         },
       ]
-      return baseActions
-    }
+    )
 
     return (
       <div>
@@ -188,6 +187,7 @@ class RoleTable extends React.Component {
           onConfirm={onAdd}
         />
         <SimpleTableDeleteDialog
+          resource={deleteConfirmItem || null}
           open={deleteConfirmOpen}
           title={deleteConfirmItem ? `the role for ${deleteConfirmItem.user}` : null}
           onCancel={() => this.closeDeleteDialog()}

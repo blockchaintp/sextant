@@ -112,8 +112,9 @@ class UserTable extends React.Component {
           )}
         />
         <SimpleTableDeleteDialog
-          open={deleteConfirmOpen}
+          resource={deleteConfirmItem || null}
           title={deleteConfirmItem ? `the ${deleteConfirmItem.username} user` : null}
+          open={deleteConfirmOpen}
           onCancel={() => this.closeDeleteDialog()}
           onConfirm={() => {
             this.closeDeleteDialog()
