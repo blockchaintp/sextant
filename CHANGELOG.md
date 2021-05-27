@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* refactor(taekion): removes extra arguments from functions [view commit](https://github.com/catenasys/sextant/commit/b6783466c2be69f72de4ef6d43917ebf44ed9e19)
+* refactor(src): removes all unused variables [view commit](https://github.com/catenasys/sextant/commit/07ae8f85bb77ec3d1b5618d54ee2dd07eb94aa57)
+* refactor(src): linting [view commit](https://github.com/catenasys/sextant/commit/14679f3bf59d16ea71bd80e08ed44a3e833d93e1)
 * refactor(wrapper): removes logging [view commit](https://github.com/catenasys/sextant/commit/9a203296f97be12d2a05a958035fcaaba375a03e)
 * refactor(utils): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/fc002431cea947049400571c0c4565a0fa7c7a01)
 * refactor(utils): linting [view commit](https://github.com/catenasys/sextant/commit/148b18c02bd288b0b77aabfed66fc41a5d07394a)
