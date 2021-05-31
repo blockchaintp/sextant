@@ -20,16 +20,16 @@ const numeric = (value) => (Number.isNaN(parseFloat(value)) ? 'Must be a numeric
 const integer = (value) => (value % 1 !== 0 ? 'Must be an integer' : undefined)
 const unsigned = (value) => (value < 0 ? 'Must be a positive value' : undefined)
 
-const wrapper = (validators) => (value, allValues, props) => validators
+const wrapper = (currentValidators) => (value, allValues, props) => currentValidators
   // return the first of any errors
   .map((validator) => validator(value, allValues, props))
   .filter((v) => v)[0]
 
 // wrap an array of other validators that will only apply if there is a value to check
 // useful for if you want a field that is validated only if a value is entered
-const optionalWrapper = (validators) => (value, allValues, props) => {
+const optionalWrapper = (currentValidators) => (value, allValues, props) => {
   if (typeof (value) === 'undefined') return undefined
-  return wrapper(validators)(value, allValues, props)
+  return wrapper(currentValidators)(value, allValues, props)
 }
 
 const validators = {
