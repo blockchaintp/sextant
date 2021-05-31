@@ -146,12 +146,12 @@ class RoleTable extends React.Component {
         {
           title: 'Delete',
           icon: DeleteIcon,
-          handler: (item) => this.openDeleteDialog(item),
+          handler: (currentItem) => this.openDeleteDialog(currentItem),
         },
         {
           title: 'Edit',
           icon: EditIcon,
-          handler: (item) => this.openEditDialog(item),
+          handler: (currentItem) => this.openEditDialog(currentItem),
         },
       ]
       return baseActions
