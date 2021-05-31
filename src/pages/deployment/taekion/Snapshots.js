@@ -116,38 +116,38 @@ class TaekionSnapshots extends React.Component {
 
     const onSubmitForm = (payload) => {
       const {
-        volume,
-        ...data
+        currentVolume,
+        ...currentData
       } = payload
       onCreateSnapshot({
         cluster,
         deployment,
-        volume,
-        payload: data,
+        currentVolume,
+        payload: currentData,
       })
     }
 
-    const volumesById = volumes.reduce((all, volume) => {
-      all[volume.uuid] = volume
+    const volumesById = volumes.reduce((all, currentVolume) => {
+      all[currentVolume.uuid] = currentVolume
       return all
     }, {})
 
     const data = snapshots.map((snapshot) => {
-      const volume = volumesById[snapshot.volumeuuid]
+      const currentVolume = volumesById[snapshot.volumeuuid]
       return {
         id: `${snapshot.volume}-${snapshot.name}`,
         name: snapshot.name,
         volume: snapshot.volume,
-        volume_name: volume ? volume.name : '',
+        volume_name: currentVolume ? currentVolume.name : '',
       }
     })
 
     const volumeOptions = [{
       id: 'all',
       name: 'All',
-    }].concat(volumes.map((volume) => ({
-      id: volume.uuid,
-      name: volume.name,
+    }].concat(volumes.map((currentVolume) => ({
+      id: currentVolume.uuid,
+      name: currentVolume.name,
     })))
 
     const headerActions = (
@@ -161,12 +161,12 @@ class TaekionSnapshots extends React.Component {
             >
               {
                 volumeOptions
-                  .map((volume, i) => (
+                  .map((currentVolume, i) => (
                     <MenuItem
                       key={i}
-                      value={volume.id}
+                      value={currentVolume.id}
                     >
-                      { volume.name }
+                      { currentVolume.name }
                     </MenuItem>
                   ))
               }
@@ -206,9 +206,9 @@ class TaekionSnapshots extends React.Component {
         if (item.id === 'volume') {
           return {
             ...item,
-            options: volumes.map((volume) => ({
-              title: volume.name,
-              value: volume.uuid,
+            options: volumes.map((currentVolume) => ({
+              title: currentVolume.name,
+              value: currentVolume.uuid,
             })),
           }
         }
