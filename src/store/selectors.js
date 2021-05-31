@@ -43,14 +43,14 @@ const entity = ({
   const list = createSelector(
     entities,
     ids,
-    (entities, ids) => ids.map((id) => entities[id]),
+    (currentEntities, currentIds) => currentIds.map((id) => currentEntities[id]),
   )
   const item = createSelector(
     entities,
     routeParamId,
-    (entities, id) => (id === 'new'
+    (currentEntities, id) => (id === 'new'
       ? {}
-      : entities[id]),
+      : currentEntities[id]),
   )
 
   return {
@@ -137,7 +137,7 @@ const configStore = (state) => state.config
 const configData = prop(configStore, 'data')
 const forms = createSelector(
   configData,
-  (configData) => (configData ? configData.forms || {} : {}),
+  (currentConfigData) => (currentConfigData ? currentConfigData.forms || {} : {}),
 )
 const userForms = prop(forms, 'user')
 const clusterForms = prop(forms, 'cluster')
@@ -149,9 +149,9 @@ const roleAccessLevels = prop(configData, 'roleAccessLevels')
 const userAccessFilter = (type) => createSelector(
   authData,
   userAccessLevels,
-  (authData, userAccessLevels) => {
-    if (!authData || !userAccessLevels) return false
-    return userAccessLevels[authData.permission] >= userAccessLevels[type]
+  (currentAuthData, currentUserAccessLevels) => {
+    if (!currentAuthData || !currentUserAccessLevels) return false
+    return currentUserAccessLevels[currentAuthData.permission] >= currentUserAccessLevels[type]
   },
 )
 
