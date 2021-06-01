@@ -312,6 +312,8 @@ class FormListInner extends React.Component {
         />
         { disabled ? null : addButton }
         <SimpleTableDeleteDialog
+          resourceType=""
+          resource={deleteConfirmItem}
           open={deleteConfirmOpen}
           title={deleteConfirmItem ? deleteConfirmItem[mainField] : null}
           onCancel={() => this.closeDeleteDialog()}

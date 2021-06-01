@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 
 import SimpleTable from 'components/table/SimpleTable'
-import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
+import SimpleTableTripleDeleteDialog from 'components/table/SimpleTableTripleDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
@@ -208,6 +208,8 @@ class ClusterTable extends React.Component {
       return buttons
     }
 
+    const getItemStatus = (item) => (item.status === 'inactive' ? ' permanently' : '')
+
     return (
       <div _ci="clusterTable">
         <SimpleTableHeader
@@ -228,11 +230,11 @@ class ClusterTable extends React.Component {
             )
           }}
         />
-        <SimpleTableDeleteDialog
+        <SimpleTableTripleDeleteDialog
           resource={deleteConfirmItem}
           open={deleteConfirmOpen}
           resourceType="cluster"
-          title={deleteConfirmItem ? `the ${deleteConfirmItem.name} cluster ${deleteConfirmItem.status === 'inactive' ? ' permanently' : ''}` : null}
+          title={deleteConfirmItem ? `the ${deleteConfirmItem.name} cluster ${getItemStatus(deleteConfirmItem)}` : null}
           onCancel={() => this.closeDeleteDialog()}
           onConfirm={() => {
             this.closeDeleteDialog()
