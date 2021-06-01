@@ -1,20 +1,18 @@
 const getError = (data) => {
-  if(!data) {
+  if (!data) {
     return 'no error found'
-    return
   }
-  if(typeof(data) == 'string') return data
-  if(data.response && data.response.data) {
+  if (typeof data === 'string') return data
+  if (data.response && data.response.data) {
     const body = data.response.data
-    return  (body.error || body).toString()
+    return (body.error || body).toString()
   }
-  else {
-    return  (data.error || data).toString()  
-  }
+
+  return (data.error || data).toString()
 }
 
 const utils = {
-  getError
+  getError,
 }
 
 export default utils
