@@ -19,12 +19,12 @@ import customizationActions from './customization'
 
 const prefix = 'deployment'
 
-const deployment = new schema.Entity('deployment')
+const upperDeployment = new schema.Entity('deployment')
 const task = new schema.Entity('task')
 const role = new schema.Entity('role')
 
 const initialState = {
-  deployments: normalize([], [deployment]),
+  deployments: normalize([], [upperDeployment]),
   tasks: normalize([], [task]),
   roles: normalize([], [role]),
   resources: {
@@ -48,7 +48,7 @@ const initialState = {
 
 const reducers = {
   setDeployments: (state, action) => {
-    state.deployments = normalize(action.payload, [deployment])
+    state.deployments = normalize(action.payload, [upperDeployment])
   },
   setRoles: (state, action) => {
     state.roles = normalize(action.payload, [role])
@@ -57,7 +57,7 @@ const reducers = {
     state.roles = normalize([], [role])
   },
   setDeployment: (state, action) => {
-    mergeEntities(state.deployments, normalize([action.payload], [deployment]))
+    mergeEntities(state.deployments, normalize([action.payload], [upperDeployment]))
   },
   setHideDeleted: (state, action) => {
     state.hideDeleted = action.payload
@@ -172,8 +172,8 @@ const sideEffects = {
 
     if (trackTask) {
       const newTrackTask = newData
-        .map((deployment) => deployment.task)
-        .find((task) => task.id === trackTask.id)
+        .map((currentDeployment) => currentDeployment.task)
+        .find((currentTask) => currentTask.id === trackTask.id)
       if (newTrackTask) {
         // the tracked task has failed or finished
         if (newTrackTask.status === 'error' || newTrackTask.status === 'finished') {
@@ -289,7 +289,7 @@ const sideEffects = {
 
       const name = dotty.get(payload, paths.name)
 
-      const deployment = {
+      const currentDeployment = {
         name,
         deployment_type,
         deployment_version,
@@ -297,16 +297,16 @@ const sideEffects = {
         custom_yaml,
       }
 
-      const task = await api.loaderSideEffect({
+      const currentTask = await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.create(cluster, deployment),
+        loader: () => loaders.create(cluster, currentDeployment),
         dataAction: actions.setDeployment,
         prefix,
         name: 'form',
         returnError: true,
       })
 
-      dispatch(actions.setTrackTask(task))
+      dispatch(actions.setTrackTask(currentTask))
       dispatch(snackbarActions.setInfo('deployment creating'))
       dispatch(routerActions.navigateTo('deployments', {
         cluster,
@@ -339,7 +339,7 @@ const sideEffects = {
         custom_yaml,
       }
 
-      const task = await api.loaderSideEffect({
+      const currentTask = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.update(cluster, id, deploymentUpdate),
         dataAction: actions.setDeployment,
@@ -347,7 +347,7 @@ const sideEffects = {
         name: 'form',
         returnError: true,
       })
-      dispatch(actions.setTrackTask(task))
+      dispatch(actions.setTrackTask(currentTask))
       dispatch(snackbarActions.setInfo('deployment saving'))
       dispatch(routerActions.navigateTo('deployments', {
         cluster,
@@ -359,8 +359,8 @@ const sideEffects = {
   },
   delete: (cluster, id) => async (dispatch, getState) => {
     try {
-      const deployment = getState().deployment.deployments.entities.deployment[id]
-      const task = await api.loaderSideEffect({
+      const currentDeployment = getState().deployment.deployments.entities.deployment[id]
+      const currentTask = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.delete(cluster, id),
         prefix,
@@ -370,10 +370,10 @@ const sideEffects = {
       })
 
       // this means we are doing a permenant delete
-      if (deployment.status === 'deleted') {
+      if (currentDeployment.status === 'deleted') {
         dispatch(snackbarActions.setSuccess('deployment deleted'))
       } else {
-        dispatch(actions.setTrackTask(task))
+        dispatch(actions.setTrackTask(currentTask))
         dispatch(snackbarActions.setInfo('deployment undeploying'))
       }
       // manualy dispatch actions instead of relying on route activation being triggered
