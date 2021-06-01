@@ -144,8 +144,8 @@ const sideEffects = {
 
     if (trackTask) {
       const newTrackTask = newData
-        .map((cluster) => cluster.task)
-        .find((task) => task.id === trackTask.id)
+        .map((currentCluster) => currentCluster.task)
+        .find((currentTask) => currentTask.id === trackTask.id)
       if (newTrackTask) {
         // the tracked task has failed or finished
         if (newTrackTask.status === 'error' || newTrackTask.status === 'finished') {
@@ -209,7 +209,7 @@ const sideEffects = {
   },
   create: (payload) => async (dispatch, getState) => {
     try {
-      const task = await api.loaderSideEffect({
+      const currentTask = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.create(payload),
         prefix,
@@ -217,7 +217,7 @@ const sideEffects = {
         returnError: true,
       })
 
-      dispatch(actions.setTrackTask(task))
+      dispatch(actions.setTrackTask(currentTask))
       dispatch(snackbarActions.setInfo('cluster creating'))
       dispatch(routerActions.navigateTo('clusters'))
       dispatch(authActions.loadStatus())
@@ -228,14 +228,14 @@ const sideEffects = {
   },
   save: (id, payload) => async (dispatch, getState) => {
     try {
-      const task = await api.loaderSideEffect({
+      const currentTask = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.update(id, payload),
         prefix,
         name: 'form',
         returnError: true,
       })
-      dispatch(actions.setTrackTask(task))
+      dispatch(actions.setTrackTask(currentTask))
       dispatch(snackbarActions.setInfo('cluster saving'))
       dispatch(routerActions.navigateTo('clusters'))
     } catch (e) {
@@ -245,18 +245,18 @@ const sideEffects = {
   },
   delete: (id) => async (dispatch, getState) => {
     try {
-      const cluster = getState().cluster.clusters.entities.cluster[id]
-      const task = await api.loaderSideEffect({
+      const currentCluster = getState().cluster.clusters.entities.cluster[id]
+      const currentTask = await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.delete(id),
         prefix,
         name: 'delete',
         returnError: true,
       })
-      if (cluster.status === 'deleted') {
+      if (currentCluster.status === 'deleted') {
         dispatch(snackbarActions.setSuccess('cluster deleted'))
       } else {
-        dispatch(actions.setTrackTask(task))
+        dispatch(actions.setTrackTask(currentTask))
         dispatch(snackbarActions.setInfo('cluster deleting'))
       }
       dispatch(routerActions.navigateTo('clusters'))

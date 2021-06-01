@@ -1,12 +1,13 @@
+/* eslint-disable no-shadow */
 const googleData = (data) => {
-  if(!data) return {}
+  if (!data) return {}
   const meta = data.meta || {}
   return meta.google || {}
 }
 
 const displayName = (data) => {
-  const displayName = googleData(data).displayName
-  const username = (data || {}).username
+  const { displayName } = googleData(data)
+  const { username } = data || {}
   return displayName || username
 }
 
@@ -15,7 +16,7 @@ const email = (data) => (emails(data)[0] || {}).value
 const images = (data) => googleData(data).photos || []
 const image = (data) => (images(data)[0] || {}).value
 const activeProjectId = (data) => {
-  if(!data) return null
+  if (!data) return null
   const meta = data.meta || {}
   return meta.activeInstallationId
 }
