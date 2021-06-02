@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+* fix(role-and-user-tables): add resource prop to delete dialog component [view commit](https://github.com/catenasys/sextant/commit/11b89abd78140755de88ad597bc42f00ceab3135)
+* feat(deployment-and-cluster-tables): switch from original simple delete dialog to triple dd [view commit](https://github.com/catenasys/sextant/commit/959a34fa7fe565298e710f65610ab839aae9bad2)
+* fix(simple-table-delete-dialog): remove features that enabled triple delete with this component [view commit](https://github.com/catenasys/sextant/commit/6e1ed9b47f4903af72cf9878a3b5801aa585dddf)
+* feat(table-component): create a unique triple confirm delete dialog component [view commit](https://github.com/catenasys/sextant/commit/b6ef5b0057d56dfc427165ce09ddb01df39e049f)
+* style(user-table): linting [view commit](https://github.com/catenasys/sextant/commit/c1d3726e5046427bfdc3a7ea74351bce9e54ab35)
+* fix(wrapper): fixes issue with deleting custom containers in deplopyment form [view commit](https://github.com/catenasys/sextant/commit/f7f26024f85898a89cbbae5c821a17296d3a9968)
+* refactor(error-util): remove unreachable code and general linting [view commit](https://github.com/catenasys/sextant/commit/c5cc07fb3818a2b5a9d7be737f507079ca9da197)
+* fix(store-modules-deployment): removes ui breaking bug that arose as a result of sonar linting [view commit](https://github.com/catenasys/sextant/commit/bfe1b7e7f80dbef79aa756726d859898c1e05834)
+* refactor(validators): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/7a764af907520649688cdd223655565f28fd7da6)
+* refactor(user): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/fbb9f7dc6232b91f13efc753b382a9742d03a4ef)
+* refactor(selectors): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/0e300e4bfdca3949c92df05b1f4f503d402de566)
+* refactor(cluster): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/23aeb52f3f93e33251f4f236cc60d4e176041c61)
+* refactor(roletable): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/37dfc075cdbae19f8722c3c5ebacee632da513d9)
+* refactor(snapshots): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/f1f9b7c9238a59ca438a9f375c48fc80aaa228ec)
+* refactor(validators): linting [view commit](https://github.com/catenasys/sextant/commit/4de6bf8ee7fd2e380f38151a12d90d4d8c0cb270)
 * refactor(taekion): removes extra arguments from functions [view commit](https://github.com/catenasys/sextant/commit/b6783466c2be69f72de4ef6d43917ebf44ed9e19)
 * refactor(src): removes all unused variables [view commit](https://github.com/catenasys/sextant/commit/07ae8f85bb77ec3d1b5618d54ee2dd07eb94aa57)
 * refactor(src): linting [view commit](https://github.com/catenasys/sextant/commit/14679f3bf59d16ea71bd80e08ed44a3e833d93e1)
