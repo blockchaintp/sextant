@@ -63,15 +63,18 @@ pipeline {
     }
 
     stage("Analyze") {
-      when {
-        expression { env.BRANCH_NAME == "master" }
-      } 
       steps {
         withSonarQubeEnv('sonarqube') {
           sh '''
             make analyze
           '''
         }
+      }
+    }
+
+    stage("Quality gate") {
+      steps {
+        waitForQualityGate abortPipeline: true
       }
     }
 
