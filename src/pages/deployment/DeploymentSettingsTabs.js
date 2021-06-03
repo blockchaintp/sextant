@@ -32,7 +32,6 @@ class DeploymentSettings extends React.Component {
 
     const pages = getPages(features)
 
-    // eslint-disable-next-line no-unused-vars
     const [, pageName] = route.name.split('.')
     if (pages.length === 0) {
       return (

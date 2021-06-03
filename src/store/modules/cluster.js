@@ -1,5 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import { normalize, schema } from 'normalizr'
 import CreateReducer from '../utils/createReducer'
@@ -47,7 +45,7 @@ const reducers = {
   setRoles: (state, action) => {
     state.roles = normalize(action.payload, [role])
   },
-  resetRoles: (state, action) => {
+  resetRoles: (state) => {
     state.roles = normalize([], [role])
   },
   setCluster: (state, action) => {
@@ -132,7 +130,7 @@ const loaders = {
 
 const sideEffects = {
 
-  updateShowDeleted: (value) => (dispatch, getState) => {
+  updateShowDeleted: (value) => (dispatch) => {
     dispatch(actions.setShowDeleted(value))
     dispatch(actions.list())
   },
@@ -165,7 +163,7 @@ const sideEffects = {
     dispatch(actions.setClusters(newData))
   },
 
-  list: (opts = {}) => (dispatch, getState) => api.loaderSideEffect({
+  list: (opts = {}) => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.list({
       // eslint-disable-next-line no-unneeded-ternary
@@ -207,7 +205,7 @@ const sideEffects = {
       dispatch(actions.save(id, payload))
     }
   },
-  create: (payload) => async (dispatch, getState) => {
+  create: (payload) => async (dispatch) => {
     try {
       const currentTask = await api.loaderSideEffect({
         dispatch,
@@ -226,7 +224,7 @@ const sideEffects = {
       console.error(e)
     }
   },
-  save: (id, payload) => async (dispatch, getState) => {
+  save: (id, payload) => async (dispatch) => {
     try {
       const currentTask = await api.loaderSideEffect({
         dispatch,
@@ -291,7 +289,7 @@ const sideEffects = {
     dataAction: actions.setSummary,
     snackbarError: true,
   }),
-  startClusterLoop: () => async (dispatch, getState) => {
+  startClusterLoop: () => async (dispatch) => {
     await dispatch(actions.list())
     const intervalTask = setInterval(() => {
       dispatch(actions.list({ background: true }))
@@ -309,7 +307,7 @@ const sideEffects = {
       value: null,
     }))
   },
-  startResourcesLoop: (id) => async (dispatch, getState) => {
+  startResourcesLoop: (id) => async (dispatch) => {
     dispatch(actions.setLoop({
       name: 'resources',
       value: true,
@@ -323,7 +321,7 @@ const sideEffects = {
     await new Promise((resolve) => setTimeout(resolve, 1000))
     dispatch(actions.resourcesLoop(id, { background: true }))
   },
-  stopResourcesLoop: () => (dispatch, getState) => {
+  stopResourcesLoop: () => (dispatch) => {
     dispatch(actions.setLoop({
       name: 'resources',
       value: false,

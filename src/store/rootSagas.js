@@ -28,8 +28,7 @@ const initialLoader = ({
   title,
 }) => function* loadInitialData() {
   yield put(getLoaderAction())
-  // eslint-disable-next-line no-unused-vars
-  const { dataAction, errorAction } = yield race({
+  const { errorAction } = yield race({
     dataAction: take(setDataAction.type),
     errorAction: take(errorFilter(networkName)),
   })

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
@@ -66,7 +65,7 @@ const reducers = {
   setSelectedParties: (state, action) => {
     state.selectedParties = action.payload
   },
-  resetSelectedParties: (state, action) => {
+  resetSelectedParties: (state) => {
     state.selectedParties = {}
   },
   setVisibleParticipant: (state, action) => {
@@ -215,7 +214,7 @@ const sideEffects = {
   listKeyManagerKeys: ({
     cluster,
     id,
-  }) => (dispatch, getState) => api.loaderSideEffect({
+  }) => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.listKeyManagerKeys({ cluster, id }),
     prefix,
@@ -227,7 +226,7 @@ const sideEffects = {
   listEnrolledKeys: ({
     cluster,
     id,
-  }) => (dispatch, getState) => api.loaderSideEffect({
+  }) => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.listEnrolledKeys({ cluster, id }),
     prefix,
@@ -239,7 +238,7 @@ const sideEffects = {
   loadKeys: ({
     cluster,
     id,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     await Promise.all([
       dispatch(actions.listKeyManagerKeys({
         cluster,
@@ -255,7 +254,7 @@ const sideEffects = {
   loadParties: ({
     cluster,
     id,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     await Promise.all([
       dispatch(actions.listKeyManagerKeys({
         cluster,
@@ -272,7 +271,7 @@ const sideEffects = {
     cluster,
     id,
     publicKey,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     if (!publicKey) {
       dispatch(snackbarActions.setError('please provide a public key'))
       return
@@ -298,7 +297,7 @@ const sideEffects = {
   listParticipants: ({
     cluster,
     id,
-  }) => (dispatch, getState) => api.loaderSideEffect({
+  }) => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.listParticipants({ cluster, id }),
     prefix,
@@ -310,7 +309,7 @@ const sideEffects = {
   listArchives: ({
     cluster,
     id,
-  }) => (dispatch, getState) => api.loaderSideEffect({
+  }) => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.listArchives({ cluster, id }),
     prefix,
@@ -322,7 +321,7 @@ const sideEffects = {
   listTimeServiceInfo: ({
     cluster,
     id,
-  }) => (dispatch, getState) => api.loaderSideEffect({
+  }) => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.listTimeServiceInfo({ cluster, id }),
     prefix,
@@ -335,7 +334,7 @@ const sideEffects = {
     cluster,
     id,
     publicKey,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     try {
       await api.loaderSideEffect({
         dispatch,
@@ -359,7 +358,7 @@ const sideEffects = {
     cluster,
     id,
     publicKey,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     try {
       await api.loaderSideEffect({
         dispatch,
@@ -385,7 +384,7 @@ const sideEffects = {
     publicKey,
     partyName,
     partyIdHint,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     if (!partyName) {
       dispatch(snackbarActions.setError('please enter a party name'))
       return
@@ -421,7 +420,7 @@ const sideEffects = {
     id,
     publicKey,
     partyNames,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     if (partyNames.length <= 0) {
       dispatch(snackbarActions.setError('please select some parties to remove'))
       return
@@ -454,7 +453,7 @@ const sideEffects = {
     applicationId,
     readAs,
     actAs,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     if (!applicationId) {
       dispatch(snackbarActions.setError('please enter an application id to generate a token for'))
       return
@@ -491,7 +490,7 @@ const sideEffects = {
     cluster,
     id,
     applicationId,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     if (!applicationId) {
       dispatch(snackbarActions.setError('please enter an application id to generate a token for'))
       return
@@ -522,12 +521,12 @@ const sideEffects = {
     cluster,
     id,
     files,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     dispatch(fileUploadActions.startUploads({
       files,
       method: 'POST',
       url: api.url(`/clusters/${cluster}/deployments/${id}/uploadArchive`),
-      onComplete: (results) => {
+      onComplete: () => {
         dispatch(actions.setUploadArchiveWindowOpen(false))
         dispatch(snackbarActions.setSuccess('archive uploaded'))
         dispatch(actions.listArchives({
@@ -541,7 +540,7 @@ const sideEffects = {
   startKeysLoop: ({
     cluster,
     id,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     dispatch(actions.setLoop({
       name: 'keys',
       value: true,
@@ -567,7 +566,7 @@ const sideEffects = {
       id,
     }))
   },
-  stopKeysLoop: () => (dispatch, getState) => {
+  stopKeysLoop: () => (dispatch) => {
     dispatch(actions.setLoop({
       name: 'keys',
       value: false,
