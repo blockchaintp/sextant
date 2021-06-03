@@ -10,6 +10,7 @@ import Collapse from '@material-ui/core/Collapse'
 import FolderIcon from '@material-ui/icons/Folder'
 import DraftsIcon from '@material-ui/icons/Drafts'
 import SendIcon from '@material-ui/icons/Send'
+import StorageIcon from '@material-ui/icons/Storage'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -33,7 +34,7 @@ const ExplorerFolderTreeItem = ({
   classes,
   explorer,
   entry,
-  isRoot = false,
+  depth = 0,
 }) => {
 
   const {
@@ -46,7 +47,6 @@ const ExplorerFolderTreeItem = ({
   const selected = inode_id == entry.inodeid
   const open = expanded[entry.inodeid] ? true : false
   const isLoading = loading[entry.inodeid] ? true : false
-  const itemClassname = isRoot ? classes.rootListItem : classes.nestedListItem
 
   const onClick = (e) => {
     clickFolderTree(entry.inodeid)
@@ -56,7 +56,7 @@ const ExplorerFolderTreeItem = ({
 
   return (
     <>
-      <ListItem selected={ selected } button onClick={ onClick } className={ itemClassname }>
+      <ListItem selected={ selected } button onClick={ onClick } style={{ paddingLeft: depth * 24 }}>
         <ListItemIcon>
           <FolderIcon />
         </ListItemIcon>
@@ -79,6 +79,7 @@ const ExplorerFolderTreeItem = ({
                   classes={ classes }
                   explorer={ explorer }
                   entry={ child }
+                  depth={ depth + 1 }
                 />
               )
             })
@@ -95,9 +96,11 @@ const ExplorerFolderTree = ({
 }) => {
 
   const {
+    inode_id,
     volume,
     volumes,
     folderTree,
+    openFolder,
     expanded,
     loading,
     onChangeVolume,
@@ -117,19 +120,27 @@ const ExplorerFolderTree = ({
       aria-labelledby="nested-list-subheader"
       className={classes.root}
     >
-      {
-        folderTree.map((child, i) => {
-          return (
-            <ExplorerFolderTreeItem
-              isRoot
-              key={ i }
-              classes={ classes }
-              explorer={ explorer }
-              entry={ child }
-            />
-          )
-        }) 
-      }
+      <ListItem selected={ inode_id == 'root' } button onClick={ () => openFolder('root') } className={ classes.rootListItem }>
+        <ListItemIcon>
+          <StorageIcon />
+        </ListItemIcon>
+        <ListItemText primary="Root" />
+      </ListItem>
+      <List dense component="div" disablePadding>
+        {
+          folderTree.map((child, i) => {
+            return (
+              <ExplorerFolderTreeItem
+                key={ i }
+                classes={ classes }
+                explorer={ explorer }
+                entry={ child }
+                depth={ 1 }
+              />
+            )
+          }) 
+        }
+      </List>
     </List>
   )
 }

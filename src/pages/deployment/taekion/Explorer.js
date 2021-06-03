@@ -134,7 +134,6 @@ const TaekionExplorer = ({
     return buttons
   }
 
-  console.dir(entries)
   const data = entries.map((entry) => {
     let ret = {
       id: entry.inodeid,

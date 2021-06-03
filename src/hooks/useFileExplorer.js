@@ -79,7 +79,8 @@ const useFileExplorer = () => {
   ])
 
   const clickFolderTree = useCallback((id) => {
-    const value = explorerNodesExpanded[id] ? false : true
+    let value = true
+    if(id == params.inode) value = explorerNodesExpanded[id] ? false : true
     setExplorerNodesExpanded(Object.assign({}, explorerNodesExpanded, {
       [id]: value,
     }))
@@ -89,6 +90,7 @@ const useFileExplorer = () => {
   }, [
     explorerNodesExpanded,
     onUpdateRoute,
+    params,
   ])
 
   const openFolder = useCallback((id) => {
