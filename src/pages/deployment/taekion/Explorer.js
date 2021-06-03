@@ -1,10 +1,15 @@
 /* eslint-disable no-shadow */
-import React, { useCallback } from 'react'
+import React, { useState } from 'react'
 import { withStyles, useTheme } from '@material-ui/core/styles'
 import { FileIcon, defaultStyles } from 'react-file-icon'
 import useFileExplorer from 'hooks/useFileExplorer'
 import prettyBytes from 'pretty-bytes'
 import ExplorerSidebar from 'components/fileexplorer/Sidebar'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
@@ -115,6 +120,7 @@ const TaekionExplorer = ({
 }) => {
 
   const explorer = useFileExplorer()
+  const [ viewingEntry, setViewingEntry ] = useState(null)
 
   const {
     inode_id,
@@ -130,6 +136,12 @@ const TaekionExplorer = ({
     else {
       explorer.openFile(entry.inodeid, download_filename)
     }
+  }
+
+  const entryDetails = (e, entry) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setViewingEntry(entry)
   }
 
   const getActions = (item) => {
@@ -177,10 +189,11 @@ const TaekionExplorer = ({
             
           </div>
           <div>
-            { entry.filename }
+            <a href="#" onClick={ (e) => entryDetails(e, entry) }>
+              { entry.filename }
+            </a>
           </div>
         </div>
-        
       ),
       entry,
       created: (
@@ -225,6 +238,33 @@ const TaekionExplorer = ({
           )}
         />
       </div>
+      {
+        viewingEntry && (
+          <Dialog
+            open
+            fullWidth
+            maxWidth="md"
+            onClose={ () => setViewingEntry(null) }
+          >
+            <DialogTitle>{viewingEntry.filename}</DialogTitle>
+            <DialogContent>
+              <pre>{ JSON.stringify(viewingEntry, null, 4) }</pre>
+            </DialogContent>
+            <DialogActions>
+              {
+                !viewingEntry.isDirectory && (
+                  <Button onClick={() => clickEntry(viewingEntry, viewingEntry.filename)}>
+                    Download
+                  </Button>
+                )
+              }
+              <Button onClick={() => setViewingEntry(null)} color="primary">
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )
+      }
     </div>
   )
 }
