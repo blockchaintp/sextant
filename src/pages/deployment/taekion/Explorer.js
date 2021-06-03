@@ -105,12 +105,12 @@ const TaekionExplorer = ({
 
   const entries = explorerDirectories[inode_id] || []
 
-  const clickEntry = (entry) => {
+  const clickEntry = (entry, download_filename) => {
     if(entry.isDirectory) {
       explorer.openFolder(entry.inodeid)
     }
     else {
-      explorer.openFile(entry.inodeid)
+      explorer.openFile(entry.inodeid, download_filename)
     }
   }
 
@@ -121,7 +121,7 @@ const TaekionExplorer = ({
       buttons.push({
         title: 'Download',
         icon: CloudDownloadIcon,
-        handler: () => {},
+        handler: () => clickEntry(item.entry, item.entry.filename),
       })
     }
 
