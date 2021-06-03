@@ -6,9 +6,9 @@ const googleData = (data) => {
 }
 
 const displayName = (data) => {
-  const { displayName } = googleData(data)
+  const { innerDisplayName } = googleData(data)
   const { username } = data || {}
-  return displayName || username
+  return innerDisplayName || username
 }
 
 const emails = (data) => googleData(data).emails || []
