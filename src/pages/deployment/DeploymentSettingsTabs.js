@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab'
 
 import { getPages } from 'utils/deployment_settings_page'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
 
   },
@@ -17,14 +17,13 @@ const styles = theme => ({
 })
 
 class DeploymentSettings extends React.Component {
-
   render() {
     const {
       classes,
       cluster,
       id,
-      deployment_type,
-      deployment_version,
+      deploymentType,
+      deploymentVersion,
       features,
       route,
       onViewPage,
@@ -33,18 +32,18 @@ class DeploymentSettings extends React.Component {
 
     const pages = getPages(features)
 
+    // eslint-disable-next-line no-unused-vars
     const [_, pageName] = route.name.split('.')
     if (pages.length === 0) {
       return (
         <div className={classes.root}>
-        <AppBar position="static" color="default">
-        </AppBar>
-      </div>
+          <AppBar position="static" color="default" />
+        </div>
       )
     }
 
-    let currentIndex = pages.findIndex(p => p.id == pageName)
-    if(currentIndex < 0) currentIndex = 0
+    let currentIndex = pages.findIndex((p) => p.id === pageName)
+    if (currentIndex < 0) currentIndex = 0
 
     return (
       <div className={classes.root}>
@@ -53,7 +52,7 @@ class DeploymentSettings extends React.Component {
             value={currentIndex}
             onChange={(ev, value) => {
               const nextPage = pages[value]
-              onViewPage(cluster, id, deployment_type, deployment_version, nextPage.id, nextPage.params || {})
+              onViewPage(cluster, id, deploymentType, deploymentVersion, nextPage.id, nextPage.params || {})
             }}
             indicatorColor="primary"
             textColor="primary"
