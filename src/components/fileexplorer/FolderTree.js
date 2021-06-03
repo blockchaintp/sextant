@@ -98,20 +98,9 @@ const ExplorerFolderTree = ({
   const {
     inode_id,
     volume,
-    volumes,
     folderTree,
     openFolder,
-    expanded,
-    loading,
-    onChangeVolume,
-    onSetExpanded,
   } = explorer
-
-  const handleClick = () => {}
-
-  const open = true
-
-  console.dir(folderTree)
 
   return (
     <List
@@ -124,7 +113,11 @@ const ExplorerFolderTree = ({
         <ListItemIcon>
           <StorageIcon />
         </ListItemIcon>
-        <ListItemText primary="Root" />
+        {
+          volume && (
+            <ListItemText primary={ volume.name } />
+          )
+        }
       </ListItem>
       <List dense component="div" disablePadding>
         {
