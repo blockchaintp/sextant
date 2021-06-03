@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
@@ -22,8 +23,8 @@ class DeploymentSettings extends React.Component {
       classes,
       cluster,
       id,
-      deploymentType,
-      deploymentVersion,
+      deployment_type,
+      deployment_version,
       features,
       route,
       onViewPage,
@@ -32,7 +33,7 @@ class DeploymentSettings extends React.Component {
 
     const pages = getPages(features)
 
-    const [, pageName] = route.name.split('.')
+    const [pageName] = route.name.split('.')
     if (pages.length === 0) {
       return (
         <div className={classes.root}>
@@ -51,7 +52,7 @@ class DeploymentSettings extends React.Component {
             value={currentIndex}
             onChange={(ev, value) => {
               const nextPage = pages[value]
-              onViewPage(cluster, id, deploymentType, deploymentVersion, nextPage.id, nextPage.params || {})
+              onViewPage(cluster, id, deployment_type, deployment_version, nextPage.id, nextPage.params || {})
             }}
             indicatorColor="primary"
             textColor="primary"

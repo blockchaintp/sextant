@@ -140,8 +140,7 @@ class RoleTable extends React.Component {
       </div>
     )
 
-    // eslint-disable-next-line no-unused-vars
-    const getActions = (item) => (
+    const getActions = () => (
       [
         {
           title: 'Delete',
@@ -169,7 +168,7 @@ class RoleTable extends React.Component {
           getActions={(item) => (
             <SimpleTableActions
               item={item}
-              actions={getActions(item)}
+              actions={getActions()}
             />
           )}
         />
