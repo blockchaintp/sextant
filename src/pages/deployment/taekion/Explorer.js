@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 import React, { useCallback } from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles, useTheme } from '@material-ui/core/styles'
+import { FileIcon, defaultStyles } from 'react-file-icon'
 import useFileExplorer from 'hooks/useFileExplorer'
 import prettyBytes from 'pretty-bytes'
 import ExplorerSidebar from 'components/fileexplorer/Sidebar'
@@ -9,6 +10,7 @@ import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
+import FolderIcon from '@material-ui/icons/Folder'
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 
@@ -74,6 +76,22 @@ const styles = theme => ({
   smalltext: {
     fontSize: '0.8em',
     color: '#999'
+  },
+  fileicon: {
+    width: '30px',
+    marginRight: theme.spacing.unit * 2,
+  },
+  filename: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  folderIcon: {
+    '& svg': {
+      width: '140px',
+      height: '140px'
+    }
+    
   }
 })
 
@@ -135,9 +153,35 @@ const TaekionExplorer = ({
   }
 
   const data = entries.map((entry) => {
+    const ext = entry.filename.split('.').pop()
     let ret = {
       id: entry.inodeid,
-      name: entry.filename,
+      name: (
+        <div className={ classes.filename }>
+          <div className={ classes.fileicon }>
+            {
+              entry.isDirectory ? (
+                <FolderIcon
+                  color="primary"
+                  style={{ fontSize: 34 }}
+                />
+              ) : (
+                <FileIcon
+                  extension={ ext }
+                  glyphColor="#3F51B5"
+                  labelColor="#3F51B5"
+                  {...(defaultStyles[ext] || {})}
+                />
+              )
+            }
+            
+          </div>
+          <div>
+            { entry.filename }
+          </div>
+        </div>
+        
+      ),
       entry,
       created: (
         <span className={ classes.smalltext }>
