@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* build(deps): bump axios from 0.18.1 to 0.21.1 [view commit](https://github.com/catenasys/sextant/commit/ab5dc31d7c01f4909b1fd706db5ac2d135ed0c39)
 * fix(role-and-user-tables): add resource prop to delete dialog component [view commit](https://github.com/catenasys/sextant/commit/11b89abd78140755de88ad597bc42f00ceab3135)
 * feat(deployment-and-cluster-tables): switch from original simple delete dialog to triple dd [view commit](https://github.com/catenasys/sextant/commit/959a34fa7fe565298e710f65610ab839aae9bad2)
 * fix(simple-table-delete-dialog): remove features that enabled triple delete with this component [view commit](https://github.com/catenasys/sextant/commit/6e1ed9b47f4903af72cf9878a3b5801aa585dddf)
