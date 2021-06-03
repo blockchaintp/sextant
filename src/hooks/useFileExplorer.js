@@ -103,8 +103,8 @@ const useFileExplorer = () => {
     onUpdateRoute,
   ])
 
-  const openFile = useCallback((id) => {
-    const url = `${settings.api}/clusters/${params.cluster}/deployments/${params.id}/taekion/explorer/${volume.uuid}/file/${id}?token=${accessToken}`
+  const openFile = useCallback((file_inode) => {
+    const url = `${settings.api}/clusters/${params.cluster}/deployments/${params.id}/taekion/explorer/${volume.uuid}/dir/${params.inode}/file/${file_inode}?token=${accessToken}`
     window.open(url)
   }, [
     volume,
