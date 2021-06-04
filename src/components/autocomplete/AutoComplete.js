@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react'
 import PropTypes from 'prop-types'
 import Autosuggest from 'react-autosuggest'
@@ -14,26 +15,24 @@ const renderInputComponent = ({
   classes,
   inputRef = () => {},
   ref,
-  ...other,
-}) => {
-  return (
-    <TextField
-      fullWidth
-      InputProps={{
-        inputRef: node => {
-          ref(node)
-          inputRef(node)
-        },
-        classes: {
-          input: classes.input,
-        },
-      }}
-      {...other}
-    />
-  )
-}
+  ...other
+}) => (
+  <TextField
+    fullWidth
+    InputProps={{
+      inputRef: (node) => {
+        ref(node)
+        inputRef(node)
+      },
+      classes: {
+        input: classes.input,
+      },
+    }}
+    {...other}
+  />
+)
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
     flexGrow: 1,
     position: 'relative',
@@ -69,37 +68,34 @@ const styles = theme => ({
 })
 
 class AutoComplete extends React.Component {
-
   getHighlightedText = (value, query) => {
     const {
       classes,
       highlightClasses,
     } = this.props
 
-    const highlightClass = highlightClasses && highlightClasses.highlight ?
-      highlightClasses.highlight :
-      classes.highlightText
+    const highlightClass = highlightClasses && highlightClasses.highlight
+      ? highlightClasses.highlight
+      : classes.highlightText
 
-    const normalClass = highlightClasses && highlightClasses.normal ?
-      highlightClasses.normal :
-      classes.normalText
+    const normalClass = highlightClasses && highlightClasses.normal
+      ? highlightClasses.normal
+      : classes.normalText
 
     const parts = parse(value, match(value, query))
 
     return (
       <span>
         {
-          parts.map((part, index) => {
-            return part.highlight ? (
-              <span key={ index } className={ highlightClass }>
-                { part.text }
-              </span>
-            ) : (
-              <strong key={ index } className={ normalClass }>
-                { part.text }
-              </strong>
-            )
-          })
+          parts.map((part, index) => (part.highlight ? (
+            <span key={index} className={highlightClass}>
+              { part.text }
+            </span>
+          ) : (
+            <strong key={index} className={normalClass}>
+              { part.text }
+            </strong>
+          )))
         }
       </span>
     )
@@ -112,19 +108,19 @@ class AutoComplete extends React.Component {
       getSuggestionValue,
     } = this.props
 
-    return renderSuggestion ?
-      renderSuggestion({
+    return renderSuggestion
+      ? renderSuggestion({
         suggestion,
         query,
         getHighlightedText: this.getHighlightedText,
         isHighlighted,
       }) : (
         <ListItem
-          selected={ isHighlighted }
+          selected={isHighlighted}
           component="div"
-          className={ classes.listItem }
+          className={classes.listItem}
         >
-          <ListItemText primary={ this.getHighlightedText(getSuggestionValue(suggestion), query) } />
+          <ListItemText primary={this.getHighlightedText(getSuggestionValue(suggestion), query)} />
         </ListItem>
       )
   }
@@ -179,7 +175,7 @@ class AutoComplete extends React.Component {
           suggestionsList: classes.suggestionsList,
           suggestion: classes.suggestion,
         }}
-        renderSuggestionsContainer={options => (
+        renderSuggestionsContainer={(options) => (
           <Paper {...options.containerProps} square>
             { options.children }
           </Paper>
@@ -199,6 +195,11 @@ AutoComplete.propTypes = {
   onClick: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
+  highlightClasses: PropTypes.object,
+}
+
+AutoComplete.defaultProps = {
+  renderSuggestion: PropTypes.func,
   highlightClasses: PropTypes.object,
 }
 
