@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
@@ -7,7 +8,7 @@ import Tab from '@material-ui/core/Tab'
 
 import { getPages } from 'utils/deployment_settings_page'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
 
   },
@@ -17,7 +18,6 @@ const styles = theme => ({
 })
 
 class DeploymentSettings extends React.Component {
-
   render() {
     const {
       classes,
@@ -33,18 +33,17 @@ class DeploymentSettings extends React.Component {
 
     const pages = getPages(features)
 
-    const [_, pageName] = route.name.split('.')
+    const [pageName] = route.name.split('.')
     if (pages.length === 0) {
       return (
         <div className={classes.root}>
-        <AppBar position="static" color="default">
-        </AppBar>
-      </div>
+          <AppBar position="static" color="default" />
+        </div>
       )
     }
 
-    let currentIndex = pages.findIndex(p => p.id == pageName)
-    if(currentIndex < 0) currentIndex = 0
+    let currentIndex = pages.findIndex((p) => p.id === pageName)
+    if (currentIndex < 0) currentIndex = 0
 
     return (
       <div className={classes.root}>

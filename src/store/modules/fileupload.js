@@ -330,8 +330,6 @@ function* uploadFiles(action) {
 
   const {
     upload,
-    // eslint-disable-next-line no-unused-vars
-    cancelUpload,
   } = yield race({
     upload: all(uploadSagas),
     cancelUpload: take(`${prefix}/cancel`),

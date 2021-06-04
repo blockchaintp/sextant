@@ -96,8 +96,7 @@ class PodTable extends React.Component {
         }
       })
 
-    // eslint-disable-next-line no-unused-vars
-    const getActions = (item) => {
+    const getActions = () => {
       const baseActions = [
         {
           title: 'Delete',
@@ -116,7 +115,7 @@ class PodTable extends React.Component {
           getActions={(item) => (
             <SimpleTableActions
               item={item}
-              actions={getActions(item)}
+              actions={getActions()}
             />
           )}
         />
