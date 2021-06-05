@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+* refactor(user): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/3c037cf277bca0c54b9263c3f87ea8704c98428f)
+* refactor(podtable-roletable): removes useless variable assignments to variable and resulting errors [view commit](https://github.com/catenasys/sextant/commit/434d55a8db5deecd709cc363106f66d0e4e05a7a)
+* refactor(pages-store): removes declarations of unused variables [view commit](https://github.com/catenasys/sextant/commit/f539eb09fa7137a904e04ff68705219caa3278ea)
+* refactor(deployment-settings-tabs-fileupload): removes declarations of unused variables [view commit](https://github.com/catenasys/sextant/commit/4ebf8c4d99292373bf1398428f8fc9afc90a3e12)
+* refactor(deployment-settings-tabs): linting [view commit](https://github.com/catenasys/sextant/commit/7d8baf9956b227cfb1c925ca1cc5941931165d09)
 * build(deps): bump axios from 0.18.1 to 0.21.1 [view commit](https://github.com/catenasys/sextant/commit/ab5dc31d7c01f4909b1fd706db5ac2d135ed0c39)
 * fix(role-and-user-tables): add resource prop to delete dialog component [view commit](https://github.com/catenasys/sextant/commit/11b89abd78140755de88ad597bc42f00ceab3135)
 * feat(deployment-and-cluster-tables): switch from original simple delete dialog to triple dd [view commit](https://github.com/catenasys/sextant/commit/959a34fa7fe565298e710f65610ab839aae9bad2)
