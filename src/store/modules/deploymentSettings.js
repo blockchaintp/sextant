@@ -525,7 +525,7 @@ const sideEffects = {
     dispatch(fileUploadActions.startUploads({
       files,
       method: 'POST',
-      url: api.url(`/clusters/${cluster}/deployments/${id}/uploadArchive`),
+      url: api.url(`/clusters/${cluster}/deployments/${id}/daml/uploadArchive`),
       onComplete: () => {
         dispatch(actions.setUploadArchiveWindowOpen(false))
         dispatch(snackbarActions.setSuccess('archive uploaded'))
