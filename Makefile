@@ -23,6 +23,7 @@ dirs_test:
 
 $(MARKERS)/build_docker:
 	docker-compose -f docker-compose.yaml build
+	touch $@
 
 .PHONY: analyze_cpd
 analyze_cpd:
