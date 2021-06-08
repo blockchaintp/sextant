@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "frontend for the sextant cluster creation service",
   "scripts": {
-    "develop": "webpack-dev-server --config config/webpack.dev.js",
+    "develop": "webpack serve --config config/webpack.dev.js",
     "build-test": "webpack --config config/webpack.test.js",
     "build": "webpack --config config/webpack.prod.js",
     "test": "babel-tape-runner {src,test}/**/*.test.js | tap-spec",

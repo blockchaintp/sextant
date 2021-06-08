@@ -1,12 +1,12 @@
 const webpack = require('webpack')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin')
 
 const common = require('./webpack.common')
 
 module.exports = merge(common, {
   mode: 'development',
-  devtool: 'cheap-module-source-map', 
+  devtool: 'cheap-module-source-map',
   plugins: [
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('development') }),
     new ErrorOverlayPlugin(),

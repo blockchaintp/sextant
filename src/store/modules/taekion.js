@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Promise from 'bluebird'
 import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
 import api from '../utils/api'
@@ -118,7 +117,6 @@ const loaders = {
   }) => axios.delete(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volume}/snapshots/${snapshotName}`))
     .then(api.process),
 
-
 }
 
 const sideEffects = {
@@ -126,9 +124,9 @@ const sideEffects = {
   listKeys: ({
     cluster,
     deployment,
-  }) => (dispatch, getState) => api.loaderSideEffect({
+  }) => (dispatch) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listKeys({cluster, deployment}),
+    loader: () => loaders.listKeys({ cluster, deployment }),
     prefix,
     name: 'listKeys',
     dataAction: actions.setKeys,
@@ -139,13 +137,12 @@ const sideEffects = {
     cluster,
     deployment,
     payload,
-  }) => async (dispatch, getState) => {
-
+  }) => async (dispatch) => {
     try {
       dispatch(networkActions.setGlobalLoading(true))
       const data = await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.createKey({cluster, deployment, payload}),
+        loader: () => loaders.createKey({ cluster, deployment, payload }),
         prefix,
         name: 'createKey',
         returnError: true,
@@ -154,11 +151,11 @@ const sideEffects = {
         cluster,
         deployment,
       }))
-      dispatch(snackbarActions.setSuccess(`key added`))
+      dispatch(snackbarActions.setSuccess('key added'))
       dispatch(actions.setAddKeyResult(data))
       dispatch(actions.setAddKeyWindowOpen(false))
       dispatch(networkActions.setGlobalLoading(false))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error adding key: ${e.toString()}`))
       console.error(e)
       dispatch(networkActions.setGlobalLoading(false))
@@ -169,12 +166,11 @@ const sideEffects = {
     cluster,
     deployment,
     id,
-  }) => async (dispatch, getState) => {
-
+  }) => async (dispatch) => {
     try {
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.deleteKey({cluster, deployment, id}),
+        loader: () => loaders.deleteKey({ cluster, deployment, id }),
         prefix,
         name: 'deleteKey',
         returnError: true,
@@ -183,8 +179,8 @@ const sideEffects = {
         cluster,
         deployment,
       }))
-      dispatch(snackbarActions.setSuccess(`key deleted`))
-    } catch(e) {
+      dispatch(snackbarActions.setSuccess('key deleted'))
+    } catch (e) {
       dispatch(snackbarActions.setError(`error deleting key: ${e.toString()}`))
       console.error(e)
     }
@@ -193,9 +189,9 @@ const sideEffects = {
   listVolumes: ({
     cluster,
     deployment,
-  }) => (dispatch, getState) => api.loaderSideEffect({
+  }) => (dispatch) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listVolumes({cluster, deployment}),
+    loader: () => loaders.listVolumes({ cluster, deployment }),
     prefix,
     name: 'listVolumes',
     dataAction: actions.setVolumes,
@@ -206,13 +202,12 @@ const sideEffects = {
     cluster,
     deployment,
     payload,
-  }) => async (dispatch, getState) => {
-
+  }) => async (dispatch) => {
     try {
       dispatch(networkActions.setGlobalLoading(true))
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.createVolume({cluster, deployment, payload}),
+        loader: () => loaders.createVolume({ cluster, deployment, payload }),
         prefix,
         name: 'createVolume',
         returnError: true,
@@ -221,10 +216,10 @@ const sideEffects = {
         cluster,
         deployment,
       }))
-      dispatch(snackbarActions.setSuccess(`volume added`))
+      dispatch(snackbarActions.setSuccess('volume added'))
       dispatch(actions.setAddVolumeWindowOpen(false))
       dispatch(networkActions.setGlobalLoading(false))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error adding volume: ${e.toString()}`))
       console.error(e)
       dispatch(networkActions.setGlobalLoading(false))
@@ -236,13 +231,14 @@ const sideEffects = {
     deployment,
     volume,
     payload,
-  }) => async (dispatch, getState) => {
-
+  }) => async (dispatch) => {
     try {
       dispatch(networkActions.setGlobalLoading(true))
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.updateVolume({ cluster, deployment, volume, payload }),
+        loader: () => loaders.updateVolume({
+          cluster, deployment, volume, payload,
+        }),
         prefix,
         name: 'updateVolume',
         returnError: true,
@@ -251,7 +247,7 @@ const sideEffects = {
         cluster,
         deployment,
       }))
-      dispatch(snackbarActions.setSuccess(`volume updated`))
+      dispatch(snackbarActions.setSuccess('volume updated'))
       dispatch(actions.setAddVolumeWindowOpen(false))
       dispatch(networkActions.setGlobalLoading(false))
     } catch (e) {
@@ -265,13 +261,12 @@ const sideEffects = {
     cluster,
     deployment,
     name,
-  }) => async (dispatch, getState) => {
-
+  }) => async (dispatch) => {
     try {
       dispatch(networkActions.setGlobalLoading(true))
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.deleteVolume({cluster, deployment, name}),
+        loader: () => loaders.deleteVolume({ cluster, deployment, name }),
         prefix,
         name: 'deleteVolume',
         returnError: true,
@@ -280,9 +275,9 @@ const sideEffects = {
         cluster,
         deployment,
       }))
-      dispatch(snackbarActions.setSuccess(`volume deleted`))
+      dispatch(snackbarActions.setSuccess('volume deleted'))
       dispatch(networkActions.setGlobalLoading(false))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error deleting volume: ${e.toString()}`))
       console.error(e)
       dispatch(networkActions.setGlobalLoading(false))
@@ -293,9 +288,9 @@ const sideEffects = {
     cluster,
     deployment,
     volume,
-  }) => (dispatch, getState) => api.loaderSideEffect({
+  }) => (dispatch) => api.loaderSideEffect({
     dispatch,
-    loader: () => loaders.listSnapshots({cluster, deployment, volume}),
+    loader: () => loaders.listSnapshots({ cluster, deployment, volume }),
     prefix,
     name: 'listSnapshots',
     dataAction: actions.setSnapshots,
@@ -307,12 +302,14 @@ const sideEffects = {
     deployment,
     volume,
     payload,
-  }) => async (dispatch, getState) => {
+  }) => async (dispatch) => {
     try {
       dispatch(networkActions.setGlobalLoading(true))
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.createSnapshot({cluster, deployment, volume, payload}),
+        loader: () => loaders.createSnapshot({
+          cluster, deployment, volume, payload,
+        }),
         prefix,
         name: 'createSnapshot',
         returnError: true,
@@ -322,10 +319,10 @@ const sideEffects = {
         deployment,
         volume,
       }))
-      dispatch(snackbarActions.setSuccess(`snapshot added`))
+      dispatch(snackbarActions.setSuccess('snapshot added'))
       dispatch(actions.setAddSnapshotWindowOpen(false))
       dispatch(networkActions.setGlobalLoading(false))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error adding snapshot: ${e.toString()}`))
       console.error(e)
       dispatch(networkActions.setGlobalLoading(false))
@@ -338,14 +335,15 @@ const sideEffects = {
     volume,
     snapshotName,
   }) => async (dispatch, getState) => {
-
     const params = selectors.router.params(getState())
 
     try {
       dispatch(networkActions.setGlobalLoading(true))
       await api.loaderSideEffect({
         dispatch,
-        loader: () => loaders.deleteSnapshot({cluster, deployment, volume, snapshotName}),
+        loader: () => loaders.deleteSnapshot({
+          cluster, deployment, volume, snapshotName,
+        }),
         prefix,
         name: 'deleteSnapshot',
         returnError: true,
@@ -355,9 +353,9 @@ const sideEffects = {
         deployment,
         volume: params.volume,
       }))
-      dispatch(snackbarActions.setSuccess(`snapshot deleted`))
+      dispatch(snackbarActions.setSuccess('snapshot deleted'))
       dispatch(networkActions.setGlobalLoading(false))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error deleting snapshot: ${e.toString()}`))
       console.error(e)
       dispatch(networkActions.setGlobalLoading(false))
@@ -365,7 +363,6 @@ const sideEffects = {
   },
 
 }
-
 
 const reducer = CreateReducer({
   initialState,
