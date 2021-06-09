@@ -62,18 +62,21 @@ pipeline {
       }
     }
 
+    stage('Package') {
+      steps {
+        sh '''
+          make package
+        '''
+      }
+    }
+
     stage("Analyze") {
       steps {
-        withSonarQubeEnv('sonarqube') {
+        withSonarQubeEnv('sonarcloud') {
           sh '''
             make analyze
           '''
         }
-      }
-    }
-
-    stage("Quality gate") {
-      steps {
         waitForQualityGate abortPipeline: true
       }
     }
@@ -86,24 +89,27 @@ pipeline {
       }
     }
 
+    stage('Publish') {
+      steps {
+        sh '''
+          make publish
+        '''
+      }
+    }
   }
 
   post {
-     always {
-          // recordIssues enabledForFailure: true, tools: [mavenConsole(), java(), javaDoc()]
-          // recordIssues enabledForFailure: true, tool: checkStyle()
-          // recordIssues enabledForFailure: true, tool: spotBugs()
-          recordIssues enabledForFailure: true, tool: cpd(pattern: '**/build/cpd.xml')
-          // recordIssues enabledForFailure: true, tool: pmdParser(pattern: '**/build/pmd.xml')
-      }
-      success {
-          archiveArtifacts 'build/*.tgz, build/*.zip'
-      }
-      aborted {
-          error "Aborted, exiting now"
-      }
-      failure {
-          error "Failed, exiting now"
-      }
+    always {
+        recordIssues enabledForFailure: true, tool: cpd(pattern: '**/build/cpd.xml')
+    }
+    success {
+      echo "Successfully completed"
+    }
+    aborted {
+        error "Aborted, exiting now"
+    }
+    failure {
+        error "Failed, exiting now"
+    }
   }
 }
