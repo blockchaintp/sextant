@@ -3,16 +3,13 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 
-
 import EditorDialog from './EditorDialog'
 
-const styles = theme => {
-  return {
-    button: {
-      marginRight: theme.spacing.unit * 2,
-    },
-  }
-}
+const styles = (theme) => ({
+  button: {
+    marginRight: theme.spacing.unit * 2,
+  },
+})
 
 class EditorButton extends React.Component {
   state = {
@@ -39,9 +36,12 @@ class EditorButton extends React.Component {
       yamlInput,
       saveYamlInput,
       inputToState,
-      customYaml
+      customYaml,
     } = this.props
 
+    const {
+      open,
+    } = this.state
 
     const handleSave = (payload) => {
       saveYamlInput(payload)
@@ -52,7 +52,7 @@ class EditorButton extends React.Component {
     return (
       <div>
         <Button
-          size='small'
+          size="small"
           onClick={this.handleClickOpen}
           className={classes.button}
           type="button"
@@ -62,17 +62,15 @@ class EditorButton extends React.Component {
         </Button>
         <EditorDialog
           cancel={this.handleClose}
-          open={this.state.open}
+          open={open}
           save={handleSave}
           yamlInput={yamlInput}
           inputToState={inputToState}
           customYaml={customYaml}
-        >
-        </EditorDialog>
+        />
       </div>
     )
   }
 }
-
 
 export default withStyles(styles)(EditorButton)

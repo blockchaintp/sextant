@@ -7,20 +7,18 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
-
 import EditorButton from './EditorButton'
 
-
-const styles = theme => ({
+const styles = (theme) => ({
   warning: {
     padding: theme.spacing.unit * 2,
-    color: "red"
+    color: 'red',
   },
   details: {
     padding: theme.spacing.unit * 3,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: 'center'
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 })
 
@@ -31,7 +29,7 @@ class CustomizationPanel extends React.Component {
       saveYamlInput,
       yamlInput,
       customYaml,
-      inputToState
+      inputToState,
     } = this.props
 
     return (
@@ -40,8 +38,7 @@ class CustomizationPanel extends React.Component {
           <Typography>Advanced Deployment Customization</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
-          <EditorButton inputToState={inputToState} saveYamlInput={saveYamlInput} yamlInput={yamlInput} customYaml={customYaml}>
-          </EditorButton>
+          <EditorButton inputToState={inputToState} saveYamlInput={saveYamlInput} yamlInput={yamlInput} customYaml={customYaml} />
           <Typography className={classes.warning}>
             WARNING: This will overwrite default template options!
           </Typography>

@@ -29,7 +29,7 @@ class AppBarMenu extends React.Component {
     anchorEl: null,
   }
 
-  handleMenu = event => {
+  handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget })
   }
 
@@ -37,40 +37,22 @@ class AppBarMenu extends React.Component {
     this.setState({ anchorEl: null })
   }
 
-  clickItem(item) {
-    const {
-      openPage,
-    } = this.props
-
-    if(typeof(item.handler) === 'string') {
-      openPage(item.handler)
-      this.handleClose()
-    }
-    else if(typeof(item.handler) === 'function') {
-      item.handler()
-      this.handleClose()
-    }
-    else {
-      throw new Error(`unknown AppBarMenu item handler for ${item.title}`)
-    }
-  }
-
   getMenu() {
-    const { 
+    const {
       items,
     } = this.props
 
     return items.map((item, i) => {
-      if(item === '-') {
+      if (item === '-') {
         return (
-          <Divider key={ i } />
+          <Divider key={i} />
         )
       }
 
       return (
         <MenuItem
-          key={ i }
-          onClick={ () => this.clickItem(item) }
+          key={i}
+          onClick={() => this.clickItem(item)}
         >
           {
             item.icon && (
@@ -79,39 +61,55 @@ class AppBarMenu extends React.Component {
               </ListItemIcon>
             )
           }
-          <ListItemText 
-            primary={ item.title }
+          <ListItemText
+            primary={item.title}
           />
         </MenuItem>
       )
     })
   }
 
+  clickItem(item) {
+    const {
+      openPage,
+    } = this.props
+
+    if (typeof (item.handler) === 'string') {
+      openPage(item.handler)
+      this.handleClose()
+    } else if (typeof (item.handler) === 'function') {
+      item.handler()
+      this.handleClose()
+    } else {
+      throw new Error(`unknown AppBarMenu item handler for ${item.title}`)
+    }
+  }
+
   render() {
-    const { 
-      classes, 
+    const {
+      classes,
       user,
     } = this.props
 
-    const { 
+    const {
       anchorEl,
     } = this.state
 
     const open = Boolean(anchorEl)
 
     return (
-      <div className={ classes.root }>
+      <div className={classes.root}>
         <Button
-          aria-owns={ open ? 'appbar-menu' : null }
+          aria-owns={open ? 'appbar-menu' : null}
           aria-haspopup="true"
-          onClick={ this.handleMenu }
+          onClick={this.handleMenu}
           color="inherit"
         >
           {
             user ? (
               <UserAvatar
-                _ci='avatar'
-                user={ user }
+                _ci="avatar"
+                user={user}
               />
             ) : (
               <MoreIcon />
@@ -120,7 +118,7 @@ class AppBarMenu extends React.Component {
         </Button>
         <Menu
           id="appbar-menu"
-          anchorEl={ anchorEl }
+          anchorEl={anchorEl}
           anchorOrigin={{
             vertical: 'top',
             horizontal: 'right',
@@ -129,10 +127,10 @@ class AppBarMenu extends React.Component {
             vertical: 'top',
             horizontal: 'right',
           }}
-          open={ open }
-          onClose={ this.handleClose }
+          open={open}
+          onClose={this.handleClose}
         >
-          <MenuItem key="placeholder" style={{display: "none"}} />
+          <MenuItem key="placeholder" style={{ display: 'none' }} />
           { this.getMenu() }
         </Menu>
       </div>
@@ -145,6 +143,10 @@ AppBarMenu.propTypes = {
   user: PropTypes.object,
   openPage: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
+}
+
+AppBarMenu.defaultProps = {
+  user: PropTypes.object,
 }
 
 export default withStyles(styles)(AppBarMenu)

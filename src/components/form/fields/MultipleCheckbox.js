@@ -8,7 +8,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 import HelperText from './HelperText'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     display: 'flex',
     marginTop: theme.spacing.unit * 2,
@@ -16,7 +16,6 @@ const styles = theme => ({
 })
 
 class MultipleCheckboxField extends React.Component {
-
   render() {
     const {
       field: {
@@ -38,52 +37,51 @@ class MultipleCheckboxField extends React.Component {
     const extraProps = item.extraProps || {}
 
     return (
-      <FormControl component="fieldset" className={ classes.root }>
+      <FormControl component="fieldset" className={classes.root}>
         <FormLabel component="legend">{ title }</FormLabel>
         <FormGroup
-          row={ item.row ? true : false }
+          row={!!item.row}
         >
           {
             (item.options || []).map((option, i) => {
-              option = typeof(option) === 'string' ? {
+              option = typeof (option) === 'string' ? {
                 title: option,
                 value: option,
               } : option
 
-              const checked = useValue[option.value] ? true : false
+              const checked = !!useValue[option.value]
 
               return (
                 <FormControlLabel
-                  key={ i }
-                  control={
+                  key={i}
+                  control={(
                     <Checkbox
-                      name={ `${name}-${i}` }
-                      checked={ checked }
-                      disabled={ disabled }
-                      onChange={ () => {
-                        const newValue = Object.assign({}, useValue)
-                        if(!checked) {
+                      name={`${name}-${i}`}
+                      checked={checked}
+                      disabled={disabled}
+                      onChange={() => {
+                        const newValue = { ...useValue }
+                        if (!checked) {
                           newValue[option.value] = true
-                        }
-                        else {
-                          delete(newValue[option.value])
+                        } else {
+                          delete (newValue[option.value])
                         }
                         setFieldValue(name, newValue)
                       }}
-                      value={ `${name}-${i}` }
-                      { ...extraProps }
+                      value={`${name}-${i}`}
+                      {...extraProps}
                     />
-                  }
-                  label={ option.title }
+                  )}
+                  label={option.title}
                 />
               )
             })
           }
         </FormGroup>
         <HelperText
-          helperText={ item.helperText }
-          error={ error ? true : false }
-          touched={ touched }
+          helperText={item.helperText}
+          error={!!error}
+          touched={touched}
         />
       </FormControl>
     )
