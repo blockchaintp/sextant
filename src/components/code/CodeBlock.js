@@ -8,7 +8,7 @@ import ClipboardIcon from '@material-ui/icons/FileCopy'
 
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-const styles = theme => ({
+const styles = (theme) => ({
   codeblock: {
     width: '100%',
     overflowX: 'auto',
@@ -35,7 +35,7 @@ const styles = theme => ({
   icon: {
     width: '15px',
     height: '15px',
-  }
+  },
 })
 
 /*
@@ -55,7 +55,6 @@ const styles = theme => ({
 
 */
 class CodeBlock extends React.Component {
-
   render() {
     const {
       classes,
@@ -65,25 +64,25 @@ class CodeBlock extends React.Component {
     } = this.props
 
     return (
-      <div className={ classes.root }>
+      <div className={classes.root}>
         {
           clipboard && (
-            <div className={ classes.clipboardButton }>
+            <div className={classes.clipboardButton}>
               <CopyToClipboard
-                text={ code }
+                text={code}
                 onCopy={() => {
                   snackbarMessage('Copied to clipboard')
                 }}
               >
                 <Tooltip title="Copy to clipboard" placement="top">
-                  <Fab 
-                    size="small" 
-                    color="secondary" 
-                    aria-label="Add" 
-                    className={ classes.fab }
+                  <Fab
+                    size="small"
+                    color="secondary"
+                    aria-label="Add"
+                    className={classes.fab}
                   >
                     <ClipboardIcon
-                      className={ classes.icon }
+                      className={classes.icon}
                     />
                   </Fab>
                 </Tooltip>
@@ -91,13 +90,13 @@ class CodeBlock extends React.Component {
             </div>
           )
         }
-        <pre className={ classes.codeblock }>
+        <pre className={classes.codeblock}>
           <code>
             { code }
           </code>
         </pre>
       </div>
-      
+
     )
   }
 }
@@ -105,8 +104,8 @@ class CodeBlock extends React.Component {
 CodeBlock.propTypes = {
   classes: PropTypes.object.isRequired,
   code: PropTypes.string.isRequired,
-  clipboard: PropTypes.bool.isRequired, 
-  snackbarMessage: PropTypes.func.isRequired, 
+  clipboard: PropTypes.bool.isRequired,
+  snackbarMessage: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(CodeBlock)
