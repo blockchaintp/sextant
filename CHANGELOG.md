@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* fix(daml-routes): add daml subpath to get-archives route [view commit](https://github.com/catenasys/sextant/commit/52f7d5a1a28beb67a1eccccbb9c681a682501673)
 * refactor(user): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/3c037cf277bca0c54b9263c3f87ea8704c98428f)
 * refactor(podtable-roletable): removes useless variable assignments to variable and resulting errors [view commit](https://github.com/catenasys/sextant/commit/434d55a8db5deecd709cc363106f66d0e4e05a7a)
 * refactor(pages-store): removes declarations of unused variables [view commit](https://github.com/catenasys/sextant/commit/f539eb09fa7137a904e04ff68705219caa3278ea)
