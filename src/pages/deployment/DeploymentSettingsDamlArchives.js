@@ -26,24 +26,24 @@ const UploadIcon = settings.icons.upload
 
 const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 2,
-    margin: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
+    margin: theme.spacing(2),
   },
   formTextContainer: {
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
   },
   buttonIcon: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
   },
   errorText: {
     color: '#cc0000',
   },
   dropzoneContent: {
-    padding: theme.spacing.unit * 4,
+    padding: theme.spacing(4),
     border: '1px dashed #ccc',
     textAlign: 'center',
     cursor: 'pointer',
@@ -51,7 +51,7 @@ const styles = (theme) => ({
   clickMe: {
     fontWeight: 'bold',
     color: theme.palette.primary.main,
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   centerAlign: {
     textAlign: 'center',

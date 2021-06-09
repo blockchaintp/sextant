@@ -33,14 +33,14 @@ const styles = (theme) => ({
   },
   iconVariant: {
     opacity: 0.9,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
   },
   message: {
     display: 'flex',
     alignItems: 'center',
   },
   close: {
-    padding: theme.spacing.unit / 2,
+    padding: theme.spacing(0.5),
   },
   success: {
     backgroundColor: green[600],
@@ -55,7 +55,7 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.primary.dark,
   },
   margin: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
 })
 

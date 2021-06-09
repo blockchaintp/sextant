@@ -34,11 +34,11 @@ const KeyIcon = settings.icons.key
 
 const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 4,
-    margin: theme.spacing.unit * 2,
+    padding: theme.spacing(4),
+    margin: theme.spacing(2),
   },
   denseTable: {
     '& th,td': {
@@ -49,10 +49,10 @@ const styles = (theme) => ({
     },
   },
   spacing: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
   doubleSpacing: {
-    marginTop: theme.spacing.unit * 4,
+    marginTop: theme.spacing(4),
   },
   smallButton: {
     fontSize: ['9px', '!important'],
@@ -64,22 +64,22 @@ const styles = (theme) => ({
     textAlign: 'right',
   },
   iconSmall: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
     fontSize: 20,
   },
   partyButtons: {
-    marginTop: theme.spacing.unit * 2,
-    marginLeft: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
+    marginLeft: theme.spacing(2),
   },
   buttonMargin: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
   },
   buttonBottomMargin: {
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
   },
   partyContainer: {
-    marginTop: theme.spacing.unit * 2,
-    padding: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
     border: '1px dashed #e5e5e5',
   },
   warningText: {

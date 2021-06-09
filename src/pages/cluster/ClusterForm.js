@@ -87,16 +87,16 @@ echo
 
 const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
   },
   dateTime: {
     whiteSpace: 'nowrap',
   },
   button: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   text: {
     fontFamily: 'Roboto',
@@ -109,7 +109,7 @@ const styles = (theme) => ({
     paddingLeft: '0px',
   },
   spacer: {
-    height: theme.spacing.unit * 2,
+    height: theme.spacing(2),
   },
   child: {
     flexGrow: 1,

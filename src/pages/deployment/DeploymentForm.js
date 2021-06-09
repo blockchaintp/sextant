@@ -16,13 +16,13 @@ import CustomizationPanel from 'components/deployment/CustomizationPanel'
 
 const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
   },
   scrolling: {
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
     height: '68vh',
     overflow: 'auto',
   },
@@ -30,17 +30,17 @@ const styles = (theme) => ({
     whiteSpace: 'nowrap',
   },
   button: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   panel: {
     width: '49.2%',
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   roleTableHeader: {
     paddingLeft: '0px',
   },
   spacer: {
-    height: theme.spacing.unit * 6,
+    height: theme.spacing(6),
   },
 })
 

@@ -21,10 +21,10 @@ import AutoComplete from 'components/autocomplete/AutoComplete'
 const styles = (theme) => ({
   formControl: {
     width: '100%',
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
   },
   spacer: {
-    height: theme.spacing.unit * 4,
+    height: theme.spacing(4),
   },
 })
 

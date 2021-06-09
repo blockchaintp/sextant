@@ -24,11 +24,11 @@ const styles = (theme) => ({
     flex: 1,
   },
   line: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   text: {
     flex: 1,
-    marginTop: theme.spacing.unit * 0.5,
+    marginTop: theme.spacing(0.5),
   },
   logoText: {
     display: 'flex',
@@ -37,7 +37,7 @@ const styles = (theme) => ({
     flex: 1,
   },
   toolbar: {
-    margin: theme.spacing.unit * 1,
+    margin: theme.spacing(1),
   },
   flex: {
     flex: 1,

@@ -23,7 +23,7 @@ const AddIcon = settings.icons.add
 
 const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   headerActions: {
     display: 'flex',
@@ -32,10 +32,10 @@ const styles = (theme) => ({
     alignItems: 'center',
   },
   volumeSelect: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   formControl: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     minWidth: 200,
   },
 })

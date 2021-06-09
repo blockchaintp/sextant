@@ -46,7 +46,7 @@ const styles = (theme) => ({
     justifyContent: 'left',
   },
   statusIcon: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   headerActions: {
     display: 'flex',
@@ -55,16 +55,16 @@ const styles = (theme) => ({
     alignItems: 'center',
   },
   clusterSelect: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   hideDeletedCheckbox: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   hideDeletedLabel: {
     whiteSpace: 'nowrap',
   },
   formControl: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     minWidth: 200,
   },
   embeddedHeader: {

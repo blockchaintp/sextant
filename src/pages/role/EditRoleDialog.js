@@ -16,10 +16,10 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 const styles = (theme) => ({
   formControl: {
     width: '100%',
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   spacer: {
-    height: theme.spacing.unit * 4,
+    height: theme.spacing(4),
   },
 })
 
