@@ -12,16 +12,16 @@ const styles = (theme) => ({
     maxWidth: '50%',
   },
   item: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
   },
   button: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   restart: {
     display: 'flex',

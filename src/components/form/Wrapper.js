@@ -35,28 +35,28 @@ import Validate from './validate'
 
 const styles = (theme) => ({
   errorContainer: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
   errorText: {
     color: theme.palette.error.main,
   },
   button: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   listTableTitle: {
     color: theme.palette.text.secondary,
     flex: 'flexGrow',
   },
   listTable: {
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   divider: {
     marginTop: '20px',
     marginBottom: '20px',
   },
   addButtonContainer: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
   listTableHeader: {
     paddingLeft: '0px',

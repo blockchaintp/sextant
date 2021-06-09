@@ -11,7 +11,7 @@ import HelperText from './HelperText'
 const styles = (theme) => ({
   root: {
     display: 'flex',
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
 })
 

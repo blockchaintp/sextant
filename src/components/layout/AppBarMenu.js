@@ -20,7 +20,7 @@ const styles = (theme) => ({
   },
   avatarName: {
     flex: 1,
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
 })
 

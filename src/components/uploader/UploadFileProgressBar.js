@@ -8,7 +8,7 @@ import prettyBytes from 'pretty-bytes'
 
 const styles = (theme) => ({
   root: {
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
   },
   rightAlign: {
     textAlign: 'right',

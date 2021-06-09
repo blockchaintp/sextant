@@ -16,7 +16,7 @@ const styles = (theme) => ({
     color: '#fff',
     fontFamily: 'Courier',
     fontSize: '0.8em',
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
     minHeight: '48px',
   },
   root: {
@@ -24,8 +24,8 @@ const styles = (theme) => ({
   },
   clipboardButton: {
     position: 'absolute',
-    top: theme.spacing.unit,
-    right: theme.spacing.unit,
+    top: theme.spacing(1),
+    right: theme.spacing(1),
   },
   fab: {
     width: '30px',

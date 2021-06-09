@@ -9,7 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 const styles = (theme) => ({
   rightAlign: {
     textAlign: 'right',
-    paddingRight: theme.spacing.unit * 2,
+    paddingRight: theme.spacing(2),
   },
 })
 

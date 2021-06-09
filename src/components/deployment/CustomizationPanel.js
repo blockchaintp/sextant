@@ -11,11 +11,11 @@ import EditorButton from './EditorButton'
 
 const styles = (theme) => ({
   warning: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     color: 'red',
   },
   details: {
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

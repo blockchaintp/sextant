@@ -10,13 +10,13 @@ import { actionNameTranslator } from '../../utils/translators'
 
 const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   dateTime: {
     whiteSpace: 'nowrap',
   },
   button: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   errorContainer: {
     maxWidth: '200px',
@@ -30,7 +30,7 @@ const styles = (theme) => ({
     justifyContent: 'left',
   },
   statusIcon: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
 })
 

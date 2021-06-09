@@ -13,7 +13,7 @@ const UserIcon = settings.icons.user
 const styles = (theme) => ({
   chip: {
     cursor: 'pointer',
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   chipAvatar: {
     color: theme.palette.primary.main,

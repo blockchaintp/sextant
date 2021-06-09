@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 
 const styles = (theme) => ({
   toolbarRoot: {
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing(1),
   },
   spacer: {
     flex: '1 1 100%',

@@ -7,7 +7,7 @@ import EditorDialog from './EditorDialog'
 
 const styles = (theme) => ({
   button: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
 })
 

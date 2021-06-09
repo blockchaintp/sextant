@@ -9,7 +9,7 @@ import TextEditor from './TextEditor'
 
 const styles = (theme) => ({
   button: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   warning: {
     color: 'red',

@@ -22,10 +22,10 @@ require('ace-builds/src-noconflict/theme-monokai')
 
 const styles = (theme) => ({
   button: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   editor: {
-    margin: theme.spacing.unit * 3,
+    margin: theme.spacing(3),
   },
 })
 
