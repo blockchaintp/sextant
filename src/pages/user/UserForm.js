@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button'
 
 import FormWrapper from 'components/form/Wrapper'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     padding: theme.spacing.unit * 2,
   },
@@ -22,7 +22,7 @@ const styles = theme => ({
 
 class UserForm extends React.Component {
   render() {
-    const { 
+    const {
       classes,
       title,
       submitTitle,
@@ -32,54 +32,53 @@ class UserForm extends React.Component {
       error,
       submitting,
       onCancel,
-      dbId
+      dbId,
     } = this.props
-    
-    
+
     return (
-      <div className={ classes.root }>
+      <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Paper className={ classes.paper }>
-              <Typography _ci='formheader' variant="h6" gutterBottom>
+            <Paper className={classes.paper}>
+              <Typography _ci="formheader" variant="h6" gutterBottom>
                 { title }
               </Typography>
               <FormWrapper
                 dbId={dbId}
-                schema={ schema }
-                initialValues={ initialValues }
-                error={ error }
-                onSubmit={ submitForm }
+                schema={schema}
+                initialValues={initialValues}
+                error={error}
+                onSubmit={submitForm}
                 renderButtons={
                   ({
                     handleSubmit,
                   }) => (
-                    <React.Fragment>
+                    <>
                       {
                         onCancel && (
                           <Button
-                            className={ classes.button }
+                            className={classes.button}
                             type="button"
                             variant="contained"
-                            onClick={ onCancel }
+                            onClick={onCancel}
                           >
                             Cancel
                           </Button>
                         )
                       }
                       <Button
-                        _ci='submitButton'
-                        className={ classes.button }
+                        _ci="submitButton"
+                        className={classes.button}
                         type="button"
                         variant="contained"
                         color="primary"
-                        disabled={ submitting }
-                        onClick={ handleSubmit }
+                        disabled={submitting}
+                        onClick={handleSubmit}
                       >
                         { submitTitle }
                       </Button>
-                    </React.Fragment>
-                    
+                    </>
+
                   )
                 }
               />
@@ -94,7 +93,7 @@ class UserForm extends React.Component {
 UserForm.propTypes = {
   classes: PropTypes.object.isRequired,
   submitForm: PropTypes.func.isRequired,
-  initialValues: PropTypes.object.isRequired, 
+  initialValues: PropTypes.object.isRequired,
   error: PropTypes.string,
   title: PropTypes.string,
   submitTitle: PropTypes.string,
@@ -102,8 +101,10 @@ UserForm.propTypes = {
 }
 
 UserForm.defaultProps = {
+  error: PropTypes.string,
   title: 'User Details',
   submitTitle: 'Save',
+  onCancel: PropTypes.func,
 }
 
 export default withStyles(styles)(UserForm)

@@ -24,9 +24,9 @@ const variantIcon = {
   info: InfoIcon,
 }
 
-const styles = theme => ({
+const styles = (theme) => ({
   fullHeight: {
-    height: '100%'
+    height: '100%',
   },
   icon: {
     fontSize: 20,
@@ -60,9 +60,8 @@ const styles = theme => ({
 })
 
 class SnackbarWrapper extends React.Component {
-
   render() {
-    const { 
+    const {
       classes,
       open,
       text,
@@ -74,39 +73,39 @@ class SnackbarWrapper extends React.Component {
     const Icon = variantIcon[type]
 
     return (
-      <div className={ classes.fullHeight }>
+      <div className={classes.fullHeight}>
         { children }
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center',
           }}
-          open={ open }
-          autoHideDuration={ settings.snackbarAutoHide }
-          onClose={ onClose }
+          open={open}
+          autoHideDuration={settings.snackbarAutoHide}
+          onClose={onClose}
         >
           <SnackbarContent
-            className={ classNames(classes[type], classes.margin) }
+            className={classNames(classes[type], classes.margin)}
             aria-describedby="client-snackbar"
-            message={
-              <span id="client-snackbar" className={ classes.message }>
-                { 
+            message={(
+              <span id="client-snackbar" className={classes.message}>
+                {
                   Icon && (
-                    <Icon 
-                      className={ classNames(classes.icon, classes.iconVariant) }
+                    <Icon
+                      className={classNames(classes.icon, classes.iconVariant)}
                     />
                   )
                 }
                 { text }
               </span>
-            }
+            )}
             action={[
               <IconButton
                 key="close"
                 aria-label="Close"
                 color="inherit"
-                className={ classes.close }
-                onClick={ onClose }
+                className={classes.close}
+                onClick={onClose}
               >
                 <CloseIcon />
               </IconButton>,

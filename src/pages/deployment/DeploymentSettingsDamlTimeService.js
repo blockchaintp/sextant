@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper'
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     padding: theme.spacing.unit * 2,
   },
@@ -18,25 +18,20 @@ const styles = theme => ({
 })
 
 class DeploymentSettingsDamlTimeService extends React.Component {
-
   getTimeServiceInfo() {
     const {
       timeServiceInfo,
     } = this.props
 
-    const fields =[{
+    const fields = [{
       title: 'Public Key of Keeper',
       name: 'publicKey',
-    },{
+    }, {
       title: 'Last Clock Update',
       name: 'lastClockUpdate',
     }]
 
-    const data = timeServiceInfo.map(entry => {
-      return Object.assign({}, entry, {
-        id: entry.publicKey,
-      })
-    })
+    const data = timeServiceInfo.map((entry) => ({ ...entry, id: entry.publicKey }))
 
     return (
       <div>
@@ -44,12 +39,11 @@ class DeploymentSettingsDamlTimeService extends React.Component {
           title="Time Service"
         />
         <SimpleTable
-          data={ data }
-          fields={ fields }
+          data={data}
+          fields={fields}
         />
       </div>
     )
-                
   }
 
   render() {
@@ -58,10 +52,10 @@ class DeploymentSettingsDamlTimeService extends React.Component {
     } = this.props
 
     return (
-      <div className={ classes.root }>
+      <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={ 12 }>
-            <Paper className={ classes.paper }>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
               { this.getTimeServiceInfo() }
             </Paper>
           </Grid>

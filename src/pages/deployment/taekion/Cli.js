@@ -3,10 +3,9 @@ import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import CodeBlock from 'components/code/CodeBlock'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     padding: theme.spacing.unit * 2,
   },
@@ -19,14 +18,8 @@ const styles = theme => ({
 })
 
 class TaekionCli extends React.Component {
-
-  constructor(props) {
-    super(props)
-  }
-
   render() {
-
-    const { 
+    const {
       classes,
       cluster,
       deployment,
@@ -36,20 +29,20 @@ class TaekionCli extends React.Component {
 
     const auth = `bearer:${accessToken}`
 
-    const sextantApi = process.env.NODE_ENV == 'development' ?
-      `http://${auth}@api` :
-      `${window.location.protocol}//${auth}@${window.location.hostname}`
+    const sextantApi = process.env.NODE_ENV === 'development'
+      ? `http://${auth}@api`
+      : `${window.location.protocol}//${auth}@${window.location.hostname}`
 
-    const devCommands = process.env.NODE_ENV == 'development' ?
-      ` --network sextant-dev_default ` :
-      ''
+    const devCommands = process.env.NODE_ENV === 'development'
+      ? ' --network sextant-dev_default '
+      : ''
 
     return (
-      <div className={ classes.root }>
+      <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={0} md={2}></Grid>
+          <Grid item xs={0} md={2} />
           <Grid item xs={12} md={8}>
-            <Paper className={ classes.paper }>
+            <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
                 Taekion FS CLI
               </Typography>
@@ -64,12 +57,12 @@ class TaekionCli extends React.Component {
   --device /dev/fuse \\
   -e TFS_URL=${sextantApi}/api/v1/clusters/${cluster}/deployments/${deployment}/taekion/rest_api \\
   taekion/taekion-fs-client:latest`}
-                clipboard={ true }
-                snackbarMessage={ snackbarMessage }
+                clipboard
+                snackbarMessage={snackbarMessage}
               />
             </Paper>
           </Grid>
-          <Grid item xs={0} md={2}></Grid>
+          <Grid item xs={0} md={2} />
         </Grid>
       </div>
     )
