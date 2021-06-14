@@ -1,7 +1,7 @@
 {
   "presets": [
     "@babel/env",
-    "@babel/preset-react",
+    "@babel/preset-react"
   ],
   "plugins": [
     "@babel/transform-runtime",
@@ -12,24 +12,30 @@
       "@babel/plugin-proposal-decorators",
       {
         "legacy": true
-      },
+      }
     ],
     [
       "@babel/plugin-proposal-class-properties",
       {
         "loose": true
-      },
+      }
+    ],
+    [
+      "@babel/plugin-proposal-private-methods",
+      {
+        "loose": true
+      }
     ],
     "@babel/plugin-proposal-function-sent",
     "@babel/plugin-proposal-export-namespace-from",
     "@babel/plugin-proposal-numeric-separator",
-    "@babel/plugin-proposal-throw-expressions",
+    "@babel/plugin-proposal-throw-expressions"
   ],
   "env": {
     "development": {
       "plugins": [
         "@babel/plugin-transform-react-jsx-source"
-      ],
-    },
-  },
+      ]
+    }
+  }
 }
