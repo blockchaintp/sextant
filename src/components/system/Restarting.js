@@ -41,7 +41,7 @@ class Restarting extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <div className={classes.restart}>

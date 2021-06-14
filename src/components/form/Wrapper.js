@@ -617,7 +617,7 @@ class FormWrapperInner extends React.Component {
                   }
                 }}
               >
-                <Grid container spacing={spacing || 24}>
+                <Grid container spacing={spacing || 3}>
                   {
                     schema.map((item, i) => this.getRow(item, formProps, i))
                   }

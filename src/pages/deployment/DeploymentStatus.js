@@ -33,7 +33,7 @@ class DeploymentStatus extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={8}>
             <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>

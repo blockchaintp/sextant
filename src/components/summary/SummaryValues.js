@@ -64,7 +64,7 @@ class SummaryValues extends React.Component {
         container
         direction="row"
         className={classes.container}
-        spacing={8}
+        spacing={1}
       >
 
         {parts}

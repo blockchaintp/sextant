@@ -215,7 +215,7 @@ class DeploymentSettingsDamlParties extends React.Component {
         aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-          <Grid container spacing={8}>
+          <Grid container spacing={1}>
             <Grid item xs={12}>
               <Typography variant="h6">
                 { admin ? 'Admin' : 'Party' }
@@ -565,7 +565,7 @@ class DeploymentSettingsDamlParties extends React.Component {
 
             return (
               <div key={i}>
-                <Grid container spacing={24}>
+                <Grid container spacing={3}>
                   <Grid item xs={6}>
                     <Typography variant="subtitle2">
                       { entry.participantId }
@@ -696,7 +696,7 @@ class DeploymentSettingsDamlParties extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={4}>
             <Paper className={classes.paper}>
               <Typography variant="h6">

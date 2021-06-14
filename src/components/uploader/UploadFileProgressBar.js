@@ -36,7 +36,7 @@ class UploadFileProgressBar extends React.Component {
       : `${timeLeftMinutes} mins ${timeLeftMinutesSeconds} secs`
 
     return (
-      <Grid container spacing={8} className={classes.root}>
+      <Grid container spacing={1} className={classes.root}>
         <Grid item xs={12}>
           <Typography variant="body2">
             { filename }
