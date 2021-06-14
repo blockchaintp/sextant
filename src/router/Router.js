@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import HTML5Backend from 'react-dnd-html5-backend'
-import { DragDropContext } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 
 import selectors from 'store/selectors'
 import Loading from 'components/system/Loading'
@@ -59,82 +59,84 @@ class Router extends React.Component {
     if (!userLoaded || !route) return <Loading />
 
     return (
-      <RouteContext.Provider value={route.name}>
-        <LayoutMain>
-          <Route segment="notfound" exact>
-            <NotFound />
-          </Route>
-          <Route segment="login" exact>
-            <Login />
-          </Route>
-          <Route segment="create-initial-user" exact>
-            <CreateInitialUser />
-          </Route>
-          <Route segment="users" exact>
-            <UserTable />
-          </Route>
-          <Route segment="user" exact>
-            <UserForm />
-          </Route>
-          <Route segment="accesstoken" exact>
-            <AccessToken />
-          </Route>
-          <Route segment="accountdetails" exact>
-            <AccountDetails />
-          </Route>
-          <Route segment="clusters" exact>
-            <ClusterTable />
-          </Route>
-          <Route segment="cluster" exact>
-            <ClusterForm />
-          </Route>
-          <Route segment="cluster_status" exact>
-            <ClusterStatus />
-          </Route>
-          <Route segment="deployments" exact>
-            <DeploymentTable />
-          </Route>
-          <Route segment="deployment" exact>
-            <DeploymentForm />
-          </Route>
-          <Route segment="deployment_status" exact>
-            <DeploymentStatus />
-          </Route>
-          <Route segment="deployment_settings">
-            <DeploymentSettingsTabs>
-              <Route segment="keys" exact>
-                <DeploymentSettingsKeys />
-              </Route>
-              <Route segment="damlParties" exact>
-                <DeploymentSettingsDamlParties />
-              </Route>
-              <Route segment="damlArchives" exact>
-                <DeploymentSettingsDamlArchives />
-              </Route>
-              <Route segment="damlTimeService" exact>
-                <DeploymentSettingsDamlTimeService />
-              </Route>
-              <Route segment="taekionCli" exact>
-                <DeploymentSettingsTaekionCli />
-              </Route>
-              <Route segment="taekionKeys" exact>
-                <DeploymentSettingsTaekionKeys />
-              </Route>
-              <Route segment="taekionVolumes" exact>
-                <DeploymentSettingsTaekionVolumes />
-              </Route>
-              <Route segment="taekionSnapshots" exact>
-                <DeploymentSettingsTaekionSnapshots />
-              </Route>
-            </DeploymentSettingsTabs>
-          </Route>
-          <Route segment="administration" exact>
-            <Administration />
-          </Route>
-        </LayoutMain>
-      </RouteContext.Provider>
+      <DndProvider backend={HTML5Backend}>
+        <RouteContext.Provider value={route.name}>
+          <LayoutMain>
+            <Route segment="notfound" exact>
+              <NotFound />
+            </Route>
+            <Route segment="login" exact>
+              <Login />
+            </Route>
+            <Route segment="create-initial-user" exact>
+              <CreateInitialUser />
+            </Route>
+            <Route segment="users" exact>
+              <UserTable />
+            </Route>
+            <Route segment="user" exact>
+              <UserForm />
+            </Route>
+            <Route segment="accesstoken" exact>
+              <AccessToken />
+            </Route>
+            <Route segment="accountdetails" exact>
+              <AccountDetails />
+            </Route>
+            <Route segment="clusters" exact>
+              <ClusterTable />
+            </Route>
+            <Route segment="cluster" exact>
+              <ClusterForm />
+            </Route>
+            <Route segment="cluster_status" exact>
+              <ClusterStatus />
+            </Route>
+            <Route segment="deployments" exact>
+              <DeploymentTable />
+            </Route>
+            <Route segment="deployment" exact>
+              <DeploymentForm />
+            </Route>
+            <Route segment="deployment_status" exact>
+              <DeploymentStatus />
+            </Route>
+            <Route segment="deployment_settings">
+              <DeploymentSettingsTabs>
+                <Route segment="keys" exact>
+                  <DeploymentSettingsKeys />
+                </Route>
+                <Route segment="damlParties" exact>
+                  <DeploymentSettingsDamlParties />
+                </Route>
+                <Route segment="damlArchives" exact>
+                  <DeploymentSettingsDamlArchives />
+                </Route>
+                <Route segment="damlTimeService" exact>
+                  <DeploymentSettingsDamlTimeService />
+                </Route>
+                <Route segment="taekionCli" exact>
+                  <DeploymentSettingsTaekionCli />
+                </Route>
+                <Route segment="taekionKeys" exact>
+                  <DeploymentSettingsTaekionKeys />
+                </Route>
+                <Route segment="taekionVolumes" exact>
+                  <DeploymentSettingsTaekionVolumes />
+                </Route>
+                <Route segment="taekionSnapshots" exact>
+                  <DeploymentSettingsTaekionSnapshots />
+                </Route>
+              </DeploymentSettingsTabs>
+            </Route>
+            <Route segment="administration" exact>
+              <Administration />
+            </Route>
+          </LayoutMain>
+        </RouteContext.Provider>
+      </DndProvider>
     )
   }
 }
 
-export default DragDropContext(HTML5Backend)(Router)
+export default Router

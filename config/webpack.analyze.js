@@ -1,5 +1,5 @@
-const merge = require('webpack-merge')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const { merge } = require('webpack-merge')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const VisualizerPlugin = require('webpack-visualizer-plugin')
 
 const prod = require('./webpack.prod')
@@ -12,7 +12,7 @@ module.exports = merge(prod, {
       openAnalyzer: false,
     }),
     new VisualizerPlugin({
-      filename: './analyze/webpack-visualizer-plugin.html'
+      filename: './analyze/webpack-visualizer-plugin.html',
     }),
   ],
 })
