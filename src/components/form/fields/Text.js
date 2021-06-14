@@ -43,7 +43,6 @@ class Text extends React.Component {
               value={value}
               onChange={onChange}
               onBlur={onBlur}
-
               disabled={disabled}
               {...inputProps}
               {...extraProps}
@@ -61,7 +60,6 @@ class Text extends React.Component {
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-
           disabled={disabled}
           {...inputProps}
           {...extraProps}
