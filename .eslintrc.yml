@@ -24,6 +24,7 @@ rules:
   import/no-cycle: 1
   import/no-unresolved: 1
   max-len: 0
+  no-restricted-syntax: 0
 settings:
   import/resolver:
     node:

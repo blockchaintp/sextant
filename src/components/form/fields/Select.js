@@ -32,9 +32,9 @@ class SelectField extends React.Component {
 
     // filter through the consensus options, find the selected consensus, return the corresponding blurb
     const blurbText = (selectedConsensus) => {
-      for (let i = 0; i < item.options.length; i += 1) {
-        if (item.options[i].value === selectedConsensus) {
-          return item.options[i].blurb
+      for (const option of item.options) {
+        if (option.value === selectedConsensus) {
+          return option.blurb
         }
       }
       return undefined;
