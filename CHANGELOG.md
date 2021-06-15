@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+* fix(dockerfile-multistage): update node version [view commit](https://github.com/catenasys/sextant/commit/de00e95bbe44da0579c24d3ddcabcfaff3fc62db)
+* fix(prod-webpack-config): remove instance of terser plugin [view commit](https://github.com/catenasys/sextant/commit/87e5a01b1e9d4dd59c9152f413fbaf8910b5bcc8)
+* fix(package-json): remove terser plugin module [view commit](https://github.com/catenasys/sextant/commit/d434b622fbad253b0e2ae398418a20f2c0a3eed7)
+* fix(babelrc): update config [view commit](https://github.com/catenasys/sextant/commit/4c3ae9e8f92b35396769c634800ac3300fd9e8c1)
+* fix(webpack): update webpack implimentations after module upgrades [view commit](https://github.com/catenasys/sextant/commit/bf4c6c50525737dcce0e0899cfc6af89a1211e2f)
+* build(node-modules): updates all webpack related dependencies [view commit](https://github.com/catenasys/sextant/commit/8efad573ca821b6f1a211830e482d3aa39bf7ed6)
+* build(node-modules): updates all react packages [view commit](https://github.com/catenasys/sextant/commit/250434604d84280db8363d47f771ab3b405d03cc)
+* build(node-modules): updates material-ui/core and material-ui/icons [view commit](https://github.com/catenasys/sextant/commit/4834f7a79f8054acaf06008ce52a54a229829c04)
+* build(node-modules): updates router5 and related packages [view commit](https://github.com/catenasys/sextant/commit/8f6443acef563c311e4fff6be3d0ae25a2f916c2)
+* build(node-modules): updates formik and tape [view commit](https://github.com/catenasys/sextant/commit/44ed7ff968bf2ef676eff2346fd317992343e375)
+* build(node-modules): updates all node_modules/ minor versions [view commit](https://github.com/catenasys/sextant/commit/52047aed9c0bcac79af1d42e6ce40fef6f7b5db0)
+* build(node-modules): updates node_module/babel-loader and linting [view commit](https://github.com/catenasys/sextant/commit/34e8f85d111f6cebc4769eae56299681a97d3bc1)
+* build(node-modules): updates all babel node modules [view commit](https://github.com/catenasys/sextant/commit/72bd7e02ed3c7dd210ab2a01b8a00d40419d3c37)
+* build(node-modules): updates all package.json dependencies at the patch level [view commit](https://github.com/catenasys/sextant/commit/6564d65d59501b3028f982454c9174e870fdb71f)
 * fix(daml-routes): add daml subpath to get-archives route [view commit](https://github.com/catenasys/sextant/commit/52f7d5a1a28beb67a1eccccbb9c681a682501673)
 * refactor(user): removes variable shadowing [view commit](https://github.com/catenasys/sextant/commit/3c037cf277bca0c54b9263c3f87ea8704c98428f)
 * refactor(podtable-roletable): removes useless variable assignments to variable and resulting errors [view commit](https://github.com/catenasys/sextant/commit/434d55a8db5deecd709cc363106f66d0e4e05a7a)
