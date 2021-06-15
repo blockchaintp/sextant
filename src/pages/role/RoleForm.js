@@ -67,7 +67,6 @@ class RoleForm extends React.Component {
             clearSuggestions={clearUsers}
             value={search}
             onChange={setSearch}
-            onClick={() => {}}
             inputProps={{
               placeholder: 'Search for user',
               label: 'User',
