@@ -30,7 +30,7 @@ const styles = (theme) => ({
     justifyContent: 'left',
   },
   statusIcon: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   headerActions: {
     display: 'flex',
@@ -39,7 +39,7 @@ const styles = (theme) => ({
     alignItems: 'center',
   },
   showDeletedCheckbox: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   showDeletedLabel: {
     whiteSpace: 'nowrap',

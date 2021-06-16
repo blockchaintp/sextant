@@ -87,16 +87,16 @@ echo
 
 const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
   },
   dateTime: {
     whiteSpace: 'nowrap',
   },
   button: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   text: {
     fontFamily: 'Roboto',
@@ -109,7 +109,7 @@ const styles = (theme) => ({
     paddingLeft: '0px',
   },
   spacer: {
-    height: theme.spacing.unit * 2,
+    height: theme.spacing(2),
   },
   child: {
     flexGrow: 1,
@@ -323,7 +323,7 @@ class ClusterForm extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={id === 'new' ? 6 : 12}>
             <Paper className={classes.paper}>
               <Typography _ci="formheader" variant="h6" gutterBottom>

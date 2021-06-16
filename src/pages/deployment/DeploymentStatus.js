@@ -13,11 +13,11 @@ import SummaryValues from 'components/summary/SummaryValues'
 
 const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 2,
-    margin: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
+    margin: theme.spacing(2),
   },
 })
 
@@ -33,7 +33,7 @@ class DeploymentStatus extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={8}>
             <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>

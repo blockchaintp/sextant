@@ -10,28 +10,25 @@ import settings from 'settings'
 
 const UserIcon = settings.icons.user
 
-const styles = (theme) => {
-  return {
-    chip: {
-      cursor: 'pointer',
-      margin: theme.spacing.unit,
-    },
-    chipAvatar: {
-      color: theme.palette.primary.main,
-      backgroundColor: [theme.palette.getContrastText(theme.palette.primary.main), '!important'],
-    },
-    chipLabel: {
-      color: theme.palette.getContrastText(theme.palette.primary.main),
-      textTransform: ['none', '!important'],
-    },
-    chipOutline: {
-      borderColor: [theme.palette.getContrastText(theme.palette.primary.main), '!important'],
-    },
-  }
-}
+const styles = (theme) => ({
+  chip: {
+    cursor: 'pointer',
+    margin: theme.spacing(1),
+  },
+  chipAvatar: {
+    color: theme.palette.primary.main,
+    backgroundColor: [theme.palette.getContrastText(theme.palette.primary.main), '!important'],
+  },
+  chipLabel: {
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+    textTransform: ['none', '!important'],
+  },
+  chipOutline: {
+    borderColor: [theme.palette.getContrastText(theme.palette.primary.main), '!important'],
+  },
+})
 
 class UserAvatar extends React.Component {
-
   render() {
     const {
       classes,
@@ -41,13 +38,13 @@ class UserAvatar extends React.Component {
     return (
       <Chip
         variant="outlined"
-        avatar={
-          <Avatar className={ classes.bigAvatar }>
+        avatar={(
+          <Avatar className={classes.bigAvatar}>
             <UserIcon />
           </Avatar>
-        }
-        label={ user.username }
-        className={ classes.chip }
+        )}
+        label={user.username}
+        className={classes.chip}
         classes={{
           outlined: classes.chipOutline,
           label: classes.chipLabel,
@@ -56,7 +53,6 @@ class UserAvatar extends React.Component {
       />
     )
   }
- 
 }
 
 UserAvatar.propTypes = {

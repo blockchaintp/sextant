@@ -8,10 +8,10 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 import HelperText from './HelperText'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     display: 'flex',
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
 })
 
@@ -34,27 +34,27 @@ class CheckboxField extends React.Component {
     const extraProps = item.extraProps || {}
 
     return (
-      <FormControl component="fieldset" className={ classes.root }>
+      <FormControl component="fieldset" className={classes.root}>
         <FormLabel component="legend">{ title }</FormLabel>
         <FormGroup>
           <FormControlLabel
-            control={
+            control={(
               <Checkbox
-                name={ name }
-                checked={ value ? true : false }
-                onChange={ onChange }
-                disabled={ disabled }
-                value={ name }
-                { ...extraProps }
+                name={name}
+                checked={!!value}
+                onChange={onChange}
+                disabled={disabled}
+                value={name}
+                {...extraProps}
               />
-            }
-            label={ title }
+            )}
+            label={title}
           />
         </FormGroup>
         <HelperText
-          helperText={ item.helperText }
-          error={ error ? true : false }
-          touched={ touched }
+          helperText={item.helperText}
+          error={!!error}
+          touched={touched}
         />
       </FormControl>
     )

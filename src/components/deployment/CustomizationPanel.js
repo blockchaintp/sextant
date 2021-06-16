@@ -1,26 +1,24 @@
 import React from 'react';
 
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
-
 import EditorButton from './EditorButton'
 
-
-const styles = theme => ({
+const styles = (theme) => ({
   warning: {
-    padding: theme.spacing.unit * 2,
-    color: "red"
+    padding: theme.spacing(2),
+    color: 'red',
   },
   details: {
-    padding: theme.spacing.unit * 3,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: 'center'
+    padding: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 })
 
@@ -31,22 +29,21 @@ class CustomizationPanel extends React.Component {
       saveYamlInput,
       yamlInput,
       customYaml,
-      inputToState
+      inputToState,
     } = this.props
 
     return (
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>Advanced Deployment Customization</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails className={classes.details}>
-          <EditorButton inputToState={inputToState} saveYamlInput={saveYamlInput} yamlInput={yamlInput} customYaml={customYaml}>
-          </EditorButton>
+        </AccordionSummary>
+        <AccordionDetails className={classes.details}>
+          <EditorButton inputToState={inputToState} saveYamlInput={saveYamlInput} yamlInput={yamlInput} customYaml={customYaml} />
           <Typography className={classes.warning}>
             WARNING: This will overwrite default template options!
           </Typography>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionDetails>
+      </Accordion>
     )
   }
 }

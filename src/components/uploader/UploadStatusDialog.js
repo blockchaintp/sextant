@@ -12,17 +12,15 @@ import Divider from '@material-ui/core/Divider'
 
 import UploadFileProgressBar from './UploadFileProgressBar'
 
-const styles = theme => {
-  return {
-    errorText: {
-      color: theme.palette.error.main,
-    },
-    divider: {
-      marginTop: theme.spacing.unit * 2,
-      marginBottom: theme.spacing.unit * 2,
-    },
-  }
-}
+const styles = (theme) => ({
+  errorText: {
+    color: theme.palette.error.main,
+  },
+  divider: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+})
 
 class UploadStatusDialog extends React.Component {
   render() {
@@ -52,44 +50,51 @@ class UploadStatusDialog extends React.Component {
 
     return (
       <Dialog
-        open={ inProgress }
-        onClose={ () => {} }
+        open={inProgress}
+        onClose={() => {}}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         fullWidth
         maxWidth="md"
       >
-        <DialogTitle id="alert-dialog-title">{ isDone ? `Uploaded` : `Uploading` } { fileCount } file{ fileCount == 1 ? '' : 's' }</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          { isDone ? 'Uploaded' : 'Uploading' }
+          {' '}
+          { fileCount }
+          {' '}
+          file
+          { fileCount === 1 ? '' : 's' }
+        </DialogTitle>
         <DialogContent>
 
           {
             fileCount > 1 && (
-              <React.Fragment>
+              <>
                 <UploadFileProgressBar
-                  filename={ `${ fileCount } file${ fileCount == 1 ? '' : 's'}` }
-                  size={ totals.size }
-                  percentDone={ totals.percent }
-                  uploadedBytes={ totals.uploadedBytes }
+                  filename={`${fileCount} file${fileCount === 1 ? '' : 's'}`}
+                  size={totals.size}
+                  percentDone={totals.percent}
+                  uploadedBytes={totals.uploadedBytes}
                   color="secondary"
                 />
-                <Divider className={ classes.divider } />
-              </React.Fragment>
+                <Divider className={classes.divider} />
+              </>
             )
           }
-          
+
           {
             error ? (
-              <DialogContentText className={ classes.errorText }>{ error }</DialogContentText>
+              <DialogContentText className={classes.errorText}>{ error }</DialogContentText>
             ) : Object.keys(status).map((filename, i) => {
               const uploadInfo = status[filename]
               return (
                 <UploadFileProgressBar
-                  key={ i }
-                  filename={ filename }
-                  size={ uploadInfo.size }
-                  percentDone={ uploadInfo.percentDone }
-                  remainingTime={ uploadInfo.remainingTime }
-                  uploadedBytes={ uploadInfo.uploadedBytes }
+                  key={i}
+                  filename={filename}
+                  size={uploadInfo.size}
+                  percentDone={uploadInfo.percentDone}
+                  remainingTime={uploadInfo.remainingTime}
+                  uploadedBytes={uploadInfo.uploadedBytes}
                   color="primary"
                 />
               )
@@ -99,14 +104,14 @@ class UploadStatusDialog extends React.Component {
         <DialogActions>
           {
             (!isDone && !error) && (
-              <Button onClick={ () => onCancel() }>
+              <Button onClick={() => onCancel()}>
                 Cancel
               </Button>
             )
           }
           {
             (isDone || error) && (
-              <Button onClick={ () => onFinish() }>
+              <Button onClick={() => onFinish()}>
                 Close
               </Button>
             )
@@ -118,7 +123,7 @@ class UploadStatusDialog extends React.Component {
 }
 
 UploadStatusDialog.propTypes = {
-  classes: PropTypes.object.isRequired,  
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(UploadStatusDialog)

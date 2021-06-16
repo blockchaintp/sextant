@@ -7,14 +7,14 @@ import Button from '@material-ui/core/Button'
 
 const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
   },
   button: {
-    marginRight: theme.spacing.unit * 2,
-    margin: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
+    margin: theme.spacing(2),
   },
 })
 
@@ -28,7 +28,7 @@ class Administration extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>

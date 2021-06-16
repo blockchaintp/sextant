@@ -12,16 +12,16 @@ const styles = (theme) => ({
     maxWidth: '50%',
   },
   item: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
   },
   button: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   restart: {
     display: 'flex',
@@ -41,7 +41,7 @@ class Restarting extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <div className={classes.restart}>

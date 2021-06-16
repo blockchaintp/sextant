@@ -4,19 +4,18 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 const theme = createMuiTheme({
   typography: {
-    useNextVariants: true,
-    fontSize: 18 ,
+    fontSize: 18,
   },
   palette: {
 
   },
 })
 
-function Theme(props) {
+function Theme({ children }) {
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      { props.children }
+      { children }
     </MuiThemeProvider>
   );
 }

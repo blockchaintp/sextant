@@ -8,18 +8,18 @@ import Button from '@material-ui/core/Button'
 
 import FormWrapper from 'components/form/Wrapper'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
   },
 })
 
 class Login extends React.Component {
   render() {
-    const { 
+    const {
       classes,
       login,
       error,
@@ -29,29 +29,29 @@ class Login extends React.Component {
     } = this.props
 
     return (
-      <div className={ classes.root }>
-        <Grid container spacing={24}>
+      <div className={classes.root}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper className={ classes.paper }>
+            <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
                 Login
               </Typography>
               <FormWrapper
-                schema={ schema }
-                initialValues={ initialValues }
-                error={ error }
-                onSubmit={ login }
+                schema={schema}
+                initialValues={initialValues}
+                error={error}
+                onSubmit={login}
                 renderButtons={
                   ({
                     handleSubmit,
                   }) => (
                     <Button
-                      _ci='submitButton'
+                      _ci="submitButton"
                       type="button"
                       variant="contained"
                       color="primary"
-                      disabled={ loading }
-                      onClick={ handleSubmit }
+                      disabled={loading}
+                      onClick={handleSubmit}
                     >
                       Login
                     </Button>

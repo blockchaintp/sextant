@@ -10,20 +10,19 @@ import TaskTable from 'components/task/TaskTable'
 import NodeTable from 'components/cluster/NodeTable'
 import SummaryValues from 'components/summary/SummaryValues'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 2,
-    margin: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
+    margin: theme.spacing(2),
   },
 })
 
 class ClusterStatus extends React.Component {
-
   render() {
-    const { 
+    const {
       classes,
       resources,
       summary,
@@ -31,38 +30,38 @@ class ClusterStatus extends React.Component {
     } = this.props
 
     return (
-      <div className={ classes.root }>
-        <Grid container spacing={24}>
-          <Grid item xs={ 9 }>
-            <Paper className={ classes.paper }>
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          <Grid item xs={9}>
+            <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
                 Nodes
               </Typography>
               <NodeTable
-                data={ resources.nodes }
+                data={resources.nodes}
               />
             </Paper>
-            <Paper className={ classes.paper }>
+            <Paper className={classes.paper}>
               <DeploymentTable
                 embedded
               />
             </Paper>
-            <Paper className={ classes.paper }>
+            <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
                 Tasks
               </Typography>
               <TaskTable
-                data={ tasks }
+                data={tasks}
               />
             </Paper>
           </Grid>
-          <Grid item xs={ 3 }>
-            <Paper className={ classes.paper }>
+          <Grid item xs={3}>
+            <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
                 Summary
               </Typography>
               <SummaryValues
-                data={ summary }
+                data={summary}
               />
             </Paper>
           </Grid>
@@ -77,7 +76,7 @@ ClusterStatus.propTypes = {
 }
 
 ClusterStatus.defaultProps = {
-  
+
 }
 
 export default withStyles(styles)(ClusterStatus)

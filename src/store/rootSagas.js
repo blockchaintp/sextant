@@ -26,7 +26,7 @@ const initialLoader = ({
   setDataAction,
   networkName,
   title,
-}) => function* loadInitialData() {
+}) => (function* loadInitialData() {
   yield put(getLoaderAction())
   const { errorAction } = yield race({
     dataAction: take(setDataAction.type),
@@ -37,7 +37,7 @@ const initialLoader = ({
     return false
   }
   return true
-}
+})
 
 const RootSagas = ({
   router,

@@ -9,7 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 const styles = (theme) => ({
   rightAlign: {
     textAlign: 'right',
-    paddingRight: theme.spacing.unit * 2,
+    paddingRight: theme.spacing(2),
   },
 })
 
@@ -64,7 +64,7 @@ class SummaryValues extends React.Component {
         container
         direction="row"
         className={classes.container}
-        spacing={8}
+        spacing={1}
       >
 
         {parts}

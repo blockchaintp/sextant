@@ -13,7 +13,7 @@ const styles = (theme) => ({
 
   },
   paper: {
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
   },
 })
 

@@ -7,21 +7,21 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import CodeBlock from 'components/code/CodeBlock'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   paper: {
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
   },
   button: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
 })
 
 class AccessTokenPage extends React.Component {
   render() {
-    const { 
+    const {
       classes,
       accessToken,
       refreshToken,
@@ -30,25 +30,25 @@ class AccessTokenPage extends React.Component {
     } = this.props
 
     return (
-      <div className={ classes.root }>
-        <Grid container spacing={24}>
+      <div className={classes.root}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper className={ classes.paper }>
+            <Paper className={classes.paper}>
               <Typography variant="h6" gutterBottom>
                 Your Access Token is shown below - use it to access the sextant REST api.
               </Typography>
               <CodeBlock
-                code={ accessToken }
-                clipboard={ true }
-                snackbarMessage={ snackbarMessage }
+                code={accessToken}
+                clipboard
+                snackbarMessage={snackbarMessage}
               />
               <Button
-                className={ classes.button }
+                className={classes.button}
                 type="button"
                 variant="contained"
                 color="primary"
-                disabled={ submitting }
-                onClick={ refreshToken }
+                disabled={submitting}
+                onClick={refreshToken}
               >
                 Refresh Access Token
               </Button>
@@ -64,6 +64,10 @@ AccessTokenPage.propTypes = {
   classes: PropTypes.object.isRequired,
   accessToken: PropTypes.string,
   refreshToken: PropTypes.func.isRequired,
+}
+
+AccessTokenPage.defaultProps = {
+  accessToken: PropTypes.string,
 }
 
 export default withStyles(styles)(AccessTokenPage)

@@ -2,11 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
-import Button  from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
 import InputLabel from '@material-ui/core/InputLabel'
@@ -19,14 +18,14 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 import AutoComplete from 'components/autocomplete/AutoComplete'
 
-const styles = theme => ({
+const styles = (theme) => ({
   formControl: {
     width: '100%',
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
   },
   spacer: {
-    height: theme.spacing.unit * 4,
-  }
+    height: theme.spacing(4),
+  },
 })
 
 class RoleForm extends React.Component {
@@ -45,26 +44,29 @@ class RoleForm extends React.Component {
       onCancel,
       onConfirm,
     } = this.props
-    
+
     return (
       <Dialog
-        open={ open }
-        onClose={ onCancel }
+        open={open}
+        onClose={onCancel}
         fullWidth
         maxWidth="sm"
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Add { title }</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          Add
+          {' '}
+          { title }
+        </DialogTitle>
         <DialogContent>
           <AutoComplete
-            suggestions={ users }
-            getSuggestionValue={ (user) => user }
-            loadSuggestions={ loadUsers }
-            clearSuggestions={ clearUsers }
-            value={ search }
-            onChange={ setSearch }
-            onClick={ (user) => {} }
+            suggestions={users}
+            getSuggestionValue={(user) => user}
+            loadSuggestions={loadUsers}
+            clearSuggestions={clearUsers}
+            value={search}
+            onChange={setSearch}
             inputProps={{
               placeholder: 'Search for user',
               label: 'User',
@@ -73,34 +75,32 @@ class RoleForm extends React.Component {
               highlight: classes.highlightText,
               normal: classes.normalText,
             }}
-            renderSuggestion={ ({
+            renderSuggestion={({
               suggestion,
               query,
               getHighlightedText,
               isHighlighted,
-            }) => {
-              return (
-                <ListItem
-                  selected={ isHighlighted }
-                  component="div"
-                >
-                  <ListItemText 
-                    primary={ getHighlightedText(suggestion.username, query) } 
-                    secondary={ suggestion.permission }
-                  />
-                </ListItem>
-              )
-            }}
+            }) => (
+              <ListItem
+                selected={isHighlighted}
+                component="div"
+              >
+                <ListItemText
+                  primary={getHighlightedText(suggestion.username, query)}
+                  secondary={suggestion.permission}
+                />
+              </ListItem>
+            )}
           />
           <FormHelperText>Search for the user to add access control for</FormHelperText>
-          <div className={ classes.spacer } />
-          <FormControl className={ classes.formControl }>
+          <div className={classes.spacer} />
+          <FormControl className={classes.formControl}>
             <InputLabel>
               Access Level
             </InputLabel>
             <Select
-              value={ level }
-              onChange={ (e) => setLevel(e.target.value) }
+              value={level}
+              onChange={(e) => setLevel(e.target.value)}
               displayEmpty
               name="accessLevel"
             >
@@ -111,10 +111,10 @@ class RoleForm extends React.Component {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={ onCancel }>
+          <Button onClick={onCancel}>
             Cancel
           </Button>
-          <Button onClick={ onConfirm } variant="contained" color="secondary" autoFocus>
+          <Button onClick={onConfirm} variant="contained" color="secondary" autoFocus>
             Save
           </Button>
         </DialogActions>
@@ -131,4 +131,3 @@ RoleForm.propTypes = {
 }
 
 export default withStyles(styles)(RoleForm)
-

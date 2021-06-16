@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
@@ -13,7 +13,7 @@ const styles = theme => ({
     height: '100%',
   },
   container: {
-    maxWidth: '50%'
+    maxWidth: '50%',
   },
   item: {
     textAlign: 'center',
@@ -22,7 +22,6 @@ const styles = theme => ({
 })
 
 class Loading extends React.Component {
-
   render() {
     const {
       classes,
@@ -34,21 +33,21 @@ class Loading extends React.Component {
       <div className={classes.root}>
         <div className={classes.container}>
           <div className={classes.item}>
-            <CircularProgress 
-              color={ color }
+            <CircularProgress
+              color={color}
             />
-            { 
+            {
               message && (
                 <Typography
-                  variant='subtitle1'
-                  color={ color }
+                  variant="subtitle1"
+                  color={color}
                 >
                   { message }
                 </Typography>
               )
             }
           </div>
-          
+
         </div>
       </div>
     )
@@ -57,13 +56,11 @@ class Loading extends React.Component {
 
 Loading.propTypes = {
   classes: PropTypes.object.isRequired,
-  variant: PropTypes.string,
   color: PropTypes.string,
   message: PropTypes.string,
 }
 
 Loading.defaultProps = {
-  variant: 'subheading',
   color: 'primary',
   message: 'loading',
 }
