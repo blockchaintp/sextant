@@ -10,7 +10,7 @@ COPY ./package.json /app/frontend/package.json
 
 COPY ./package-lock.json /app/frontend/package-lock.json
 
-RUN npm install
+RUN npm ci
 
 COPY ./ /app/frontend
 
