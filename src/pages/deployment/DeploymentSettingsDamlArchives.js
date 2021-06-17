@@ -181,9 +181,13 @@ class DeploymentSettingsDamlArchives extends React.Component {
       name: 'packageId',
     }]
 
+    const integers = new Uint32Array(10);
+    const randomNumbers = window.crypto.getRandomValues(integers);
+    const randomNumber = randomNumbers[0]
+
     const data = archives.map((archive) => ({
       ...archive,
-      id: `archive.packageId-${Math.random()}`, // Needed to generate table rows
+      id: `archive.packageId-${randomNumber}`, // Needed to generate table rows
       packageId: archive.packageId,
       modules: archive.modules,
     }))
