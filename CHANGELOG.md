@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* fix(daml-archives): replace math-random with windoe-crypto [view commit](https://github.com/catenasys/sextant/commit/4ef29aa4b43a99b533f4d13f7e3f97f0785ba31d)
 * build(dockerfile-multistage): changes `npm install` into `npm ci` to sync package.json with package-lock.json in build [view commit](https://github.com/catenasys/sextant/commit/d740e5b03fb6267fde07cd0851f80a36f7795b77)
 * build: update package-lock.json [view commit](https://github.com/catenasys/sextant/commit/7660e1638ae5f052db112f98c135ced860e82dae)
 * fix(role-form): remove on-click that was an anonymous function returning an empty object [view commit](https://github.com/catenasys/sextant/commit/0c417e337d06f7c9328ed34ef3ca0dcf6ff957a5)
