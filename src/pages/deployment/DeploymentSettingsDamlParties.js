@@ -99,13 +99,13 @@ class DeploymentSettingsDamlParties extends React.Component {
       setVisibleParticipant,
       setAddPartyWindowOpen,
       setAddPartyName,
-      setAddPartyPubicKey,
+      setAddPartyPublicKey,
       resetSelectedParties,
     } = this.props
     setVisibleParticipant(null)
     setAddPartyWindowOpen(false)
     setAddPartyName('')
-    setAddPartyPubicKey(null)
+    setAddPartyPublicKey(null)
     resetSelectedParties()
   }
 
@@ -113,12 +113,12 @@ class DeploymentSettingsDamlParties extends React.Component {
     const {
       setAddPartyWindowOpen,
       setAddPartyName,
-      setAddPartyPubicKey,
+      setAddPartyPublicKey,
     } = this.props
 
     setAddPartyWindowOpen(value)
     setAddPartyName('')
-    setAddPartyPubicKey(value ? publicKey : null)
+    setAddPartyPublicKey(value ? publicKey : null)
   }
 
   getAddPartyDialog() {

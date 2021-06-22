@@ -83,7 +83,7 @@ const reducers = {
   setAddPartyIdHint: (state, action) => {
     state.addPartyIdHint = action.payload
   },
-  setAddPartyPubicKey: (state, action) => {
+  setAddPartyPublicKey: (state, action) => {
     state.addPartyPublicKey = action.payload
   },
   setTokenWindowOpen: (state, action) => {
@@ -408,7 +408,7 @@ const sideEffects = {
       dispatch(actions.setAddPartyWindowOpen(false))
       dispatch(actions.setAddPartyName(''))
       dispatch(actions.setAddPartyIdHint(null))
-      dispatch(actions.setAddPartyPubicKey(null))
+      dispatch(actions.setAddPartyPublicKey(null))
     } catch (e) {
       dispatch(snackbarActions.setError(`error adding party: ${e.toString()}`))
       console.error(e)
