@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* refactor(deployment-settings): corrects typo '...PubicKey' -> '...PublicKey' [view commit](https://github.com/catenasys/sextant/commit/56a20f16b53eb459a3649d30395f00c943539cb5)
+* build(package-lock): updates package-lock which allows eslint to work properly [view commit](https://github.com/catenasys/sextant/commit/c287be21743778079bd2186a7612c181a0e919b1)
 * fix(daml-archives): replace math-random with windoe-crypto [view commit](https://github.com/catenasys/sextant/commit/4ef29aa4b43a99b533f4d13f7e3f97f0785ba31d)
 * build(dockerfile-multistage): changes `npm install` into `npm ci` to sync package.json with package-lock.json in build [view commit](https://github.com/catenasys/sextant/commit/d740e5b03fb6267fde07cd0851f80a36f7795b77)
 * build: update package-lock.json [view commit](https://github.com/catenasys/sextant/commit/7660e1638ae5f052db112f98c135ced860e82dae)
