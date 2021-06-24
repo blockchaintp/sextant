@@ -39,12 +39,12 @@ const useFileExplorer = () => {
   // MEMO
 
   const volume = useMemo(() => {
-    let volume = volumes[0]
+    let returnVolume = volumes[0]
     if(params.volume) {
       const idVolume = volumes.find(v => v.uuid == params.volume)
-      volume = idVolume || volume
+      returnVolume = idVolume || returnVolume
     }
-    return volume
+    return returnVolume
   }, [
     volumes,
     params.volume,

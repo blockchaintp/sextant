@@ -1,21 +1,16 @@
 /* eslint-disable no-shadow */
-import React, { useMemo } from 'react'
+import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import ListSubheader from '@material-ui/core/ListSubheader'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import Collapse from '@material-ui/core/Collapse'
 import FolderIcon from '@material-ui/icons/Folder'
-import DraftsIcon from '@material-ui/icons/Drafts'
-import SendIcon from '@material-ui/icons/Send'
 import StorageIcon from '@material-ui/icons/Storage'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import StarBorder from '@material-ui/icons/StarBorder'
-
 
 const styles = theme => ({
   root: {

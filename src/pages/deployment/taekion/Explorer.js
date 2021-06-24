@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { useState } from 'react'
-import { withStyles, useTheme } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles'
 import { FileIcon, defaultStyles } from 'react-file-icon'
 import useFileExplorer from 'hooks/useFileExplorer'
 import prettyBytes from 'pretty-bytes'
@@ -8,18 +8,15 @@ import ExplorerSidebar from 'components/fileexplorer/Sidebar'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
 import SimpleTable from 'components/table/SimpleTable'
-import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
 import FolderIcon from '@material-ui/icons/Folder'
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 
-// TODO: upgrade material ui so we can use `makeStyles` and not have to decorate the component
 const styles = theme => ({
 
   // adjust the global layout so we can have full height file explorer

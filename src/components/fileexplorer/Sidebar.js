@@ -36,11 +36,7 @@ const ExplorerSidebar = ({
   const {
     volume,
     volumes,
-    folderTree,
-    expanded,
-    loading,
     onChangeVolume,
-    onSetExpanded,
   } = explorer
 
   const changeVolumeSelect = useMemo(() => {
