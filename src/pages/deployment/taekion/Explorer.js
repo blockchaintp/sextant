@@ -70,7 +70,6 @@ const styles = theme => ({
     flexGrow: 1,
     paddingLeft: '20px',
     height: '100%',
-    height: '100%',
     minHeight: '100%',
     overflowY: 'auto',
   },
