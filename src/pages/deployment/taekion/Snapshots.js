@@ -116,13 +116,13 @@ class TaekionSnapshots extends React.Component {
 
     const onSubmitForm = (payload) => {
       const {
-        currentVolume,
+        volume,
         ...currentData
       } = payload
       onCreateSnapshot({
         cluster,
         deployment,
-        currentVolume,
+        volume,
         payload: currentData,
       })
     }
