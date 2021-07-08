@@ -126,12 +126,12 @@ class TaekionSnapshots extends React.Component {
     } = this.props
 
     const onSubmitForm = (payload) => {
-      const data = splitSnapshotFormData(payload)
+      const formData = splitSnapshotFormData(payload)
       onCreateSnapshot({
         cluster,
         deployment,
-        volume: data.volume,
-        payload: data.currentData,
+        volume: formData.volume,
+        payload: formData.currentData,
       })
     }
 
