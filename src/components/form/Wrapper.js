@@ -437,22 +437,27 @@ class FormWrapperInner extends React.Component {
         />
       )
     }
-
+    
     const renderFieldArray = (currentItem) => {
+
+      const renderList = (arrayHelpers) => {
+        return (
+          <FormList
+            item={currentItem}
+            formProps={formProps}
+            arrayHelpers={arrayHelpers}
+            disabled={disableField()}
+          />
+        )
+      }
+
       if (currentItem.linked) {
         if (meetsVisibilityRequirement(currentItem.linked)) {
           return (
             <FieldArray
               _ci={currentItem.id}
               name={currentItem.id}
-              render={(arrayHelpers) => (
-                <FormList
-                  item={currentItem}
-                  formProps={formProps}
-                  arrayHelpers={arrayHelpers}
-                  disabled={disableField()}
-                />
-              )}
+              render={renderList}
             />
           )
         }
@@ -463,14 +468,7 @@ class FormWrapperInner extends React.Component {
         <FieldArray
           _ci={item.id}
           name={item.id}
-          render={(arrayHelpers) => (
-            <FormList
-              item={currentItem}
-              formProps={formProps}
-              arrayHelpers={arrayHelpers}
-              disabled={disableField()}
-            />
-          )}
+          render={renderList}
         />
       )
     }
