@@ -33,8 +33,7 @@ class DeploymentSettings extends React.Component {
     } = this.props
 
     const pages = getPages(features)
-
-    const [pageName] = route.name.split('.')
+    const pageName = route.name.split('.').pop()
     if (pages.length === 0) {
       return (
         <div className={classes.root}>
