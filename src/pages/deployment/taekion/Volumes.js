@@ -230,10 +230,12 @@ class TaekionVolumes extends React.Component {
         if (item.id === 'fingerprint') {
           // eslint-disable-next-line prefer-object-spread
           return Object.assign({}, item, {
-            options: keys.map((key) => ({
-              title: key.label,
-              value: key.fingerprint,
-            })),
+            options: keys.map((key) => {
+              return {
+                title: key.label,
+                value: key.fingerprint,
+              }
+            }),
           })
         }
         return item

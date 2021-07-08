@@ -429,7 +429,7 @@ class FormWrapperInner extends React.Component {
           dbId={isNew}
           name={item.id}
           component={utils.getComponent(item.component)}
-          item={item}
+          item={currentItem}
           disabled={disableField()}
           error={error}
           touched={touched}
@@ -465,7 +465,7 @@ class FormWrapperInner extends React.Component {
           name={item.id}
           render={(arrayHelpers) => (
             <FormList
-              item={item}
+              item={currentItem}
               formProps={formProps}
               arrayHelpers={arrayHelpers}
               disabled={disableField()}
