@@ -86,7 +86,7 @@ class DamlArchiveTable extends React.Component {
               )
             }
             <TableBody>
-              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((dataRow) => (
+              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((dataRow, index) => (
                 <TableRow
                   hover
                   onClick={(event) => {
@@ -94,7 +94,7 @@ class DamlArchiveTable extends React.Component {
                     onRowClick(event, dataRow.id)
                   }}
                   tabIndex={-1}
-                  key={dataRow.id}
+                  key={index}
                 >
                   {
                       fields.map((field, i) => {
