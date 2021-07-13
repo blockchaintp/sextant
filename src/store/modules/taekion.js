@@ -18,6 +18,9 @@ const initialState = {
   addKeyResult: null,
   addVolumeWindowOpen: false,
   addSnapshotWindowOpen: false,
+  explorerDirectories: {},
+  explorerNodes: {},
+  explorerNodesLoading: {},
 }
 
 const reducers = {
@@ -41,6 +44,28 @@ const reducers = {
   },
   setAddSnapshotWindowOpen: (state, action) => {
     state.addSnapshotWindowOpen = action.payload
+  },
+  resetExplorer: (state, action) => {
+    state.explorerNodes = {}
+    state.explorerDirectories = {}
+    state.explorerNodesLoading = {}
+  },
+  setExplorerDirectory: (state, action) => {
+    const {
+      id,
+      data,
+    } = action.payload
+    data.forEach(node => {
+      state.explorerNodes[node.inodeid] = node
+    })
+    state.explorerDirectories[id] = data
+  },
+  setExplorerNodeLoading: (state, action) => {
+    const {
+      id,
+      value,
+    } = action.payload
+    state.explorerNodesLoading[id] = value
   },
 }
 
@@ -117,6 +142,40 @@ const loaders = {
   }) => axios.delete(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/volumes/${volume}/snapshots/${snapshotName}`))
     .then(api.process),
 
+  explorerListDirectory: ({
+    cluster,
+    deployment,
+    volume,
+    inode,
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/explorer/${volume}/dir/${inode}`))
+    .then(api.process),
+
+
+}
+
+// wrap all taekion api calls
+// so we can detect a "pod not ready" error
+// and show a "loading" overlay rather
+// than a nasty red snackbar
+const taekionApiWrapper = async ({
+  name = 'taekion api request',
+  globalLoading = false,
+  apiHandler,
+  dispatch,
+}) => {
+  if(globalLoading) dispatch(networkActions.setGlobalLoading(true))
+  try {
+    await apiHandler()
+  } catch(e) {
+    console.error(e)
+    if(e.toString().indexOf('connect: connection refused') > 0) {
+      dispatch(snackbarActions.setInfo(`the taekion cluster is still starting up, please refresh in a few minutes`))
+    }
+    else {
+      dispatch(snackbarActions.setError(`error for ${name}: ${e.toString()}`))
+    }
+  }
+  if(globalLoading) dispatch(networkActions.setGlobalLoading(false))
 }
 
 const sideEffects = {
@@ -124,106 +183,120 @@ const sideEffects = {
   listKeys: ({
     cluster,
     deployment,
-  }) => (dispatch) => api.loaderSideEffect({
+  }) => (dispatch, getState) => taekionApiWrapper({
+    name: 'list keys',
     dispatch,
-    loader: () => loaders.listKeys({ cluster, deployment }),
-    prefix,
-    name: 'listKeys',
-    dataAction: actions.setKeys,
-    snackbarError: true,
+    apiHandler: () => api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.listKeys({cluster, deployment}),
+      prefix,
+      name: 'listKeys',
+      dataAction: actions.setKeys,
+      snackbarError: true,
+    })
   }),
 
   createKey: ({
     cluster,
     deployment,
     payload,
-  }) => async (dispatch) => {
-    try {
-      dispatch(networkActions.setGlobalLoading(true))
-      const data = await api.loaderSideEffect({
-        dispatch,
-        loader: () => loaders.createKey({ cluster, deployment, payload }),
-        prefix,
-        name: 'createKey',
-        returnError: true,
-      })
-      dispatch(actions.listKeys({
-        cluster,
-        deployment,
-      }))
-      dispatch(snackbarActions.setSuccess('key added'))
-      dispatch(actions.setAddKeyResult(data))
-      dispatch(actions.setAddKeyWindowOpen(false))
-      dispatch(networkActions.setGlobalLoading(false))
-    } catch (e) {
-      dispatch(snackbarActions.setError(`error adding key: ${e.toString()}`))
-      console.error(e)
-      dispatch(networkActions.setGlobalLoading(false))
-    }
+  }) => async (dispatch, getState) => {
+
+    await taekionApiWrapper({
+      name: 'create key',
+      globalLoading: true,
+      dispatch,
+      apiHandler: async () => {
+        const data = await api.loaderSideEffect({
+          dispatch,
+          loader: () => loaders.createKey({cluster, deployment, payload}),
+          prefix,
+          name: 'createKey',
+          returnError: true,
+        })
+        dispatch(actions.listKeys({
+          cluster,
+          deployment,
+        }))
+        dispatch(snackbarActions.setSuccess(`key added`))
+        dispatch(actions.setAddKeyResult(data))
+        dispatch(actions.setAddKeyWindowOpen(false))
+      }
+    })
   },
 
   deleteKey: ({
     cluster,
     deployment,
     id,
-  }) => async (dispatch) => {
-    try {
-      await api.loaderSideEffect({
-        dispatch,
-        loader: () => loaders.deleteKey({ cluster, deployment, id }),
-        prefix,
-        name: 'deleteKey',
-        returnError: true,
-      })
-      dispatch(actions.listKeys({
-        cluster,
-        deployment,
-      }))
-      dispatch(snackbarActions.setSuccess('key deleted'))
-    } catch (e) {
-      dispatch(snackbarActions.setError(`error deleting key: ${e.toString()}`))
-      console.error(e)
-    }
+  }) => async (dispatch, getState) => {
+
+    await taekionApiWrapper({
+      name: 'delete key',
+      globalLoading: true,
+      dispatch,
+      apiHandler: async () => {
+        await api.loaderSideEffect({
+          dispatch,
+          loader: () => loaders.deleteKey({cluster, deployment, id}),
+          prefix,
+          name: 'deleteKey',
+          returnError: true,
+        })
+        dispatch(actions.listKeys({
+          cluster,
+          deployment,
+        }))
+        dispatch(snackbarActions.setSuccess(`key deleted`))
+      }
+    })
+
   },
 
   listVolumes: ({
     cluster,
     deployment,
-  }) => (dispatch) => api.loaderSideEffect({
+  }) => (dispatch, getState) => taekionApiWrapper({
+    name: 'list volumes',
     dispatch,
-    loader: () => loaders.listVolumes({ cluster, deployment }),
-    prefix,
-    name: 'listVolumes',
-    dataAction: actions.setVolumes,
-    snackbarError: true,
+    apiHandler: () => api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.listVolumes({cluster, deployment}),
+      prefix,
+      name: 'listVolumes',
+      dataAction: actions.setVolumes,
+      snackbarError: false,
+      returnError: true,
+    })
   }),
 
   createVolume: ({
     cluster,
     deployment,
     payload,
-  }) => async (dispatch) => {
-    try {
-      dispatch(networkActions.setGlobalLoading(true))
-      await api.loaderSideEffect({
-        dispatch,
-        loader: () => loaders.createVolume({ cluster, deployment, payload }),
-        prefix,
-        name: 'createVolume',
-        returnError: true,
-      })
-      await dispatch(actions.listVolumes({
-        cluster,
-        deployment,
-      }))
-      dispatch(snackbarActions.setSuccess('volume added'))
-      dispatch(actions.setAddVolumeWindowOpen(false))
-      dispatch(networkActions.setGlobalLoading(false))
-    } catch (e) {
-      dispatch(snackbarActions.setError(`error adding volume: ${e.toString()}`))
-      console.error(e)
-      dispatch(networkActions.setGlobalLoading(false))
-    }
+  }) => async (dispatch, getState) => {
+
+    await taekionApiWrapper({
+      name: 'create volume',
+      globalLoading: true,
+      dispatch,
+      apiHandler: async () => {
+        await api.loaderSideEffect({
+          dispatch,
+          loader: () => loaders.createVolume({cluster, deployment, payload}),
+          prefix,
+          name: 'createVolume',
+          returnError: true,
+        })
+        await dispatch(actions.listVolumes({
+          cluster,
+          deployment,
+        }))
+        dispatch(snackbarActions.setSuccess(`volume added`))
+        dispatch(actions.setAddVolumeWindowOpen(false))
+      }
+    })
+
   },
 
   updateVolume: ({
@@ -231,102 +304,104 @@ const sideEffects = {
     deployment,
     volume,
     payload,
-  }) => async (dispatch) => {
-    try {
-      dispatch(networkActions.setGlobalLoading(true))
-      await api.loaderSideEffect({
-        dispatch,
-        loader: () => loaders.updateVolume({
-          cluster, deployment, volume, payload,
-        }),
-        prefix,
-        name: 'updateVolume',
-        returnError: true,
-      })
-      await dispatch(actions.listVolumes({
-        cluster,
-        deployment,
-      }))
-      dispatch(snackbarActions.setSuccess('volume updated'))
-      dispatch(actions.setAddVolumeWindowOpen(false))
-      dispatch(networkActions.setGlobalLoading(false))
-    } catch (e) {
-      dispatch(snackbarActions.setError(`error updating volume: ${e.toString()}`))
-      console.error(e)
-      dispatch(networkActions.setGlobalLoading(false))
-    }
+  }) => async (dispatch, getState) => {
+
+    await taekionApiWrapper({
+      name: 'update volume',
+      globalLoading: true,
+      dispatch,
+      apiHandler: async () => {
+        await api.loaderSideEffect({
+          dispatch,
+          loader: () => loaders.updateVolume({ cluster, deployment, volume, payload }),
+          prefix,
+          name: 'updateVolume',
+          returnError: true,
+        })
+        await dispatch(actions.listVolumes({
+          cluster,
+          deployment,
+        }))
+        dispatch(snackbarActions.setSuccess(`volume updated`))
+        dispatch(actions.setAddVolumeWindowOpen(false))
+      }
+    })
+
   },
 
   deleteVolume: ({
     cluster,
     deployment,
     name,
-  }) => async (dispatch) => {
-    try {
-      dispatch(networkActions.setGlobalLoading(true))
-      await api.loaderSideEffect({
-        dispatch,
-        loader: () => loaders.deleteVolume({ cluster, deployment, name }),
-        prefix,
-        name: 'deleteVolume',
-        returnError: true,
-      })
-      await dispatch(actions.listVolumes({
-        cluster,
-        deployment,
-      }))
-      dispatch(snackbarActions.setSuccess('volume deleted'))
-      dispatch(networkActions.setGlobalLoading(false))
-    } catch (e) {
-      dispatch(snackbarActions.setError(`error deleting volume: ${e.toString()}`))
-      console.error(e)
-      dispatch(networkActions.setGlobalLoading(false))
-    }
+  }) => async (dispatch, getState) => {
+
+    await taekionApiWrapper({
+      name: 'delete volume',
+      globalLoading: true,
+      dispatch,
+      apiHandler: async () => {
+        await api.loaderSideEffect({
+          dispatch,
+          loader: () => loaders.deleteVolume({cluster, deployment, name}),
+          prefix,
+          name: 'deleteVolume',
+          returnError: true,
+        })
+        await dispatch(actions.listVolumes({
+          cluster,
+          deployment,
+        }))
+        dispatch(snackbarActions.setSuccess(`volume deleted`))
+      }
+    })
   },
 
   listSnapshots: ({
     cluster,
     deployment,
     volume,
-  }) => (dispatch) => api.loaderSideEffect({
+  }) => (dispatch, getState) => taekionApiWrapper({
+    name: 'list snapshots',
     dispatch,
-    loader: () => loaders.listSnapshots({ cluster, deployment, volume }),
-    prefix,
-    name: 'listSnapshots',
-    dataAction: actions.setSnapshots,
-    snackbarError: true,
+    apiHandler: () => api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.listSnapshots({cluster, deployment, volume}),
+      prefix,
+      name: 'listSnapshots',
+      dataAction: actions.setSnapshots,
+      snackbarError: false,
+      returnError: true,
+    })
   }),
-
+  
   createSnapshot: ({
     cluster,
     deployment,
     volume,
     payload,
-  }) => async (dispatch) => {
-    try {
-      dispatch(networkActions.setGlobalLoading(true))
-      await api.loaderSideEffect({
-        dispatch,
-        loader: () => loaders.createSnapshot({
-          cluster, deployment, volume, payload,
-        }),
-        prefix,
-        name: 'createSnapshot',
-        returnError: true,
-      })
-      await dispatch(actions.listSnapshots({
-        cluster,
-        deployment,
-        volume,
-      }))
-      dispatch(snackbarActions.setSuccess('snapshot added'))
-      dispatch(actions.setAddSnapshotWindowOpen(false))
-      dispatch(networkActions.setGlobalLoading(false))
-    } catch (e) {
-      dispatch(snackbarActions.setError(`error adding snapshot: ${e.toString()}`))
-      console.error(e)
-      dispatch(networkActions.setGlobalLoading(false))
-    }
+  }) => async (dispatch, getState) => {
+    await taekionApiWrapper({
+      name: 'create snapshot',
+      globalLoading: true,
+      dispatch,
+      apiHandler: async () => {
+        await api.loaderSideEffect({
+          dispatch,
+          loader: () => loaders.createSnapshot({cluster, deployment, volume, payload}),
+          prefix,
+          name: 'createSnapshot',
+          returnError: true,
+        })
+        await dispatch(actions.listSnapshots({
+          cluster,
+          deployment,
+          volume,
+        }))
+        dispatch(snackbarActions.setSuccess(`snapshot added`))
+        dispatch(actions.setAddSnapshotWindowOpen(false))
+      }
+    })
+
   },
 
   deleteSnapshot: ({
@@ -336,30 +411,62 @@ const sideEffects = {
     snapshotName,
   }) => async (dispatch, getState) => {
     const params = selectors.router.params(getState())
+    
+    await taekionApiWrapper({
+      name: 'delete snapshot',
+      globalLoading: true,
+      dispatch,
+      apiHandler: async () => {
+        await api.loaderSideEffect({
+          dispatch,
+          loader: () => loaders.deleteSnapshot({cluster, deployment, volume, snapshotName}),
+          prefix,
+          name: 'deleteSnapshot',
+          returnError: true,
+        })
+        await dispatch(actions.listSnapshots({
+          cluster,
+          deployment,
+          volume: params.volume,
+        }))
+        dispatch(snackbarActions.setSuccess(`snapshot deleted`))
+      }
+    })
+  },
 
-    try {
-      dispatch(networkActions.setGlobalLoading(true))
-      await api.loaderSideEffect({
-        dispatch,
-        loader: () => loaders.deleteSnapshot({
-          cluster, deployment, volume, snapshotName,
-        }),
-        prefix,
-        name: 'deleteSnapshot',
-        returnError: true,
-      })
-      await dispatch(actions.listSnapshots({
-        cluster,
-        deployment,
-        volume: params.volume,
-      }))
-      dispatch(snackbarActions.setSuccess('snapshot deleted'))
-      dispatch(networkActions.setGlobalLoading(false))
-    } catch (e) {
-      dispatch(snackbarActions.setError(`error deleting snapshot: ${e.toString()}`))
-      console.error(e)
-      dispatch(networkActions.setGlobalLoading(false))
-    }
+  explorerListDirectory: ({
+    cluster,
+    deployment,
+    volume,
+    inode,
+  }) => async (dispatch, getState) => {
+
+    await taekionApiWrapper({
+      name: 'explorer list directory',
+      globalLoading: false,
+      dispatch,
+      apiHandler: async () => {
+        dispatch(actions.setExplorerNodeLoading({
+          id: inode,
+          value: true,
+        }))
+        const data = await api.loaderSideEffect({
+          dispatch,
+          loader: () => loaders.explorerListDirectory({cluster, deployment, volume, inode}),
+          prefix,
+          name: 'explorerListDirectory',
+          returnError: true,
+        })
+        dispatch(actions.setExplorerDirectory({
+          id: inode,
+          data,
+        }))
+        dispatch(actions.setExplorerNodeLoading({
+          id: inode,
+          value: false,
+        }))
+      }
+    })
   },
 
 }

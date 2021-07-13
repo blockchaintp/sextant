@@ -11,7 +11,11 @@ const initialState = {
 
 const reducers = {
   setData: (state, action) => {
-    state.data = action.payload
+    // this is here purely so we don't have to merge the helm-charts 30 mins before a demo
+    const data = action.payload
+    const version = data.forms.deployment['tfs-on-sawtooth'].button.versions[0]
+    version.features = version.features.concat(['taekion.explorer'])
+    state.data = data
   },
 }
 

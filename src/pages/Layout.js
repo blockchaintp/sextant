@@ -1,6 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import { Helmet } from 'react-helmet'
 import AppBar from '@material-ui/core/AppBar'
@@ -55,6 +56,7 @@ const styles = (theme) => ({
     // padding that is the height of the footer -
     // ensures enough space for footer in shared container
     paddingBottom: '4rem',
+    //minHeight: 'calc(100vh - 4rem)',
   },
   footer: {
     // absolute postion within the root container set to the bottom
@@ -99,11 +101,11 @@ class Layout extends React.Component {
     } = this.props
 
     return (
-      <div className={classes.root}>
+      <div className={classnames(classes.root, 'main-layout-root')}>
         <Helmet>
           <link rel="shortcut icon" type="image/png" href={favIcon} />
         </Helmet>
-        <div className={classes.appbar}>
+        <div className={classnames(classes.appbar, 'main-layout-appbar')}>
           <AppBar position="static">
             <Toolbar className={classes.toolbar}>
               <SideMenu
@@ -138,11 +140,11 @@ class Layout extends React.Component {
             </Toolbar>
           </AppBar>
         </div>
-        <div className={classes.box}>
-          <div className={classes.content}>
+        <div className={classnames(classes.box, 'main-layout-box')}>
+          <div className={classnames(classes.content, 'main-layout-content')}>
             { children }
           </div>
-          <div>
+          <div className={classnames('main-layout-footer')}>
             <Toolbar className={classes.footer}>
               <Typography variant="caption" color="textSecondary">
                 &copy; 2018-2021

@@ -78,6 +78,17 @@ const FORM_INITIAL_VALUES = {
   name: '',
 }
 
+const splitSnapshotFormData = (payload) => {
+  const {
+    volume,
+    ...currentData
+  } = payload
+  return {
+    volume,
+    currentData,
+  } 
+}
+
 class TaekionSnapshots extends React.Component {
   // this for when we click the "create snapshot" button on the volumes page
   // it redirects here with ?create=yes
@@ -115,15 +126,12 @@ class TaekionSnapshots extends React.Component {
     } = this.props
 
     const onSubmitForm = (payload) => {
-      const {
-        currentVolume,
-        ...currentData
-      } = payload
+      const formData = splitSnapshotFormData(payload)
       onCreateSnapshot({
         cluster,
         deployment,
-        currentVolume,
-        payload: currentData,
+        volume: formData.volume,
+        payload: formData.currentData,
       })
     }
 

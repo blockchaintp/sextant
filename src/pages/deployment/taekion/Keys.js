@@ -75,7 +75,7 @@ class TaekionKeys extends React.Component {
     }
 
     const data = keys.map((key) => ({
-      id: key.id,
+      id: key.fingerprint,
       name: key.label,
       fingerprint: key.fingerprint,
     }))

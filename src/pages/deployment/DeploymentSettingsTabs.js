@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
@@ -32,8 +33,7 @@ class DeploymentSettings extends React.Component {
     } = this.props
 
     const pages = getPages(features)
-
-    const [pageName] = route.name.split('.')
+    const pageName = route.name.split('.').pop()
     if (pages.length === 0) {
       return (
         <div className={classes.root}>
@@ -46,7 +46,7 @@ class DeploymentSettings extends React.Component {
     if (currentIndex < 0) currentIndex = 0
 
     return (
-      <div className={classes.root}>
+      <div className={classnames(classes.root, 'deployment-settings-root')}>
         <AppBar position="static" color="default">
           <Tabs
             value={currentIndex}
