@@ -33,7 +33,8 @@ class DeploymentSettings extends React.Component {
     } = this.props
 
     const pages = getPages(features)
-    const pageName = route.name.split('.').pop()
+
+    const pageName = route.name.split('.')[1]
     if (pages.length === 0) {
       return (
         <div className={classes.root}>
@@ -41,10 +42,8 @@ class DeploymentSettings extends React.Component {
         </div>
       )
     }
-
     let currentIndex = pages.findIndex((p) => p.id === pageName)
     if (currentIndex < 0) currentIndex = 0
-
     return (
       <div className={classnames(classes.root, 'deployment-settings-root')}>
         <AppBar position="static" color="default">
