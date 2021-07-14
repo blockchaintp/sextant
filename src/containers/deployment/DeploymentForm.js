@@ -39,9 +39,7 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
 
       if (existingValues) {
         initialValues = JSON.parse(JSON.stringify(existingValues.desired_state))
-        // eslint-disable-next-line no-shadow
-        const { deployment_version, deployment_type } = existingValues
-        schema = deploymentForms[deployment_type].forms[deployment_version]
+        schema = deploymentForms[existingValues.deployment_type].forms[existingValues.deployment_version]
         initialValues = formUtils.processInitialValues(schema, initialValues)
       }
     }
