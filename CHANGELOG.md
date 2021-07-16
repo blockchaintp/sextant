@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* fix(config): remove code that injects tfs explorer feature to config form object [view commit](https://github.com/catenasys/sextant/commit/2040fccf17a0d4b1504d9836c31e8b8963be4b73)
 * fix(daml-archive-table): prefer index to item id for react key when mapping over items [view commit](https://github.com/catenasys/sextant/commit/e22bd49fb3b92de64a3f89ee8a6df703ecfc8653)
 * fix(settings-tabs-page): prefer traditional variable assignment over array destructing [view commit](https://github.com/catenasys/sextant/commit/9e9ada398ff67ff62f6a21192cc66443e4c0cb5a)
 * fix(daml-parties-page): remove duplicate and broken sort method from archives table [view commit](https://github.com/catenasys/sextant/commit/709fd2c0d625404b522aa8d55ea1a3e8dcf23746)
