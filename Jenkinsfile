@@ -72,10 +72,12 @@ pipeline {
 
     stage("Analyze") {
       steps {
-        withSonarQubeEnv('sonarcloud') {
-          sh '''
-            make analyze
-          '''
+        withCredentials([string(credentialsId: 'fossa.full.token', variable: 'FOSSA_API_KEY')]) {
+          withSonarQubeEnv('sonarcloud') {
+            sh '''
+              make analyze
+            '''
+          }
         }
         waitForQualityGate abortPipeline: true
       }
