@@ -9,7 +9,7 @@ all: clean build test archive
 
 build:  $(MARKERS)/build_docker
 
-analyze: analyze_cpd analyze_sonar_js
+analyze: analyze_fossa analyze_sonar_js
 
 clean: clean_container
 
@@ -24,13 +24,6 @@ dirs_test:
 $(MARKERS)/build_docker:
 	docker-compose -f docker-compose.yaml build
 	touch $@
-
-.PHONY: analyze_cpd
-analyze_cpd:
-	docker run -v $$(pwd)/src:/src $(PMD_IMAGE) cpd --minimum-tokens 100 \
-		--failOnViolation false \
-		--files /src --language ecmascript --format xml \
-		--skip-lexical-errors > build/cpd.xml
 
 .PHONY: clean_container
 clean_container:
