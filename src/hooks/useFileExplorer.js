@@ -129,6 +129,11 @@ const useFileExplorer = () => {
       volume: volume.uuid,
       inode,
     }))
+    dispatch(taekionActions.listSnapshots({
+      cluster: params.cluster,
+      deployment: params.id,
+      volume: volume.uuid,
+    }))
   }, [
     volume,
     params.inode,
