@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { FileIcon, defaultStyles } from 'react-file-icon'
 import useFileExplorer from 'hooks/useFileExplorer'
@@ -112,6 +112,12 @@ const TABLE_FIELDS = [{
   name: 'modified',
 }]
 
+const sortByFilename = (a, b) => {
+  if(a.filename > b.filename) return 1
+  else if(a.filename < b.filename) return -1
+  else return 0
+}
+
 const TaekionExplorer = ({
   classes,
 }) => {
@@ -125,6 +131,18 @@ const TaekionExplorer = ({
   } = explorer
 
   const entries = explorerDirectories[inode_id] || []
+
+  const sortedEntries = useMemo(() => {
+    const folders = entries.filter(e => e.isDirectory ? true : false)
+    const files = entries.filter(e => e.isDirectory ? false : true)
+
+    folders.sort(sortByFilename)
+    files.sort(sortByFilename)
+
+    return folders.concat(files)
+  }, [
+    entries,
+  ])
 
   const clickEntry = (entry, download_filename) => {
     if(entry.isDirectory) {
@@ -167,7 +185,7 @@ const TaekionExplorer = ({
     return buttons
   }
 
-  const data = entries.map((entry) => {
+  const data = sortedEntries.map((entry) => {
     const ext = entry.filename.split('.').pop()
     let ret = {
       id: entry.inodeid,
