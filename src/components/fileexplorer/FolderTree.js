@@ -21,7 +21,7 @@ const styles = theme => ({
 
   },
   nestedListItem: {
-    paddingLeft: theme.spacing.unit * 4,
+    paddingLeft: theme.spacing(4),
   },
 })
 

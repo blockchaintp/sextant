@@ -23,7 +23,7 @@ const styles = theme => ({
     width: '100%',
   },
   formControl: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(4),
     width: '100%',
   },
 })
