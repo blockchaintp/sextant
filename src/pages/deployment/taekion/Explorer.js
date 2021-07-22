@@ -16,6 +16,7 @@ import SimpleTableActions from 'components/table/SimpleTableActions'
 import FolderIcon from '@material-ui/icons/Folder'
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
+import InfoIcon from '@material-ui/icons/Info'
 
 const styles = theme => ({
 
@@ -134,10 +135,10 @@ const TaekionExplorer = ({
     }
   }
 
-  const entryDetails = (e, entry) => {
+  const clickEntryTitle = (e, entry) => {
     e.preventDefault()
     e.stopPropagation()
-    setViewingEntry(entry)
+    clickEntry(entry, entry.filename)
   }
 
   const getActions = (item) => {
@@ -155,6 +156,12 @@ const TaekionExplorer = ({
       title: 'Open',
       icon: OpenInBrowserIcon,
       handler: () => clickEntry(item.entry),
+    })
+
+    buttons.push({
+      title: 'Info',
+      icon: InfoIcon,
+      handler: () => setViewingEntry(item.entry),
     })
     
     return buttons
@@ -185,7 +192,7 @@ const TaekionExplorer = ({
             
           </div>
           <div>
-            <a href="#" onClick={ (e) => entryDetails(e, entry) }>
+            <a href="#" onClick={ (e) => clickEntryTitle(e, entry) }>
               { entry.filename }
             </a>
           </div>
