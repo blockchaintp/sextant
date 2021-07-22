@@ -167,8 +167,7 @@ const taekionApiWrapper = async ({
   try {
     await apiHandler()
   } catch(e) {
-    console.error(e)
-    if(e.toString().indexOf('connect: connection refused') > 0) {
+    if(e.toString().indexOf('connect:') > 0) {
       dispatch(snackbarActions.setInfo(`the taekion cluster is still starting up, please refresh in a few minutes`))
     }
     else {
@@ -193,6 +192,7 @@ const sideEffects = {
       name: 'listKeys',
       dataAction: actions.setKeys,
       snackbarError: true,
+      returnError: true,
     })
   }),
 
