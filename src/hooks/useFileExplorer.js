@@ -31,13 +31,12 @@ const useFileExplorer = () => {
   const accessToken = useSelector(selectors.user.accessToken)
   const params = useSelector(selectors.router.params)
   const volumes = useSelector(selectors.taekion.volumes)
+  const snapshots = useSelector(selectors.taekion.snapshots)
   const explorerNodes = useSelector(selectors.taekion.explorerNodes)
   const explorerDirectories = useSelector(selectors.taekion.explorerDirectories)
   const explorerNodesLoading = useSelector(selectors.taekion.explorerNodesLoading)
   
-  
   // MEMO
-
   const volume = useMemo(() => {
     let returnVolume = volumes[0]
     if(params.volume) {
@@ -48,6 +47,14 @@ const useFileExplorer = () => {
   }, [
     volumes,
     params.volume,
+  ])
+
+  const snapshot = useMemo(() => {
+    if(!params.snapshot) return null
+    return snapshots.find(s => s.block == params.snapshot)
+  }, [
+    snapshots,
+    params.snapshot,
   ])
 
   const folderTree = useMemo(() => {
@@ -145,9 +152,12 @@ const useFileExplorer = () => {
 
   return {
     volume_id: params.volume,
+    snapshot_id: params.snapshot,
     inode_id: params.inode,
     volumes,
     volume,
+    snapshots,
+    snapshot,
     explorerNodes,
     explorerDirectories,
     folderTree,
