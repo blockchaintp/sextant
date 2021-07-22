@@ -88,6 +88,7 @@ const useFileExplorer = () => {
   const onChangeSnapshot = useCallback((id) => {
     onUpdateRoute({
       snapshot: id == 'head' ? '' : id,
+      inode: 'root',
     })
   }, [
     onUpdateRoute,
@@ -142,8 +143,17 @@ const useFileExplorer = () => {
       cluster: params.cluster,
       deployment: params.id,
       volume: volume.uuid,
+      snapshot: params.snapshot,
       inode,
     }))
+  }, [
+    volume,
+    params.snapshot,
+    params.inode,
+  ])
+
+  useEffect(() => {
+    if(!volume) return
     dispatch(taekionActions.listSnapshots({
       cluster: params.cluster,
       deployment: params.id,
@@ -151,7 +161,6 @@ const useFileExplorer = () => {
     }))
   }, [
     volume,
-    params.inode,
   ])
 
   useEffect(() => {

@@ -147,10 +147,13 @@ const loaders = {
     deployment,
     volume,
     inode,
-  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/explorer/${volume}/dir/${inode}`))
-    .then(api.process),
-
-
+    snapshot,
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/explorer/${volume}/dir/${inode}`), {
+      params: {
+        snapshot,
+      }
+    })
+      .then(api.process)
 }
 
 // wrap all taekion api calls
@@ -439,6 +442,7 @@ const sideEffects = {
     deployment,
     volume,
     inode,
+    snapshot,
   }) => async (dispatch, getState) => {
 
     await taekionApiWrapper({
@@ -452,7 +456,7 @@ const sideEffects = {
         }))
         const data = await api.loaderSideEffect({
           dispatch,
-          loader: () => loaders.explorerListDirectory({cluster, deployment, volume, inode}),
+          loader: () => loaders.explorerListDirectory({cluster, deployment, volume, inode, snapshot}),
           prefix,
           name: 'explorerListDirectory',
           returnError: true,
