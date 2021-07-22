@@ -71,7 +71,7 @@ const styles = theme => ({
     overflowY: 'auto',
   },
   formControl: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     minWidth: 200,
   },
   smalltext: {
@@ -80,7 +80,7 @@ const styles = theme => ({
   },
   fileicon: {
     width: '30px',
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   filename: {
     display: 'flex',
