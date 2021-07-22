@@ -111,13 +111,13 @@ const ExplorerSidebar = ({
               latest
             </MenuItem>
             {
-              volumes
-                .map((v, i) => (
+              snapshots
+                .map((s, i) => (
                   <MenuItem
                     key={i}
-                    value={v.uuid}
+                    value={s.block}
                   >
-                    { v.name }
+                    { s.name }
                   </MenuItem>
                 ))
             }

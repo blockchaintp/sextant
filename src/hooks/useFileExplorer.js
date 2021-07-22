@@ -85,6 +85,14 @@ const useFileExplorer = () => {
     onUpdateRoute,
   ])
 
+  const onChangeSnapshot = useCallback((id) => {
+    onUpdateRoute({
+      snapshot: id == 'head' ? '' : id,
+    })
+  }, [
+    onUpdateRoute,
+  ])
+
   const clickFolderTree = useCallback((id) => {
     let value = true
     if(id == params.inode) value = explorerNodesExpanded[id] ? false : true
@@ -164,6 +172,7 @@ const useFileExplorer = () => {
     expanded: explorerNodesExpanded,
     loading: explorerNodesLoading,
     onChangeVolume,
+    onChangeSnapshot,
     openFolder,
     openFile,
     clickFolderTree,
