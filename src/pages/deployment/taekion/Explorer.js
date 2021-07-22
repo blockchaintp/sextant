@@ -230,6 +230,7 @@ const TaekionExplorer = ({
       </div>
       <div className={ classes.content }>
         <SimpleTable
+          withSorting={ false }
           pagination
           data={data}
           fields={TABLE_FIELDS}

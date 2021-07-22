@@ -94,6 +94,7 @@ class SimpleTable extends React.Component {
       pagination,
       hideHeader,
       hideHeaderIfEmpty,
+      withSorting = true,
     } = this.props
 
     const {
@@ -113,12 +114,9 @@ class SimpleTable extends React.Component {
                 <TableHead>
                   <TableRow>
                     {
-                      fields.map((field, i) => (
-                        <TableCell
-                          key={i}
-                          align={field.numeric ? 'right' : 'left'}
-                          sortDirection={orderBy === field.name ? order : false}
-                        >
+                      fields.map((field, i) => {
+
+                        const content = withSorting ? (
                           <Tooltip
                             title="Sort"
                             placement={field.numeric ? 'bottom-end' : 'bottom-start'}
@@ -132,8 +130,19 @@ class SimpleTable extends React.Component {
                               {field.title}
                             </TableSortLabel>
                           </Tooltip>
-                        </TableCell>
-                      ))
+                        ) : (
+                          <div>{field.title}</div>
+                        )
+                        return (
+                          <TableCell
+                            key={i}
+                            align={field.numeric ? 'right' : 'left'}
+                            sortDirection={orderBy === field.name ? order : false}
+                          >
+                            {content}
+                          </TableCell>
+                        )
+                      })
                     }
                     {
                       getActions ? (
