@@ -115,11 +115,11 @@ class SimpleTable extends React.Component {
                   <TableRow>
                     {
                       fields.map((field, i) => {
-
+                        const tooltipPlacement = field.numeric ? 'bottom-end' : 'bottom-start'
                         const content = withSorting ? (
                           <Tooltip
                             title="Sort"
-                            placement={field.numeric ? 'bottom-end' : 'bottom-start'}
+                            placement={tooltipPlacement}
                             enterDelay={300}
                           >
                             <TableSortLabel
