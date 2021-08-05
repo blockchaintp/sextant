@@ -220,3 +220,6 @@ typings/
 build
 .scannerwork
 markers
+
+# MkDocs documentation
+site/
