@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* fix(deploymenttable): removes version column from deployment table in ui [view commit](https://github.com/catenasys/sextant/commit/a2508496749f3e42b225b1d995e1bdfbb6ba29ea)
 * docs: add mkdocs setup [view commit](https://github.com/catenasys/sextant/commit/c24607272a1e20707bab509de536c18d859a4162)
 * refactor(deployment-form): removes variable shadowing by exploding unnecessary object destructure [view commit](https://github.com/catenasys/sextant/commit/66bedff4a7dd1d54bb5d4591819f9f175c106297)
 * fix(config): remove code that injects tfs explorer feature to config form object [view commit](https://github.com/catenasys/sextant/commit/2040fccf17a0d4b1504d9836c31e8b8963be4b73)
