@@ -572,6 +572,11 @@ const sideEffects = {
       value: false,
     }))
   },
+  clearState: () => (dispatch) => {
+    dispatch(actions.setArchives([]))
+    dispatch(actions.setParticipants([]))
+    dispatch(actions.setKeyManagerKeys([]))
+  },
 }
 
 const reducer = CreateReducer({

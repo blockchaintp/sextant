@@ -214,6 +214,9 @@ const routes = [
       activate: (store, params) => {
         store.dispatch(deploymentActions.get(params.cluster, params.id))
       },
+      deactivate: (store) => {
+        store.dispatch(deploymentSettingsActions.clearState())
+      },
     },
     children: [{
       name: 'keys',
