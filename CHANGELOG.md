@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* build(deps): bump url-parse from 1.5.1 to 1.5.3 [view commit](https://github.com/catenasys/sextant/commit/eadf8068cdaa66c2df8ea61d6be5be16f9857725)
+* feat(routes): add deactivate trigger that clears daml settings state [view commit](https://github.com/catenasys/sextant/commit/cdbd57c6b9d337d73fb701206a977514289c7ea0)
+* feat(daml-settings-actions): add action that clears parts of state [view commit](https://github.com/catenasys/sextant/commit/284f72d94bd65ef6f600f64e983f267789694899)
 * fix(deploymenttable): removes version column from deployment table in ui [view commit](https://github.com/catenasys/sextant/commit/a2508496749f3e42b225b1d995e1bdfbb6ba29ea)
 * docs: add mkdocs setup [view commit](https://github.com/catenasys/sextant/commit/c24607272a1e20707bab509de536c18d859a4162)
 * refactor(deployment-form): removes variable shadowing by exploding unnecessary object destructure [view commit](https://github.com/catenasys/sextant/commit/66bedff4a7dd1d54bb5d4591819f9f175c106297)
