@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v2.1.2
 
 * build(deps): bump url-parse from 1.5.1 to 1.5.3 [view commit](https://github.com/catenasys/sextant/commit/eadf8068cdaa66c2df8ea61d6be5be16f9857725)
 * feat(routes): add deactivate trigger that clears daml settings state [view commit](https://github.com/catenasys/sextant/commit/cdbd57c6b9d337d73fb701206a977514289c7ea0)
