@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+* build(packages): removes tap-spec which was parent to dependancy that had a severe vulnerability [view commit](https://github.com/catenasys/sextant/commit/a6814752941b2e5eab4ad644dc78e8517aa7d19d)
+
 ## v2.1.2
 
 * build(deps): bump url-parse from 1.5.1 to 1.5.3 [view commit](https://github.com/catenasys/sextant/commit/eadf8068cdaa66c2df8ea61d6be5be16f9857725)
