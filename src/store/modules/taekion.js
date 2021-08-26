@@ -147,10 +147,13 @@ const loaders = {
     deployment,
     volume,
     inode,
-  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/explorer/${volume}/dir/${inode}`))
-    .then(api.process),
-
-
+    snapshot,
+  }) => axios.get(api.url(`/clusters/${cluster}/deployments/${deployment}/taekion/explorer/${volume}/dir/${inode}`), {
+      params: {
+        snapshot,
+      }
+    })
+      .then(api.process)
 }
 
 // wrap all taekion api calls
@@ -167,8 +170,7 @@ const taekionApiWrapper = async ({
   try {
     await apiHandler()
   } catch(e) {
-    console.error(e)
-    if(e.toString().indexOf('connect: connection refused') > 0) {
+    if(e.toString().indexOf('connect:') > 0) {
       dispatch(snackbarActions.setInfo(`the taekion cluster is still starting up, please refresh in a few minutes`))
     }
     else {
@@ -193,6 +195,7 @@ const sideEffects = {
       name: 'listKeys',
       dataAction: actions.setKeys,
       snackbarError: true,
+      returnError: true,
     })
   }),
 
@@ -439,6 +442,7 @@ const sideEffects = {
     deployment,
     volume,
     inode,
+    snapshot,
   }) => async (dispatch, getState) => {
 
     await taekionApiWrapper({
@@ -452,7 +456,7 @@ const sideEffects = {
         }))
         const data = await api.loaderSideEffect({
           dispatch,
-          loader: () => loaders.explorerListDirectory({cluster, deployment, volume, inode}),
+          loader: () => loaders.explorerListDirectory({cluster, deployment, volume, inode, snapshot}),
           prefix,
           name: 'explorerListDirectory',
           returnError: true,

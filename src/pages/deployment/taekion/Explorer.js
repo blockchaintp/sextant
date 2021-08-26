@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { FileIcon, defaultStyles } from 'react-file-icon'
 import useFileExplorer from 'hooks/useFileExplorer'
@@ -16,6 +16,7 @@ import SimpleTableActions from 'components/table/SimpleTableActions'
 import FolderIcon from '@material-ui/icons/Folder'
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
+import InfoIcon from '@material-ui/icons/Info'
 
 const styles = theme => ({
 
@@ -71,7 +72,7 @@ const styles = theme => ({
     overflowY: 'auto',
   },
   formControl: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     minWidth: 200,
   },
   smalltext: {
@@ -80,7 +81,7 @@ const styles = theme => ({
   },
   fileicon: {
     width: '30px',
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   filename: {
     display: 'flex',
@@ -111,6 +112,12 @@ const TABLE_FIELDS = [{
   name: 'modified',
 }]
 
+const sortByFilename = (a, b) => {
+  if(a.filename > b.filename) return 1
+  else if(a.filename < b.filename) return -1
+  else return 0
+}
+
 const TaekionExplorer = ({
   classes,
 }) => {
@@ -125,6 +132,18 @@ const TaekionExplorer = ({
 
   const entries = explorerDirectories[inode_id] || []
 
+  const sortedEntries = useMemo(() => {
+    const folders = entries.filter(e => e.isDirectory ? true : false)
+    const files = entries.filter(e => e.isDirectory ? false : true)
+
+    folders.sort(sortByFilename)
+    files.sort(sortByFilename)
+
+    return folders.concat(files)
+  }, [
+    entries,
+  ])
+
   const clickEntry = (entry, download_filename) => {
     if(entry.isDirectory) {
       explorer.openFolder(entry.inodeid)
@@ -134,10 +153,10 @@ const TaekionExplorer = ({
     }
   }
 
-  const entryDetails = (e, entry) => {
+  const clickEntryTitle = (e, entry) => {
     e.preventDefault()
     e.stopPropagation()
-    setViewingEntry(entry)
+    clickEntry(entry, entry.filename)
   }
 
   const getActions = (item) => {
@@ -156,11 +175,17 @@ const TaekionExplorer = ({
       icon: OpenInBrowserIcon,
       handler: () => clickEntry(item.entry),
     })
+
+    buttons.push({
+      title: 'Info',
+      icon: InfoIcon,
+      handler: () => setViewingEntry(item.entry),
+    })
     
     return buttons
   }
 
-  const data = entries.map((entry) => {
+  const data = sortedEntries.map((entry) => {
     const ext = entry.filename.split('.').pop()
     let ret = {
       id: entry.inodeid,
@@ -185,7 +210,7 @@ const TaekionExplorer = ({
             
           </div>
           <div>
-            <a href="#" onClick={ (e) => entryDetails(e, entry) }>
+            <a href="#" onClick={ (e) => clickEntryTitle(e, entry) }>
               { entry.filename }
             </a>
           </div>
@@ -223,6 +248,7 @@ const TaekionExplorer = ({
       </div>
       <div className={ classes.content }>
         <SimpleTable
+          withSorting={ false }
           pagination
           data={data}
           fields={TABLE_FIELDS}

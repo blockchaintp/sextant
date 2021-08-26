@@ -31,13 +31,12 @@ const useFileExplorer = () => {
   const accessToken = useSelector(selectors.user.accessToken)
   const params = useSelector(selectors.router.params)
   const volumes = useSelector(selectors.taekion.volumes)
+  const snapshots = useSelector(selectors.taekion.snapshots)
   const explorerNodes = useSelector(selectors.taekion.explorerNodes)
   const explorerDirectories = useSelector(selectors.taekion.explorerDirectories)
   const explorerNodesLoading = useSelector(selectors.taekion.explorerNodesLoading)
   
-  
   // MEMO
-
   const volume = useMemo(() => {
     let returnVolume = volumes[0]
     if(params.volume) {
@@ -48,6 +47,14 @@ const useFileExplorer = () => {
   }, [
     volumes,
     params.volume,
+  ])
+
+  const snapshot = useMemo(() => {
+    if(!params.snapshot) return null
+    return snapshots.find(s => s.block == params.snapshot)
+  }, [
+    snapshots,
+    params.snapshot,
   ])
 
   const folderTree = useMemo(() => {
@@ -72,6 +79,15 @@ const useFileExplorer = () => {
     dispatch(taekionActions.resetExplorer())
     onUpdateRoute({
       volume: id,
+      inode: 'root',
+    })
+  }, [
+    onUpdateRoute,
+  ])
+
+  const onChangeSnapshot = useCallback((id) => {
+    onUpdateRoute({
+      snapshot: id == 'head' ? '' : id,
       inode: 'root',
     })
   }, [
@@ -106,7 +122,7 @@ const useFileExplorer = () => {
   ])
 
   const openFile = useCallback((file_inode, download_filename) => {
-    const url = `${settings.api}/clusters/${params.cluster}/deployments/${params.id}/taekion/explorer/${volume.uuid}/dir/${params.inode}/file/${file_inode}?download_filename=${download_filename || ''}&token=${accessToken}`
+    const url = `${settings.api}/clusters/${params.cluster}/deployments/${params.id}/taekion/explorer/${volume.uuid}/dir/${params.inode}/file/${file_inode}?download_filename=${download_filename || ''}&token=${accessToken}&snapshot=${params.snapshot}`
     window.open(url)
   }, [
     volume,
@@ -127,11 +143,24 @@ const useFileExplorer = () => {
       cluster: params.cluster,
       deployment: params.id,
       volume: volume.uuid,
+      snapshot: params.snapshot,
       inode,
     }))
   }, [
     volume,
+    params.snapshot,
     params.inode,
+  ])
+
+  useEffect(() => {
+    if(!volume) return
+    dispatch(taekionActions.listSnapshots({
+      cluster: params.cluster,
+      deployment: params.id,
+      volume: volume.uuid,
+    }))
+  }, [
+    volume,
   ])
 
   useEffect(() => {
@@ -140,15 +169,19 @@ const useFileExplorer = () => {
 
   return {
     volume_id: params.volume,
+    snapshot_id: params.snapshot,
     inode_id: params.inode,
     volumes,
     volume,
+    snapshots,
+    snapshot,
     explorerNodes,
     explorerDirectories,
     folderTree,
     expanded: explorerNodesExpanded,
     loading: explorerNodesLoading,
     onChangeVolume,
+    onChangeSnapshot,
     openFolder,
     openFile,
     clickFolderTree,
