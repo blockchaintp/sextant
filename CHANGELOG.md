@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+* fix(taekion-snapshot-ui): fix code smell [view commit](https://github.com/catenasys/sextant/commit/4240d253d31e5156b01736cd3abd5f4a4423bcff)
+* feat(taekion-snapshot-ui): sorting for file and folder list [view commit](https://github.com/catenasys/sextant/commit/cb72f48607e8bca036d8bd6e9d4109bee952ace2)
+* feat(taekion-snapshot-ui): add table option to disable sorting and use that for tfs explorer list [view commit](https://github.com/catenasys/sextant/commit/e65045801bac2feb4a0d95ede0aab8c8e8efb54a)
+* feat(taekion-snapshot-ui): click on title to open and add info button to actions [view commit](https://github.com/catenasys/sextant/commit/05b81e698916a12b9324690ad64aab15d4f36f3a)
+* feat(taekion-snapshot-ui): forward snapshot id to download file urls [view commit](https://github.com/catenasys/sextant/commit/20cab96ba51c61b04e060e5762824ff2fa9b74a8)
+* feat(taekion-snapshot-ui): trigger snapshot directory listing is working [view commit](https://github.com/catenasys/sextant/commit/476db3887999a59921a10cefd1940a6bdd7fd5cc)
+* feat(taekion-snapshot-ui): trigger route change on snapshot select [view commit](https://github.com/catenasys/sextant/commit/f02ff7fd75ff522f33315857542017522f06910f)
+* feat(taekion-snapshots-ui): layout for snapshot select in explorer sidebar [view commit](https://github.com/catenasys/sextant/commit/6e14c1108c3319b81344f9d7e7f8378d81f6845a)
+* fix(taekion-snapshots): load snapshots so we can drive the snapshot selector ui [view commit](https://github.com/catenasys/sextant/commit/cb18902ff1c7e96f7d5b918591964b042fb3cc72)
+* fix(material-ui): upgrade spacing to new material ui api [view commit](https://github.com/catenasys/sextant/commit/e8eb8ec9eb8b0611d76bcf129228bdac1a3e72d4)
+* fix(taekion-ui): fix padding on volume drop down [view commit](https://github.com/catenasys/sextant/commit/98fcbaa8d65f448e4325636fb155707f1ce4aa52)
+* fix(taekion-ui): fix warmup message for taekion keys page [view commit](https://github.com/catenasys/sextant/commit/001c0a47bbfffc1c80605f14300cac9da394081d)
+* fix(taekion-snapshots): upgrade material ui spacing [view commit](https://github.com/catenasys/sextant/commit/e5eedff1040c00090ce5e1a831f8abf64d317240)
+* build(babelrc): silences excessive warnings during frontend build [view commit](https://github.com/catenasys/sextant/commit/cf27652da48d37b4d2c31977933e3f9136b4140d)
+* build(packages): reverts webpack-dev-server back to 3.11.2 to support our version of node [view commit](https://github.com/catenasys/sextant/commit/f994bba3ff5878ee926894e4aa1f1524ed018ddf)
 * build(packages): removes tap-spec which was parent to dependancy that had a severe vulnerability [view commit](https://github.com/catenasys/sextant/commit/a6814752941b2e5eab4ad644dc78e8517aa7d19d)
 
 ## v2.1.2
