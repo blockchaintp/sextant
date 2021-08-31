@@ -213,9 +213,11 @@ const routes = [
     trigger: {
       activate: (store, params) => {
         store.dispatch(deploymentActions.get(params.cluster, params.id))
+        store.dispatch(deploymentActions.startPartiesLoop(params.cluster, params.id))
       },
       deactivate: (store) => {
         store.dispatch(deploymentSettingsActions.clearState())
+        store.dispatch(deploymentSettingsActions.stopPartiesLoop())
       },
     },
     children: [{
