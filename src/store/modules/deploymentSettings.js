@@ -36,6 +36,7 @@ const initialState = {
   // are we looping for the following endpoints?
   loops: {
     keys: null,
+    paties: null,
   },
 }
 
@@ -534,6 +535,41 @@ const sideEffects = {
           id,
         }))
       },
+    }))
+  },
+  startPartiesLoop: ({
+    cluster,
+    id,
+  }) => async (dispatch) => {
+    dispatch(actions.setLoop({
+      name: 'parties',
+      value: true,
+    }))
+    dispatch(actions.partiesLoop({
+      cluster,
+      id,
+    }))
+  },
+  partiesLoop: ({
+    cluster,
+    id,
+  }) => async (dispatch, getState) => {
+    const looping = getState().deploymentSettings.loops.parties
+    if (!looping) return
+    await dispatch(actions.loadParties({
+      cluster,
+      id,
+    }))
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    dispatch(actions.partiesLoop({
+      cluster,
+      id,
+    }))
+  },
+  stopPartiesLoop: () => (dispatch) => {
+    dispatch(actions.setLoop({
+      name: 'parties',
+      value: false,
     }))
   },
 
