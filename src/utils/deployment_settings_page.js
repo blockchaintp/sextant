@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 /*
  * Copyright © 2020 Blockchain Technology Partners Limited All Rights Reserved
  *
@@ -38,7 +40,7 @@ const FEATURE_TABS = {
     title: 'TFS Snapshots',
     params: {
       volume: 'all',
-    }
+    },
   },
   'taekion.explorer': {
     id: 'taekionExplorer',
@@ -46,28 +48,30 @@ const FEATURE_TABS = {
     params: {
       volume: 'any',
       inode: 'root',
-    }
+    },
   },
 }
 
 const getPages = function (features) {
-  return features.map(feature => FEATURE_TABS[feature])
+  return features.map((feature) => FEATURE_TABS[feature])
 }
 
-const getFeaturesForDeployment = (deploymentForms, deployment_type, deployment_version) => {
-  return deploymentForms[deployment_type].button.versions.find((item) => {
-    return (item.form === deployment_version)
-  }).features
-}
+const getFeaturesForDeployment = (
+  deploymentForms,
+  deployment_type,
+  deployment_version,
+) => deploymentForms[deployment_type]
+  .button
+  .versions
+  .find((item) => (item.form === deployment_version)).features
 
 const getFirstTagForDeployment = (deploymentForms, deployment_type, deployment_version) => {
   const features = getFeaturesForDeployment(deploymentForms, deployment_type, deployment_version)
   const pages = getPages(features)
   if (pages.length > 0) {
     return pages[0].id
-  } else {
-    return ""
   }
+  return ''
 }
 
 module.exports = {

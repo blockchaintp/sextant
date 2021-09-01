@@ -1,4 +1,3 @@
-
 import createAction from './createAction'
 
 test('createAction -> standard', () => {
