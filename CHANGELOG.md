@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* docs: add documentation for daml actions [view commit](https://github.com/catenasys/sextant/commit/71f7c64b2b9ee073f057f071ff139fdaeda2e837)
 * fix(taekion-snapshot-ui): fix code smell [view commit](https://github.com/catenasys/sextant/commit/4240d253d31e5156b01736cd3abd5f4a4423bcff)
 * feat(taekion-snapshot-ui): sorting for file and folder list [view commit](https://github.com/catenasys/sextant/commit/cb72f48607e8bca036d8bd6e9d4109bee952ace2)
 * feat(taekion-snapshot-ui): add table option to disable sorting and use that for tfs explorer list [view commit](https://github.com/catenasys/sextant/commit/e65045801bac2feb4a0d95ede0aab8c8e8efb54a)
