@@ -5,7 +5,7 @@
   "description": "frontend for the sextant cluster creation service",
   "scripts": {
     "develop": "webpack serve --config config/webpack.dev.js",
-    "build-test": "webpack --config config/webpack.test.js",
+    "build-test": "webpack --config config/webpackTest.js",
     "build": "webpack --config config/webpack.prod.js",
     "test": "jest",
     "analyze": "npm run analyze:build && npm run analyze:serve",
