@@ -20,9 +20,9 @@ const reducers = {
   setWarning: (state, action) => setText(state, action.payload, 'warning'),
   setError: (state, action) => setText(state, action.payload, 'error'),
   setInfo: (state, action) => setText(state, action.payload, 'info'),
-  onClose: (state, action) => {
+  onClose: (state) => {
     state.open = false
-  }
+  },
 }
 
 const reducer = CreateReducer({

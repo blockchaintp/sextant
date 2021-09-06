@@ -36,19 +36,16 @@ const CreateReducer = ({
   reducers,
   prefix,
 }) => {
-  if(!reducers) throw new Error(`reducers required for CreateReducer`)
+  if (!reducers) throw new Error('reducers required for CreateReducer')
   const useReducers = Object.keys(reducers).reduce((all, name) => {
     const key = prefix ? `${prefix}/${name}` : name
     all[key] = reducers[name]
     return all
   }, {})
-
-  return (state = initialState, action) => {
-    return createNextState(state, draft => {
-      const caseReducer = useReducers[action.type]
-      return caseReducer ? caseReducer(draft, action) : undefined
-    })
-  }
+  return (state = initialState, action) => createNextState(state, (draft) => { // NOSONAR
+    const caseReducer = useReducers[action.type]
+    return caseReducer ? caseReducer(draft, action) : undefined
+  })
 }
 
 export default CreateReducer
