@@ -4,11 +4,15 @@
   "version": "1.0.0",
   "description": "frontend for the sextant cluster creation service",
   "jest": {
+    "verbose": true,
     "reporters": [
-      [ "jest-tap-reporter", { "filePath": "tap.out" } ],
-      [ "jest-tap-reporter", { "showProgress": true } ]
-    ],
-    "verbose": true
+      "default",
+      [
+        "jest-tap-reporter", {
+          "filePath": "tap.out"
+        }
+      ]
+    ]
   },
   "scripts": {
     "develop": "webpack serve --config config/webpack.dev.js",
