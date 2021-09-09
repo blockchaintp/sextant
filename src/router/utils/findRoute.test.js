@@ -1,4 +1,3 @@
-import tape from 'tape'
 import findRoute from './findRoute'
 
 const layer3 = {
@@ -20,7 +19,7 @@ const layer1 = {
 
 const home = {
   name: 'home',
-  path: '/'
+  path: '/',
 }
 
 const routes = [
@@ -28,32 +27,27 @@ const routes = [
   layer1,
 ]
 
-tape('findRoute -> layer1', (t) => {
+test('findRoute -> layer1', () => {
   const route = findRoute(routes, 'layer1')
-  t.deepEqual(route, layer1, 'the layer1 route is correct')
-  t.end()
+  expect(route).toMatchObject(layer1)
 })
 
-tape('findRoute -> layer2', (t) => {
+test('findRoute -> layer2', () => {
   const route = findRoute(routes, 'layer1.layer2')
-  t.deepEqual(route, layer2, 'the layer2 route is correct')
-  t.end()
+  expect(route).toMatchObject(layer2)
 })
 
-tape('findRoute -> layer3', (t) => {
+test('findRoute -> layer3', () => {
   const route = findRoute(routes, 'layer1.layer2.layer3')
-  t.deepEqual(route, layer3, 'the layer3 route is correct')
-  t.end()
+  expect(route).toMatchObject(layer3)
 })
 
-tape('findRoute -> missing layer4', (t) => {
+test('findRoute -> missing layer4', () => {
   const route = findRoute(routes, 'layer1.layer2.layer3.layer4')
-  t.notok(route, 'the layer4 route is correctly missing')
-  t.end()
+  expect(route).toBeFalsy()
 })
 
-tape('findRoute -> missing top level', (t) => {
+test('findRoute -> missing top level', () => {
   const route = findRoute(routes, 'oranges')
-  t.notok(route, 'the oranges route is correctly missing')
-  t.end()
+  expect(route).toBeFalsy()
 })

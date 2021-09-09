@@ -1,36 +1,36 @@
+/* eslint-disable global-require */
+/* eslint-disable no-underscore-dangle */
 import { applyMiddleware, createStore, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import thunk from 'redux-thunk'
 import { router5Middleware } from 'redux-router5'
-import {logger, createLogger} from 'redux-logger'
 
 import SagaManager from './sagaManager'
 import reducer from './reducer'
 
-
 const Store = (router, initialState = {}) => {
-
   const sagaMiddleware = createSagaMiddleware()
 
   const middleware = [
     router5Middleware(router),
     thunk,
     sagaMiddleware,
-    //logger
   ]
 
   const storeEnhancers = [
     applyMiddleware(...middleware),
   ]
 
-  if(window.__REDUX_DEVTOOLS_EXTENSION__) storeEnhancers.push(window.__REDUX_DEVTOOLS_EXTENSION__({
-    shouldHotReload: false,
-  }))
+  if (window.__REDUX_DEVTOOLS_EXTENSION__) {
+    storeEnhancers.push(window.__REDUX_DEVTOOLS_EXTENSION__({
+      shouldHotReload: false,
+    }))
+  }
 
   const store = createStore(
     reducer,
     initialState,
-    compose(...storeEnhancers)
+    compose(...storeEnhancers),
   )
 
   router.setDependency('store', store)

@@ -1,4 +1,3 @@
-import tape from 'tape'
 import createReducer from './createReducer'
 
 const initialState = {
@@ -8,7 +7,7 @@ const initialState = {
 const reducers = {
   toggleOpen: (state, action) => {
     state.open = action.payload
-  }, 
+  },
 }
 
 const getReducer = (prefix) => createReducer({
@@ -17,37 +16,34 @@ const getReducer = (prefix) => createReducer({
   prefix,
 })
 
-tape('createReducer -> initial state', (t) => {
+test('createReducer -> initial state', () => {
   const reducer = getReducer()
-  t.deepEqual(reducer(undefined, {}), initialState, `the initial state is correct`)
-  t.end()
+  expect(reducer(undefined, {})).toMatchObject(initialState)
 })
 
-tape('createReducer -> toggle action', (t) => {
+test('createReducer -> toggle action', () => {
   const reducer = getReducer()
   const newState = reducer(undefined, {
     type: 'toggleOpen',
     payload: true,
   })
-  t.deepEqual(newState, {
+  expect(newState).toMatchObject({
     open: true,
-  }, `the new state is correct`)
-  t.end()
+  })
 })
 
-tape('createReducer -> with prefix', (t) => {
+test('createReducer -> with prefix', () => {
   const reducer = getReducer('apples')
   const newState = reducer(undefined, {
     type: 'apples/toggleOpen',
     payload: true,
   })
-  t.deepEqual(newState, {
+  expect(newState).toMatchObject({
     open: true,
-  }, `the new state is correct`)
-  t.end()
+  })
 })
 
-tape('createReducer -> with no matching action', (t) => {
+test('createReducer -> with no matching action', () => {
   const reducer = createReducer({
     initialState: {
       fruit: 10,
@@ -55,16 +51,16 @@ tape('createReducer -> with no matching action', (t) => {
     reducers: {
       apples: (state, action) => {
         state.fruit = action.payload
-      }
-    }
+      },
+    },
   })
 
   const newState = reducer(undefined, {
     type: 'oranges',
     payload: 11,
   })
-  t.deepEqual(newState, {
+
+  expect(newState).toMatchObject({
     fruit: 10,
-  }, `the new state is correct`)
-  t.end()
+  })
 })

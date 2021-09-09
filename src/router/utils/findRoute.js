@@ -34,10 +34,10 @@
 */
 
 const findRoute = (routes, name) => {
-  if(!name) return null
+  if (!name) return null
   return name.split('.').reduce((currentRoute, part) => {
-    if(!currentRoute || !currentRoute.children) return null
-    return currentRoute.children.find(route => route.name == part)
+    if (!currentRoute || !currentRoute.children) return null
+    return currentRoute.children.find((route) => route.name === part)
   }, {
     children: routes,
   })

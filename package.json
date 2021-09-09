@@ -3,11 +3,23 @@
   "private": true,
   "version": "1.0.0",
   "description": "frontend for the sextant cluster creation service",
+  "jest": {
+    "verbose": true,
+    "reporters": [
+      "default",
+      [
+        "jest-tap-reporter", {
+          "filePath": "tap.out"
+        }
+      ]
+    ]
+  },
   "scripts": {
     "develop": "webpack serve --config config/webpack.dev.js",
-    "build-test": "webpack --config config/webpack.test.js",
+    "build-test": "webpack --config config/webpackTest.js",
     "build": "webpack --config config/webpack.prod.js",
-    "test": "babel-tape-runner {src,test}/**/*.test.js",
+    "test": "jest",
+    "posttest": "rm tap.out",
     "analyze": "npm run analyze:build && npm run analyze:serve",
     "analyze:build": "webpack --config config/webpack.analyze.js",
     "analyze:serve": "node analyzeServer.js"
@@ -47,6 +59,7 @@
     "file-saver": "^2.0.5",
     "formik": "^2.2.9",
     "html-webpack-plugin": "^5.3.1",
+    "immer": "^9.0.5",
     "normalizr": "^3.6.1",
     "pretty-bytes": "^5.6.0",
     "prop-types": "15.7.2",
@@ -72,7 +85,6 @@
     "router5-plugin-browser": "^8.0.1",
     "router5-transition-path": "^8.0.1",
     "style-loader": "^2.0.0",
-    "tape": "^5.3.1",
     "timeago.js": "^4.0.2",
     "webpack": "^5.38.1",
     "webpack-bundle-analyzer": "^4.4.2",
@@ -92,6 +104,8 @@
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest": "^27.1.0",
+    "jest-tap-reporter": "^1.9.0"
   }
 }

@@ -5,7 +5,7 @@
     reducers,
     sideEffects,
   }) => map[string][function]
-  
+
   const actions = createActions({
     reducers: {
       toggleOpen: (state, action) => {
@@ -50,20 +50,17 @@ const CreateActions = ({
   const sideEffectActions = Object.keys(sideEffects || {}).reduce((all, key) => {
     const handler = sideEffects[key]
 
-    if(typeof(handler) === 'string') {
+    if (typeof (handler) === 'string') {
       all[key] = CreateAction(prefix ? `${prefix}/${handler}` : handler)
-    }
-    else if(typeof(handler) === 'function') {
+    } else if (typeof (handler) === 'function') {
       all[key] = handler
+    } else {
+      throw new Error(`unknown sideEffect type for ${key} of type ${typeof (handler)}`)
     }
-    else {
-      throw new Error(`unknown sideEffect type for ${key} of type ${typeof(handler)}`)
-    }
-    
     return all
   }, {})
 
-  return Object.assign({}, reducerActions, sideEffectActions)
+  return { ...reducerActions, ...sideEffectActions }
 }
 
 export default CreateActions

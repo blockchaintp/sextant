@@ -1,7 +1,6 @@
-import tape from 'tape'
 import createActions from './createActions'
 
-tape('createActions -> standard', (t) => {
+test('createActions -> standard', () => {
   const actions = createActions({
     reducers: {
       toggleOpen: (state, action) => {
@@ -9,21 +8,20 @@ tape('createActions -> standard', (t) => {
       },
       setData: (state, action) => {
         state.data = action.payload
-      }
-    }
+      },
+    },
   })
-  t.deepEqual(actions.toggleOpen(true), {
+  expect(actions.toggleOpen(true)).toMatchObject({
     type: 'toggleOpen',
     payload: true,
-  }, `the toggleOpen action is correct`)
-  t.deepEqual(actions.setData(10), {
+  })
+  expect(actions.setData(10)).toMatchObject({
     type: 'setData',
     payload: 10,
-  }, `the setData action is correct`)
-  t.end()
+  })
 })
 
-tape('createActions -> with prefix', (t) => {
+test('createActions -> with prefix', () => {
   const actions = createActions({
     prefix: 'apples',
     reducers: {
@@ -32,16 +30,15 @@ tape('createActions -> with prefix', (t) => {
       },
       setData: (state, action) => {
         state.data = action.payload
-      }
-    }
+      },
+    },
   })
-  t.deepEqual(actions.toggleOpen(true), {
+  expect(actions.toggleOpen(true)).toMatchObject({
     type: 'apples/toggleOpen',
     payload: true,
-  }, `the toggleOpen action is correct`)
-  t.deepEqual(actions.setData(10), {
+  })
+  expect(actions.setData(10)).toMatchObject({
     type: 'apples/setData',
     payload: 10,
-  }, `the setData action is correct`)
-  t.end()
+  })
 })
