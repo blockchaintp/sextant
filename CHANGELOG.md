@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+* build(deps): major update to error-overlay-webpack-plugin, patch update to axios [view commit](https://github.com/catenasys/sextant/commit/c3fe7bcb76843424da99d34839b6b6b6ed727d2c)
+* build(packages): sets up reporters so that both tap friendly and human readable output is given upon running test [view commit](https://github.com/catenasys/sextant/commit/3b896766a5b25485bce6c47e8c6d7150ac11065b)
+* test(store-router): converts old tape tests to jest tests [view commit](https://github.com/catenasys/sextant/commit/db800c7d2c9925fdba16ba3ffb6229b76d5bafac)
+* build(packages): adds jest-tap-reporter to dev dependencies [view commit](https://github.com/catenasys/sextant/commit/00291624603cdcc680b67586e4fd7081edc24292)
+* refactor(packages-webpack): renames webpack.test.js > webpackTest.js to avoid confusing jest [view commit](https://github.com/catenasys/sextant/commit/7fcca54ef935818bfef500254c32a529033d2d5a)
+* build(packages-eslint): installs jest as dev dependency and updates linter to know about jest [view commit](https://github.com/catenasys/sextant/commit/58eb83b3df691efd7ed217da906a22970a28e85c)
+* refactor(src): linting [view commit](https://github.com/catenasys/sextant/commit/88e330ce7dc1307943fdeff3ce6e9718704752a0)
 * docs: add documentation for daml actions [view commit](https://github.com/catenasys/sextant/commit/71f7c64b2b9ee073f057f071ff139fdaeda2e837)
 * fix(taekion-snapshot-ui): fix code smell [view commit](https://github.com/catenasys/sextant/commit/4240d253d31e5156b01736cd3abd5f4a4423bcff)
 * feat(taekion-snapshot-ui): sorting for file and folder list [view commit](https://github.com/catenasys/sextant/commit/cb72f48607e8bca036d8bd6e9d4109bee952ace2)
