@@ -56,9 +56,12 @@ pipeline {
 
     stage('Test') {
       steps {
-        sh '''
-          make test
-        '''
+        withCredentials([usernamePassword(credentialsId: 'btp-build-nexus', passwordVariable: 'BTP_DEV_PSW', usernameVariable: 'BTP_DEV_USR')]) {
+          sh '''
+            make test
+          '''
+          step([$class: "TapPublisher", testResults: "build/results.tap"])
+        }
       }
     }
 

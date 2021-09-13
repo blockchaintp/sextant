@@ -10,7 +10,7 @@
       [
         "jest-tap-reporter",
         {
-          "filePath": "tap.out"
+          "filePath": "test.out"
         }
       ]
     ]
@@ -20,7 +20,6 @@
     "build-test": "webpack --config config/webpackTest.js",
     "build": "webpack --config config/webpack.prod.js",
     "test": "jest",
-    "posttest": "rm tap.out",
     "analyze": "npm run analyze:build && npm run analyze:serve",
     "analyze:build": "webpack --config config/webpack.analyze.js",
     "analyze:serve": "node analyzeServer.js"
