@@ -13,7 +13,7 @@ test: $(MARKERS)/test_npm
 
 analyze: analyze_fossa analyze_sonar_js
 
-clean: clean_container
+clean: clean_container clean_npm
 
 distclean: clean_docker
 
@@ -40,9 +40,6 @@ clean_npm:
 	rm -rf node_modules
 
 $(MARKERS)/test_npm:
-	docker-compose -f docker-compose.test.yml up -d
-	docker-compose -f docker-compose.test.yml exec -T frontend_1 npm run test
-	docker cp frontend_test:/tmp/test.out ./build/results.tap
-	docker-compose -f docker-compose.test.yml down -v || true
-	docker-compose -f docker-compose.test.yml rm -f || true
+	$(TOOLCHAIN) npm ci
+	$(TOOLCHAIN) npm test
 	touch $@
