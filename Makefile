@@ -9,9 +9,11 @@ all: clean build test archive
 
 build:  $(MARKERS)/build_docker
 
+test: $(MARKERS)/test_npm
+
 analyze: analyze_fossa analyze_sonar_js
 
-clean: clean_container
+clean: clean_container clean_npm
 
 distclean: clean_docker
 
@@ -32,3 +34,12 @@ clean_container:
 .PHONY: clean_docker
 clean_docker:
 	docker-compose -f docker-compose.yaml down -v --rmi all || true
+
+.PHONY: clean_npm
+clean_npm:
+	rm -rf node_modules
+
+$(MARKERS)/test_npm:
+	$(TOOLCHAIN) npm ci
+	$(TOOLCHAIN) npm test
+	touch $@
