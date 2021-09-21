@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* build(deps): update package-lock.json [view commit](https://github.com/catenasys/sextant/commit/b56fd06a6fd9db91e602c3b484eaa1b75f418fd6)
 * build(deps): major update to error-overlay-webpack-plugin, patch update to axios [view commit](https://github.com/catenasys/sextant/commit/c3fe7bcb76843424da99d34839b6b6b6ed727d2c)
 * build(packages): sets up reporters so that both tap friendly and human readable output is given upon running test [view commit](https://github.com/catenasys/sextant/commit/3b896766a5b25485bce6c47e8c6d7150ac11065b)
 * test(store-router): converts old tape tests to jest tests [view commit](https://github.com/catenasys/sextant/commit/db800c7d2c9925fdba16ba3ffb6229b76d5bafac)
