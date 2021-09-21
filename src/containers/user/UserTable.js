@@ -12,9 +12,9 @@ const onEdit = (id) => routerActions.navigateTo('user', { id })
 const onDelete = (id) => userActions.delete(id)
 
 @connect(
-  state => ({
+  (state) => ({
     users: selectors.user.collection.list(state),
-    isSuperuser: selectors.auth.isSuperuser(state)
+    isSuperuser: selectors.auth.isSuperuser(state),
   }),
   {
     onAdd,
@@ -23,11 +23,10 @@ const onDelete = (id) => userActions.delete(id)
   },
 )
 class UserTableContainer extends React.Component {
-
   render() {
     return (
       <UserTable {...this.props} />
-    )    
+    )
   }
 }
 

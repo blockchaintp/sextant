@@ -7,11 +7,10 @@ import SnackbarWrapper from './containers/SnackbarWrapper'
 import Router from './router/Router'
 import edition from './edition'
 
-const header = edition.header
+const { header } = edition
 
 class Root extends React.Component {
   render() {
-
     const {
       store,
       router,
@@ -20,10 +19,10 @@ class Root extends React.Component {
     document.title = `Sextant for ${header.text}`
 
     return (
-      <Provider store={ store }>
+      <Provider store={store}>
         <Theme>
           <SnackbarWrapper>
-            <RouterProvider router={ router }>
+            <RouterProvider router={router}>
               <Router />
             </RouterProvider>
           </SnackbarWrapper>
