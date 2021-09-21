@@ -17,11 +17,13 @@ const prefix = 'cluster'
 const cluster = new schema.Entity('cluster')
 const task = new schema.Entity('task')
 const role = new schema.Entity('role')
+const user = new schema.Entity('user')
 
 const initialState = {
   clusters: normalize([], [cluster]),
   tasks: normalize([], [task]),
   roles: normalize([], [role]),
+  userList: normalize([], [user]),
   resources: {
     nodes: [],
   },
@@ -44,6 +46,9 @@ const reducers = {
   },
   setRoles: (state, action) => {
     state.roles = normalize(action.payload, [role])
+  },
+  setUserList: (state, action) => {
+    state.userList = normalize(action.payload, [user])
   },
   resetRoles: (state) => {
     state.roles = normalize([], [role])
@@ -86,6 +91,9 @@ const loaders = {
       mode: mode ? 'background' : 'foreground',
     },
   })
+    .then(api.process),
+
+  listUsers: () => axios.get(api.url('/user'))
     .then(api.process),
 
   get: (id) => axios.get(api.url(`/clusters/${id}`), {
@@ -197,6 +205,14 @@ const sideEffects = {
       snackbarError: true,
     })
   },
+  listUsers: () => (dispatch) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listUsers(),
+    prefix,
+    name: 'listUsers',
+    dataAction: actions.setUsers,
+    snackbarError: true,
+  }),
   submitForm: (payload) => (dispatch, getState) => {
     const id = selectors.router.idParam(getState())
     if (id === 'new') {

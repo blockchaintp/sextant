@@ -142,6 +142,7 @@ class ClusterForm extends React.Component {
   getRoleTable() {
     const {
       roles,
+      userList,
       accessControlFormOpen,
       accessControlSearch,
       accessControlLevel,
@@ -172,6 +173,7 @@ class ClusterForm extends React.Component {
           search={accessControlSearch}
           level={accessControlLevel}
           users={accessControlUsers}
+          userList={userList}
           setOpen={setAccessControlFormOpen}
           setLevel={setAccessControlLevel}
           setSearch={setAccessControlSearch}

@@ -69,6 +69,7 @@ const clearAccessControlResults = () => userActions.setAccessControlResults([])
       accessControlLevel: selectors.user.accessControlLevel(state),
       accessControlSearch: selectors.user.accessControlSearch(state),
       accessControlUsers: selectors.user.accessControlResults(state),
+      userList: selectors.user.collection.list(state),
     }
   },
   {

@@ -287,6 +287,7 @@ const selectors = {
       'showDeleted',
       'resources',
       'summary',
+      'userList',
     ]),
   },
 

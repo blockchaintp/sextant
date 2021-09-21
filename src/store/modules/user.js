@@ -24,6 +24,7 @@ const initialState = {
   accessControlLevel: DEFAUT_ACCESS_LEVEL,
   accessControlSearch: '',
   accessControlResults: [],
+  accessUserList: [],
 }
 
 const reducers = {

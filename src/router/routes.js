@@ -130,6 +130,7 @@ const routes = [
         store.dispatch(networkActions.startLoading('cluster.get'))
         store.dispatch(clusterActions.get(params.id))
         store.dispatch(clusterActions.listTasks(params.id))
+        store.dispatch(userActions.list())
       },
     },
   },
@@ -178,6 +179,7 @@ const routes = [
         store.dispatch(networkActions.startLoading('deployment.get'))
         store.dispatch(deploymentActions.get(params.cluster, params.id))
         store.dispatch(deploymentActions.listTasks(params.cluster, params.id))
+        store.dispatch(userActions.list())
       },
       deactivate: (store) => {
         store.dispatch(networkActions.clearError('deployment.form'))
