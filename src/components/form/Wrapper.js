@@ -366,9 +366,7 @@ class FormWrapperInner extends React.Component {
       let disabled = false
 
       if (item.editable && typeof (item.editable.new) === 'boolean') {
-        if (item.editable.new && exists) {
-          disabled = true
-        } else if (!item.editable.new && !exists) {
+        if ((item.editable.new && exists) || (!item.editable.new && !exists)) {
           disabled = true
         }
       }
@@ -437,19 +435,16 @@ class FormWrapperInner extends React.Component {
         />
       )
     }
-    
-    const renderFieldArray = (currentItem) => {
 
-      const renderList = (arrayHelpers) => {
-        return (
-          <FormList
-            item={currentItem}
-            formProps={formProps}
-            arrayHelpers={arrayHelpers}
-            disabled={disableField()}
-          />
-        )
-      }
+    const renderFieldArray = (currentItem) => {
+      const renderList = (arrayHelpers) => (
+        <FormList
+          item={currentItem}
+          formProps={formProps}
+          arrayHelpers={arrayHelpers}
+          disabled={disableField()}
+        />
+      )
 
       if (currentItem.linked) {
         if (meetsVisibilityRequirement(currentItem.linked)) {
