@@ -22,11 +22,13 @@ const prefix = 'deployment'
 const upperDeployment = new schema.Entity('deployment')
 const task = new schema.Entity('task')
 const role = new schema.Entity('role')
+const user = new schema.Entity('user')
 
 const initialState = {
   deployments: normalize([], [upperDeployment]),
   tasks: normalize([], [task]),
   roles: normalize([], [role]),
+  userList: normalize([], [user]),
   resources: {
     pods: [],
     services: [],
@@ -52,6 +54,9 @@ const reducers = {
   },
   setRoles: (state, action) => {
     state.roles = normalize(action.payload, [role])
+  },
+  setUserList: (state, action) => {
+    state.userList = normalize(action.payload, [user])
   },
   resetRoles: (state) => {
     state.roles = normalize([], [role])
@@ -96,6 +101,9 @@ const loaders = {
       mode: mode ? 'background' : 'foreground',
     },
   })
+    .then(api.process),
+
+  listUsers: () => axios.get(api.url('/user'))
     .then(api.process),
 
   listWithOptions: ({
@@ -243,6 +251,14 @@ const sideEffects = {
       snackbarError: true,
     })
   },
+  listUsers: () => (dispatch) => api.loaderSideEffect({
+    dispatch,
+    loader: () => loaders.listUsers(),
+    prefix,
+    name: 'listUsers',
+    dataAction: actions.setUsers,
+    snackbarError: true,
+  }),
   submitForm: (payload) => (dispatch, getState) => {
     const params = selectors.router.params(getState())
     const {
