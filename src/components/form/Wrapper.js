@@ -358,7 +358,6 @@ class FormWrapperInner extends React.Component {
       exists,
     } = this.props
 
-    // eslint-disable-next-line react/destructuring-assignment
     const isNew = this.props.dbId
     const hooks = formProps.hooks || {}
 
@@ -505,7 +504,7 @@ class FormWrapperInner extends React.Component {
     } = this.props
 
     if (typeof (row) === 'string') {
-      return (
+      return ([
         <Grid item xs={12} key={i}>
           <Divider className={classes.divider} />
 
@@ -519,8 +518,8 @@ class FormWrapperInner extends React.Component {
             )
           }
 
-        </Grid>
-      )
+        </Grid>,
+      ])
     }
     if (row.constructor === Array) {
       const colSize = Math.floor(12 / row.length)
@@ -530,11 +529,12 @@ class FormWrapperInner extends React.Component {
         </Grid>
       ))
     }
-    return (
+
+    return ([
       <Grid item xs={12} key={i}>
         { this.getItem(row, formProps) }
-      </Grid>
-    )
+      </Grid>,
+    ])
   }
 
   flagSubmitted() {
