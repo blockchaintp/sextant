@@ -358,7 +358,6 @@ class FormWrapperInner extends React.Component {
       exists,
     } = this.props
 
-    // eslint-disable-next-line react/destructuring-assignment
     const isNew = this.props.dbId
     const hooks = formProps.hooks || {}
 
@@ -366,9 +365,7 @@ class FormWrapperInner extends React.Component {
       let disabled = false
 
       if (item.editable && typeof (item.editable.new) === 'boolean') {
-        if (item.editable.new && exists) {
-          disabled = true
-        } else if (!item.editable.new && !exists) {
+        if ((item.editable.new && exists) || (!item.editable.new && !exists)) {
           disabled = true
         }
       }
@@ -437,19 +434,16 @@ class FormWrapperInner extends React.Component {
         />
       )
     }
-    
-    const renderFieldArray = (currentItem) => {
 
-      const renderList = (arrayHelpers) => {
-        return (
-          <FormList
-            item={currentItem}
-            formProps={formProps}
-            arrayHelpers={arrayHelpers}
-            disabled={disableField()}
-          />
-        )
-      }
+    const renderFieldArray = (currentItem) => {
+      const renderList = (arrayHelpers) => (
+        <FormList
+          item={currentItem}
+          formProps={formProps}
+          arrayHelpers={arrayHelpers}
+          disabled={disableField()}
+        />
+      )
 
       if (currentItem.linked) {
         if (meetsVisibilityRequirement(currentItem.linked)) {
@@ -510,7 +504,7 @@ class FormWrapperInner extends React.Component {
     } = this.props
 
     if (typeof (row) === 'string') {
-      return (
+      return ([
         <Grid item xs={12} key={i}>
           <Divider className={classes.divider} />
 
@@ -524,8 +518,8 @@ class FormWrapperInner extends React.Component {
             )
           }
 
-        </Grid>
-      )
+        </Grid>,
+      ])
     }
     if (row.constructor === Array) {
       const colSize = Math.floor(12 / row.length)
@@ -535,11 +529,12 @@ class FormWrapperInner extends React.Component {
         </Grid>
       ))
     }
-    return (
+
+    return ([
       <Grid item xs={12} key={i}>
         { this.getItem(row, formProps) }
-      </Grid>
-    )
+      </Grid>,
+    ])
   }
 
   flagSubmitted() {

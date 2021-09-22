@@ -23,11 +23,11 @@ const formatSummaryValues = (value) => {
       </Tooltip>
     ))
   }
-  return (
+  return ([
     <Typography>
       {value}
-    </Typography>
-  )
+    </Typography>,
+  ])
 }
 
 class SummaryValues extends React.Component {
