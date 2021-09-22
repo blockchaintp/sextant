@@ -13,10 +13,10 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormHelperText from '@material-ui/core/FormHelperText'
+
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-
-import AutoComplete from 'components/autocomplete/AutoComplete'
+import AutoComplete from 'components/autocomplete/AutoComplete';
 
 const styles = (theme) => ({
   formControl: {
@@ -36,7 +36,7 @@ class RoleForm extends React.Component {
       open,
       level,
       search,
-      users,
+      userList,
       setSearch,
       setLevel,
       loadUsers,
@@ -61,8 +61,8 @@ class RoleForm extends React.Component {
         </DialogTitle>
         <DialogContent>
           <AutoComplete
-            suggestions={users}
-            getSuggestionValue={(user) => user}
+            suggestions={userList}
+            getSuggestionValue={(user) => user.username}
             loadSuggestions={loadUsers}
             clearSuggestions={clearUsers}
             value={search}
@@ -114,7 +114,12 @@ class RoleForm extends React.Component {
           <Button onClick={onCancel}>
             Cancel
           </Button>
-          <Button onClick={onConfirm} variant="contained" color="secondary" autoFocus>
+          <Button
+            onClick={onConfirm}
+            variant="contained"
+            color="secondary"
+            autoFocus
+          >
             Save
           </Button>
         </DialogActions>

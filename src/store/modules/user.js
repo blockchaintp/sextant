@@ -1,8 +1,9 @@
+/* eslint-disable arrow-body-style */
 import axios from 'axios'
 import { normalize, schema } from 'normalizr'
 import CreateReducer from '../utils/createReducer'
 import CreateActions from '../utils/createActions'
-import { mergeEntities, mergeAll } from '../utils/mergeNormalized'
+import { mergeEntities } from '../utils/mergeNormalized'
 import api from '../utils/api'
 
 import selectors from '../selectors'
@@ -23,6 +24,7 @@ const initialState = {
   accessControlLevel: DEFAUT_ACCESS_LEVEL,
   accessControlSearch: '',
   accessControlResults: [],
+  accessUserList: [],
 }
 
 const reducers = {
@@ -45,15 +47,15 @@ const reducers = {
     state.accessControlLevel = action.payload
   },
   setAccessControlSearch: (state, action) => {
-    const value = typeof(action.payload) == 'object' ?
-      action.payload.username :
-      action.payload
+    const value = typeof (action.payload) === 'object'
+      ? action.payload.username
+      : action.payload
     state.accessControlSearch = value
   },
   setAccessControlResults: (state, action) => {
     state.accessControlResults = action.payload
   },
-  closeAccessControlForm: (state, action) => {
+  closeAccessControlForm: (state) => {
     state.accessControlFormOpen = false
     state.accessControlSearch = ''
     state.accessControlResults = []
@@ -63,16 +65,16 @@ const reducers = {
 
 const loaders = {
 
-  hasInitialUser: () => axios.get(api.url(`/user/hasInitialUser`))
+  hasInitialUser: () => axios.get(api.url('/user/hasInitialUser'))
     .then(api.process),
 
-  list: () => axios.get(api.url(`/user`))
+  list: () => axios.get(api.url('/user'))
     .then(api.process),
 
   get: (id) => axios.get(api.url(`/user/${id}`))
     .then(api.process),
 
-  create: (payload) => axios.post(api.url(`/user`), payload)
+  create: (payload) => axios.post(api.url('/user'), payload)
     .then(api.process),
 
   update: (id, payload) => axios.put(api.url(`/user/${id}`), payload)
@@ -83,12 +85,12 @@ const loaders = {
 
   getAccessToken: (id) => axios.get(api.url(`/user/${id}/token`))
     .then(api.process)
-    .then(data => data.token),
+    .then((data) => data.token),
 
   refreshAccessToken: (id) => axios.put(api.url(`/user/${id}/token`))
     .then(api.process),
 
-  loadAccessControlResults: (search) => axios.get(api.url(`/user/search`), {
+  loadAccessControlResults: (search) => axios.get(api.url('/user/search'), {
     params: {
       search,
     },
@@ -98,7 +100,7 @@ const loaders = {
 }
 
 const sideEffects = {
-  loadHasInitialUser: () => (dispatch, getState) => api.loaderSideEffect({
+  loadHasInitialUser: () => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.hasInitialUser(),
     prefix,
@@ -130,13 +132,13 @@ const sideEffects = {
         name: 'delete',
         returnError: true,
       })
-      dispatch(snackbarActions.setSuccess(`user deleted`))
+      dispatch(snackbarActions.setSuccess('user deleted'))
       dispatch(actions.list())
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error deleting user: ${e.toString()}`))
     }
   },
-  create: (payload) => (dispatch, getState) => {
+  create: (payload) => (dispatch) => {
     return api.loaderSideEffect({
       dispatch,
       loader: () => loaders.create({
@@ -149,25 +151,25 @@ const sideEffects = {
       returnError: true,
     })
   },
-  createInitial: (payload) => async (dispatch, getState) => {
+  createInitial: (payload) => async (dispatch) => {
     try {
       await dispatch(actions.create(payload))
-      dispatch(snackbarActions.setSuccess(`initial user created`))
+      dispatch(snackbarActions.setSuccess('initial user created'))
       dispatch(routerActions.navigateTo('login'))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error creating initial user: ${e.toString()}`))
     }
   },
-  createNew: (payload) => async (dispatch, getState) => {
+  createNew: (payload) => async (dispatch) => {
     try {
       await dispatch(actions.create(payload))
-      dispatch(snackbarActions.setSuccess(`user created`))
+      dispatch(snackbarActions.setSuccess('user created'))
       dispatch(routerActions.navigateTo('users'))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error creating user: ${e.toString()}`))
     }
   },
-  save: (id, payload) => async (dispatch, getState) => {
+  save: (id, payload) => async (dispatch) => {
     try {
       await api.loaderSideEffect({
         dispatch,
@@ -180,9 +182,9 @@ const sideEffects = {
         name: 'form',
         returnError: true,
       })
-      dispatch(snackbarActions.setSuccess(`user saved`))
+      dispatch(snackbarActions.setSuccess('user saved'))
       dispatch(routerActions.navigateTo('users'))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error saving user: ${e.toString()}`))
     }
   },
@@ -199,18 +201,17 @@ const sideEffects = {
         name: 'form',
         returnError: true,
       })
-      dispatch(snackbarActions.setSuccess(`account details saved`))
+      dispatch(snackbarActions.setSuccess('account details saved'))
       dispatch(routerActions.navigateTo('home'))
-    } catch(e) {
+    } catch (e) {
       dispatch(snackbarActions.setError(`error saving account details: ${e.toString()}`))
     }
   },
   submitForm: (payload) => (dispatch, getState) => {
     const id = selectors.router.idParam(getState())
-    if(id == 'new') {
+    if (id === 'new') {
       dispatch(actions.createNew(payload))
-    }
-    else {
+    } else {
       dispatch(actions.save(id, payload))
     }
   },
@@ -236,12 +237,12 @@ const sideEffects = {
         returnError: true,
       })
       await dispatch(actions.getAccessToken())
-      dispatch(snackbarActions.setSuccess(`access token refreshed`))
-    } catch(e) {
+      dispatch(snackbarActions.setSuccess('access token refreshed'))
+    } catch (e) {
       dispatch(snackbarActions.setError(`error updating access token: ${e.toString()}`))
     }
   },
-  loadAccessControlResults: (search) => async (dispatch, getState) => api.loaderSideEffect({
+  loadAccessControlResults: (search) => async (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.loadAccessControlResults(search),
     prefix,

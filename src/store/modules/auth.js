@@ -26,7 +26,6 @@ const loaders = {
   status: () => axios.get(api.url('/user/status'))
     .then(api.process),
 
-
   login: (payload) => axios.post(api.url('/user/login'), payload)
     .then(api.process),
 
@@ -36,14 +35,14 @@ const loaders = {
 }
 
 const sideEffects = {
-  loadStatus: () => (dispatch, getState) => api.loaderSideEffect({
+  loadStatus: () => (dispatch) => api.loaderSideEffect({
     dispatch,
     loader: () => loaders.status(),
     prefix,
     name: 'status',
     dataAction: actions.setData,
   }),
-  login: (payload) => async (dispatch, getState) => {
+  login: (payload) => async (dispatch) => {
     try {
       const result = await api.loaderSideEffect({
         dispatch,
@@ -52,18 +51,18 @@ const sideEffects = {
         name: 'login',
         returnError: true,
       })
-      if(!result.ok) throw new Error('unexpected result from login')
+      if (!result.ok) throw new Error('unexpected result from login')
       await dispatch(configActions.loadData())
       await dispatch(actions.loadStatus())
       dispatch(routerActions.navigateTo('home'))
-    } catch(err) {
+    } catch (err) {
       dispatch(networkActions.setError({
         name: 'auth.login',
         value: 'Incorrect details',
       }))
     }
   },
-  logout: () => (dispatch, getState) => {
+  logout: () => (dispatch) => {
     dispatch(routerActions.navigateTo('logout'))
     api.loaderSideEffect({
       dispatch,
@@ -73,21 +72,22 @@ const sideEffects = {
       returnError: true,
     })
       .then(() => loaders.status())
-      .then(data => dispatch(actions.setData(data)))
+      .then((data) => dispatch(actions.setData(data)))
       .then(() => dispatch(routerActions.navigateTo('login')))
       .catch(() => {})
   },
-  reset: () => (dispatch, getState) => { api.loaderSideEffect({
-    dispatch,
-    loader: () => loaders.status(),
-    prefix,
-    name: 'reset',
-    dataAction: actions.setData,
-  })
-    .then(data => dispatch(actions.setData(data)))
-    .then(() => dispatch(routerActions.navigateTo('login')))
-    .catch(() => {})
-  }
+  reset: () => (dispatch) => {
+    api.loaderSideEffect({
+      dispatch,
+      loader: () => loaders.status(),
+      prefix,
+      name: 'reset',
+      dataAction: actions.setData,
+    })
+      .then((data) => dispatch(actions.setData(data)))
+      .then(() => dispatch(routerActions.navigateTo('login')))
+      .catch(() => {})
+  },
 }
 
 const reducer = CreateReducer({

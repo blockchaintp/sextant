@@ -73,6 +73,7 @@ class DeploymentForm extends React.Component {
   getRoleTable() {
     const {
       roles,
+      userList,
       accessControlFormOpen,
       accessControlSearch,
       accessControlLevel,
@@ -103,6 +104,7 @@ class DeploymentForm extends React.Component {
           search={accessControlSearch}
           level={accessControlLevel}
           users={accessControlUsers}
+          userList={userList}
           setOpen={setAccessControlFormOpen}
           setLevel={setAccessControlLevel}
           setSearch={setAccessControlSearch}

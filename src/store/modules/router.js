@@ -1,4 +1,4 @@
-import { 
+import {
   actions,
   router5Reducer as reducer,
 } from 'redux-router5'

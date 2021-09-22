@@ -137,10 +137,6 @@ class AutoComplete extends React.Component {
     this.props.clearSuggestions()
   }
 
-  suggestionSelected = (event, { suggestion }) => {
-    this.props.onClick(suggestion)
-  }
-
   render() {
     const {
       classes,
@@ -192,7 +188,6 @@ AutoComplete.propTypes = {
   getSuggestionValue: PropTypes.func.isRequired,
   loadSuggestions: PropTypes.func.isRequired,
   clearSuggestions: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   highlightClasses: PropTypes.object,

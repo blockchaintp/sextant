@@ -95,6 +95,7 @@ class RoleTable extends React.Component {
       search,
       level,
       users,
+      userList,
       setOpen,
       setLevel,
       setSearch,
@@ -178,6 +179,7 @@ class RoleTable extends React.Component {
           level={level}
           search={search}
           users={users}
+          userList={userList}
           setSearch={setSearch}
           setLevel={setLevel}
           loadUsers={loadUsers}
