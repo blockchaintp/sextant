@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+* build(packages): removes unused '@material-ui/lab' package and rebuilds package-lock [view commit](https://github.com/catenasys/sextant/commit/146b4e537b1920561115f9bd4ff3eb9451537124)
+* fix(autocomplete): removes problematic suggestionSelected function [view commit](https://github.com/catenasys/sextant/commit/85bff1651e63663d90ad871c3241d773d42bfc8c)
+* fix(roletable-roleform): sends userList through roletable to roleform and replaces old defunct users list in autocomplete [view commit](https://github.com/catenasys/sextant/commit/9d8f11371ee6540c49481e02951db4f7ddd328c5)
+* fix(deployment-pipeline): repeats initialization process from cluster on deployment [view commit](https://github.com/catenasys/sextant/commit/fcab4b6deea43efa08e4b7dc3a53f4bf2d431c11)
+* fix(store-modules-user): adds accessUserList to user initialState [view commit](https://github.com/catenasys/sextant/commit/6d476a091f14efcc32bab523e8099b22f71f350c)
+* style(root): linting [view commit](https://github.com/catenasys/sextant/commit/8a196485976760fc130716778c6ef9e7b77dc243)
+* build(packages): adds material ui lab dependency [view commit](https://github.com/catenasys/sextant/commit/e6f461edc0bea4ea32eef44704b3baa2ed80638f)
+* fix(wrapper): returns all outcomes of getRow as lists to eliminate code smell [view commit](https://github.com/catenasys/sextant/commit/353302875aedc4a7bc433d1680bff974eb8ab6a5)
+* style(wrapper): linting and sonarlinter [view commit](https://github.com/catenasys/sextant/commit/4796968f6d4bcbf091df2abc644aac590b2eeff4)
+* fix(summaryvalues): ensures both outcomes of formatSummaryValues are arrays [view commit](https://github.com/catenasys/sextant/commit/537111e0d67a1963bd9554355c3778b0fe1d568c)
+* refactor(theme): updates depracated mui theme function [view commit](https://github.com/catenasys/sextant/commit/2f0e96735c16b3565c6ab04b05dc314dd7c3e337)
 * build(deps): bump nth-check from 2.0.0 to 2.0.1 [view commit](https://github.com/catenasys/sextant/commit/793cd931ec7811bbc4c21d4bc6dc77607f4c4333)
 * build(deps): update package-lock.json [view commit](https://github.com/catenasys/sextant/commit/b56fd06a6fd9db91e602c3b484eaa1b75f418fd6)
 * build(deps): major update to error-overlay-webpack-plugin, patch update to axios [view commit](https://github.com/catenasys/sextant/commit/c3fe7bcb76843424da99d34839b6b6b6ed727d2c)
