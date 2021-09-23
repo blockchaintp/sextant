@@ -61,7 +61,17 @@ class SimpleTableTripleDeleteDialog extends React.Component {
           <Button onClick={onCancel}>
             Cancel
           </Button>
-          <Button disabled={error} _ci="confirm" onClick={onConfirm} variant="contained" color="secondary" autoFocus>
+          <Button
+            disabled={error}
+            _ci="confirm"
+            onClick={() => {
+              onConfirm()
+              this.setState({ name: '' })
+            }}
+            variant="contained"
+            color="secondary"
+            autoFocus
+          >
             Confirm
           </Button>
         </DialogActions>
