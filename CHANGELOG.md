@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v2.1.3
 
 * fix(simpletabletripledelete): clears state after deleting a resource [view commit](https://github.com/catenasys/sextant/commit/b97a70b3dad60da4aad9dd22d3aab3449e578175)
 * style(utils-translators): linting [view commit](https://github.com/catenasys/sextant/commit/8bd81acbba9a6555a4bec7fa63e60e0a24ec8e4c)
