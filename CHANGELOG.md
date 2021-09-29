@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* fix(simpletabletripledelete): clears state after deleting a resource [view commit](https://github.com/catenasys/sextant/commit/b97a70b3dad60da4aad9dd22d3aab3449e578175)
+* style(utils-translators): linting [view commit](https://github.com/catenasys/sextant/commit/8bd81acbba9a6555a4bec7fa63e60e0a24ec8e4c)
 * build(packages): removes unused '@material-ui/lab' package and rebuilds package-lock [view commit](https://github.com/catenasys/sextant/commit/146b4e537b1920561115f9bd4ff3eb9451537124)
 * fix(autocomplete): removes problematic suggestionSelected function [view commit](https://github.com/catenasys/sextant/commit/85bff1651e63663d90ad871c3241d773d42bfc8c)
 * fix(roletable-roleform): sends userList through roletable to roleform and replaces old defunct users list in autocomplete [view commit](https://github.com/catenasys/sextant/commit/9d8f11371ee6540c49481e02951db4f7ddd328c5)
