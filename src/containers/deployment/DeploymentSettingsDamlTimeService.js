@@ -6,8 +6,7 @@ import selectors from 'store/selectors'
 import DeploymentSettingsDamlTimeService from 'pages/deployment/DeploymentSettingsDamlTimeService'
 
 @connect(
-  state => {
-
+  (state) => {
     const routeParams = selectors.router.params(state)
 
     const {
@@ -21,15 +20,12 @@ import DeploymentSettingsDamlTimeService from 'pages/deployment/DeploymentSettin
       timeServiceInfo: selectors.deploymentSettings.timeServiceInfo(state),
     }
   },
-  {
-    
-  },
+  {},
 )
 class DeploymentSettingsDamlTimeServiceContainer extends React.Component {
-
   render() {
     return (
-      <DeploymentSettingsDamlTimeService 
+      <DeploymentSettingsDamlTimeService
         {...this.props}
       />
     )

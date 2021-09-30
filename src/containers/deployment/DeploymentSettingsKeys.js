@@ -8,15 +8,12 @@ import selectors from 'store/selectors'
 import DeploymentSettingsKeys from 'pages/deployment/DeploymentSettingsKeys'
 
 @connect(
-  state => {
-
-    return {
-      keyManagerKeys: selectors.deploymentSettings.keyManagerKeys(state),
-      enrolledKeys: selectors.deploymentSettings.enrolledKeys(state),
-      addEnrolledKeyDialogOpen: selectors.deploymentSettings.addEnrolledKeyDialogOpen(state),
-      addEnrolledKeyValue: selectors.deploymentSettings.addEnrolledKeyValue(state),
-    }
-  },
+  (state) => ({
+    keyManagerKeys: selectors.deploymentSettings.keyManagerKeys(state),
+    enrolledKeys: selectors.deploymentSettings.enrolledKeys(state),
+    addEnrolledKeyDialogOpen: selectors.deploymentSettings.addEnrolledKeyDialogOpen(state),
+    addEnrolledKeyValue: selectors.deploymentSettings.addEnrolledKeyValue(state),
+  }),
   {
     addEnrolledKey: deploymentSettingsActions.addEnrolledKey,
     snackbarMessage: snackbarActions.setInfo,
@@ -25,10 +22,9 @@ import DeploymentSettingsKeys from 'pages/deployment/DeploymentSettingsKeys'
   },
 )
 class DeploymentSettingsKeysContainer extends React.Component {
-
   render() {
     return (
-      <DeploymentSettingsKeys 
+      <DeploymentSettingsKeys
         {...this.props}
       />
     )

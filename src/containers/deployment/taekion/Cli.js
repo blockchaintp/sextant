@@ -3,12 +3,10 @@ import { connect } from 'react-redux'
 
 import snackbarActions from 'store/modules/snackbar'
 import selectors from 'store/selectors'
-import taekionActions from 'store/modules/taekion'
 import TaekionCli from 'pages/deployment/taekion/Cli'
 
 @connect(
-  state => {
-
+  (state) => {
     const {
       cluster,
       id,
@@ -25,10 +23,9 @@ import TaekionCli from 'pages/deployment/taekion/Cli'
   },
 )
 class TaekionCliContainer extends React.Component {
-
   render() {
     return (
-      <TaekionCli 
+      <TaekionCli
         {...this.props}
       />
     )

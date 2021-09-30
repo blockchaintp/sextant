@@ -3,7 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 // eslint-disable-next-line camelcase
 // eslint-disable-next-line no-undef
-__webpack_public_path__ = window.SEXTANT_ROOT_BASE_PATH
+__webpack_public_path__ = window.SEXTANT_ROOT_BASE_PATH // NOSONAR
 
 import './assets/index.css'
 import React from 'react'

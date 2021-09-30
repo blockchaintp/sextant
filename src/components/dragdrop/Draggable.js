@@ -6,7 +6,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 
 class Draggable extends React.Component {
-  
   render() {
     const {
       isDragging,
@@ -14,10 +13,11 @@ class Draggable extends React.Component {
     } = this.props
 
     return (
-      <div style={{ 
+      <div style={{
         opacity: isDragging ? 0.5 : 1,
         cursor: 'move',
-      }}>
+      }}
+      >
         <ListItem>
           <ListItemIcon>
             <UnfoldMoreIcon />

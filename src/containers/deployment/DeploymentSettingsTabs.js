@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -6,11 +7,12 @@ import selectors from 'store/selectors'
 
 import DeploymentSettingsTabs from 'pages/deployment/DeploymentSettingsTabs'
 
-const onViewPage = (cluster, id, deployment_type, deployment_version, page, params = {}) => routerActions.navigateTo(`deployment_settings.${page}`, { cluster, id, deployment_type, deployment_version, ...params})
+const onViewPage = (cluster, id, deployment_type, deployment_version, page, params = {}) => routerActions.navigateTo(`deployment_settings.${page}`, {
+  cluster, id, deployment_type, deployment_version, ...params,
+})
 
 @connect(
-  state => {
-
+  (state) => {
     const routeParams = selectors.router.params(state)
     const route = selectors.router.route(state)
 
@@ -19,14 +21,12 @@ const onViewPage = (cluster, id, deployment_type, deployment_version, page, para
       cluster,
       id,
       deployment_type,
-      deployment_version
+      deployment_version,
     } = routeParams
 
-    const versions = deploymentForms[deployment_type].button.versions
+    const { versions } = deploymentForms[deployment_type].button
 
-    const features=versions.find((item) => {
-      return (item.form === deployment_version)
-    }).features
+    const { features } = versions.find((item) => (item.form === deployment_version))
 
     return {
       cluster,
@@ -42,7 +42,6 @@ const onViewPage = (cluster, id, deployment_type, deployment_version, page, para
   },
 )
 class DeploymentSettingsTabsContainer extends React.Component {
-
   render() {
     return (
       <DeploymentSettingsTabs

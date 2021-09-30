@@ -5,50 +5,43 @@ import { withStyles } from '@material-ui/core/styles'
 
 import AddIcon from '@material-ui/icons/AddCircle'
 import EditIcon from '@material-ui/icons/Edit'
-import DeleteIcon from '@material-ui/icons/Delete'
 import RemoveIcon from '@material-ui/icons/RemoveCircle'
 
-const styles = theme => {
-
-  return {
-    icon: {
-      color: theme.palette.text.hint,
-    },
-  }
-}
+const styles = (theme) => ({
+  icon: {
+    color: theme.palette.text.hint,
+  },
+})
 
 class TaskActionIcon extends React.Component {
-
   render() {
     const {
       classes,
       action,
     } = this.props
 
-    if(action == 'create') {
+    if (action === 'create') {
       return (
-        <AddIcon 
-          className={ classes.icon }
+        <AddIcon
+          className={classes.icon}
         />
       )
     }
-    else if(action == 'update') {
+    if (action === 'update') {
       return (
-        <EditIcon 
-          className={ classes.icon }
+        <EditIcon
+          className={classes.icon}
         />
       )
     }
-    else if(action == 'delete') {
+    if (action === 'delete') {
       return (
-        <RemoveIcon 
-          className={ classes.icon }
+        <RemoveIcon
+          className={classes.icon}
         />
       )
     }
-    else {
-      return null
-    }
+    return null
   }
 }
 

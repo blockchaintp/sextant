@@ -6,8 +6,7 @@ import taekionActions from 'store/modules/taekion'
 import TaekionKeys from 'pages/deployment/taekion/Keys'
 
 @connect(
-  state => {
-
+  (state) => {
     const {
       cluster,
       id,
@@ -26,15 +25,14 @@ import TaekionKeys from 'pages/deployment/taekion/Keys'
     onOpenAddKeyWindow: () => taekionActions.setAddKeyWindowOpen(true),
     onCloseAddKeyWindow: () => taekionActions.setAddKeyWindowOpen(false),
     onCloseKeyResultWindow: () => taekionActions.setAddKeyResult(null),
-    onCreateKey:  taekionActions.createKey,
-    onDeleteKey:  taekionActions.deleteKey,
+    onCreateKey: taekionActions.createKey,
+    onDeleteKey: taekionActions.deleteKey,
   },
 )
 class TaekionKeysContainer extends React.Component {
-
   render() {
     return (
-      <TaekionKeys 
+      <TaekionKeys
         {...this.props}
       />
     )

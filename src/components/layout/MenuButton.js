@@ -10,7 +10,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 
-const styles = (theme) => ({
+const styles = () => ({
 
 })
 
@@ -20,7 +20,7 @@ class MenuButton extends React.Component {
     items: null,
   }
 
-  handleMenu = event => {
+  handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget })
   }
 
@@ -31,49 +31,21 @@ class MenuButton extends React.Component {
     })
   }
 
-  clickItem(item) {
-    const {
-      openPage,
-    } = this.props
-
-    if(item.items) {
-      this.setState({
-        items: item.items,
-      })
-      if(item.handler) {
-        item.handler()
-      }
-      return
-    }
-
-    if(typeof(item.handler) === 'string') {
-      openPage(item.handler)
-      this.handleClose()
-    }
-    else if(typeof(item.handler) === 'function') {
-      item.handler()
-      this.handleClose()
-    }
-    else {
-      throw new Error(`unknown AppBarMenu item handler for ${item.title}`)
-    }
-  }
-
   getMenu({
     open = false,
     items,
   }) {
     const menuItems = items.map((item, i) => {
-      if(item === '-') {
+      if (item === '-') {
         return (
-          <Divider key={ i } />
+          <Divider key={i} />
         )
       }
 
       return (
         <MenuItem
-          key={ i }
-          onClick={ () => this.clickItem(item) }
+          key={i}
+          onClick={() => this.clickItem(item)}
         >
           {
             item.icon && (
@@ -83,7 +55,7 @@ class MenuButton extends React.Component {
             )
           }
           <ListItemText
-            primary={ item.title }
+            primary={item.title}
           />
         </MenuItem>
       )
@@ -95,7 +67,7 @@ class MenuButton extends React.Component {
 
     return (
       <Menu
-        anchorEl={ anchorEl }
+        anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'right',
@@ -104,13 +76,39 @@ class MenuButton extends React.Component {
           vertical: 'top',
           horizontal: 'right',
         }}
-        open={ open }
-        onClose={ this.handleClose }
+        open={open}
+        onClose={this.handleClose}
       >
-        <MenuItem key="placeholder" style={{display: "none"}} />
+        <MenuItem key="placeholder" style={{ display: 'none' }} />
         { menuItems }
       </Menu>
     )
+  }
+
+  clickItem(item) {
+    const {
+      openPage,
+    } = this.props
+
+    if (item.items) {
+      this.setState({
+        items: item.items,
+      })
+      if (item.handler) {
+        item.handler()
+      }
+      return
+    }
+
+    if (typeof (item.handler) === 'string') {
+      openPage(item.handler)
+      this.handleClose()
+    } else if (typeof (item.handler) === 'function') {
+      item.handler()
+      this.handleClose()
+    } else {
+      throw new Error(`unknown AppBarMenu item handler for ${item.title}`)
+    }
   }
 
   render() {
@@ -130,11 +128,13 @@ class MenuButton extends React.Component {
 
     const open = Boolean(anchorEl)
 
+    const { items } = this.state
+
     return (
-      <div className={ classes.root }>
+      <div className={classes.root}>
         <Button
-          onClick={ this.handleMenu }
-          disabled={ disabled }
+          onClick={this.handleMenu}
+          disabled={disabled}
           {...buttonProps}
         >
           { title }
@@ -145,16 +145,16 @@ class MenuButton extends React.Component {
 
         {
           this.getMenu({
-            open: open && !this.state.items,
-            items: this.props.items,
+            open: open && !items,
+            items,
           })
         }
 
         {
-          this.state.items && open && (
+          items && open && (
             this.getMenu({
               open: true,
-              items: this.state.items,
+              items,
             })
           )
         }

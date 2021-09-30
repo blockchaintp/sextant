@@ -10,7 +10,7 @@ import settings from 'settings'
 import Layout from 'pages/Layout'
 
 @connect(
-  state => ({
+  (state) => ({
     header: settings.edition.header,
     title: settings.title,
     loggedIn: selectors.auth.loggedIn(state),
@@ -25,7 +25,6 @@ import Layout from 'pages/Layout'
   },
 )
 class LayoutContainer extends React.Component {
-
   render() {
     const {
       loggedIn,

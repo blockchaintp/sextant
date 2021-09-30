@@ -8,33 +8,36 @@ class ErrorBoundary extends React.Component {
       errorInfo: null,
     }
   }
-  
+
   componentDidCatch(error, errorInfo) {
     this.setState({
-      error: error,
-      errorInfo: errorInfo,
+      error,
+      errorInfo,
     })
   }
-  
+
   render() {
-    if (this.state.errorInfo) {
+    const { error, errorInfo } = this.state
+    const { children } = this.props
+
+    if (errorInfo) {
       return (
         <div>
           <h4>Something went wrong:</h4>
           <details style={{ whiteSpace: 'pre-wrap' }}>
             {
-              this.state.error && (
-                <summary>{ this.state.error.toString() }</summary>
+              error && (
+                <summary>{ error.toString() }</summary>
               )
             }
             <br />
-            {this.state.errorInfo.componentStack}
+            {errorInfo.componentStack}
           </details>
         </div>
       )
     }
-    return this.props.children
-  }  
+    return children
+  }
 }
 
 export default ErrorBoundary

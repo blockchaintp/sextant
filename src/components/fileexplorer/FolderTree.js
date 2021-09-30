@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-shadow */
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
@@ -12,7 +13,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     width: '100%',
     fontSize: '0.7em',
@@ -31,7 +32,6 @@ const ExplorerFolderTreeItem = ({
   entry,
   depth = 0,
 }) => {
-
   const {
     inode_id,
     expanded,
@@ -39,11 +39,11 @@ const ExplorerFolderTreeItem = ({
     clickFolderTree,
   } = explorer
 
-  const selected = inode_id == entry.inodeid
-  const open = expanded[entry.inodeid] ? true : false
-  const isLoading = loading[entry.inodeid] ? true : false
+  const selected = inode_id === entry.inodeid
+  const open = !!expanded[entry.inodeid]
+  const isLoading = !!loading[entry.inodeid]
 
-  const onClick = (e) => {
+  const onClick = () => {
     clickFolderTree(entry.inodeid)
   }
 
@@ -51,14 +51,14 @@ const ExplorerFolderTreeItem = ({
 
   return (
     <>
-      <ListItem selected={ selected } button onClick={ onClick } style={{ paddingLeft: depth * 24 }}>
+      <ListItem selected={selected} button onClick={onClick} style={{ paddingLeft: depth * 24 }}>
         <ListItemIcon>
           <FolderIcon />
         </ListItemIcon>
-        <ListItemText primary={ entry.filename } />
+        <ListItemText primary={entry.filename} />
         {
           isLoading ? (
-            <CircularProgress size={ 20 } />
+            <CircularProgress size={20} />
           ) : (
             icon
           )
@@ -67,17 +67,15 @@ const ExplorerFolderTreeItem = ({
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List dense component="div" disablePadding>
           {
-            entry.children.map((child, i) => {
-              return (
-                <ExplorerFolderTreeItem
-                  key={ i }
-                  classes={ classes }
-                  explorer={ explorer }
-                  entry={ child }
-                  depth={ depth + 1 }
-                />
-              )
-            })
+            entry.children.map((child, i) => (
+              <ExplorerFolderTreeItem
+                key={i}
+                classes={classes}
+                explorer={explorer}
+                entry={child}
+                depth={depth + 1}
+              />
+            ))
           }
         </List>
       </Collapse>
@@ -89,7 +87,6 @@ const ExplorerFolderTree = ({
   classes,
   explorer,
 }) => {
-
   const {
     inode_id,
     volume,
@@ -104,34 +101,31 @@ const ExplorerFolderTree = ({
       aria-labelledby="nested-list-subheader"
       className={classes.root}
     >
-      <ListItem selected={ inode_id == 'root' } button onClick={ () => openFolder('root') } className={ classes.rootListItem }>
+      <ListItem selected={inode_id === 'root'} button onClick={() => openFolder('root')} className={classes.rootListItem}>
         <ListItemIcon>
           <StorageIcon />
         </ListItemIcon>
         {
           volume && (
-            <ListItemText primary={ volume.name } />
+            <ListItemText primary={volume.name} />
           )
         }
       </ListItem>
       <List dense component="div" disablePadding>
         {
-          folderTree.map((child, i) => {
-            return (
-              <ExplorerFolderTreeItem
-                key={ i }
-                classes={ classes }
-                explorer={ explorer }
-                entry={ child }
-                depth={ 1 }
-              />
-            )
-          }) 
+          folderTree.map((child, i) => (
+            <ExplorerFolderTreeItem
+              key={i}
+              classes={classes}
+              explorer={explorer}
+              entry={child}
+              depth={1}
+            />
+          ))
         }
       </List>
     </List>
   )
 }
-
 
 export default withStyles(styles)(ExplorerFolderTree)

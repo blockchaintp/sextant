@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-shadow */
 import React, { useState, useMemo } from 'react'
 import { withStyles } from '@material-ui/core/styles'
@@ -18,7 +19,7 @@ import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import InfoIcon from '@material-ui/icons/Info'
 
-const styles = theme => ({
+const styles = (theme) => ({
 
   // adjust the global layout so we can have full height file explorer
   // even if there is not much content
@@ -46,7 +47,7 @@ const styles = theme => ({
     '.deployment-settings-root': {
       height: '100%',
       minHeight: '100%',
-    }
+    },
   },
   root: {
     display: 'flex',
@@ -77,7 +78,7 @@ const styles = theme => ({
   },
   smalltext: {
     fontSize: '0.8em',
-    color: '#999'
+    color: '#999',
   },
   fileicon: {
     width: '30px',
@@ -91,10 +92,10 @@ const styles = theme => ({
   folderIcon: {
     '& svg': {
       width: '140px',
-      height: '140px'
-    }
-    
-  }
+      height: '140px',
+    },
+
+  },
 })
 
 const TABLE_FIELDS = [{
@@ -113,17 +114,16 @@ const TABLE_FIELDS = [{
 }]
 
 const sortByFilename = (a, b) => {
-  if(a.filename > b.filename) return 1
-  else if(a.filename < b.filename) return -1
-  else return 0
+  if (a.filename > b.filename) return 1
+  if (a.filename < b.filename) return -1
+  return 0
 }
 
 const TaekionExplorer = ({
   classes,
 }) => {
-
   const explorer = useFileExplorer()
-  const [ viewingEntry, setViewingEntry ] = useState(null)
+  const [viewingEntry, setViewingEntry] = useState(null)
 
   const {
     inode_id,
@@ -133,8 +133,8 @@ const TaekionExplorer = ({
   const entries = explorerDirectories[inode_id] || []
 
   const sortedEntries = useMemo(() => {
-    const folders = entries.filter(e => e.isDirectory ? true : false)
-    const files = entries.filter(e => e.isDirectory ? false : true)
+    const folders = entries.filter((e) => (!!e.isDirectory))
+    const files = entries.filter((e) => (!e.isDirectory))
 
     folders.sort(sortByFilename)
     files.sort(sortByFilename)
@@ -145,10 +145,9 @@ const TaekionExplorer = ({
   ])
 
   const clickEntry = (entry, download_filename) => {
-    if(entry.isDirectory) {
+    if (entry.isDirectory) {
       explorer.openFolder(entry.inodeid)
-    }
-    else {
+    } else {
       explorer.openFile(entry.inodeid, download_filename)
     }
   }
@@ -161,8 +160,8 @@ const TaekionExplorer = ({
 
   const getActions = (item) => {
     const buttons = []
-    
-    if(!item.entry.isDirectory) {
+
+    if (!item.entry.isDirectory) {
       buttons.push({
         title: 'Download',
         icon: CloudDownloadIcon,
@@ -181,17 +180,17 @@ const TaekionExplorer = ({
       icon: InfoIcon,
       handler: () => setViewingEntry(item.entry),
     })
-    
+
     return buttons
   }
 
   const data = sortedEntries.map((entry) => {
     const ext = entry.filename.split('.').pop()
-    let ret = {
+    const ret = {
       id: entry.inodeid,
       name: (
-        <div className={ classes.filename }>
-          <div className={ classes.fileicon }>
+        <div className={classes.filename}>
+          <div className={classes.fileicon}>
             {
               entry.isDirectory ? (
                 <FolderIcon
@@ -200,55 +199,55 @@ const TaekionExplorer = ({
                 />
               ) : (
                 <FileIcon
-                  extension={ ext }
+                  extension={ext}
                   glyphColor="#3F51B5"
                   labelColor="#3F51B5"
                   {...(defaultStyles[ext] || {})}
                 />
               )
             }
-            
+
           </div>
           <div>
-            <a href="#" onClick={ (e) => clickEntryTitle(e, entry) }>
+            <button type="button" onClick={(e) => clickEntryTitle(e, entry)}>
               { entry.filename }
-            </a>
+            </button>
           </div>
         </div>
       ),
       entry,
       created: (
-        <span className={ classes.smalltext }>
+        <span className={classes.smalltext}>
           { new Date(entry.inode.ctime).toLocaleString() }
         </span>
       ),
       modified: (
-        <span className={ classes.smalltext }>
+        <span className={classes.smalltext}>
           { new Date(entry.inode.mtime).toLocaleString() }
         </span>
-      )
+      ),
     }
 
-    if(!entry.isDirectory) {
+    if (!entry.isDirectory) {
       ret.size = (
-        <span className={ classes.smalltext }>
+        <span className={classes.smalltext}>
           { prettyBytes(entry.inode.size) }
         </span>
-      ) 
+      )
     }
     return ret
   })
 
   return (
-    <div className={ classes.root }>
-      <div className={ classes.sidebar }>
+    <div className={classes.root}>
+      <div className={classes.sidebar}>
         <ExplorerSidebar
-          explorer={ explorer }
+          explorer={explorer}
         />
       </div>
-      <div className={ classes.content }>
+      <div className={classes.content}>
         <SimpleTable
-          withSorting={ false }
+          withSorting={false}
           pagination
           data={data}
           fields={TABLE_FIELDS}
@@ -266,7 +265,7 @@ const TaekionExplorer = ({
             open
             fullWidth
             maxWidth="md"
-            onClose={ () => setViewingEntry(null) }
+            onClose={() => setViewingEntry(null)}
           >
             <DialogTitle>{viewingEntry.filename}</DialogTitle>
             <DialogContent>
@@ -290,6 +289,5 @@ const TaekionExplorer = ({
     </div>
   )
 }
-
 
 export default withStyles(styles)(TaekionExplorer)

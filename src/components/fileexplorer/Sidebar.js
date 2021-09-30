@@ -7,7 +7,7 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import FolderTree from './FolderTree'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -26,8 +26,8 @@ const styles = theme => ({
     width: '100px',
     '& span': {
       fontSize: '0.75em',
-      color: '#666'
-    }
+      color: '#666',
+    },
   },
   folders: {
     flexGrow: 1,
@@ -41,15 +41,14 @@ const styles = theme => ({
     width: '100%',
   },
   volumeSelectControl: {
-    fontSize: '0.75em'
-  }
+    fontSize: '0.75em',
+  },
 })
 
 const ExplorerSidebar = ({
   classes,
   explorer,
 }) => {
-
   const {
     volume,
     volumes,
@@ -59,54 +58,52 @@ const ExplorerSidebar = ({
     onChangeSnapshot,
   } = explorer
 
-  const changeVolumeSelect = useMemo(() => {
-    return volume ? (
-      <div className={ classes.volumeSelect }>
-        <div className={ classes.volumeSelectTitle }>
-          <Typography variant="caption">volume:</Typography>
-        </div>
-        <FormControl className={classes.formControl}>
-          <Select
-            className={ classes.volumeSelectControl }
-            value={volume.uuid}
-            onChange={(ev) => onChangeVolume(ev.target.value)}
-          >
-            {
+  const changeVolumeSelect = useMemo(() => (volume ? (
+    <div className={classes.volumeSelect}>
+      <div className={classes.volumeSelectTitle}>
+        <Typography variant="caption">volume:</Typography>
+      </div>
+      <FormControl className={classes.formControl}>
+        <Select
+          className={classes.volumeSelectControl}
+          value={volume.uuid}
+          onChange={(ev) => onChangeVolume(ev.target.value)}
+        >
+          {
               volumes
                 .map((v, i) => (
                   <MenuItem
                     key={i}
-                    value={v.uuid} 
+                    value={v.uuid}
                   >
                     { v.name }
                   </MenuItem>
                 ))
             }
-          </Select>
-        </FormControl>
-      </div>
-    ) : null
-  }, [
+        </Select>
+      </FormControl>
+    </div>
+  ) : null), [
     classes,
     volume,
     volumes,
   ])
 
   const changeSnapshotSelect = useMemo(() => {
-    if(!snapshots || snapshots.length <= 0) return null
+    if (!snapshots || snapshots.length <= 0) return null
     return (
-      <div className={ classes.volumeSelect }>
-        <div className={ classes.volumeSelectTitle }>
+      <div className={classes.volumeSelect}>
+        <div className={classes.volumeSelectTitle}>
           <Typography variant="caption">snapshot:</Typography>
         </div>
         <FormControl className={classes.formControl}>
           <Select
-            className={ classes.volumeSelectControl }
-            value={ snapshot ? snapshot.block : 'head' }
+            className={classes.volumeSelectControl}
+            value={snapshot ? snapshot.block : 'head'}
             onChange={(ev) => onChangeSnapshot(ev.target.value)}
           >
             <MenuItem
-              value='head'
+              value="head"
             >
               latest
             </MenuItem>
@@ -132,17 +129,16 @@ const ExplorerSidebar = ({
   ])
 
   return (
-    <div className={ classes.root }>
+    <div className={classes.root}>
       { changeVolumeSelect }
       { changeSnapshotSelect }
-      <div className={ classes.folders }>
+      <div className={classes.folders}>
         <FolderTree
-          explorer={ explorer }
+          explorer={explorer}
         />
       </div>
     </div>
   )
 }
-
 
 export default withStyles(styles)(ExplorerSidebar)
