@@ -170,13 +170,13 @@
 * feat(role-table): add edit option dialog components and lint existing components [view commit](https://github.com/catenasys/sextant/commit/10e471071f704f18c2afd23197dd3072717c8a48)
 * fix(dockerfile): bump node version to twelve [view commit](https://github.com/catenasys/sextant/commit/5cc41c314d5d305e7dab8a9c8cdb8508b8561f50)
 
-## v2.1.1
+## stopBuild/v2.1.1
 
 * feat(simple-table): add sort functionality to columns [view commit](https://github.com/catenasys/sextant/commit/d768558793f0edd9a467ebe12a4a884ea0d935ad)
 * style(deployment-table-components): linting [view commit](https://github.com/catenasys/sextant/commit/c13bc3f7d1ff30b0439b6a73387880b0f3d57c8f)
 * feat(assets): update tfs logo [view commit](https://github.com/catenasys/sextant/commit/85af60eccf40201e843b50adaac5526bd42f8e31)
 
-## v2.1.0
+## stopBuild/v2.1.0
 
 * fix(volumes): handle volumes when there is no key defined [view commit](https://github.com/catenasys/sextant/commit/6a48a90efa7adcd650a7dbdba711058665ffa5e2)
 * fix(daml): add daml prefix to all daml routes [view commit](https://github.com/catenasys/sextant/commit/1cca12349584bd6719bb4b9e4c986d3fa1db3f2d)
@@ -186,33 +186,30 @@
 * fix(form-wrapper): meets visibility requirement function is backwards compatible [view commit](https://github.com/catenasys/sextant/commit/3f68c28ec36c56ed32dd0394254afbe461f47ea4)
 * feat(form-wrapper): look for multiple linked fields when rendering form [view commit](https://github.com/catenasys/sextant/commit/738c893817790451f399982e1baabcae96e5bd85)
 * style(form-wrapper): lint the form wrapper [view commit](https://github.com/catenasys/sextant/commit/6ce4bd0ff201c60cdfa9036065751bbd08af4d83)
-
-## v2.0.18
-
 * Revert "refactor(lint): linting related changes" [view commit](https://github.com/catenasys/sextant/commit/193cd05cc3f4257257fc1ec7653964dbd02511c6)
 * refactor(lint): linting related changes [view commit](https://github.com/catenasys/sextant/commit/9e110b4df45a3d3d8ebecf848ef869fea5ae8d3a)
 * fix(daml-jwt): remove old UI for tokens [view commit](https://github.com/catenasys/sextant/commit/7d83111180120d4905e5d67f0841c0a294b6b22a)
 * feat(daml-jwt): token settings window with split for act and read and application id fields [view commit](https://github.com/catenasys/sextant/commit/dbe605e7e7a1e018881ac4c57581fcb101ab64a4)
 * fix(daml-jwt): applicationId readAs and actAs params for generate token handler [view commit](https://github.com/catenasys/sextant/commit/84001c15f64960088da894896184d8851106d5bc)
 
-## v2.0.17
+## stopBuild/v2.0.18
 
 * feat(assets): update logos to make them closesly cropped versions [view commit](https://github.com/catenasys/sextant/commit/5b6b535bc59635ec63539b24152710b70bc2356d)
 * feat(assests): add new logos for deployment types [view commit](https://github.com/catenasys/sextant/commit/2f80570619acf20e993ebbabc5aa1bcb9275fb06)
 * feat(assets): update tfs logo image [view commit](https://github.com/catenasys/sextant/commit/4b825271a25fa4cb3fa127dc852cfab6a9c0f091)
 * fix(simple-table-actions): linting and fix _ci prop error [view commit](https://github.com/catenasys/sextant/commit/7f922e3a9ee863cb421fd4731b4f507afe6f2890)
 
-## v2.0.16
+## stopBuild/v2.0.16
 
 * style(submit-action): refactor for law of demeter [view commit](https://github.com/catenasys/sextant/commit/683c33803679c14f1a2d61589243e9660167d6fd)
 * fix(submit-action): removes cannot define id of undefined error [view commit](https://github.com/catenasys/sextant/commit/532a2e75432166ff6a89e0243b80c08d883c67fa)
 
-## v2.0.15
+## stopBuild/v2.0.15
 
 * fix(daml-archives): no longer display module names in table [view commit](https://github.com/catenasys/sextant/commit/3efdd803b3d87e538c610ae32086b13d15dfc9b9)
 * fix(extra-yaml): input yaml should save after undeploy and re render on redeploy [view commit](https://github.com/catenasys/sextant/commit/934134e4be155505d5cf069cc766c2693ea85136)
 
-## v2.0.14
+## stopBuild/v2.0.14
 
 * fix(taekion): remove delete option from pages of TFS components [view commit](https://github.com/catenasys/sextant/commit/7ba04eff03bcc5546c114402005fdf3bb74fa745)
 * feat(taekion): disable delete actions until this is a feature [view commit](https://github.com/catenasys/sextant/commit/6478f5c95fd483796694a4caed9053fd3738dcc2)
@@ -237,7 +234,7 @@
 * feat(taekionkeys): hide the delete button because the middleware does not delete keys [view commit](https://github.com/catenasys/sextant/commit/53a07b91ca25242f0a693dc332b2ddfda71d4ecb)
 * feat(form-string-array): allow forms to extract a single field from an array of objects [view commit](https://github.com/catenasys/sextant/commit/4ef642c19c88377562046381df842e9798eb37f4)
 
-## v2.0.13
+## stopBuild/v2.0.13
 
 * feat(deployment-table): filter helm deployments and sort options by order [view commit](https://github.com/catenasys/sextant/commit/e815caa01f6d6bfd9cf68a900aa9194fa60a1eab)
 * fix(redux): update administration restart loggging [view commit](https://github.com/catenasys/sextant/commit/d8097341604a2874339c3ffbb0405132f27f49d5)
@@ -246,11 +243,11 @@
 * feat(router): connect to administration routes in api [view commit](https://github.com/catenasys/sextant/commit/bcedef6816cedd0fef9e059883f61707e08fc2b9)
 * feat(linter): update eslint config [view commit](https://github.com/catenasys/sextant/commit/bc8ce382eba9a0bbce4f8d75ceafa498c8902836)
 
-## v2.0.12
+## stopBuild/v2.0.12
 
 * fix(editions): correct names [view commit](https://github.com/catenasys/sextant/commit/fb27f9510fc2e18a76c53ac2541b5b153fe02e99)
 
-## v2.0.11
+## stopBuild/v2.0.11
 
 * fix(editions): change title of dev edition to Engineering [view commit](https://github.com/catenasys/sextant/commit/be5f709d2431506e0a93645885e6b0f9c1f0cb66)
 * fix(component): add boolean type to supported validators [view commit](https://github.com/catenasys/sextant/commit/7a7d70e47ca379194d61bd128fee67cee74f27aa)
@@ -263,7 +260,7 @@
 * refactor(linting): lint deployment table page [view commit](https://github.com/catenasys/sextant/commit/1b0625590ca4c39d7a37dd80bae4b2431815c718)
 * style(eslint): allow state deifnition outside of constructor [view commit](https://github.com/catenasys/sextant/commit/ec13b12410fb90b27027db346871babe238f8b0d)
 
-## v2.0.10
+## stopBuild/v2.0.10
 
 * feat(assets): add transparent taekion png [view commit](https://github.com/catenasys/sextant/commit/f00180e8a7b8b115d7cf6d6933463a0a401a8651)
 * build(package-json): add babel parser for linting [view commit](https://github.com/catenasys/sextant/commit/c2dc068a51eb1044a410c469db9319306336872c)
@@ -318,7 +315,7 @@
 * render takeion options as tabs [view commit](https://github.com/catenasys/sextant/commit/4a318771d7c79e8461de78668f2225986403cfec)
 * add taekion logo [view commit](https://github.com/catenasys/sextant/commit/a1317fbc456f1984e6bdb96d132406fc60e30594)
 
-## v2.0.9
+## stopBuild/v2.0.9
 
 * feat(summaryvalues): render container values on lines, display info on hover [view commit](https://github.com/catenasys/sextant/commit/e538a505077d8c8d2b9e32e6f8dcd6df754a382e)
 * build(.eslintrc): override airbnb styleguide [view commit](https://github.com/catenasys/sextant/commit/131d6c4d686f8d4850e253530c172ac87b6b7b04)
@@ -335,7 +332,7 @@
 * SXT-319 Update packages, remove ace package [view commit](https://github.com/catenasys/sextant/commit/282646787f6632224f15acc0e4964b3d5a759af2)
 * SXT-316 Allow undefined values in the service object to render as emtpy string [view commit](https://github.com/catenasys/sextant/commit/858aaf92cc4489b7c875a52c20cd01a49cfcd509)
 
-## v2.0.8
+## stopBuild/v2.0.8
 
 * BUGFIXES Remove code from earlier commits [view commit](https://github.com/catenasys/sextant/commit/b34f9b8d61c39708d523ec0f7fa2a8a9ce2dee9d)
 * BUGFIXES Conditional render of add button handles case when cluster is undefined [view commit](https://github.com/catenasys/sextant/commit/bae84ed3b7aaab82b304d9aefb6ac6040b09640c)
