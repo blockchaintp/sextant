@@ -252,7 +252,7 @@ class DeploymentTable extends React.Component {
       : (
         <div className={classes.headerActions}>
           <div className={classes.clusterSelect}>
-            <FormControl className={classes.formControl}>
+            <FormControl variant="standard" className={classes.formControl}>
               <InputLabel htmlFor="name-readonly">Cluster</InputLabel>
               <Select
                 value={clusterId}
