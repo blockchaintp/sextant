@@ -1,10 +1,10 @@
 import React from 'react'
 
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
-import Avatar from '@material-ui/core/Avatar'
-import Chip from '@material-ui/core/Chip'
+import Avatar from '@mui/material/Avatar'
+import Chip from '@mui/material/Chip'
 
 import settings from 'settings'
 

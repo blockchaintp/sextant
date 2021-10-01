@@ -1,8 +1,8 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import AceEditor from 'react-ace'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 
 import 'ace-builds/src-noconflict/mode-jsx';
 

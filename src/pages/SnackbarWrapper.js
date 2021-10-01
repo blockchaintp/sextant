@@ -1,19 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { withStyles } from '@material-ui/core/styles'
-import Snackbar from '@material-ui/core/Snackbar'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
-import IconButton from '@material-ui/core/IconButton'
+import withStyles from '@mui/styles/withStyles';
+import Snackbar from '@mui/material/Snackbar'
+import SnackbarContent from '@mui/material/SnackbarContent'
+import IconButton from '@mui/material/IconButton'
 
-import CloseIcon from '@material-ui/icons/Close'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import WarningIcon from '@material-ui/icons/Warning'
-import ErrorIcon from '@material-ui/icons/Error'
-import InfoIcon from '@material-ui/icons/Info'
+import CloseIcon from '@mui/icons-material/Close'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import WarningIcon from '@mui/icons-material/Warning'
+import ErrorIcon from '@mui/icons-material/Error'
+import InfoIcon from '@mui/icons-material/Info'
 
-import green from '@material-ui/core/colors/green'
-import amber from '@material-ui/core/colors/amber'
+import { amber, green } from '@mui/material/colors'
 
 import settings from 'settings'
 
@@ -106,14 +105,14 @@ class SnackbarWrapper extends React.Component {
                 color="inherit"
                 className={classes.close}
                 onClick={onClose}
-              >
+                size="large">
                 <CloseIcon />
               </IconButton>,
             ]}
           />
         </Snackbar>
       </div>
-    )
+    );
   }
 }
 

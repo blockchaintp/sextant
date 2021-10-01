@@ -1,23 +1,23 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-shadow */
 import React, { useState, useMemo } from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import { FileIcon, defaultStyles } from 'react-file-icon'
 import useFileExplorer from 'hooks/useFileExplorer'
 import prettyBytes from 'pretty-bytes'
 import ExplorerSidebar from 'components/fileexplorer/Sidebar'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import Button from '@material-ui/core/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import Button from '@mui/material/Button'
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
-import FolderIcon from '@material-ui/icons/Folder'
-import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser'
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
-import InfoIcon from '@material-ui/icons/Info'
+import FolderIcon from '@mui/icons-material/Folder'
+import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser'
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload'
+import InfoIcon from '@mui/icons-material/Info'
 
 const styles = (theme) => ({
 

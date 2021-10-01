@@ -1,17 +1,17 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-shadow */
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Collapse from '@material-ui/core/Collapse'
-import FolderIcon from '@material-ui/icons/Folder'
-import StorageIcon from '@material-ui/icons/Storage'
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import withStyles from '@mui/styles/withStyles';
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Collapse from '@mui/material/Collapse'
+import FolderIcon from '@mui/icons-material/Folder'
+import StorageIcon from '@mui/icons-material/Storage'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const styles = (theme) => ({
   root: {

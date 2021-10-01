@@ -1,12 +1,12 @@
 import React from 'react'
 
-import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 class Text extends React.Component {
   render() {

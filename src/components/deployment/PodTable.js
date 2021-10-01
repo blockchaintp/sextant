@@ -1,5 +1,5 @@
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
 import SimpleTable from 'components/table/SimpleTable'
 import DeletePodDialog from 'components/table/DeletePodDialog'

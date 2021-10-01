@@ -1,6 +1,6 @@
 import React from 'react'
-import { ThemeProvider, createTheme } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider, StyledEngineProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline'
 
 const theme = createTheme({
   typography: {
@@ -13,10 +13,12 @@ const theme = createTheme({
 
 function Theme({ children }) {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      { children }
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        { children }
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 }
 

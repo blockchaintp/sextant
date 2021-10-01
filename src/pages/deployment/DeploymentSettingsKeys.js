@@ -1,20 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import withStyles from '@mui/styles/withStyles';
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import IconButton from '@material-ui/core/IconButton'
-import Tooltip from '@material-ui/core/Tooltip'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
 
-import TextField from '@material-ui/core/TextField'
+import TextField from '@mui/material/TextField'
 
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
@@ -139,7 +139,7 @@ class DeploymentSettingsKeys extends React.Component {
                 }}
               >
                 <Tooltip title="Copy to clipboard" placement="top">
-                  <IconButton>
+                  <IconButton size="large">
                     <ClipboardIcon />
                   </IconButton>
                 </Tooltip>
@@ -148,7 +148,7 @@ class DeploymentSettingsKeys extends React.Component {
           )}
         />
       </div>
-    )
+    );
   }
 
   getEnrolledKeysTable() {
