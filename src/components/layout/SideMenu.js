@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import IconButton from '@mui/material/IconButton'
 import List from '@mui/material/List'
@@ -119,7 +119,7 @@ class SideMenu extends React.Component {
           </div>
         </SwipeableDrawer>
       </div>
-    );
+    )
   }
 }
 
