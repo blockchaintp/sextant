@@ -2,16 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import routerActions from 'store/modules/router'
-import deploymentActions from 'store/modules/deployment'
 import selectors from 'store/selectors'
 
 import ClusterStatus from 'pages/cluster/ClusterStatus'
 import Loading from 'components/system/Loading'
 
-const onCancel = (cluster) => routerActions.navigateTo('clusters')
+const onCancel = () => routerActions.navigateTo('clusters')
 
 @connect(
-  state => {
+  (state) => {
     const routeParams = selectors.router.params(state)
 
     const {
@@ -28,22 +27,21 @@ const onCancel = (cluster) => routerActions.navigateTo('clusters')
     }
   },
   {
-    onCancel, 
+    onCancel,
   },
 )
 class ClusterStatusContainer extends React.Component {
-
   render() {
     const {
       loading,
     } = this.props
 
-    if(loading) {
+    if (loading) {
       return <Loading />
     }
 
     return (
-      <ClusterStatus 
+      <ClusterStatus
         {...this.props}
       />
     )

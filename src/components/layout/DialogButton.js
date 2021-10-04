@@ -4,20 +4,16 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-
 import HorizontalCard from 'components/layout/HorizontalCard'
 
-const styles = (theme) => ({
+const styles = () => ({
 
 })
 
 class DialogButton extends React.Component {
   state = {
     open: false,
-    items: null
   }
 
   handleClickOpen = () => {
@@ -25,7 +21,9 @@ class DialogButton extends React.Component {
   }
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({
+      open: false,
+    });
   }
 
   clickItem = (item) => {
@@ -33,25 +31,20 @@ class DialogButton extends React.Component {
       openPage,
     } = this.props
 
-    if(item.items) {
-      this.setState({
-        items: item.items,
-      })
-      if(item.handler) {
+    if (item.items) {
+      if (item.handler) {
         item.handler()
       }
       return
     }
 
-    if(typeof(item.handler) === 'string') {
+    if (typeof (item.handler) === 'string') {
       openPage(item.handler)
       this.handleClose()
-    }
-    else if(typeof(item.handler) === 'function') {
+    } else if (typeof (item.handler) === 'function') {
       item.handler()
       this.handleClose()
-    }
-    else {
+    } else {
       throw new Error(`unknown AppBarMenu item handler for ${item.title}`)
     }
   }
@@ -64,29 +57,29 @@ class DialogButton extends React.Component {
       icon,
       buttonProps,
       disabled,
-      items
+      items,
     } = this.props
 
     // returns an array of divs. Each div contains dialog content for a deployment version
     const getDeploymentCards = (deploymentTypes) => {
-      let cards = []
+      const cards = []
       deploymentTypes.forEach((deployment, i) => {
-        const versions = deployment.versions
+        const { versions } = deployment
         versions.forEach((version) => {
           cards.push(
-            <div key={ i }>
-              <DialogContent >
+            <div key={i}>
+              <DialogContent>
                 <HorizontalCard
                   classes={classes}
                   theme={theme}
-                  optionIcon={version.icon || "/large-logo-outline-roundel.svg"}
+                  optionIcon={version.icon || '/large-logo-outline-roundel.svg'}
                   optionTitle={version.title}
                   optionVersion={version.version}
                   versionSummary={version.description}
-                  onClick={ () => this.clickItem(version) }
+                  onClick={() => this.clickItem(version)}
                 />
               </DialogContent>
-            </div>
+            </div>,
           )
         })
       })
@@ -97,10 +90,12 @@ class DialogButton extends React.Component {
 
     const ButtonIcon = icon
 
+    const { open } = this.state
+
     return (
       <div>
         <Button
-          disabled={ disabled }
+          disabled={disabled}
           {...buttonProps}
           onClick={this.handleClickOpen}
         >
@@ -110,10 +105,11 @@ class DialogButton extends React.Component {
           ) }
         </Button>
         <Dialog
-          open={this.state.open}
+          open={open}
           onClose={this.handleClose}
-          fullWidth={true}
-          maxWidth={'md'}
+          fullWidth
+          maxWidth="md"
+          items={items}
         >
           { deploymentCards }
         </Dialog>
@@ -126,6 +122,5 @@ DialogButton.propTypes = {
   classes: PropTypes.object.isRequired,
   items: PropTypes.array.isRequired,
 }
-
 
 export default withStyles(styles)(DialogButton)

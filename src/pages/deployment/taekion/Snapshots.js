@@ -86,7 +86,7 @@ const splitSnapshotFormData = (payload) => {
   return {
     volume,
     currentData,
-  } 
+  }
 }
 
 class TaekionSnapshots extends React.Component {

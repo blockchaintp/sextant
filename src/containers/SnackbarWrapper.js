@@ -7,7 +7,7 @@ import snackbarActions from 'store/modules/snackbar'
 import SnackbarWrapper from 'pages/SnackbarWrapper'
 
 @connect(
-  state => ({
+  (state) => ({
     open: selectors.snackbar.open(state),
     text: selectors.snackbar.text(state),
     type: selectors.snackbar.type(state),
@@ -17,7 +17,6 @@ import SnackbarWrapper from 'pages/SnackbarWrapper'
   },
 )
 class SnackbarWrapperContainer extends React.Component {
-
   render() {
     return (
       <SnackbarWrapper {...this.props} />

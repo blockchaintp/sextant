@@ -7,19 +7,17 @@ import selectors from 'store/selectors'
 
 import TaekionVolumes from 'pages/deployment/taekion/Volumes'
 
-const viewSnapshots = (volume, params) => routerActions.navigateTo('deployment_settings.taekionSnapshots', Object.assign({}, params, {
-  volume,
-}))
+const viewSnapshots = (volume, params) => routerActions.navigateTo('deployment_settings.taekionSnapshots', { ...params, volume })
 
-const createSnapshot = (volume, params) => routerActions.navigateTo('deployment_settings.taekionSnapshots', Object.assign({}, params, {
+const createSnapshot = (volume, params) => routerActions.navigateTo('deployment_settings.taekionSnapshots', {
+  ...params,
   volume,
   create: 'yes',
-}))
+})
 
 @connect(
-  state => {
-
-    const params = state.router.route.params
+  (state) => {
+    const { params } = state.router.route
 
     const {
       cluster,
@@ -48,7 +46,6 @@ const createSnapshot = (volume, params) => routerActions.navigateTo('deployment_
   },
 )
 class TaekionVolumesContainer extends React.Component {
-
   render() {
     return (
       <TaekionVolumes

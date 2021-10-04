@@ -10,25 +10,22 @@ import UserForm from 'pages/user/UserForm'
 const onCancel = () => routerActions.navigateTo('home')
 
 @connect(
-  state => {
-    return {
-      error: selectors.user.errors.form(state),
-      submitting: selectors.user.loading.form(state),
-      schema: selectors.config.forms.user.userSelf(state),
-      initialValues: selectors.auth.data(state),
-    }
-  },
+  (state) => ({
+    error: selectors.user.errors.form(state),
+    submitting: selectors.user.loading.form(state),
+    schema: selectors.config.forms.user.userSelf(state),
+    initialValues: selectors.auth.data(state),
+  }),
   {
     submitForm: userActions.saveAccountDetails,
-    onCancel, 
+    onCancel,
   },
 )
 class AccountDetailsContainer extends React.Component {
-
   render() {
     return (
       <UserForm {...this.props} />
-    )    
+    )
   }
 }
 

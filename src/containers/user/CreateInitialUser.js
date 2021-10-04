@@ -14,11 +14,11 @@ const initialValues = {
   username: '',
   permission: 'superuser',
   password: '',
-  confirmPassword: '', 
+  confirmPassword: '',
 }
 
 @connect(
-  state => ({
+  (state) => ({
     error: selectors.user.errors.form(state),
     loading: selectors.user.loading.form(state),
     schema: initialUserForm,
@@ -29,11 +29,10 @@ const initialValues = {
   },
 )
 class CreateInitialUserContainer extends React.Component {
-
   render() {
     return (
       <UserForm {...this.props} />
-    )    
+    )
   }
 }
 

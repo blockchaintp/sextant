@@ -1,8 +1,9 @@
+/* eslint-disable consistent-return */
 import transitionPath from 'router5-transition-path'
-import findRoutes from '../utils/findRoutes'
 
 import snackbarActions from 'store/modules/snackbar'
 import routerActions from 'store/modules/router'
+import findRoutes from '../utils/findRoutes'
 
 /*
 
@@ -22,14 +23,14 @@ const authorizeRoute = (routes) => (router, dependencies) => (toState, fromState
   }
 
   const authorizeHandlers = findRoutes(routes, toActivate)
-    .map(route => route.authorize)
-    .filter(authorize => authorize)
+    .map((route) => route.authorize)
+    .filter((authorize) => authorize)
 
   // there are no authorize settings on this route
-  if(authorizeHandlers.length <= 0) return done()
+  if (authorizeHandlers.length <= 0) return done()
   // check there is only a single auth requirement
-  if(authorizeHandlers.length > 1) {
-    routeError(`multiple authorize settings found in route`)
+  if (authorizeHandlers.length > 1) {
+    routeError('multiple authorize settings found in route')
     return
   }
 
@@ -37,10 +38,9 @@ const authorizeRoute = (routes) => (router, dependencies) => (toState, fromState
 
   const redirectTo = authorizeHandler(store.getState())
 
-  if(!redirectTo) {
+  if (!redirectTo) {
     done()
-  }
-  else {
+  } else {
     store.dispatch(routerActions.navigateTo(redirectTo))
   }
 }

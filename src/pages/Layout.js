@@ -56,7 +56,7 @@ const styles = (theme) => ({
     // padding that is the height of the footer -
     // ensures enough space for footer in shared container
     paddingBottom: '4rem',
-    //minHeight: 'calc(100vh - 4rem)',
+    // minHeight: 'calc(100vh - 4rem)',
   },
   footer: {
     // absolute postion within the root container set to the bottom

@@ -2,7 +2,6 @@ import React from 'react'
 import FormHelperText from '@material-ui/core/FormHelperText'
 
 class HelperText extends React.Component {
-
   render() {
     const {
       helperText,
@@ -10,13 +9,13 @@ class HelperText extends React.Component {
       touched,
     } = this.props
 
-    if(!error && !helperText) return null
+    if (!error && !helperText) return null
 
     const hasError = touched && error
 
     return (
       <FormHelperText
-        error={ hasError }
+        error={hasError}
       >
         { helperText }
       </FormHelperText>

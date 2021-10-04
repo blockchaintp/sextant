@@ -1,5 +1,5 @@
 import React from 'react'
-import {useDropzone} from 'react-dropzone'
+import { useDropzone } from 'react-dropzone'
 import RootRef from '@material-ui/core/RootRef'
 
 const DropZone = ({
@@ -8,12 +8,12 @@ const DropZone = ({
   multiple = false,
   accept,
 }) => {
-  const {getRootProps, getInputProps} = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     multiple,
     onDrop,
     accept,
   })
-  const {ref, ...rootProps} = getRootProps()
+  const { ref, ...rootProps } = getRootProps()
 
   return (
     <RootRef rootRef={ref}>

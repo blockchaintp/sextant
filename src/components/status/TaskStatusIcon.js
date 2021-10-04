@@ -8,7 +8,7 @@ import DoneIcon from '@material-ui/icons/Done'
 
 import green from '@material-ui/core/colors/green'
 
-const styles = theme => ({
+const styles = (theme) => ({
   spinner: {
     width: ['16px', '!important'],
     height: ['16px', '!important'],
@@ -22,37 +22,34 @@ const styles = theme => ({
 })
 
 class TaskStatusIcon extends React.Component {
-
   render() {
     const {
       classes,
       status,
     } = this.props
 
-    if(status == 'running' || status == 'created') {
+    if (status === 'running' || status === 'created') {
       return (
         <CircularProgress
-          className={ classes.spinner }
+          className={classes.spinner}
         />
       )
     }
-    else if(status == 'error') {
+    if (status === 'error') {
       return (
         <ErrorIcon
-          className={ classes.error }
+          className={classes.error}
         />
       )
     }
-    else if(status == 'finished') {
+    if (status === 'finished') {
       return (
         <DoneIcon
-          className={ classes.success }
+          className={classes.success}
         />
       )
     }
-    else {
-      return null
-    }
+    return null
   }
 }
 

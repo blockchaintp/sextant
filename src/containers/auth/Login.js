@@ -16,7 +16,7 @@ const initialValues = {
 }
 
 @connect(
-  state => ({
+  (state) => ({
     error: selectors.auth.errors.login(state),
     loading: selectors.auth.loading.login(state),
     schema: loginForm,
@@ -27,11 +27,10 @@ const initialValues = {
   },
 )
 class LoginContainer extends React.Component {
-
   render() {
     return (
       <Login {...this.props} />
-    )    
+    )
   }
 }
 
