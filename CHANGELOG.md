@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## Unreleased
+
+* fix(src): removes uncaught semicolons [view commit](https://github.com/catenasys/sextant/commit/a867dcaec5472b73a6c4564448ddd9eb151a2a6b)
+* fix(deploymenttable): sets formcontrol variant to standard to maintain consistent style [view commit](https://github.com/catenasys/sextant/commit/5b53aa7d4cb01fe0948714665ef38379a7dffca7)
+* style(src): updates all material imports to adhere to 5.0 standard [view commit](https://github.com/catenasys/sextant/commit/9078f1a683044b21c7162289079bc14a84a9c892)
+* build(packages): installs mui 5 and dependencies [view commit](https://github.com/catenasys/sextant/commit/5e00192eb00dcfb239d4056c67519d20ead0d627)
+* style(root): updates themeprovider per migration 4->5 instructions [view commit](https://github.com/catenasys/sextant/commit/88ee5f4d4a31aefdce2cde9a4e1bdd51c2f09436)
+* style(src): linting [view commit](https://github.com/catenasys/sextant/commit/435dfe67f9da1028edb6c1fd60032756158750e5)
+
 ## v2.1.3
 
 * fix(simpletabletripledelete): clears state after deleting a resource [view commit](https://github.com/catenasys/sextant/commit/b97a70b3dad60da4aad9dd22d3aab3449e578175)
