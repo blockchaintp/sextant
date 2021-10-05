@@ -1,17 +1,17 @@
 /* eslint-disable no-else-return */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
+import withStyles from '@mui/styles/withStyles';
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 
 import DamlArchiveTable from 'components/table/DamlArchiveTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'

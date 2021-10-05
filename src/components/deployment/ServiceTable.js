@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
 import SimpleTable from 'components/table/SimpleTable'
 

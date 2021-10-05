@@ -1,9 +1,9 @@
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import Select from '@material-ui/core/Select'
-import FormControl from '@material-ui/core/FormControl'
-import MenuItem from '@material-ui/core/MenuItem'
-import FormLabel from '@material-ui/core/FormLabel';
+import withStyles from '@mui/styles/withStyles';
+import Select from '@mui/material/Select'
+import FormControl from '@mui/material/FormControl'
+import MenuItem from '@mui/material/MenuItem'
+import FormLabel from '@mui/material/FormLabel';
 
 import HelperText from './HelperText'
 

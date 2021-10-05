@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Tooltip from '@material-ui/core/Tooltip'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip'
 
 const styles = (theme) => ({
   rightAlign: {

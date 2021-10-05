@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import withStyles from '@mui/styles/withStyles';
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
 
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'

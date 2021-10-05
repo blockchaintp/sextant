@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import LinearProgress from '@material-ui/core/LinearProgress'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
+import withStyles from '@mui/styles/withStyles';
+import LinearProgress from '@mui/material/LinearProgress'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 import prettyBytes from 'pretty-bytes'
 
 const styles = (theme) => ({

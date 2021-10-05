@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
-import AddIcon from '@material-ui/icons/AddCircle'
-import EditIcon from '@material-ui/icons/Edit'
-import RemoveIcon from '@material-ui/icons/RemoveCircle'
+import AddIcon from '@mui/icons-material/AddCircle'
+import EditIcon from '@mui/icons-material/Edit'
+import RemoveIcon from '@mui/icons-material/RemoveCircle'
 
 const styles = (theme) => ({
   icon: {

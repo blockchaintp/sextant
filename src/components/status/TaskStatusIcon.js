@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withStyles } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import ErrorIcon from '@material-ui/icons/Error'
-import DoneIcon from '@material-ui/icons/Done'
+import withStyles from '@mui/styles/withStyles';
+import CircularProgress from '@mui/material/CircularProgress'
+import ErrorIcon from '@mui/icons-material/Error'
+import DoneIcon from '@mui/icons-material/Done'
 
-import green from '@material-ui/core/colors/green'
+import { green } from '@mui/material/colors'
 
 const styles = (theme) => ({
   spinner: {

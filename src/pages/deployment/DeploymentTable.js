@@ -1,14 +1,14 @@
 /* eslint-disable max-len */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import Select from '@material-ui/core/Select'
-import MenuItem from '@material-ui/core/MenuItem'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import Checkbox from '@mui/material/Checkbox'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableTripleDeleteDialog from 'components/table/SimpleTableTripleDeleteDialog'
@@ -252,7 +252,7 @@ class DeploymentTable extends React.Component {
       : (
         <div className={classes.headerActions}>
           <div className={classes.clusterSelect}>
-            <FormControl className={classes.formControl}>
+            <FormControl variant="standard" className={classes.formControl}>
               <InputLabel htmlFor="name-readonly">Cluster</InputLabel>
               <Select
                 value={clusterId}

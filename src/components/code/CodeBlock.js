@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
-import Tooltip from '@material-ui/core/Tooltip'
-import Fab from '@material-ui/core/Fab'
-import ClipboardIcon from '@material-ui/icons/FileCopy'
+import Tooltip from '@mui/material/Tooltip'
+import Fab from '@mui/material/Fab'
+import ClipboardIcon from '@mui/icons-material/FileCopy'
 
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 

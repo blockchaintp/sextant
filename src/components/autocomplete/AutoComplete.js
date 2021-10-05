@@ -5,11 +5,11 @@ import Autosuggest from 'react-autosuggest'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 
-import { withStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
-import Paper from '@material-ui/core/Paper'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
+import withStyles from '@mui/styles/withStyles';
+import TextField from '@mui/material/TextField'
+import Paper from '@mui/material/Paper'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 
 const renderInputComponent = ({
   classes,

@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withStyles } from '@material-ui/core/styles'
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
-import IconButton from '@material-ui/core/IconButton'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Divider from '@material-ui/core/Divider'
-import MenuIcon from '@material-ui/icons/Menu'
+import withStyles from '@mui/styles/withStyles'
+import SwipeableDrawer from '@mui/material/SwipeableDrawer'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Divider from '@mui/material/Divider'
+import MenuIcon from '@mui/icons-material/Menu'
 
 import settings from 'settings'
 
@@ -96,6 +96,7 @@ class SideMenu extends React.Component {
           color="inherit"
           aria-label="Menu"
           onClick={this.handleOpen}
+          size="large"
         >
           <MenuIcon />
         </IconButton>

@@ -1,10 +1,10 @@
 /* eslint-disable no-shadow */
 import React, { useMemo } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import FormControl from '@material-ui/core/FormControl'
-import Select from '@material-ui/core/Select'
-import MenuItem from '@material-ui/core/MenuItem'
+import withStyles from '@mui/styles/withStyles';
+import Typography from '@mui/material/Typography'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 import FolderTree from './FolderTree'
 
 const styles = (theme) => ({

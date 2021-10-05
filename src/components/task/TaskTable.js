@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
 import SimpleTable from 'components/table/SimpleTable'
 import TaskStatusIcon from 'components/status/TaskStatusIcon'
