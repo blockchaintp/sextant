@@ -75,7 +75,7 @@ class UserTable extends React.Component {
         _ci="addbutton"
         className={classes.button}
         variant="contained"
-        color="secondary"
+        color="primary"
         onClick={onAdd}
       >
         Add

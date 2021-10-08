@@ -75,7 +75,7 @@ class UploadStatusDialog extends React.Component {
                   size={totals.size}
                   percentDone={totals.percent}
                   uploadedBytes={totals.uploadedBytes}
-                  color="secondary"
+                  color="primary"
                 />
                 <Divider className={classes.divider} />
               </>

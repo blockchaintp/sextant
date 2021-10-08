@@ -198,7 +198,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
           title="Packages"
           getActions={() => (
             <Button
-              color="secondary"
+              color="primary"
               variant="contained"
               onClick={() => setUploadArchiveWindowOpen(true)}
               disabled={false}

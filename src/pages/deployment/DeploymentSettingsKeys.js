@@ -88,7 +88,7 @@ class DeploymentSettingsKeys extends React.Component {
           <Button onClick={() => this.setFormOpen(false)}>
             Cancel
           </Button>
-          <Button onClick={() => this.submitAddForm()} variant="contained" color="secondary" autoFocus>
+          <Button onClick={() => this.submitAddForm()} variant="contained" color="primary" autoFocus>
             Save
           </Button>
         </DialogActions>
@@ -179,7 +179,7 @@ class DeploymentSettingsKeys extends React.Component {
           getActions={() => (
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               onClick={() => this.setFormOpen(true)}
             >
               Add

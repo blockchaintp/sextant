@@ -221,7 +221,7 @@ class DeploymentTable extends React.Component {
           icon={AddIcon}
           buttonProps={{
             variant: 'contained',
-            color: 'secondary',
+            color: 'primary',
           }}
           items={helmAddButtonItems}
           disabled={addButtonDisabled}

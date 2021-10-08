@@ -170,7 +170,7 @@ class DeploymentSettingsDamlParties extends React.Component {
           <Button onClick={() => this.setAddFormOpen(false)}>
             Cancel
           </Button>
-          <Button onClick={() => this.submitAddForm()} variant="contained" color="secondary" autoFocus>
+          <Button onClick={() => this.submitAddForm()} variant="contained" color="primary" autoFocus>
             Save
           </Button>
         </DialogActions>
@@ -377,7 +377,7 @@ class DeploymentSettingsDamlParties extends React.Component {
           </Button>
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             disabled={!isValid}
             onClick={() => {
               if (admin) {

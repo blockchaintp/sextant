@@ -157,7 +157,7 @@ class ClusterTable extends React.Component {
             _ci="addbutton"
             className={classes.button}
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={addCluster}
             disabled={!canCreateCluster}
           >

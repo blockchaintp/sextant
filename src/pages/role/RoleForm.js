@@ -117,7 +117,7 @@ class RoleForm extends React.Component {
           <Button
             onClick={onConfirm}
             variant="contained"
-            color="secondary"
+            color="primary"
             autoFocus
           >
             Save

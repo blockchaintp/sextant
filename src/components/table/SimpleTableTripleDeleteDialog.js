@@ -69,7 +69,7 @@ class SimpleTableTripleDeleteDialog extends React.Component {
               this.setState({ name: '' })
             }}
             variant="contained"
-            color="secondary"
+            color="primary"
             autoFocus
           >
             Confirm
