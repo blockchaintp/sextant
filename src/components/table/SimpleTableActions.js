@@ -38,7 +38,9 @@ class SimpleTableActions extends React.Component {
                     }
                   }}
                   disabled={visibility}
-                  size="large">
+                  style={action.style}
+                  size="large"
+                >
                   <IconClass />
                 </IconButton>
               )
