@@ -77,7 +77,7 @@ class CodeBlock extends React.Component {
                 <Tooltip title="Copy to clipboard" placement="top">
                   <Fab
                     size="small"
-                    color="secondary"
+                    color="primary"
                     aria-label="Add"
                     className={classes.fab}
                   >

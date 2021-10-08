@@ -132,7 +132,7 @@ class RoleTable extends React.Component {
           <Button
             onClick={() => setOpen(true)}
             variant="contained"
-            color="secondary"
+            color="primary"
           >
             Add
             <AddIcon />

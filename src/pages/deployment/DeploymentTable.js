@@ -32,6 +32,7 @@ const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const ViewIcon = settings.icons.view
 const SettingsIcon = settings.icons.settings
+const EmptyIcon = settings.icons.settings
 
 const styles = (theme) => ({
   errorText: {
@@ -220,7 +221,7 @@ class DeploymentTable extends React.Component {
           icon={AddIcon}
           buttonProps={{
             variant: 'contained',
-            color: 'secondary',
+            color: 'primary',
           }}
           items={helmAddButtonItems}
           disabled={addButtonDisabled}
@@ -325,8 +326,15 @@ class DeploymentTable extends React.Component {
             return onViewSettings(item.cluster, item.id, item.deployment_type, item.deploymentData.deployment_version, pageKey)
           },
         })
+      } else {
+        buttons.push({
+          title: 'Empty',
+          icon: EmptyIcon,
+          disabled: true,
+          className: 'emptyIcon',
+          style: { opacity: 0 },
+        })
       }
-
       return buttons
     }
 

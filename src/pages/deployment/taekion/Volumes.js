@@ -188,7 +188,7 @@ class TaekionVolumes extends React.Component {
             _ci="addbutton"
             className={classes.button}
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={onOpenAddVolumeWindow}
           >
             Add
@@ -300,7 +300,7 @@ class TaekionVolumes extends React.Component {
                     <Button onClick={onCloseAddVolumeWindow}>
                       Cancel
                     </Button>
-                    <Button onClick={handleSubmit} variant="contained" color="secondary" autoFocus>
+                    <Button onClick={handleSubmit} variant="contained" color="primary" autoFocus>
                       Add
                     </Button>
                   </DialogActions>
@@ -340,7 +340,7 @@ class TaekionVolumes extends React.Component {
                     <Button onClick={onCancelEditVolume}>
                       Cancel
                     </Button>
-                    <Button onClick={handleSubmit} variant="contained" color="secondary" autoFocus>
+                    <Button onClick={handleSubmit} variant="contained" color="primary" autoFocus>
                       Edit
                     </Button>
                   </DialogActions>

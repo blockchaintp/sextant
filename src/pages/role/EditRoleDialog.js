@@ -75,7 +75,7 @@ class EditRoleDialog extends React.Component {
           <Button onClick={onCancel}>
             Cancel
           </Button>
-          <Button _ci="confirm" onClick={onConfirm} variant="contained" color="secondary" autoFocus>
+          <Button _ci="confirm" onClick={onConfirm} variant="contained" color="primary" autoFocus>
             Confirm
           </Button>
         </DialogActions>

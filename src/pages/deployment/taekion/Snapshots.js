@@ -186,7 +186,7 @@ class TaekionSnapshots extends React.Component {
             _ci="addbutton"
             className={classes.button}
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={onOpenAddSnapshotWindow}
           >
             Add
@@ -274,7 +274,7 @@ class TaekionSnapshots extends React.Component {
                     <Button onClick={onCloseAddSnapshotWindow}>
                       Cancel
                     </Button>
-                    <Button onClick={handleSubmit} variant="contained" color="secondary" autoFocus>
+                    <Button onClick={handleSubmit} variant="contained" color="primary" autoFocus>
                       Create
                     </Button>
                   </DialogActions>

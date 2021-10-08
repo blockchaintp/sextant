@@ -87,7 +87,7 @@ class TaekionKeys extends React.Component {
             _ci="addbutton"
             className={classes.button}
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={onOpenAddKeyWindow}
           >
             Add
@@ -169,7 +169,7 @@ class TaekionKeys extends React.Component {
                     <Button onClick={onCloseAddKeyWindow}>
                       Cancel
                     </Button>
-                    <Button onClick={handleSubmit} variant="contained" color="secondary" autoFocus>
+                    <Button onClick={handleSubmit} variant="contained" color="primary" autoFocus>
                       Add
                     </Button>
                   </DialogActions>
