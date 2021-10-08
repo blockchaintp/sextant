@@ -7,7 +7,12 @@ const theme = createTheme({
     fontSize: 18,
   },
   palette: {
-
+    primary: {
+      main: '#3D4897',
+    },
+    secondary: {
+      main: '#E12843',
+    },
   },
 })
 
