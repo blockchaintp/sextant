@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* feat(theme): sets primary and secondary theme color props to official company colors [view commit](https://github.com/catenasys/sextant/commit/33f9ee47004599f2342e469aef806274193bb145)
+* feat(pages-components): changes all secondary color buttons to primary color property [view commit](https://github.com/catenasys/sextant/commit/698d90a5a74e689459787c1be04dc2caebe9e4ca)
+* fix(deployment-table-action): adds empty icon when action is null to maintain button alignment [view commit](https://github.com/catenasys/sextant/commit/b58716b378d25fe3de82c9fb84cc5f712538c65f)
 * fix(src): removes uncaught semicolons [view commit](https://github.com/catenasys/sextant/commit/a867dcaec5472b73a6c4564448ddd9eb151a2a6b)
 * fix(deploymenttable): sets formcontrol variant to standard to maintain consistent style [view commit](https://github.com/catenasys/sextant/commit/5b53aa7d4cb01fe0948714665ef38379a7dffca7)
 * style(src): updates all material imports to adhere to 5.0 standard [view commit](https://github.com/catenasys/sextant/commit/9078f1a683044b21c7162289079bc14a84a9c892)
