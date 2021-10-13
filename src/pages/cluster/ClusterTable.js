@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
+import { styled } from '@mui/material/styles'
 
 import Button from '@mui/material/Button'
 
@@ -8,6 +9,11 @@ import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableTripleDeleteDialog from 'components/table/SimpleTableTripleDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
+
+import Box from '@mui/material/Box'
+import Stepper from '@mui/material/Stepper'
+import Step from '@mui/material/Step'
+import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector'
 
 import TaskStatusIcon from 'components/status/TaskStatusIcon'
 import TaskActionIcon from 'components/status/TaskActionIcon'
@@ -30,6 +36,9 @@ const styles = (theme) => ({
   errorContainer: {
     maxWidth: '200px',
   },
+  inertText: {
+    color: theme.palette.grey[600],
+  },
   statusContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -51,6 +60,12 @@ const styles = (theme) => ({
     whiteSpace: 'nowrap',
   },
 })
+
+const Connector = styled(StepConnector)(({ theme }) => ({
+  [`& .${stepConnectorClasses.line}`]: {
+    borderColor: theme.palette.grey[300],
+  },
+}));
 
 class ClusterTable extends React.Component {
   state = {
@@ -110,33 +125,21 @@ class ClusterTable extends React.Component {
       provision_type: cluster.provision_type,
       status: clusterStatusTranslator(cluster.status),
       task: cluster.task ? (
-        <div className={classes.statusContainer}>
-          <div className={classes.statusIcon}>
-            <TaskActionIcon
-              action={cluster.task.action.split('.')[1]}
-            />
-          </div>
-          <div className={classes.statusIcon}>
-            { actionNameTranslator(cluster.task.action) }
-          </div>
-          <div className={classes.statusIcon}>
-            <TaskStatusIcon
-              status={cluster.task.status}
-            />
-          </div>
-          <div>
-            { !cluster.task.error && cluster.task.status }
-            {
-                cluster.task.error && (
-                  <div className={classes.errorContainer}>
-                    <span className={classes.errorText}>
-                      { cluster.task.error }
-                    </span>
-                  </div>
-                )
-              }
-          </div>
-        </div>
+        <Box spacing={1}>
+          <Stepper connector={<Connector />}>
+            <Step>
+              <TaskActionIcon
+                action={cluster.task.action.split('.')[1]}
+              />
+            </Step>
+            <Step>
+              <TaskStatusIcon
+                status={cluster.task.status}
+                error={cluster.task.error}
+              />
+            </Step>
+          </Stepper>
+        </Box>
       ) : null,
     }))
 

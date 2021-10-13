@@ -1,15 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import withStyles from '@mui/styles/withStyles';
+import Chip from '@mui/material/Chip'
+import withStyles from '@mui/styles/withStyles'
 
 import AddIcon from '@mui/icons-material/AddCircle'
-import EditIcon from '@mui/icons-material/Edit'
+import UpdateIcon from '@mui/icons-material/Update'
 import RemoveIcon from '@mui/icons-material/RemoveCircle'
 
 const styles = (theme) => ({
   icon: {
-    color: theme.palette.text.hint,
+    color: theme.palette.text.disabled,
+  },
+  chip: {
+    height: '38px',
+    borderRadius: '36px',
   },
 })
 
@@ -22,23 +27,17 @@ class TaskActionIcon extends React.Component {
 
     if (action === 'create') {
       return (
-        <AddIcon
-          className={classes.icon}
-        />
+        <Chip className={classes.chip} icon={<AddIcon />} label={action} />
       )
     }
     if (action === 'update') {
       return (
-        <EditIcon
-          className={classes.icon}
-        />
+        <Chip className={classes.chip} icon={<UpdateIcon />} label={action} />
       )
     }
     if (action === 'delete') {
       return (
-        <RemoveIcon
-          className={classes.icon}
-        />
+        <Chip className={classes.chip} icon={<RemoveIcon />} label={action} />
       )
     }
     return null
