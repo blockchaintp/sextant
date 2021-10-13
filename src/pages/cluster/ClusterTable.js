@@ -130,6 +130,7 @@ class ClusterTable extends React.Component {
             <Step>
               <TaskActionIcon
                 action={cluster.task.action.split('.')[1]}
+                actionLabel={actionNameTranslator(cluster.task.action)}
               />
             </Step>
             <Step>
