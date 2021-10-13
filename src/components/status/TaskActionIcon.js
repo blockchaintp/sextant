@@ -23,21 +23,22 @@ class TaskActionIcon extends React.Component {
     const {
       classes,
       action,
+      actionLabel,
     } = this.props
 
     if (action === 'create') {
       return (
-        <Chip className={classes.chip} icon={<AddIcon />} label={action} />
+        <Chip className={classes.chip} icon={<AddIcon />} label={actionLabel} />
       )
     }
     if (action === 'update') {
       return (
-        <Chip className={classes.chip} icon={<UpdateIcon />} label={action} />
+        <Chip className={classes.chip} icon={<UpdateIcon />} label={actionLabel} />
       )
     }
     if (action === 'delete') {
       return (
-        <Chip className={classes.chip} icon={<RemoveIcon />} label={action} />
+        <Chip className={classes.chip} icon={<RemoveIcon />} label={actionLabel} />
       )
     }
     return null
