@@ -1,7 +1,8 @@
 /* eslint-disable max-len */
 import React from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
+import { styled } from '@mui/material/styles'
 
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
@@ -14,6 +15,11 @@ import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableTripleDeleteDialog from 'components/table/SimpleTableTripleDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
+
+import Box from '@mui/material/Box'
+import Stepper from '@mui/material/Stepper'
+import Step from '@mui/material/Step'
+import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector'
 
 import DialogButton from 'components/layout/DialogButton'
 import TaskStatusIcon from 'components/status/TaskStatusIcon'
@@ -72,6 +78,12 @@ const styles = (theme) => ({
     paddingLeft: '0px',
   },
 })
+
+const Connector = styled(StepConnector)(({ theme }) => ({
+  [`& .${stepConnectorClasses.line}`]: {
+    borderColor: theme.palette.grey[300],
+  },
+}))
 
 class DeploymentTable extends React.Component {
   state = {
@@ -146,33 +158,24 @@ class DeploymentTable extends React.Component {
       deployment_type: deployment.deployment_type,
       status: deploymentStatusTranslator(deployment.status),
       task: deployment.task ? (
-        <div className={classes.statusContainer}>
-          <div className={classes.statusIcon}>
-            <TaskActionIcon
-              action={deployment.task.action.split('.')[1]}
-            />
-          </div>
-          <div className={classes.statusIcon}>
-            { actionNameTranslator(deployment.task.action) }
-          </div>
-          <div className={classes.statusIcon}>
-            <TaskStatusIcon
-              status={deployment.task.status}
-            />
-          </div>
-          <div>
-            { !deployment.task.error && deployment.task.status }
-            {
-                deployment.task.error && (
-                  <div className={classes.errorContainer}>
-                    <span className={classes.errorText}>
-                      { deployment.task.error }
-                    </span>
-                  </div>
-                )
-              }
-          </div>
-        </div>
+
+        <Box sx={{ width: '100%' }} spacing={4}>
+          <Stepper activeStep={1} connector={<Connector />}>
+            <Step>
+              <TaskActionIcon
+                action={deployment.task.action.split('.')[1]}
+                actionLabel={actionNameTranslator(deployment.task.action)}
+              />
+            </Step>
+            <Step>
+              <TaskStatusIcon
+                status={deployment.task.status}
+                error={deployment.task.error}
+              />
+            </Step>
+          </Stepper>
+        </Box>
+
       ) : null,
     }))
 
