@@ -40,7 +40,7 @@ class UserAvatar extends React.Component {
         variant="outlined"
         avatar={(
           <Avatar className={classes.bigAvatar}>
-            <UserIcon />
+            <UserIcon color="primary" />
           </Avatar>
         )}
         label={user.username}

@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import withStyles from '@mui/styles/withStyles';
-import CircularProgress from '@mui/material/CircularProgress'
+import withStyles from '@mui/styles/withStyles'
+import Chip from '@mui/material/Chip'
+import CircularProgressIcon from '@mui/material/CircularProgress'
 import ErrorIcon from '@mui/icons-material/Error'
-import DoneIcon from '@mui/icons-material/Done'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import Tooltip from '@mui/material/Tooltip'
 
 import { green } from '@mui/material/colors'
 
@@ -19,33 +21,51 @@ const styles = (theme) => ({
   error: {
     color: theme.palette.error.dark,
   },
+  chip: {
+    height: '38px',
+    borderRadius: '36px',
+  },
+  progress: {
+    marginLeft: '5px',
+  },
 })
 
 class TaskStatusIcon extends React.Component {
   render() {
     const {
       classes,
+      error,
       status,
     } = this.props
 
     if (status === 'running' || status === 'created') {
       return (
-        <CircularProgress
-          className={classes.spinner}
+        <Chip
+          className={classes.chip}
+          icon={<CircularProgressIcon size={18} />}
+          sx={{ paddingLeft: '6px' }}
+          label={status}
         />
       )
     }
     if (status === 'error') {
       return (
-        <ErrorIcon
-          className={classes.error}
-        />
+        <Tooltip title={error}>
+          <Chip
+            className={classes.chip}
+            icon={<ErrorIcon />}
+            label="error"
+            color="error"
+          />
+        </Tooltip>
       )
     }
     if (status === 'finished') {
       return (
-        <DoneIcon
-          className={classes.success}
+        <Chip
+          className={classes.chip}
+          icon={<CheckCircleIcon />}
+          label={status}
         />
       )
     }
