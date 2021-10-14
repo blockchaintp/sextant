@@ -10,7 +10,6 @@ import SimpleTableTripleDeleteDialog from 'components/table/SimpleTableTripleDel
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
-import Box from '@mui/material/Box'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector'
@@ -249,8 +248,8 @@ class ClusterTable extends React.Component {
 }
 
 ClusterTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-  clusters: PropTypes.array.isRequired,
+  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  clusters: PropTypes.oneOfType([PropTypes.array]).isRequired,
   onAdd: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

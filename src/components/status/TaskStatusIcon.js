@@ -25,6 +25,9 @@ const styles = (theme) => ({
     height: '38px',
     borderRadius: '36px',
   },
+  progress: {
+    marginLeft: '5px',
+  },
 })
 
 class TaskStatusIcon extends React.Component {
@@ -37,7 +40,12 @@ class TaskStatusIcon extends React.Component {
 
     if (status === 'running' || status === 'created') {
       return (
-        <Chip className={classes.chip} icon={<CircularProgressIcon />} label={status} />
+        <Chip
+          className={classes.chip}
+          icon={<CircularProgressIcon size={18} />}
+          sx={{ paddingLeft: '6px' }}
+          label={status}
+        />
       )
     }
     if (status === 'error') {
@@ -54,7 +62,11 @@ class TaskStatusIcon extends React.Component {
     }
     if (status === 'finished') {
       return (
-        <Chip className={classes.chip} icon={<CheckCircleIcon />} label={status} />
+        <Chip
+          className={classes.chip}
+          icon={<CheckCircleIcon />}
+          label={status}
+        />
       )
     }
     return null
