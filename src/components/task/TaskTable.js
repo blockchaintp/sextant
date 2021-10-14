@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 
 import SimpleTable from 'components/table/SimpleTable'
 import TaskStatusIcon from 'components/status/TaskStatusIcon'
@@ -60,37 +60,16 @@ class TaskTable extends React.Component {
         </span>
       ),
       action: (
-        <div className={classes.statusContainer}>
-          <div className={classes.statusIcon}>
-            <TaskActionIcon
-              action={task.action.split('.')[1]}
-            />
-          </div>
-          <div>
-            { actionNameTranslator(task.action) }
-          </div>
-        </div>
+        <TaskActionIcon
+          action={task.action.split('.')[1]}
+          actionLabel={actionNameTranslator(task.action)}
+        />
       ),
       status: (
-        <div className={classes.statusContainer}>
-          <div className={classes.statusIcon}>
-            <TaskStatusIcon
-              status={task.status}
-            />
-          </div>
-          <div>
-            { !task.error && task.status }
-            {
-                task.error && (
-                  <div className={classes.errorContainer}>
-                    <span className={classes.errorText}>
-                      { task.error }
-                    </span>
-                  </div>
-                )
-              }
-          </div>
-        </div>
+        <TaskStatusIcon
+          error={task.error}
+          status={task.status}
+        />
       ),
     }))
 

@@ -125,22 +125,20 @@ class ClusterTable extends React.Component {
       provision_type: cluster.provision_type,
       status: clusterStatusTranslator(cluster.status),
       task: cluster.task ? (
-        <Box spacing={1}>
-          <Stepper connector={<Connector />}>
-            <Step>
-              <TaskActionIcon
-                action={cluster.task.action.split('.')[1]}
-                actionLabel={actionNameTranslator(cluster.task.action)}
-              />
-            </Step>
-            <Step>
-              <TaskStatusIcon
-                status={cluster.task.status}
-                error={cluster.task.error}
-              />
-            </Step>
-          </Stepper>
-        </Box>
+        <Stepper connector={<Connector />}>
+          <Step>
+            <TaskActionIcon
+              action={cluster.task.action.split('.')[1]}
+              actionLabel={actionNameTranslator(cluster.task.action)}
+            />
+          </Step>
+          <Step>
+            <TaskStatusIcon
+              status={cluster.task.status}
+              error={cluster.task.error}
+            />
+          </Step>
+        </Stepper>
       ) : null,
     }))
 
