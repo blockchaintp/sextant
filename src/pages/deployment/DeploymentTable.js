@@ -16,7 +16,6 @@ import SimpleTableTripleDeleteDialog from 'components/table/SimpleTableTripleDel
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
-import Box from '@mui/material/Box'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector'
@@ -158,24 +157,20 @@ class DeploymentTable extends React.Component {
       deployment_type: deployment.deployment_type,
       status: deploymentStatusTranslator(deployment.status),
       task: deployment.task ? (
-
-        <Box sx={{ width: '100%' }} spacing={4}>
-          <Stepper activeStep={1} connector={<Connector />}>
-            <Step>
-              <TaskActionIcon
-                action={deployment.task.action.split('.')[1]}
-                actionLabel={actionNameTranslator(deployment.task.action)}
-              />
-            </Step>
-            <Step>
-              <TaskStatusIcon
-                status={deployment.task.status}
-                error={deployment.task.error}
-              />
-            </Step>
-          </Stepper>
-        </Box>
-
+        <Stepper activeStep={1} connector={<Connector />}>
+          <Step>
+            <TaskActionIcon
+              action={deployment.task.action.split('.')[1]}
+              actionLabel={actionNameTranslator(deployment.task.action)}
+            />
+          </Step>
+          <Step>
+            <TaskStatusIcon
+              status={deployment.task.status}
+              error={deployment.task.error}
+            />
+          </Step>
+        </Stepper>
       ) : null,
     }))
 
