@@ -59,7 +59,7 @@ class RoleForm extends React.Component {
           {' '}
           { title }
         </DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ paddingTop: '0.5rem !important' }}>
           <AutoComplete
             suggestions={userList}
             getSuggestionValue={(user) => user.username}
@@ -95,11 +95,13 @@ class RoleForm extends React.Component {
           <FormHelperText>Search for the user to add access control for</FormHelperText>
           <div className={classes.spacer} />
           <FormControl className={classes.formControl}>
-            <InputLabel>
+            <InputLabel id="accessLevel">
               Access Level
             </InputLabel>
             <Select
+              labelId="accessLevel"
               value={level}
+              label="Access Level"
               onChange={(e) => setLevel(e.target.value)}
               displayEmpty
               name="accessLevel"
