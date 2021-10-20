@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v2.1.4
 
 * fix(roleform): increases top padding of diablog content element to avoid cutting off inputlabel [view commit](https://github.com/catenasys/sextant/commit/98115a44f166d6e70e3686816c5f0e59583bc441)
 * fix(autocomplete): increases the z-index of the autocompletes parent container [view commit](https://github.com/catenasys/sextant/commit/f9d375ffac2b807eadfccd4a8d49bbc3d1983ebc)
