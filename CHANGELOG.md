@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* fix(roleform): increases top padding of diablog content element to avoid cutting off inputlabel [view commit](https://github.com/catenasys/sextant/commit/98115a44f166d6e70e3686816c5f0e59583bc441)
+* fix(autocomplete): increases the z-index of the autocompletes parent container [view commit](https://github.com/catenasys/sextant/commit/f9d375ffac2b807eadfccd4a8d49bbc3d1983ebc)
 * fix(avatar): sets avatar color back to primary [view commit](https://github.com/catenasys/sextant/commit/c0c0befc41a1d9c8034bc2bbd558c23f1a0ade3b)
 * refactor(deploymenttable): removes uneccessary box box component [view commit](https://github.com/catenasys/sextant/commit/b7984791a0af187a6cdad1595db1c104e98e7d2e)
 * refactor(clustertable): removes unused import and refactors export object with updated classes and cluster declaration [view commit](https://github.com/catenasys/sextant/commit/93f5f03c7214856da46323573047e4b87e23deb7)
