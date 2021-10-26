@@ -40,7 +40,7 @@ class UserForm extends React.Component {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Typography _ci="formheader" variant="h6" gutterBottom>
+              <Typography _ci="formheader" id="formheader" variant="h6" gutterBottom>
                 { title }
               </Typography>
               <FormWrapper
@@ -68,6 +68,7 @@ class UserForm extends React.Component {
                       }
                       <Button
                         _ci="submitButton"
+                        id="submitButton"
                         className={classes.button}
                         type="button"
                         variant="contained"

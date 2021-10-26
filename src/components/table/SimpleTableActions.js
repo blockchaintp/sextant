@@ -30,7 +30,8 @@ class SimpleTableActions extends React.Component {
 
               const button = (
                 <IconButton
-                  _ci={`${item.name}${title}`}
+                  _ci={`${item.username}${title}`}
+                  id={`action_${item.username || item.name}${title}`}
                   onClick={(event) => {
                     event.stopPropagation()
                     if (action.handler) {

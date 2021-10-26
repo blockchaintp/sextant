@@ -64,6 +64,7 @@ class SimpleTableTripleDeleteDialog extends React.Component {
           <Button
             disabled={error}
             _ci="confirm"
+            id="simpleTableDeleteConfirm"
             onClick={() => {
               onConfirm()
               this.setState({ name: '' })

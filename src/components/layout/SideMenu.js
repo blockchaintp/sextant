@@ -53,6 +53,7 @@ class SideMenu extends React.Component {
           button
           key={i}
           onClick={() => this.clickItem(item)}
+          id={`sideMenu_${item.title}`}
         >
           {
             item.icon && (
@@ -97,6 +98,7 @@ class SideMenu extends React.Component {
           aria-label="Menu"
           onClick={this.handleOpen}
           size="large"
+          id="sideMenuButton"
         >
           <MenuIcon />
         </IconButton>
@@ -112,7 +114,9 @@ class SideMenu extends React.Component {
             onKeyDown={this.handleClose}
           >
             <div className={classes.list}>
-              <List component="nav">
+              <List
+                component="nav"
+                id="sideMenuList">
                 { this.getMenu() }
               </List>
             </div>

@@ -47,6 +47,7 @@ class Login extends React.Component {
                   }) => (
                     <Button
                       _ci="submitButton"
+                      id="submitButton"
                       type="button"
                       variant="contained"
                       color="primary"
