@@ -53,6 +53,7 @@ class AppBarMenu extends React.Component {
         <MenuItem
           key={i}
           onClick={() => this.clickItem(item)}
+          id={`appBarMenu_${item.title}`}
         >
           {
             item.icon && (
@@ -104,6 +105,7 @@ class AppBarMenu extends React.Component {
           aria-haspopup="true"
           onClick={this.handleMenu}
           color="inherit"
+          id="avatar"
         >
           {
             user ? (

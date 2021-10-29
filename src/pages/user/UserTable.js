@@ -73,6 +73,7 @@ class UserTable extends React.Component {
     const addButton = (
       <Button
         _ci="addbutton"
+        id="addButton"
         className={classes.button}
         variant="contained"
         color="primary"
@@ -95,7 +96,7 @@ class UserTable extends React.Component {
     }]
 
     return (
-      <div>
+      <div id="tableHeader_Users">
         <SimpleTableHeader
           title="Users"
           getActions={() => addButton}

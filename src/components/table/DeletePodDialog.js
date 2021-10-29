@@ -59,7 +59,7 @@ class DeletePodDialog extends React.Component {
           <Button onClick={onCancel}>
             Cancel
           </Button>
-          <Button _ci="confirm" disabled={error} onClick={onConfirm} variant="contained" color="primary" autoFocus>
+          <Button _ci="confirm" id="podDeleteConfirm" disabled={error} onClick={onConfirm} variant="contained" color="primary" autoFocus>
             Confirm
           </Button>
         </DialogActions>

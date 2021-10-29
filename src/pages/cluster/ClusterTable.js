@@ -156,6 +156,7 @@ class ClusterTable extends React.Component {
         <div className={classes.addButton}>
           <Button
             _ci="addbutton"
+            id="addButton"
             className={classes.button}
             variant="contained"
             color="primary"
@@ -212,7 +213,7 @@ class ClusterTable extends React.Component {
     const getItemStatus = (item) => (item.status === 'inactive' ? ' permanently' : '')
 
     return (
-      <div _ci="clusterTable">
+      <div id="tableHeader_Clusters">
         <SimpleTableHeader
           title="Clusters"
           getActions={() => headerActions}

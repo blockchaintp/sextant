@@ -155,7 +155,7 @@ class SimpleTable extends React.Component {
                 </TableHead>
               )
             }
-            <TableBody>
+            <TableBody id="tableBody">
               { stableSort(data, getCompareFunc(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((dataRow) => (
                   <TableRow
@@ -167,11 +167,13 @@ class SimpleTable extends React.Component {
                     tabIndex={-1}
                     key={dataRow.id}
                     _ci={dataRow.username || dataRow.name}
+                    id={`tableRow_${dataRow.username || dataRow.name}`}
                   >
                     {
                       fields.map((field, i) => (
                         <TableCell
                           _ci={`${dataRow.username || dataRow.name}${dataRow[field.name]}`}
+                          id={`tableCell_${dataRow.username || dataRow.name}${dataRow[field.name]}`}
                           key={i}
                           align={field.numeric ? 'right' : 'left'}
                           className={classes.autoCell}

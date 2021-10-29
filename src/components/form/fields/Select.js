@@ -48,6 +48,7 @@ class SelectField extends React.Component {
         <FormLabel htmlFor={name}>{ title }</FormLabel>
         <Select
           _ci={name}
+          id={`select_${name}`}
           value={value || ''}
           onChange={onChange}
           disabled={disabled}

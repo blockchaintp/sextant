@@ -27,6 +27,12 @@ const onCancel = () => routerActions.navigateTo('users')
     } else if (id === userData.id) {
       schema = selectors.config.forms.user.userSelf(state)
     } else {
+      schema = selectors.config.forms.user.userEdit(state)
+    }
+
+    if (id === userData.id) {
+      schema = selectors.config.forms.user.userSelf(state)
+    } else {
       selectors.config.forms.user.userEdit(state)
     }
 

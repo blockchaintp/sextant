@@ -603,6 +603,7 @@ class FormWrapperInner extends React.Component {
             const content = (
               <form
                 _ci="form"
+                id="form"
                 onSubmit={submitWrapper}
                 onKeyPress={(event) => {
                   if (event.key === '13') {
@@ -635,6 +636,7 @@ class FormWrapperInner extends React.Component {
                     error && (
                       <FormHelperText
                         _ci="errorHelperText"
+                        id="errorHelperText"
                         error
                       >
                         { error }

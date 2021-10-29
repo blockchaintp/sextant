@@ -184,6 +184,7 @@ class TaekionSnapshots extends React.Component {
         <div className={classes.addButton}>
           <Button
             _ci="addbutton"
+            id="addButton"
             className={classes.button}
             variant="contained"
             color="primary"
