@@ -116,7 +116,8 @@ class SideMenu extends React.Component {
             <div className={classes.list}>
               <List
                 component="nav"
-                id="sideMenuList">
+                id="sideMenuList"
+              >
                 { this.getMenu() }
               </List>
             </div>
