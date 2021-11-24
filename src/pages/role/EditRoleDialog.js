@@ -63,6 +63,7 @@ class EditRoleDialog extends React.Component {
               value={role}
               onChange={(e) => this.setRole(e.target.value)}
               displayEmpty
+              label="Access Level"
               name="accessLevel"
             >
               <MenuItem value="read">Read</MenuItem>
