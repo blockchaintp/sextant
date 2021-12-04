@@ -15,6 +15,27 @@ services:
         EDITION_MODULE: dev.js
         NPM_TARGET: build-test
     image: sextant-ci:${ISOLATION_ID}
+  frontend-enterprise:
+    build:
+      context: .
+      dockerfile: Dockerfile.multistage
+      args:
+        EDITION_MODULE: enterprise.js
+    image: sextant-enterprise:${ISOLATION_ID}
+  frontend-standard:
+    build:
+      context: .
+      dockerfile: Dockerfile.multistage
+      args:
+        EDITION_MODULE: standard.js
+    image: sextant-standard:${ISOLATION_ID}
+  frontend-premium:
+    build:
+      context: .
+      dockerfile: Dockerfile.multistage
+      args:
+        EDITION_MODULE: premium.js
+    image: sextant-premium:${ISOLATION_ID}
   frontend-sfs:
     build:
       context: .
@@ -29,13 +50,6 @@ services:
       args:
         EDITION_MODULE: aws_sfd.js
     image: sextant-sfd:${ISOLATION_ID}
-  frontend-enterprise:
-    build:
-      context: .
-      dockerfile: Dockerfile.multistage
-      args:
-        EDITION_MODULE: enterprise.js
-    image: sextant-enterprise:${ISOLATION_ID}
   frontend-sft:
     build:
       context: .
