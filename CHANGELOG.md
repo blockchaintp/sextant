@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* feat(editions): add standard and premium editions [view commit](https://github.com/catenasys/sextant/commit/e65402acfdc314639892d9234fd3d0a3b6cac01c)
 * fix(editroledialog): adds label attribute to select component which allows the label to render properly in ui [view commit](https://github.com/catenasys/sextant/commit/0e1f47f7f13c174fb4ccf1f12387aa631414356e)
 * fix(containers-userform): fixes bug which was breaking user editing when editing a different user than is logged in [view commit](https://github.com/catenasys/sextant/commit/50e72867b0d6559e83dfdd5e27b5396f3ecf3b97)
 * feat(components-pages): duplicates the _ci attributes of components referenced by integration tests as ids [view commit](https://github.com/catenasys/sextant/commit/205d37ba6b8e6189acf1ab2aecc48bf6b636ddd7)
