@@ -1,4 +1,39 @@
-site_name: Sextant
+site_name: BTP Sextant Documentation
 site_author: BTP
 theme: readthedocs
 copyright: Copyright &copy; 2021 Blockchain Technology Partners
+nav:
+  - Home: index.md
+  - Login: login.md
+  - Clusters:
+    - Overview: clusters/overview.md
+    - Operations: clusters/operations.md
+  - Deployments:
+    - Overview: deployments/overview.md
+    - Sawtooth:
+      - Overview: deployments/sawtooth/overview.md
+      - Operations: deployments/sawtooth/operations.md
+      - Kubernetes: deployments/sawtooth/k8s-services.md
+    - Besu:
+      - Overview: deployments/besu/overview.md
+      - Operations: deployments/besu/operations.md
+    - Daml:
+      - Overview: deployments/daml/overview.md
+      - Daml on Sawtooth: deployments/daml/daml-on-sawtooth.md
+      - Daml on Besu: deployments/daml/daml-on-besu.md
+      - Daml on QLDB: deployments/daml/daml-on-qldb.md
+      - Daml on Postgres: deployments/daml/daml-on-postgres.md
+    - TFS:
+      - Overview: deployments/tfs/overview.md
+      - TFS on Sawtooth: deployments/tfs/tfs-on-sawtooth.md
+    - AWS Marketplace:
+      - AWS EKS:
+        - EKS Cluster Basics: eks/eks-cluster-basics.md
+        - EKS Cluster AWS Marketplace: eks/eks-cluster-aws-marketplace.md
+        - EKS Cluster AWS Services: eks/eks-cluster-aws-services.md
+  - Users:
+    - Overview: users/overview.md
+    - Operations: users/operations.md
+  - Admin:
+    - Overview: admin/overview.md
+    - Operations: admin/operations.md
