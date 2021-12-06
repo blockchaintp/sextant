@@ -1,3 +1,0 @@
-# User Operations
-
-Text here.

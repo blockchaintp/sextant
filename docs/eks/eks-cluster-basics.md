@@ -16,8 +16,8 @@ eksctl create cluster \
 ```
 
 * Note that a minimum of 4 nodes is required to support a Sawtooth network using
-  the PBFT consensus plugin. However smaller clusters can be added to such an
-  existing Sawtooth network
+  the PBFT consensus plugin or a Besu network using IBFT consensue. However
+  smaller clusters can be added to such an existing network
 
 * If you choose a region that that doesn't support
   [Amazon EKS](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/)
@@ -43,10 +43,10 @@ kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   9m45s
 ```
 
 Now you should be all set to add this cluster to the list of available clusters
-in _Sextant_ assuming this is already running. Otherwise you can of course
-install and instance of _Sextant_ on it first.
+in Sextant assuming this is already running. Otherwise you can of course
+install and instance of Sextant on it first.
 
-__NOTE__ _Sextant_ only needs to be installed on one of your clusters unless you
+__NOTE__ Sextant only needs to be installed on one of your clusters unless you
 are running multiple environments such as development, QA, staging and
 production.
 
@@ -56,12 +56,12 @@ otherwise you will continue to be billed for them_
 
 ## Delete Amazon EKS cluster
 
-__WARNING__ Do not delete your EKS cluster if it is running _Sextant_.
+__WARNING__ Do not delete your EKS cluster if it is running Sextant.
 
 1. Before deleting your EKS cluster, delete any active deployment running on it
-   using _Sextant_
+   using Sextant
 
-1. Then, delete any provisioned clusters in _Sextant_
+1. Then, delete any provisioned clusters in Sextant
 
 1. Run the following command to delete your EKS cluster specifying the cluster
    name and region name for completeness

@@ -1,3 +1,0 @@
-# Sawtooth Operations
-
-Text here.

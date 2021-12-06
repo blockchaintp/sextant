@@ -1,6 +1,6 @@
 # Exposing Kubernetes Services
 
-An application runnning on a Kubernetes cluster must be explicitly exposed in
+An application running on a Kubernetes cluster must be explicitly exposed in
 order to be accessed from outside of the cluster.  This is especially true in
 the case of cloud environments such as AWS.
 
@@ -9,11 +9,11 @@ the [Kubernetes documentation](https://kubernetes.io/docs/tasks/access-applicati
 where there is a nice [tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/)
 as well.
 
-This document is intended to give more specific guidance on exposing services of
-a Sextant deployed application, specifically on an AWS hosted Kubernetes
-cluster, whether EKS based or not.
+This document is intended to give more specific guidance on how to expose
+services of a Sextant deployed application, specifically on an AWS hosted
+Kubernetes cluster, whether EKS based or not.
 
-## Services
+## Sawtooth Services
 
 These examples assume that you have deployed a Sawtooth network called
 `test-network` in namespace `test-namespace`.
@@ -80,7 +80,8 @@ The Sawtooth validator network itself is a somewhat different than the other
 servicces and protocols.  Validators must connect to each other directly and not
 be mediated via any loadbalancing.  In order to prepare for this a Sextant
 deployed Sawtooth network uses the direct hostPort `8800` on each of the nodes
-(similar to a [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport))
+(similar to a
+[NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport)).
 
 In addition due to some limitations in Sawtooth 1.1 each validator must address
 other validators using the same name that the target validator uses to refer to

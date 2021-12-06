@@ -1,3 +1,0 @@
-# Besu Overview
-
-Text here

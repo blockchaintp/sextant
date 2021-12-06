@@ -1,3 +1,4 @@
-# Clusters Overview
+# Clusters
 
-Text here
+Sextant keeps track of clusters that it is allowed to use as targets for
+deployments.

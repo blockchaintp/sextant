@@ -1,3 +1,0 @@
-# Besu Operations
-
-Text here.

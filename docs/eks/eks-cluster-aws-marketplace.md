@@ -1,6 +1,6 @@
 # AWS Marketplace configuration
 
-_Sextant_ itself runs under the `default` service account. However, since it is
+Sextant itself runs under the `default` service account. However, since it is
 an AWS Marketplace metered product, certain IAM privileges need to be assigned
 to this service account for it to operate correctly.
 
@@ -30,7 +30,7 @@ via the following commands.
 
 First check to see whether you have already created the
 `marketplace-register-usage` policy. For example, if you have previous installed
-_Sextant_ on another cluster using the same AWS credentials this policy should
+Sextant on another cluster using the same AWS credentials this policy should
 already exist.
 
 ```bash

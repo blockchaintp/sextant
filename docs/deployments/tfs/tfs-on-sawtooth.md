@@ -1,3 +1,3 @@
-# TFS on Sawtooth
+# Deploying TFS on Sawtooth
 
-Text here.
+Text and graphics here

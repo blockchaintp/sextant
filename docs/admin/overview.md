@@ -1,3 +1,4 @@
 # Admin Overview
 
-Text here
+Currently the only administrative management function available to the user is
+to restart Sextant.

@@ -1,16 +1,16 @@
-# EKS Daml on AWS
+# Enabling Daml on QLDB
 
-To enable Daml on Amazon Aurora _Sextant_ needs to be able to create an Amazon
-Aurora database on demand if the user doesn't supply one. Likewise, to enable
-Daml on Amazon QLDB _Sextant_ needs to be able to create an Amazon QLDB instance
-on demand.
+To enable Daml on Amazon QLDB Sextant needs to be able to create an Amazon QLDB
+instance on demand. Likewise, to enable Daml on Amazon Aurora Sextant needs to
+be able to create an Amazon Aurora database on demand if the user doesn't supply
+one.
 
 To support these features the target EKS cluster requires some additional
 permissions added to the worker instance IAM Role. This document describes the
 steps necessary to fulfill that requirement.
 
 __NOTE__ These changes can be applied your EKS cluster before or after it is
-added to _Sextant_ in the usual way.
+added to Sextant in the usual way.
 
 __NOTE__ These instructions focus on using the AWS Console. For information
 about achieving the same result via the AWS CLI please contact us

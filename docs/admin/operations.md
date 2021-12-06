@@ -1,14 +1,17 @@
-# Restart
+# Admin Operations
 
-Sextant may be administratively restarted via the UI. This may be done
-for several reasons, the most common of which is to ensure that the
-charts sextant uses are the most current according to its configuration.
+## Restart
 
-## Steps
+Restarting Sextant may be done for several reasons, the most common of which is
+to ensure that the helm charts that Sextant uses are the most current according
+to its configuration.
 
 1. Go to Sextant web interface.  Click on the control in the top left corner,
-   and select "Administration"
-1. Click on the "Restart" button.
-1. Wait for the restart to complete. If you navigate to other parts of the web
-   interface, you may see errors while the restart is in progress. These errors
-   will resolve on their own when the restart is complete.
+   and select `Administration`
+1. Click on the `Restart` button
+1. Wait for the restart to complete
+
+__NOTE__ that if you try to navigate to connect to or interact with Sextant
+while it is restarting you may have difficulty reconnecting or encounter errors
+while trying to navigate. These errors will resolve on their own once the
+restart is complete.
