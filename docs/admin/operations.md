@@ -6,6 +6,8 @@ Restarting Sextant may be done for several reasons, the most common of which is
 to ensure that the helm charts that Sextant uses are the most current according
 to its configuration.
 
+// TODO - Text and graphics here
+
 1. Go to Sextant web interface.  Click on the control in the top left corner,
    and select `Administration`
 1. Click on the `Restart` button
