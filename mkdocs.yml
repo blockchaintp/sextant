@@ -23,9 +23,13 @@ nav:
       - Daml on Sawtooth: deployments/smart-contracts/daml-on-sawtooth.md
       - Daml on QLDB: deployments/smart-contracts/daml-on-qldb.md
       - Daml on Postgres: deployments/smart-contracts/daml-on-postgres.md
+      - Daml Ledgers:
+        - Managing Daml Archives: deployments/smart-contracts/daml-packages.md
+        - Managing Daml Parties: deployments/smart-contracts/daml-parties.md
     - Information Security:
       - Overview: deployments/infosec/overview.md
       - TFS on Sawtooth: deployments/infosec/tfs-on-sawtooth.md
+      - TFS Admin: deployments/infosec/tfs-admin.md
   - Users:
     - Overview: users/overview.md
     - Operations: users/management.md
