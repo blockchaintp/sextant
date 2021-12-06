@@ -19,3 +19,10 @@ Prepare your EKS Cluster by following the instructions
 ### Step 2
 
 // TODO - Text here
+
+## Login to Sextant
+
+Once you have installed Sextant then it is straight forward to login. For
+example, using `port-forward` and the admin/password combination saved:
+
+![Sextant Login Screen](../images/sextant-login-screen.png)
