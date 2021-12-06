@@ -8,11 +8,23 @@ There are four basic management operations that apply to all deployments.
 
 ## Deploy
 
-On the `Deployments` page select your target cluster in the top right drop down
-and click `Add`. This will create a dropdown menu from which you can select your
+### Step 1
+
+On the `Deployments` page select your target cluster in the top right drop down.
+
+![Select Target Cluster](../images/sextant-deployments-select-target.png)
+
+### Step 2
+
+Click `Add`. This will create a dropdown menu from which you can select your
 specific deployment.
 
-The current _distributed ledger_ deployment options are -
+![Deployments Add Dropdown Menu](../images/sextant-deployments-add-menu.png)
+
+### Step 3
+
+Select your prefered deployment. The current _distributed ledger_ deployment
+options are -
 
 - [Hyperledger Sawtooth](dlts/sawtooth.md)
 - [Hyperledger Besu](dlts/besu.md)
