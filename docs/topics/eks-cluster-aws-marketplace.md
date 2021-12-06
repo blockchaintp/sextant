@@ -1,8 +1,8 @@
 # AWS Marketplace configuration
 
-Sextant itself runs under the `default` service account. However, since it is
-an AWS Marketplace metered product, certain IAM privileges need to be assigned
-to this service account for it to operate correctly.
+Sextant itself runs under the `default` service account in a cluster. However,
+if you have subscribed to it via the AWS Marketplace, certain IAM privileges
+need to be assigned to this service account for it to operate correctly.
 
 __NOTE__ it is only necessary to configure your cluster once.
 
@@ -37,9 +37,9 @@ already exist.
 aws iam list-policies | grep marketplace-register-usage
 ```
 
-If this is successful, note the __ARN__ of the policy and go to Step 3.
-Otherwise create a file called `policy` or similar containing the
-following text:
+If this is successful, note the __ARN__ of the policy and go to
+[Step 3](#step-3). Otherwise create a file called `policy.json` or similar
+containing the following text:
 
 ```json
 {
@@ -61,7 +61,7 @@ and note its __ARN__:
 
 ```bash
 aws iam create-policy --policy-name "marketplace-register-usage" \
---policy-document file://policy
+--policy-document file://policy.json
 ```
 
 ## Step 3

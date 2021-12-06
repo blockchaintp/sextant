@@ -11,17 +11,23 @@ management with ease.
 
 _Sextant | Enterprise_ focuses on three key areas:
 
-Distributed Ledgers: Sextant automates the deployment and management of
-enterprise blockchain infrastructure, and currently supports the open-source
-Hyperledger Besu and Hyperledger Sawtooth distributed ledgers.
+### Distributed Ledgers
 
-Smart Contracts: Sextant accelerates the adoption of Daml, an open-source smart
-contract language and application framework, by simplifying the deployment and
-management of the Daml runtime environment on distributed ledgers as well as
-centralized alternatives.
+Sextant automates the deployment and management of enterprise blockchain
+infrastructure, and currently supports the open-source Hyperledger Besu and
+Hyperledger Sawtooth distributed ledgers.
 
-Information Security: Sextant simplifies the deployment and management of the
-Taekion File System as well as its underlying distributed ledger, delivering
+### Smart Contracts
+
+Sextant accelerates the adoption of Daml, an open-source smart contract language
+and application framework, by simplifying the deployment and management of the
+Daml runtime environment on distributed ledgers as well as centralized
+alternatives.
+
+### Information Security
+
+Sextant simplifies the deployment and management of the Taekion File System as
+well as its underlying distributed ledger, Hyperledger Sawtooth, delivering
 military-grade protection for your business-critical information.
 
 ## Key Concepts

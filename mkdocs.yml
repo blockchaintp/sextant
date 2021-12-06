@@ -18,21 +18,22 @@ nav:
         - Deployment: deployments/dlts/sawtooth.md
         - Services: deployments/dlts/sawtooth-services.md
     - Smart Contracts:
-      - Overview: deployments/daml/overview.md
-      - Daml on Besu: deployments/daml/daml-on-besu.md
-      - Daml on Sawtooth: deployments/daml/daml-on-sawtooth.md
-      - Daml on QLDB: deployments/daml/daml-on-qldb.md
-      - Daml on Postgres: deployments/daml/daml-on-postgres.md
+      - Overview: deployments/smart-contracts/overview.md
+      - Daml on Besu: deployments/smart-contracts/daml-on-besu.md
+      - Daml on Sawtooth: deployments/smart-contracts/daml-on-sawtooth.md
+      - Daml on QLDB: deployments/smart-contracts/daml-on-qldb.md
+      - Daml on Postgres: deployments/smart-contracts/daml-on-postgres.md
     - Information Security:
-      - Overview: deployments/tfs/overview.md
-      - TFS on Sawtooth: deployments/tfs/tfs-on-sawtooth.md
-    - AWS EKS Admin:
-      - Cluster Basics: eks/eks-cluster-basics.md
-      - Enabling Daml on QLDB: eks/eks-cluster-aws-services.md
-      - AWS Marketplace Integration: eks/eks-cluster-aws-marketplace.md
+      - Overview: deployments/infosec/overview.md
+      - TFS on Sawtooth: deployments/infosec/tfs-on-sawtooth.md
   - Users:
     - Overview: users/overview.md
     - Operations: users/management.md
   - Admin:
     - Overview: admin/overview.md
     - Operations: admin/operations.md
+  - Advanced Topics:
+    - EKS Clusters: topics/eks-clusters.md
+    - Installation: topics/sextant-installation.md
+    - AWS Marketplace Integration: topics/eks-cluster-aws-marketplace.md
+    - Enabling Daml on QLDB: topics/eks-cluster-aws-services.md
