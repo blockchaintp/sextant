@@ -37,3 +37,4 @@ nav:
     - Installation: topics/sextant-installation.md
     - AWS Marketplace Integration: topics/eks-cluster-aws-marketplace.md
     - Enabling Daml on QLDB: topics/eks-cluster-aws-services.md
+    - Utility Deployments: topics/utility-deployments.md

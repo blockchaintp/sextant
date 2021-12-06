@@ -6,7 +6,7 @@ First select `Deployments`:
 
 There are four basic management operations that apply to all deployments.
 
-## Deploy
+## Add a Deployment
 
 ### Step 1
 
@@ -23,8 +23,9 @@ specific deployment.
 
 ### Step 3
 
-Select your prefered deployment. The current _distributed ledger_ deployment
-options are -
+Select your prefered deployment from the dropdown menu.
+
+The current _distributed ledger_ deployment options are -
 
 - [Hyperledger Sawtooth](dlts/sawtooth.md)
 - [Hyperledger Besu](dlts/besu.md)
@@ -40,14 +41,17 @@ The current _information security_ options are -
 
 - [TFS on Sawtooth](infosec/tfs-on-sawtooth.md)
 
-## Edit
+In addition to these core deployments the dropdown menu includes some utility
+deployments. These are documented [here](../topics/utility-deployments.md).
+
+## Edit a Deployment
 
 // TODO - Text and graphics here
 
-## Undeploy
+## Undeploy a Deployment
 
 // TODO - Text and graphics here
 
-## Delete
+## Delete a Deployment
 
 // TODO - Text and graphics here
