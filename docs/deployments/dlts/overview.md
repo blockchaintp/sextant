@@ -6,17 +6,21 @@ Hyperledger Sawtooth distributed ledgers.
 
 ## Hyperledger Besu
 
-// TODO
+[Hyperledger Besu](https://www.hyperledger.org/use/besu) is an Ethereum client
+designed to be enterprise-friendly for both public and private permissioned
+network use cases. It can also be ran on test networks such as Rinkeby, Ropsten,
+and Görli. Hyperledger Besu includes several consensus algorithms including PoW,
+and PoA (IBFT, IBFT 2.0, Etherhash, and Clique). Its comprehensive permissioning
+schemes are designed specifically for use in a consortium environment.
 
 ## Hyperledger Sawtooth
 
-[Hyperledger Sawtooth](https://www.hyperledger.org/projects/sawtooth) is one of
-the best emerging open source blockchain technology on the basis of its support
-for smart contracts; its pluggable consensus mechanism; and its scalable, highly
-modular architecture - in particular the clear separation between the network
-and the application tiers which makes it exceptionally easy for developers to
-create new transaction processors leveraging existing code and applying
-programming best practices.
+[Hyperledger Sawtooth](https://www.hyperledger.org/use/sawtooth) offers a
+flexible and modular architecture separates the core system from the application
+domain, so smart contracts can specify the business rules for applications
+without needing to know the underlying design of the core system. Hyperledger
+Sawtooth supports a variety of consensus algorithms, including Practical
+Byzantine Fault Tolerance (PBFT) and Proof of Elapsed Time (PoET).
 
 ### BTP Paralos
 
@@ -29,5 +33,5 @@ projects.
 The code is hosted on Github and freely available, prebuilt Docker images are
 published periodically on Docker Hub.
 
-* [GitHub](https://github.com/blockchaintp)
-* [Docker Hub](https://hub.docker.com/orgs/blockchaintp)
+* [BTP Paralos Github](https://github.com/blockchaintp)
+* [BTP Paralos Docker](https://hub.docker.com/orgs/blockchaintp)

@@ -18,7 +18,7 @@ __NOTE__ deployment is not instantaneous as under the covers Sextant uses the
 appropriate helm chart to create your deployment which can involve pulling the
 appropriate images if these aren't already cached by the Kubernetes cluster.
 
-## Deploymemt Options
+## Deployment Options
 
 Beyond configuring Sawtooth itself these are the deployment options supported by
 Sextant.
