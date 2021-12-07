@@ -1,7 +1,7 @@
 # Deploying Sawtooth
 
 Selecting `Hyperledger Sawtooth` in the deployments dropdown menu takes you to
-the deployment form. Here all you need to do is give your deployment a name
+its deployment form. Here all you need to do is give your deployment a name
 and specify its namespace:
 
 ![Sextant Deployments Sawtooth Form](../../images/sextant-deployments-sawtooth-form.png)

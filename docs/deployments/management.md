@@ -50,10 +50,10 @@ Once a deployment has been successfully added to your target cluster you can
 interact with it using the icons on the right.
 
 - In all cases you can `Undeploy`, `Edit` and `View` a deployment
-- In the case of the Daml deployments there is also a fourth `Gear` option which
-  supports interaction with the Daml ledger
-- In the case of the TFS on Sawtooth deployment there is also a fourth `Gear`
-  option that supports interaction with the Taekion File System
+- In the case of the Daml deployments there is also a fourth `Settings` option
+  (in the form of a _gear_ icon) which supports interaction with the Daml ledger
+- In the case of the TFS on Sawtooth deployment there is also a fourth
+  `Settings` option that supports interaction with the Taekion File System
 
 ## Generic Interactions
 

@@ -1,7 +1,7 @@
 # Deploying Besu
 
 Selecting `Hyperledger Besu` in the deployments dropdown menu takes you to
-the deployment form. Here all you need to do is give your deployment a name,
+its deployment form. Here all you need to do is give your deployment a name,
 specify its namespace and decide whether you want to enable persistence or not.
 In this example we've opted to enable persistence and specified `gp2` as the
 storage class as we are using AWS:
