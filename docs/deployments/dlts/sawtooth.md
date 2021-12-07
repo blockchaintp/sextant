@@ -14,6 +14,9 @@ Click `Deploy` and the deployment will be added to the cluster:
 
 ![Sextant Deployments Sawtooth Added](../../images/sextant-deployments-sawtooth-added.png)
 
+Once you deployment has been added you can view interact with it as described
+[here](../management.md#generic-interactions).
+
 __NOTE__ deployment is not instantaneous as under the covers Sextant uses the
 appropriate helm chart to create your deployment which can involve pulling the
 appropriate images if these aren't already cached by the Kubernetes cluster.
