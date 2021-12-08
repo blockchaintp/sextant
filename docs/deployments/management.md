@@ -4,7 +4,9 @@ First select `Deployments`:
 
 ![Sextant Select Deployments](../images/sextant-select-deployments.png)
 
-There are four basic management operations that apply to all deployments.
+In addition to viewing all existing deployments managed by this instance of
+Sextant or just those associated with a specific target cluster, there are four
+basic management operations that apply to all deployments.
 
 ## Add a Deployment
 
