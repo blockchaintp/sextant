@@ -29,7 +29,7 @@ class SimpleTableTripleDeleteDialog extends React.Component {
 
   render() {
     const {
-      open, onCancel, onConfirm, title, clusterName, resource, resourceType,
+      open, onCancel, onConfirm, title, resource, resourceType,
     } = this.props
     const { name, error } = this.state
     const text = resource ? getDialogDeleteText(resource.status) : ''
@@ -80,7 +80,7 @@ class SimpleTableTripleDeleteDialog extends React.Component {
             disabled={error}
             _ci="confirm"
             id="simpleTableDeleteConfirm"
-            onClick={() => validateAndConfirm(name, clusterName)}
+            onClick={() => validateAndConfirm(name, resourceName)}
             variant="contained"
             color="primary"
             autoFocus
