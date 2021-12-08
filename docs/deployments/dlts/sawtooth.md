@@ -34,7 +34,7 @@ This option allows you to specify, for example, a custom transaction processor.
 
 This option allows you to specify any image pull secrets that may be required in
 order to access images related to your deployment that are hosted in a private
-repository.
+repository. These all need to be available in your target namespace.
 
 ### Advanced Options
 

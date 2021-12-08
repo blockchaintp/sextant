@@ -1,12 +1,32 @@
 # Deploying TFS on Sawtooth
 
+-----
+
+__IMPORTANT__ `TFS on Sawtooth` is still in beta so you will need to be granted
+access to the appropriate private docker hub repository.
+
+Assuming you have been granted access using your docker hub credentials you will
+need to create the target namespace for your deployment and create an image pull
+secret in that namespace that you can reference later. In this example the
+namespace is `tfs-namespace` and the image pull secret is `dockerhub`:
+
+```bash
+kubectl create namespace tfs-namespace
+kubectl config set-context --current --namespace=tfs-namespace
+kubectl create secret docker-registry dockerhub --docker-username=<username> \
+--docker-password='<password>' --docker-email=<email>
+```
+
+-----
+
 Selecting `TFS on Sawtooth` in the deployments dropdown menu takes you to
-its deployment form. Here all you need to do is give your deployment a name
+its deployment form. Here you need to give your deployment a name
 and specify its namespace:
 
 ![Sextant Deployments TFS on Sawtooth Form](../../images/sextant-deployments-tfs-sawtooth-form.png)
 
-For a vanilla deployment accept the defaults and scroll to the bottom of the form:
+Then you need to scroll down, enable image pull secrets and add the image pull
+secret you added to you created above:
 
 ![Sextant Deployments Sawtooth Deploy](../../images/sextant-deployments-tfs-sawtooth-deploy.png)
 
@@ -37,7 +57,7 @@ This option allows you to specify, for example, a custom transaction processor.
 
 This option allows you to specify any image pull secrets that may be required in
 order to access images related to your deployment that are hosted in a private
-repository.
+repository. These all need to be available in your target namespace.
 
 ### Advanced Options
 
