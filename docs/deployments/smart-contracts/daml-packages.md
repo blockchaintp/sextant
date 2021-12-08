@@ -1,9 +1,9 @@
-# Packages
+# Daml Packages
 
   This page describes the Sextant functionality for dealing with Daml packages
   and archives, i.e. dars.
 
-## Uploading a Packages
+## Uploading a Package
 
 1. Select the "Daml Archives" tab.
 

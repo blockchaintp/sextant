@@ -1,4 +1,4 @@
-# Parties
+# Daml Parties
 
 At this time, it is required that Sextant be responsible for JWT token
 generation in order to use Sextant to create and manage parties as well as

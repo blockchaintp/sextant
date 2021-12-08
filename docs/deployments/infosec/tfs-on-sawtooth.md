@@ -21,18 +21,18 @@ kubectl create secret docker-registry dockerhub --docker-username=<username> \
 
 Selecting `TFS on Sawtooth` in the deployments dropdown menu takes you to
 its deployment form. Here you need to give your deployment a name
-and specify its namespace:
+and specify its namespace using the one created above:
 
 ![Sextant Deployments TFS on Sawtooth Form](../../images/sextant-deployments-tfs-sawtooth-form.png)
 
 Then you need to scroll down, enable image pull secrets and add the image pull
-secret you added to you created above:
+secret `dockerhub` you created above:
 
-![Sextant Deployments Sawtooth Deploy](../../images/sextant-deployments-tfs-sawtooth-deploy.png)
+![Sextant Deployments TFS on Sawtooth Deploy](../../images/sextant-deployments-tfs-sawtooth-deploy.png)
 
-Click `Deploy` and the deployment will be added to the cluster:
+Click `Deploy` and the deployment will be created and added to the cluster:
 
-![Sextant Deployments Sawtooth Added](../../images/sextant-deployments-tfs-sawtooth-added.png)
+![Sextant Deployments TFS on Sawtooth Added](../../images/sextant-deployments-tfs-sawtooth-added.png)
 
 Note that this deployment includes a `Settings` option - the _gear_ icon - which
 is covered [here](tfs-admin.md).

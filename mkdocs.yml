@@ -24,7 +24,7 @@ nav:
       - Daml on QLDB: deployments/smart-contracts/daml-on-qldb.md
       - Daml on Postgres: deployments/smart-contracts/daml-on-postgres.md
       - Daml Ledgers:
-        - Managing Daml Archives: deployments/smart-contracts/daml-packages.md
+        - Managing Daml Packages: deployments/smart-contracts/daml-packages.md
         - Managing Daml Parties: deployments/smart-contracts/daml-parties.md
     - Information Security:
       - Overview: deployments/infosec/overview.md

@@ -10,7 +10,7 @@ For a vanilla deployment accept the defaults and scroll to the bottom of the for
 
 ![Sextant Deployments Sawtooth Deploy](../../images/sextant-deployments-sawtooth-deploy.png)
 
-Click `Deploy` and the deployment will be added to the cluster:
+Click `Deploy` and the deployment will be created and added to the cluster:
 
 ![Sextant Deployments Sawtooth Added](../../images/sextant-deployments-sawtooth-added.png)
 
