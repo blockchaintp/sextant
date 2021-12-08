@@ -237,6 +237,7 @@ class ClusterTable extends React.Component {
           open={deleteConfirmOpen}
           resourceType="cluster"
           title={deleteConfirmItem ? `the ${deleteConfirmItem.name} cluster ${getItemStatus(deleteConfirmItem)}` : null}
+          clusterName={deleteConfirmItem}
           onCancel={() => this.closeDeleteDialog()}
           onConfirm={() => {
             this.closeDeleteDialog()
