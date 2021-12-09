@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* build(deps): bump dotty from 0.1.1 to 0.1.2 [view commit](https://github.com/catenasys/sextant/commit/be3254f8ed2b7ddf30cf5c15347028b7831d4ce8)
 * feat(editions): add standard and premium editions [view commit](https://github.com/catenasys/sextant/commit/e65402acfdc314639892d9234fd3d0a3b6cac01c)
 * fix(editroledialog): adds label attribute to select component which allows the label to render properly in ui [view commit](https://github.com/catenasys/sextant/commit/0e1f47f7f13c174fb4ccf1f12387aa631414356e)
 * fix(containers-userform): fixes bug which was breaking user editing when editing a different user than is logged in [view commit](https://github.com/catenasys/sextant/commit/50e72867b0d6559e83dfdd5e27b5396f3ecf3b97)
