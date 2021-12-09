@@ -23,7 +23,7 @@ begin uploading this dar file into the ledger:
 Once this process is complete it will return to the package listing, now with
 the new packages listed.
 
-![Sextant Deployment Daml Generic Settings Packages Loading](../../images/sextant-deployments-daml-generic-settings-packages-loaded.png)
+![Sextant Deployment Daml Generic Settings Packages Loaded](../../images/sextant-deployments-daml-generic-settings-packages-loaded.png)
 
 ## Daml Parties
 
