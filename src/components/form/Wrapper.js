@@ -390,7 +390,7 @@ class FormWrapperInner extends React.Component {
     const checkCondition = (condition) => {
       const { linkedId, visibilityParameter } = condition
       const linkedComponentValue = dotty.get(formProps.values, linkedId)
-      return linkedComponentValue === visibilityParameter || (visibilityParameter === 'true' && linkedComponentValue === true)
+      return linkedComponentValue === visibilityParameter || (visibilityParameter === 'true' && linkedComponentValue === true) || (visibilityParameter === 'false' && linkedComponentValue === false)
     }
 
     const meetsVisibilityRequirement = (conditions) => {
