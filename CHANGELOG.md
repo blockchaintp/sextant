@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+* fix(triple-delete-dialog): removes redudant itemName prop and passes resourceName instead [view commit](https://github.com/catenasys/sextant/commit/e6f4418e4eaaeeb40ee89fa5fa28c80404533cbc)
+* fix(cluster-table): removes redundant itemName prop as resourceName already exists [view commit](https://github.com/catenasys/sextant/commit/f7c3caf45adeb2298ac9c47c51e94a76207c524f)
+* fix(triple-delete-dialog): fixes bug that allows cluster deletion without validation [view commit](https://github.com/catenasys/sextant/commit/bfe4ec84bc84410944f0ea02a2512c1afb9fa9ad)
+* fix(cluster-table): passes deleteConfirmItem as a prop for use in triple delete dialog [view commit](https://github.com/catenasys/sextant/commit/7a3ff3527d19df240bb8529a6a663a003c14cdde)
+* fix(triple-delete-dialog): extends on confirm to include validation [view commit](https://github.com/catenasys/sextant/commit/9fd74757603d0f7f697d0b7aea95f947342d1c18)
 * fix(form-wrapper): includes check for visibilityParameter and linkedComponentValue [view commit](https://github.com/catenasys/sextant/commit/6ac92ed55d43098131f7d42c7777f16dbab89a3a)
 * build(deps): bump dotty from 0.1.1 to 0.1.2 [view commit](https://github.com/catenasys/sextant/commit/be3254f8ed2b7ddf30cf5c15347028b7831d4ce8)
 * feat(editions): add standard and premium editions [view commit](https://github.com/catenasys/sextant/commit/e65402acfdc314639892d9234fd3d0a3b6cac01c)
