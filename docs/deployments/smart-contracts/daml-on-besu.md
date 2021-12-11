@@ -42,7 +42,7 @@ Click `Deploy` and the deployment will be created and added to the cluster:
 Note that this deployment includes a `Settings` option - the _gear_ icon - which
 is covered [here](daml-ledger-admin.md).
 
-Once you deployment has been added you can view interact with it as described
+Once your deployment has been added you can view interact with it as described
 [here](../management.md#generic-interactions).
 
 __NOTE__ deployment is not instantaneous as under the covers Sextant uses the

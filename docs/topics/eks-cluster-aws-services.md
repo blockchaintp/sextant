@@ -81,9 +81,12 @@ Click `Create policy` and you should see this confirmed:
 
 ![Select EKS Worker Node Instance IAM Role Policy Created](../images/daml-on-qldb-select-eks-cluster-node-instance-iam-role-policy-created.png)
 
-Close this browser tab and you should return to the previous browser tab
-labelled *IAM Management Console*. __REFRESH__ this browser tab then use
-the search function to filter for your new policy and select this:
+Closing this browser tab should take you back to the previous browser tab
+labelled *IAM Management Console*.
+
+__IMPORTANT__ refresh this browser tab before continuing.
+
+Now use the search function to filter for your new policy and select this:
 
 ![Select EKS Worker Node Instance IAM Role Attach Policy](../images/daml-on-qldb-select-eks-cluster-node-instance-iam-role-attach-policy.png)
 
