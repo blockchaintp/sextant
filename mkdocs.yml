@@ -16,7 +16,7 @@ nav:
         - Deployment: deployments/dlts/besu.md
       - Sawtooth:
         - Deployment: deployments/dlts/sawtooth.md
-        - Services: deployments/dlts/sawtooth-services.md
+        - Kubernetes Services: deployments/dlts/sawtooth-services.md
     - Smart Contracts:
       - Overview: deployments/smart-contracts/overview.md
       - Daml on Besu: deployments/smart-contracts/daml-on-besu.md
@@ -35,8 +35,8 @@ nav:
     - Overview: admin/overview.md
     - Operations: admin/operations.md
   - Advanced Topics:
-    - EKS Clusters: topics/eks-clusters.md
-    - Installation: topics/sextant-installation.md
+    - Working with EKS Clusters: topics/eks-clusters.md
+    - Sextant Installation: topics/sextant-installation.md
     - AWS Marketplace Integration: topics/eks-cluster-aws-marketplace.md
     - Enabling Daml on QLDB: topics/eks-cluster-aws-services.md
     - Utility Deployments: topics/utility-deployments.md
