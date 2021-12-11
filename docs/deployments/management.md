@@ -51,15 +51,16 @@ deployments. These are documented [here](../topics/utility-deployments.md).
 Once a deployment has been successfully added to your target cluster you can
 interact with it using the icons on the right.
 
-- In all cases you can `Undeploy`, `Edit` and `View` a deployment
+- In all cases you can `Undeploy`, `Edit` and `View` a deployment. These
+  generic interactions are covered in the next section
 - In the case of the Daml deployments there is also a fourth `Settings` option
-  (in the form of a _gear_ icon) which supports interaction with the Daml ledger
+  (in the form of a _gear_ icon) which lets you interact with the Daml ledger
 - In the case of the TFS on Sawtooth deployment there is also a fourth
-  `Settings` option that supports interaction with the Taekion File System
+  `Settings` option that lets you interact with the Taekion File System
 
 ## Generic Interactions
 
-Focusing of the generic interactions these are:
+The three generic interactions are:
 
 - [Undeploy a Deployment](#undeploy-a-deployment)
 - [Edit a Deployment](#edit-a-deployment)

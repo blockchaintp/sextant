@@ -1,15 +1,15 @@
-# Sextant | Enterprise
+# Sextant for Enterprise
 
 ## Introduction
 
-_Sextant | Enterprise_ delivers the fundamental building blocks for
+_Sextant for Enterprise_ delivers the fundamental building blocks for
 multiparty innovation. It allows organizations to navigate distributed ledger,
 smart contract, and information security infrastructure deployment and
 management with ease.
 
 ## Overview
 
-_Sextant | Enterprise_ focuses on three key areas:
+_Sextant for Enterprise_ focuses on three key areas:
 
 ### Distributed Ledgers
 
@@ -32,8 +32,8 @@ military-grade protection for your business-critical information.
 
 ## Key Concepts
 
-Once you have logged into Sextant you can use the dropdown menu to either logout
-or select one of four options:
+Once you have logged into Sextant you can use the dropdown menu to select one of
+four options:
 
 ![Sextant Navigation Dropdown Options](./images/sextant-navigation-dropdown-options.png)
 
