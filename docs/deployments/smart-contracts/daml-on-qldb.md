@@ -47,6 +47,12 @@ a QLDB Ledger as we can see here:
 
 ![Sextant Deployments Daml on QLDB AWS Console 2](../../images/sextant-deployments-daml-qldb-aws-console-2.png)
 
+Alongside the creation of the QLDB Ledger Sextant also creates an S3 bucket:
+
+![Sextant Deployments Daml on QLDB AWS Console 32](../../images/sextant-deployments-daml-qldb-aws-console-3.png)
+
+__DANGER__ Neither the QLDB Ledger nor the S3 Bucket should be tampered with.
+
 ## Daml Services
 
 Once a `Daml on QLDB` deployment is running it is possible to expose various
