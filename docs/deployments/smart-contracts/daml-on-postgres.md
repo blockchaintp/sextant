@@ -46,6 +46,12 @@ appropriate images if these aren't already cached by the Kubernetes cluster.
 In the case of a `Daml on Postgres` deployment it may also include the creation
 of a Postgres database.
 
+## Daml Services
+
+Once a `Daml on Postgres` deployment is running it is possible to expose various
+Daml features using Kubernetes services. This is covered in depth
+[here](daml-services.md).
+
 ## Deployment Options
 
 Beyond specifying whether you want to enable persistence for your deployment

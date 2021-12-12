@@ -1,4 +1,6 @@
-# Exposing Kubernetes Services
+# Sawtooth Services
+
+## Background
 
 An application running on a Kubernetes cluster must be explicitly exposed in
 order to be accessed from outside of the cluster.  This is especially true in
@@ -9,11 +11,11 @@ the [Kubernetes documentation](https://kubernetes.io/docs/tasks/access-applicati
 where there is a nice [tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/)
 as well.
 
-This document is intended to give more specific guidance on how to expose
-services of a Sextant deployed application, specifically on an AWS hosted
-Kubernetes cluster, whether EKS based or not.
+Here we provide specific guidance on how to expose services of a Sextant
+managed Sawtooth deployment, specifically on an AWS hosted Kubernetes cluster,
+whether EKS based or not.
 
-## Sawtooth Services
+## Overview
 
 These examples assume that you have deployed a Sawtooth network called
 `test-network` in namespace `test-namespace`.
@@ -31,13 +33,13 @@ kubectl get svc --namespace=test-namespace
 
 * [Sawtooth Validator Network](#sawtooth-validator-network)
 
-### Sawtooth REST API
+## Sawtooth REST API
 
 Conveniently a Sextant deployed Sawtooth network already contains a basic
 service for the Sawtooth Rest API. Since this API is conventional HTTP, a
 traditional load balancer will do. Therefore you can use this command.
 
-__REMINDER__ Don't forget to substitute `test-network` and `test-namespace`
+__NOTE__ Don't forget to substitute `test-network` and `test-namespace`
 for your Sawtooth network name and namespace respectively.
 
 ```shell
@@ -45,15 +47,15 @@ kubectl expose service test-network-rest-api --name=test-network-rest-api-lb \
 --port=8008 --target-port=8008 --type=LoadBalancer --namespace=test-namespace
 ```
 
-Return to [Services](#services)
+Return to [Overview](#overview)
 
-### Grafana and Influxdb
+## Grafana and Influxdb
 
 Similar to the REST API the grafana and influxdb instances deployed with
 Sawtooth each already has a service defined. Therefore you can use these
 commands.
 
-__REMINDER__ Don't forget to substitute `test-network` and `test-namespace`
+__NOTE__ Don't forget to substitute `test-network` and `test-namespace`
 for your Sawtooth network name and namespace respectively.
 
 ```shell
@@ -66,15 +68,15 @@ kubectl expose service influxdb --name=test-network-influxdb-lb --port=8086 \
 --target-port=8086 --type=LoadBalancer --namespace=test-namespace
 ```
 
-__PLEASE NOTE__ the influxdb instance currently deployed is not particularly
+__NOTE__ the influxdb instance currently deployed is not particularly
 secure, so exposing the influxdb to the outside world should be discouraged.
 Any load balancer exposing the influxdb should use strict firewall (security
 group) rules to tighten up access control.  We plan to address this in a future
 Sextant release but for now, we do not recommend exposing the influxdb.
 
-Return to [Services](#services)
+Return to [Overview](#overview)
 
-### Sawtooth Validator Network
+## Sawtooth Validator Network
 
 The Sawtooth validator network itself is a somewhat different than the other
 servicces and protocols.  Validators must connect to each other directly and not
@@ -93,7 +95,7 @@ the ip actually used to connect to the target validator.  However outside of AWS
 or even a given VPC these `*.compute.internal` hostnames do not resolve
 normally. Two mechanisms are available to resolve this.
 
-#### Option 1
+### Option 1
 
 If one part of the network is outside of AWS, then effectively the network is
 passing through NAT.  The best soluton in this case is to synch up the hostnames
@@ -102,7 +104,7 @@ address this `/etc/hosts` entries or equivalent must be made for each of the
 target hosts on the source network mapping the target host's name to
 its _public ip address_.
 
-#### Option 2
+### Option 2
 
 [VPC Peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peering.html).
 If the two portions of the network are both on AWS and
@@ -115,4 +117,4 @@ default.  In order to connect directly to the validator hosts at all the
 relevant security groups for the k8s worker nodes must be opened on port `8800`.
 Peered VPC's still require individual security group configurations.
 
-Return to [Services](#services)
+Return to [Overview](#overview)

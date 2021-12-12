@@ -49,6 +49,18 @@ __NOTE__ deployment is not instantaneous as under the covers Sextant uses the
 appropriate helm chart to create your deployment which can involve pulling the
 appropriate images if these aren't already cached by the Kubernetes cluster.
 
+## Besu Services
+
+Once a `Hyperledger Besu` deployment is running it is possible to expose
+various Besu features using Kubernetes services. This is covered in depth
+[here](../dlts/besu-services.md).
+
+## Daml Services
+
+Once a `Daml on Besu` deployment is running it is possible to expose various
+Daml features using Kubernetes services. This is covered in depth
+[here](daml-services.md).
+
 ## Deployment Options
 
 Beyond specifying whether you want to enable persistence for your deployment

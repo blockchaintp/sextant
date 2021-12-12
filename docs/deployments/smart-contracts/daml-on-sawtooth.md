@@ -24,6 +24,18 @@ __NOTE__ deployment is not instantaneous as under the covers Sextant uses the
 appropriate helm chart to create your deployment which can involve pulling the
 appropriate images if these aren't already cached by the Kubernetes cluster.
 
+## Sawtooth Services
+
+Once a `Daml on Sawtooth` deployment is running it is possible to expose various
+Sawtooth features using Kubernetes services. This is covered in depth
+[here](../dlts/sawtooth-services.md).
+
+## Daml Services
+
+Once a `Daml on Sawtooth` deployment is running it is possible to expose various
+Daml features using Kubernetes services. This is covered in depth
+[here](daml-services.md).
+
 ## Deployment Options
 
 Beyond configuring Sawtooth itself these are the deployment options supported by

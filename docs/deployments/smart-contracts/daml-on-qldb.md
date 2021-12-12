@@ -47,6 +47,12 @@ a QLDB Ledger as we can see here:
 
 ![Sextant Deployments Daml on QLDB AWS Console 2](../../images/sextant-deployments-daml-qldb-aws-console-2.png)
 
+## Daml Services
+
+Once a `Daml on QLDB` deployment is running it is possible to expose various
+Daml features using Kubernetes services. This is covered in depth
+[here](daml-services.md).
+
 ## Deployment Options
 
 Beyond specifying whether you want to enable persistence for your deployment
