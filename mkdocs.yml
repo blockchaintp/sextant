@@ -2,6 +2,12 @@ site_name: BTP Sextant Documentation
 site_author: BTP
 theme: readthedocs
 copyright: Copyright &copy; 2021 Blockchain Technology Partners
+extra_css: [extra.css]
+markdown_extensions:
+  - attr_list
+  - admonition
+  - toc:
+      permalink: true
 nav:
   - Home: index.md
   - Clusters:
