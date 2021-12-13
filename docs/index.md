@@ -35,7 +35,7 @@ military-grade protection for your business-critical information.
 Once you have logged into Sextant you can use the dropdown menu to select one of
 four options:
 
-![Sextant Navigation Dropdown Options](./images/sextant-navigation-dropdown-options.png)
+![Sextant Navigation Dropdown Options](./images/sextant-navigation-dropdown-options.png){ .shadow}
 
 - [Manage Clusters](clusters/overview.md)
 - [Manage Deployments](deployments/overview.md)
