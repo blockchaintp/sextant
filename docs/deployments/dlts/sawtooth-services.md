@@ -39,8 +39,9 @@ Conveniently a Sextant deployed Sawtooth network already contains a basic
 service for the Sawtooth Rest API. Since this API is conventional HTTP, a
 traditional load balancer will do. Therefore you can use this command.
 
-__NOTE__ Don't forget to substitute `test-network` and `test-namespace`
-for your Sawtooth network name and namespace respectively.
+!!!Note
+    Don't forget to substitute `test-network` and `test-namespace`
+    for your Sawtooth network name and namespace respectively.
 
 ```shell
 kubectl expose service test-network-rest-api --name=test-network-rest-api-lb \
@@ -55,8 +56,9 @@ Similar to the REST API the grafana and influxdb instances deployed with
 Sawtooth each already has a service defined. Therefore you can use these
 commands.
 
-__NOTE__ Don't forget to substitute `test-network` and `test-namespace`
-for your Sawtooth network name and namespace respectively.
+!!!Note
+    Don't forget to substitute `test-network` and `test-namespace`
+    for your Sawtooth network name and namespace respectively.
 
 ```shell
 kubectl expose service grafana --name=test-network-grafana-lb --port=3000 \
@@ -68,11 +70,13 @@ kubectl expose service influxdb --name=test-network-influxdb-lb --port=8086 \
 --target-port=8086 --type=LoadBalancer --namespace=test-namespace
 ```
 
-__NOTE__ the influxdb instance currently deployed is not particularly
-secure, so exposing the influxdb to the outside world should be discouraged.
-Any load balancer exposing the influxdb should use strict firewall (security
-group) rules to tighten up access control.  We plan to address this in a future
-Sextant release but for now, we do not recommend exposing the influxdb.
+!!!Note
+    The influxdb instance currently deployed is not particularly secure, so
+    exposing the influxdb to the outside world should be discouraged.
+    Any load balancer exposing the influxdb should use strict firewall (security
+    group) rules to tighten up access control.  We plan to address this in a
+    future Sextant release but for now, we do not recommend exposing the
+    influxdb.
 
 Return to [Overview](#overview)
 

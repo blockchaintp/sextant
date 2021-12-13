@@ -4,7 +4,8 @@ Sextant itself runs under the `default` service account in a cluster. However,
 if you have subscribed to it via the AWS Marketplace, certain IAM privileges
 need to be assigned to this service account for it to operate correctly.
 
-__NOTE__ it is only necessary to configure your cluster once.
+!!!Important
+    It is only necessary to configure your cluster once.
 
 ## Step 1
 
@@ -19,8 +20,9 @@ eksctl utils associate-iam-oidc-provider \
     --approve
 ```
 
-__NOTE__ if this command fails try `--name` (now deprecated) in place of
-`--cluster` or update your version of `eksctl`.
+!!!Note
+    If this command fails try `--name` (now deprecated) in place of
+    `--cluster` or update your version of `eksctl`.
 
 ## Step 2
 
@@ -78,5 +80,6 @@ eksctl create iamserviceaccount \
 --approve
 ```
 
-__NOTE__ You may specify `--attach-policy-arn` as many times as necessary to
-attach any other permissions you require.
+!!!Note
+    You may specify `--attach-policy-arn` as many times as necessary to
+    attach any other permissions you require.

@@ -28,16 +28,16 @@ namespace using the one created above and decide whether you want to enable
 persistence or not. In this example we've opted to enable persistence and
 specified `gp2` as the storage class as we are using AWS:
 
-![Sextant Deployments Daml on Besu Form](../../images/sextant-deployments-daml-besu-form.png)
+![Sextant Deployments Daml on Besu Form](../../images/sextant-deployments-daml-besu-form.png){ .shadow}
 
 Then you need to scroll down, enable image pull secrets and add the image pull
 secret `btp-lic` you created above:
 
-![Sextant Deployments Daml on Besu Deploy](../../images/sextant-deployments-daml-besu-deploy.png)
+![Sextant Deployments Daml on Besu Deploy](../../images/sextant-deployments-daml-besu-deploy.png){ .shadow}
 
 Click `Deploy` and the deployment will be created and added to the cluster:
 
-![Sextant Deployments Daml on Besu Added](../../images/sextant-deployments-daml-besu-added.png)
+![Sextant Deployments Daml on Besu Added](../../images/sextant-deployments-daml-besu-added.png){ .shadow}
 
 Note that this deployment includes a `Settings` option - the _gear_ icon - which
 is covered [here](daml-ledger-admin.md).
@@ -45,9 +45,11 @@ is covered [here](daml-ledger-admin.md).
 Once your deployment has been added you can view interact with it as described
 [here](../management.md#generic-interactions).
 
-__NOTE__ deployment is not instantaneous as under the covers Sextant uses the
-appropriate helm chart to create your deployment which can involve pulling the
-appropriate images if these aren't already cached by the Kubernetes cluster.
+!!!Warning
+    Deployment is not instantaneous as under the covers Sextant uses the
+    appropriate helm chart to create your deployment which may involve pulling
+    the appropriate images if these aren't already cached by the Kubernetes
+    cluster.
 
 ## Besu Services
 

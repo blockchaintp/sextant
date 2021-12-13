@@ -43,7 +43,7 @@ nav:
     - Overview: admin/overview.md
     - Operations: admin/operations.md
   - Advanced Topics:
-    - Working with EKS Clusters: topics/eks-clusters.md
+    - Working with EKS Clusters: topics/eks-cluster-basics.md
     - Sextant Installation: topics/sextant-installation.md
     - AWS Marketplace Integration: topics/eks-cluster-aws-marketplace.md
     - Enabling Daml on QLDB: topics/eks-cluster-aws-services.md

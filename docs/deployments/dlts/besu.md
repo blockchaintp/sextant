@@ -6,22 +6,24 @@ specify its namespace and decide whether you want to enable persistence or not.
 In this example we've opted to enable persistence and specified `gp2` as the
 storage class as we are using AWS:
 
-![Sextant Deployments Besu Form](../../images/sextant-deployments-besu-form.png)
+![Sextant Deployments Besu Form](../../images/sextant-deployments-besu-form.png){ .shadow}
 
 Click `Deploy` and the deployment will be created by Sextant:
 
-![Sextant Deployments Besu Creating](../../images/sextant-deployments-besu-creating.png)
+![Sextant Deployments Besu Creating](../../images/sextant-deployments-besu-creating.png){ .shadow}
 
 Then added to the cluster:
 
-![Sextant Deployments Besu Added](../../images/sextant-deployments-besu-added.png)
+![Sextant Deployments Besu Added](../../images/sextant-deployments-besu-added.png){ .shadow}
 
 Once you deployment has been added you can view interact with it as described
 [here](../management.md#generic-interactions).
 
-__NOTE__ deployment is not instantaneous as under the covers Sextant uses the
-appropriate helm chart to create your deployment which can involve pulling the
-appropriate images if these aren't already cached by the Kubernetes cluster.
+!!!Warning
+    Deployment is not instantaneous as under the covers Sextant uses the
+    appropriate helm chart to create your deployment which may involve pulling
+    the appropriate images if these aren't already cached by the Kubernetes
+    cluster.
 
 ## Besu Services
 

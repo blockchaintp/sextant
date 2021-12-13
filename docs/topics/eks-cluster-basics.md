@@ -46,9 +46,10 @@ Now you should be all set to add this cluster to the list of available clusters
 in Sextant assuming this is already running. Otherwise you can of course
 install and instance of Sextant on it first.
 
-__NOTE__ Sextant only needs to be installed on one of your clusters unless you
-are running multiple environments such as development, QA, staging and
-production.
+!!!Note
+  Sextant only needs to be installed on one of your clusters unless you
+  are running multiple environments such as development, QA, staging and
+  production.
 
 -----
 _It is important to tear down any resources once you have finished with them

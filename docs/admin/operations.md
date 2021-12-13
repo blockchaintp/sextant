@@ -8,13 +8,14 @@ to its configuration.
 
 ### Step 1 - Select Administration
 
-![Sextant Select Admin](../images/sextant-select-admin.png)
+![Sextant Select Admin](../images/sextant-select-admin.png){ .shadow}
 
 ### Step 2 - Click on Restart Button
 
-![Sextant Admin Restart](../images/sextant-admin-restart.png)
+![Sextant Admin Restart](../images/sextant-admin-restart.png){ .shadow}
 
-__NOTE__ that if you try to navigate to connect to or interact with Sextant
-while it is restarting you may have difficulty reconnecting or encounter errors
-while trying to navigate. These errors will resolve on their own once the
-restart is complete.
+!!!Important
+    Note that if you try to navigate to connect to or interact with Sextant
+    while it is restarting you may have difficulty reconnecting or encounter
+    errors while trying to navigate. These errors will resolve on their own once
+    the restart is complete.
