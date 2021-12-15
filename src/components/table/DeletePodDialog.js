@@ -31,10 +31,24 @@ class DeletePodDialog extends React.Component {
     } = this.props
     const { name, error } = this.state
 
+    const clearAndClose = () => {
+      onCancel()
+      this.setState({ name: '' })
+      this.setState({ error: true })
+    }
+
+    const confirmAndClose = () => {
+      onConfirm()
+      this.setState({ name: '' })
+      this.setState({ error: true })
+    }
+
+    console.log('title: ', title);
+
     return (
       <Dialog
         open={open}
-        onClose={onCancel}
+        onClose={clearAndClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -56,10 +70,10 @@ class DeletePodDialog extends React.Component {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onCancel}>
+          <Button onClick={clearAndClose}>
             Cancel
           </Button>
-          <Button _ci="confirm" id="podDeleteConfirm" disabled={error} onClick={onConfirm} variant="contained" color="primary" autoFocus>
+          <Button _ci="confirm" id="podDeleteConfirm" disabled={error} onClick={confirmAndClose} variant="contained" color="primary" autoFocus>
             Confirm
           </Button>
         </DialogActions>
