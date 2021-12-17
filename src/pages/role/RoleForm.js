@@ -53,6 +53,11 @@ class RoleForm extends React.Component {
         maxWidth="sm"
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        onKeyPress={(event) => {
+          if (event.key === '13' || event.key === 'Enter') {
+            event.preventDefault();
+          }
+        }}
       >
         <DialogTitle id="alert-dialog-title">
           Add
