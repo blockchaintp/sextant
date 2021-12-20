@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+* fix(deletepoddialog): adds functions that handle clearing state on both confirm and close events [view commit](https://github.com/catenasys/sextant/commit/d7a9834032eb198fcde742abcbffe2571d70797c)
+* style(podtable): linting [view commit](https://github.com/catenasys/sextant/commit/b2175f99e2bbb918c45bb3e4a66e2186c0a330b4)
+* fix(roleform): adds event handler disabling enter key on role dialogs [view commit](https://github.com/catenasys/sextant/commit/b17bdd7beb799dfc2b852defa1dc2a6cfa463990)
+* fix(snapshots): linting [view commit](https://github.com/catenasys/sextant/commit/529bb460f1014344b2a9ac9a3401a9c9c1720bff)
+* fix(form-wrapper): adds redundancy to enter key event handler preventing the enter key from submitting forms [view commit](https://github.com/catenasys/sextant/commit/f6268564717a36a7f56effc06ec677d69b8136b9)
 * fix(triple-delete-dialog): removes redudant itemName prop and passes resourceName instead [view commit](https://github.com/catenasys/sextant/commit/e6f4418e4eaaeeb40ee89fa5fa28c80404533cbc)
 * fix(cluster-table): removes redundant itemName prop as resourceName already exists [view commit](https://github.com/catenasys/sextant/commit/f7c3caf45adeb2298ac9c47c51e94a76207c524f)
 * fix(triple-delete-dialog): fixes bug that allows cluster deletion without validation [view commit](https://github.com/catenasys/sextant/commit/bfe4ec84bc84410944f0ea02a2512c1afb9fa9ad)
