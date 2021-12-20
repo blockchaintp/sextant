@@ -197,11 +197,7 @@ class TaekionSnapshots extends React.Component {
       </div>
     )
 
-    const getActions = () => {
-      const buttons = []
-
-      return buttons
-    }
+    const getActions = () => []
 
     const hooks = {
       validate: (values) => {

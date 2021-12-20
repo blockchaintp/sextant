@@ -606,7 +606,7 @@ class FormWrapperInner extends React.Component {
                 id="form"
                 onSubmit={submitWrapper}
                 onKeyPress={(event) => {
-                  if (event.key === '13') {
+                  if (event.key === '13' || event.key === 'Enter') {
                     event.preventDefault();
                   }
                 }}
