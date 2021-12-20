@@ -96,16 +96,13 @@ class PodTable extends React.Component {
         }
       })
 
-    const getActions = () => {
-      const baseActions = [
-        {
-          title: 'Delete',
-          icon: DeleteIcon,
-          handler: (pod) => this.openDeleteDialog(pod),
-        },
-      ]
-      return baseActions
-    }
+    const getActions = () => [
+      {
+        title: 'Delete',
+        icon: DeleteIcon,
+        handler: (pod) => this.openDeleteDialog(pod),
+      },
+    ]
 
     return (
       <div>
