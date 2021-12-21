@@ -30,6 +30,7 @@ const styles = (theme) => ({
     flexDirection: 'row',
     justifyContent: 'right',
     alignItems: 'center',
+    paddingTop: '1.5rem !important',
   },
   volumeSelect: {
     marginRight: theme.spacing(2),
@@ -165,6 +166,7 @@ class TaekionSnapshots extends React.Component {
             <InputLabel htmlFor="name-readonly">Volume</InputLabel>
             <Select
               value={volume}
+              label="Volume"
               onChange={(ev) => onChangeVolume(ev.target.value, params)}
             >
               {

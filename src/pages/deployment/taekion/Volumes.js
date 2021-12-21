@@ -199,23 +199,19 @@ class TaekionVolumes extends React.Component {
       </div>
     )
 
-    const getActions = (item) => {
-      const buttons = [{
-        title: 'View Snapshots',
-        icon: ViewArchiveIcon,
-        handler: () => onViewSnapshots(item.id, params),
-      }, {
-        title: 'Create Snapshot',
-        icon: CreateArchiveIcon,
-        handler: () => onCreateSnapshot(item.id, params),
-      }, {
-        title: 'Edit',
-        icon: EditIcon,
-        handler: onEditVolume,
-      }]
-
-      return buttons
-    }
+    const getActions = (item) => [{
+      title: 'View Snapshots',
+      icon: ViewArchiveIcon,
+      handler: () => onViewSnapshots(item.id, params),
+    }, {
+      title: 'Create Snapshot',
+      icon: CreateArchiveIcon,
+      handler: () => onCreateSnapshot(item.id, params),
+    }, {
+      title: 'Edit',
+      icon: EditIcon,
+      handler: onEditVolume,
+    }]
 
     const hooks = {
       validate: (values) => {
