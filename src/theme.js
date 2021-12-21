@@ -14,6 +14,15 @@ const theme = createTheme({
       main: '#E12843',
     },
   },
+  components: {
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          paddingTop: '0.25rem !important',
+        },
+      },
+    },
+  },
 })
 
 function Theme({ children }) {
