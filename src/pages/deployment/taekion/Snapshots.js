@@ -141,8 +141,12 @@ class TaekionSnapshots extends React.Component {
       return all
     }, {})
 
+    console.log('snapshots:', snapshots);
+
     const data = snapshots.map((snapshot) => {
-      const currentVolume = volumesById[snapshot.volumeuuid]
+      const currentVolume = (volumesById[snapshot.volumeuuid] == null)
+        ? []
+        : volumesById[snapshot.volumeuuid]
       return {
         id: `${snapshot.volume}-${snapshot.name}`,
         name: snapshot.name,
