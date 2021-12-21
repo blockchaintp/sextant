@@ -19,7 +19,6 @@ import FormWrapper from 'components/form/Wrapper'
 import settings from 'settings'
 
 const AddIcon = settings.icons.add
-// const DeleteIcon = settings.icons.delete
 
 const styles = (theme) => ({
   root: {
@@ -30,6 +29,7 @@ const styles = (theme) => ({
     flexDirection: 'row',
     justifyContent: 'right',
     alignItems: 'center',
+    paddingTop: '0.5rem !important',
   },
   volumeSelect: {
     marginRight: theme.spacing(2),
@@ -141,6 +141,9 @@ class TaekionSnapshots extends React.Component {
     }, {})
 
     const data = snapshots.map((snapshot) => {
+      if (snapshot == null) {
+        return {}
+      }
       const currentVolume = volumesById[snapshot.volumeuuid]
       return {
         id: `${snapshot.volume}-${snapshot.name}`,
@@ -165,6 +168,7 @@ class TaekionSnapshots extends React.Component {
             <InputLabel htmlFor="name-readonly">Volume</InputLabel>
             <Select
               value={volume}
+              label="Volume"
               onChange={(ev) => onChangeVolume(ev.target.value, params)}
             >
               {
