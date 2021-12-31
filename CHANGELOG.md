@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* docs: cleanup after moving docs [view commit](https://github.com/catenasys/sextant/commit/396d10a103378602c944d06178d7dcd4a4a7952b)
+* fix(snapshots): returns empty object instead of object containing null values when no snapshots exist [view commit](https://github.com/catenasys/sextant/commit/8c64397198c3cac6acb4aacfc4853766c4dcb2d1)
 * fix(deletepoddialog): adds functions that handle clearing state on both confirm and close events [view commit](https://github.com/catenasys/sextant/commit/d7a9834032eb198fcde742abcbffe2571d70797c)
 * style(podtable): linting [view commit](https://github.com/catenasys/sextant/commit/b2175f99e2bbb918c45bb3e4a66e2186c0a330b4)
 * fix(roleform): adds event handler disabling enter key on role dialogs [view commit](https://github.com/catenasys/sextant/commit/b17bdd7beb799dfc2b852defa1dc2a6cfa463990)
