@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v2.1.5
 
 * docs: cleanup after moving docs [view commit](https://github.com/catenasys/sextant/commit/396d10a103378602c944d06178d7dcd4a4a7952b)
 * fix(snapshots): returns empty object instead of object containing null values when no snapshots exist [view commit](https://github.com/catenasys/sextant/commit/8c64397198c3cac6acb4aacfc4853766c4dcb2d1)
