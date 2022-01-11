@@ -64,7 +64,7 @@ class RoleForm extends React.Component {
           {' '}
           { title }
         </DialogTitle>
-        <DialogContent sx={{ paddingTop: '0.5rem !important' }}>
+        <DialogContent>
           <AutoComplete
             suggestions={userList}
             getSuggestionValue={(user) => user.username}

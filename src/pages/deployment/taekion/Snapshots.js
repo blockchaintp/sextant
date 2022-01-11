@@ -29,7 +29,7 @@ const styles = (theme) => ({
     flexDirection: 'row',
     justifyContent: 'right',
     alignItems: 'center',
-    paddingTop: '0.5rem !important',
+    paddingTop: '1.5rem !important',
   },
   volumeSelect: {
     marginRight: theme.spacing(2),

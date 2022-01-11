@@ -98,16 +98,7 @@ class TaekionKeys extends React.Component {
       </div>
     )
 
-    // eslint-disable-next-line arrow-body-style
-    const getActions = () => {
-      const buttons = [/* {
-        title: 'Delete',
-        icon: DeleteIcon,
-        handler: onDeleteItem,
-      } */]
-
-      return buttons
-    }
+    const getActions = () => []
 
     const hooks = {
       validate: (values) => {
@@ -158,7 +149,7 @@ class TaekionKeys extends React.Component {
                   maxWidth="md"
                   onKeyPress={(ev) => {
                     if (ev.key === 'Enter') {
-                      ev.preventDefault();
+                      ev.preventDefault()
                     }
                   }}
                 >
