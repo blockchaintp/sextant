@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+
+* fix(keys-roleform): removes redundant style change to account for labels cutting off in MuiDialogContent components [view commit](https://github.com/catenasys/sextant/commit/64405f0fa950f3f35cefc67417a65c6aa2df4014)
+* fix(theme): adds small amount of padding-top to all MuiDialogContent components that prevents labels from cutting off [view commit](https://github.com/catenasys/sextant/commit/d42dd543190a80eb1cd992720c3aafc0d3908970)
+* style(volumes-taekion-keys): linting [view commit](https://github.com/catenasys/sextant/commit/5ff1afa20586c3b7a3ef28115b9439362f25c55a)
+
 ## v2.1.5
 
 * docs: cleanup after moving docs [view commit](https://github.com/catenasys/sextant/commit/396d10a103378602c944d06178d7dcd4a4a7952b)
