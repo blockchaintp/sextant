@@ -57,6 +57,13 @@ services:
       args:
         EDITION_MODULE: sft.js
     image: sextant-sft:${ISOLATION_ID}
+  frontend-community:
+    build:
+      context: .
+      dockerfile: Dockerfile.multistage
+      args:
+        EDITION_MODULE: community.js
+    image: sextant-community:${ISOLATION_ID}
   router:
     build:
       context: .
