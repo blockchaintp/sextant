@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* feat: add community edition [view commit](https://github.com/catenasys/sextant/commit/7a4fd02f904f238518af5fe51b7d5aee63b28b31)
 * build(deps): bump follow-redirects from 1.14.4 to 1.14.7 [view commit](https://github.com/catenasys/sextant/commit/6eec1d08537dff5ca051854a7fb0fdb0a386e8d5)
 * fix(keys-roleform): removes redundant style change to account for labels cutting off in MuiDialogContent components [view commit](https://github.com/catenasys/sextant/commit/64405f0fa950f3f35cefc67417a65c6aa2df4014)
 * fix(theme): adds small amount of padding-top to all MuiDialogContent components that prevents labels from cutting off [view commit](https://github.com/catenasys/sextant/commit/d42dd543190a80eb1cd992720c3aafc0d3908970)
