@@ -605,11 +605,6 @@ class FormWrapperInner extends React.Component {
                 _ci="form"
                 id="form"
                 onSubmit={submitWrapper}
-                onKeyPress={(event) => {
-                  if (event.key === '13' || event.key === 'Enter') {
-                    event.preventDefault();
-                  }
-                }}
               >
                 <Grid container spacing={spacing || 3}>
                   {
