@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v2.1.6
 
 * feat(layout): updates current year in copyright [view commit](https://github.com/catenasys/sextant/commit/663682bdae9b188088caefb3859fac16c667e696)
 * build(deps): bump nanoid from 3.1.25 to 3.2.0 [view commit](https://github.com/catenasys/sextant/commit/34fd721ea16481ad6849c9da0774bb957c5a1554)
