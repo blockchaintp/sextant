@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* feat(layout): updates current year in copyright [view commit](https://github.com/catenasys/sextant/commit/663682bdae9b188088caefb3859fac16c667e696)
 * build(deps): bump nanoid from 3.1.25 to 3.2.0 [view commit](https://github.com/catenasys/sextant/commit/34fd721ea16481ad6849c9da0774bb957c5a1554)
 * feat: add community edition [view commit](https://github.com/catenasys/sextant/commit/7a4fd02f904f238518af5fe51b7d5aee63b28b31)
 * build(deps): bump follow-redirects from 1.14.4 to 1.14.7 [view commit](https://github.com/catenasys/sextant/commit/6eec1d08537dff5ca051854a7fb0fdb0a386e8d5)
