@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:12
+FROM node:16-alpine
 
 RUN apk update && apk upgrade
 
