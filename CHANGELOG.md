@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+* fix(wrapper): removes preventDefault on enter at the wrapper level [view commit](https://github.com/catenasys/sextant/commit/6342e360be5251eeff978cec9df9ce9d1aefb572)
+
 ## v2.1.6
 
 * feat(layout): updates current year in copyright [view commit](https://github.com/catenasys/sextant/commit/663682bdae9b188088caefb3859fac16c667e696)
