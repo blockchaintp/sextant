@@ -15,7 +15,6 @@ module.exports = merge(common, {
     host: '0.0.0.0',
     hot: true,
     historyApiFallback: true,
-    disableHostCheck: true,
     client: {
       overlay: true,
     },
