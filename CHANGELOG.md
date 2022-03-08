@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v2.1.7
 
 * fix(webpack-dev-js): updates config object to reflect new api schema after webpack major version upgrade [view commit](https://github.com/catenasys/sextant/commit/d07d10a6cb13a9a240c654a6762f8d2ca0218c4b)
 * build(package-lock): updates outdated dependencies and some dependencies of dependencies [view commit](https://github.com/catenasys/sextant/commit/683ef9a4dc3763410926280d298de76eaa9a0c27)
