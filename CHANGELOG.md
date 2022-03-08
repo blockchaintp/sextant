@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+* fix(webpack-dev-js): updates config object to reflect new api schema after webpack major version upgrade [view commit](https://github.com/catenasys/sextant/commit/d07d10a6cb13a9a240c654a6762f8d2ca0218c4b)
+* build(package-lock): updates outdated dependencies and some dependencies of dependencies [view commit](https://github.com/catenasys/sextant/commit/683ef9a4dc3763410926280d298de76eaa9a0c27)
+* build(webpack-dev-js): moves overlay option to client object [view commit](https://github.com/catenasys/sextant/commit/567a561e1e32a59561de540d2e5c73cebfa7fea4)
+* build(packages): updates old npm packages and dependencies [view commit](https://github.com/catenasys/sextant/commit/2f225b172fbd970a9393d23643bf51617a6279ff)
+* build(package-lock): updates package-lock.json version to clear warning [view commit](https://github.com/catenasys/sextant/commit/590b4969f19a0835890678cc96ef0be548d609b5)
+* build(dockerfile): updates node image to 16.13.2 [view commit](https://github.com/catenasys/sextant/commit/27e54d0d072f71e6987000b07ac76c5841de130a)
 * fix(wrapper): removes preventDefault on enter at the wrapper level [view commit](https://github.com/catenasys/sextant/commit/6342e360be5251eeff978cec9df9ce9d1aefb572)
 
 ## v2.1.6
