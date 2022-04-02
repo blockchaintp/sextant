@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Unreleased
+
+* fix(dockerfile.multistage): updates node image in Dockerfile.multistage to use v16 [view commit](https://github.com/catenasys/sextant/commit/210fb242f93482c7fe762b1e4fbd09fec490b567)
+* build(deps): bump node-forge from 1.2.1 to 1.3.1 [view commit](https://github.com/catenasys/sextant/commit/c6bb845050e34c3d44ea68fec9a124ab98d56331)
+* build(deps): bump ansi-regex from 3.0.0 to 3.0.1 [view commit](https://github.com/catenasys/sextant/commit/c418a1afe442b37cbb2c8c0fdd3134b622a29fe0)
+* build(deps): bump minimist from 1.2.5 to 1.2.6 [view commit](https://github.com/catenasys/sextant/commit/fb9e39a9e8da437f5ef043534bad2145443eb66d)
+* fix(docs): add requirements.txt and pin mkdocs version [view commit](https://github.com/catenasys/sextant/commit/ea9ca0f9d68bd08a0516a932461830af014229ce)
+
 ## v2.1.7
 
 * fix(webpack-dev-js): updates config object to reflect new api schema after webpack major version upgrade [view commit](https://github.com/catenasys/sextant/commit/d07d10a6cb13a9a240c654a6762f8d2ca0218c4b)
