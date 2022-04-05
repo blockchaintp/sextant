@@ -9,6 +9,7 @@ import deploymentActions from 'store/modules/deployment'
 import DeploymentTable from 'pages/deployment/DeploymentTable'
 import selectors from 'store/selectors'
 
+const onClickAddButton = (cluster) => routerActions.navigateTo('marketplace', { cluster })
 const onAdd = (cluster, deployment_type, deployment_version) => routerActions.navigateTo('deployment', {
   cluster, id: 'new', deployment_type, deployment_version,
 })
@@ -43,6 +44,7 @@ const updateClusterId = (cluster) => routerActions.navigateTo('deployments', { c
     }
   },
   {
+    onClickAddButton,
     onAdd,
     onEdit,
     onViewStatus,

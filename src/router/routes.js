@@ -169,6 +169,12 @@ const routes = [
     },
   },
   {
+    name: 'marketplace',
+    path: '/clusters/:cluster/deployments/marketplace',
+    authorize: authHandlers.user,
+    trigger: {},
+  },
+  {
     name: 'deployment',
     path: '/clusters/:cluster/deployment/:id',
     authorize: authHandlers.user,

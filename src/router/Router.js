@@ -21,6 +21,8 @@ import ClusterTable from 'containers/cluster/ClusterTable'
 import ClusterForm from 'containers/cluster/ClusterForm'
 import ClusterStatus from 'containers/cluster/ClusterStatus'
 
+import Marketplace from 'containers/marketplace/MarketplaceContainer'
+
 import DeploymentTable from 'containers/deployment/DeploymentTable'
 import DeploymentForm from 'containers/deployment/DeploymentForm'
 import DeploymentStatus from 'containers/deployment/DeploymentStatus'
@@ -90,6 +92,9 @@ class Router extends React.Component {
             </Route>
             <Route segment="cluster" exact>
               <ClusterForm />
+            </Route>
+            <Route segment="marketplace" exact>
+              <Marketplace />
             </Route>
             <Route segment="cluster_status" exact>
               <ClusterStatus />
