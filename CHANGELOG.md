@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* build(deps): bump async from 2.6.3 to 2.6.4 [view commit](https://github.com/catenasys/sextant/commit/a6d5348aab65b6645761ed61e3f307e092a21409)
 * feat(src): integrates new marketplace view to sextant [view commit](https://github.com/catenasys/sextant/commit/742d32f6deff46e5a24e05b959a4d0ba1dd322f2)
 * fix(dockerfile.multistage): updates node image in Dockerfile.multistage to use v16 [view commit](https://github.com/catenasys/sextant/commit/210fb242f93482c7fe762b1e4fbd09fec490b567)
 * build(deps): bump node-forge from 1.2.1 to 1.3.1 [view commit](https://github.com/catenasys/sextant/commit/c6bb845050e34c3d44ea68fec9a124ab98d56331)
