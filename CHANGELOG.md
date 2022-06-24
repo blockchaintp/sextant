@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* build(deps): bump eventsource from 1.1.0 to 1.1.2 [view commit](https://github.com/catenasys/sextant/commit/614206f8ed5fdd7faf481f9c89e00801e4cc0097)
 * build(deps): bump async from 2.6.3 to 2.6.4 [view commit](https://github.com/catenasys/sextant/commit/a6d5348aab65b6645761ed61e3f307e092a21409)
 * feat(src): integrates new marketplace view to sextant [view commit](https://github.com/catenasys/sextant/commit/742d32f6deff46e5a24e05b959a4d0ba1dd322f2)
 * fix(dockerfile.multistage): updates node image in Dockerfile.multistage to use v16 [view commit](https://github.com/catenasys/sextant/commit/210fb242f93482c7fe762b1e4fbd09fec490b567)
