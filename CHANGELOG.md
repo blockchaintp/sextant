@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v2.2.0
 
 * build(deps): bump terser from 5.12.0 to 5.14.2 [view commit](https://github.com/catenasys/sextant/commit/a0eb82f6949d61c3dde2b8367c2a68ef060a8c3b)
 * build(deps): bump eventsource from 1.1.0 to 1.1.2 [view commit](https://github.com/catenasys/sextant/commit/614206f8ed5fdd7faf481f9c89e00801e4cc0097)
