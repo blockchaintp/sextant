@@ -54,5 +54,3 @@ nav:
       - Operations: admin/operations.md
   - Advanced Topics:
       - Utility Deployments: topics/utility-deployments.md
-  - Security Updates:
-      - Log4Shell CVEs: updates/log4shell-cves.md
