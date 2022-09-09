@@ -9,7 +9,6 @@ markdown_extensions:
   - toc:
       permalink: true
 nav:
-  - Home: overview.md
   - Overview: overview.md
   - Editions: editions.md
   - Installation:
