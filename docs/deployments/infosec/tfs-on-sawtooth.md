@@ -23,8 +23,6 @@ Selecting `TFS™ on Sawtooth` in the deployments marketplace takes you to
 its deployment form. Here you need to give your deployment a name
 and specify its namespace using the one created above:
 
-// TODO - SCREEN CAPTURES USING FULL SCREEN CHROME MBP
-
 ![Sextant Deployments TFS™ on Sawtooth
 Form](../../images/sextant-deployments-tfs-sawtooth-form.png){.shadow}
 

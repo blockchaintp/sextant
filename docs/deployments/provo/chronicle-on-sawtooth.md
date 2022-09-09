@@ -22,6 +22,8 @@ Selecting `Chronicle on Sawtooth` in the deployments marketplace takes you to
 its deployment form. Here you need to give your deployment a name
 and specify its namespace using the one created above:
 
+// TODO - ADD SCREEN CAPTURES USING CHROME FULL SCREEN ON MBP
+
 ![Sextant Deployments Chronicle on Sawtooth
 Form](../../images/sextant-deployments-chronicle-sawtooth-form.png){.shadow}
 
@@ -36,11 +38,12 @@ Click `Deploy` and the deployment will be created and added to the cluster:
 ![Sextant Deployments Chronicle on Sawtooth
 Added](../../images/sextant-deployments-chronicle-sawtooth-added.png){.shadow}
 
-// TODO - DELETE FOLLOWING LINE IF THERE IS NO SETTINGS OPTION
+<!-->
+// TODO - REINSTATE WHEN SETTINGS OPTION
 
 Note that this deployment includes a `Settings` option - the _gear_ icon - which
 is covered [here](chronicle-admin.md).
-
+<-->
 Once you deployment has been added you can view interact with it as described
 [here](../management.md#generic-interactions).
 
