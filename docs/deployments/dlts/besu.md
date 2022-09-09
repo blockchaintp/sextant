@@ -1,6 +1,6 @@
 # Deploying Besu
 
-Selecting `Hyperledger Besu` in the  takes you to
+Selecting `Hyperledger Besu` in the deployments marketplace takes you to
 its deployment form. Here all you need to do is give your deployment a name,
 specify its namespace and decide whether you want to enable persistence or not.
 In this example we've opted to enable persistence and specified `gp2` as the
