@@ -1,4 +1,4 @@
-# Besu Services
+# Fabric Services
 
 ## Background
 
@@ -17,7 +17,7 @@ whether EKS based or not.
 
 ## Overview
 
-These examples assume that you have deployed a Besu network called
+These examples assume that you have deployed a Fabric network called
 `test-network` in namespace `test-namespace`.
 
 You can view the services currently defined using this command substituting

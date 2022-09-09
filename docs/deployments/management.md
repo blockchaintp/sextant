@@ -30,6 +30,9 @@ Select your preferred deployment from the marketplace.
 The current _distributed ledger_ deployment options are -
 
 - [Hyperledger Besu](dlts/besu.md)
+<!-->
+- [Hyperledger Fabric](dlts/fabric.md)
+<-->
 - [Hyperledger Sawtooth](dlts/sawtooth.md)
 
 The current _smart contract_ deployment options are -

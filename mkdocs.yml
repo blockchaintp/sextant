@@ -34,6 +34,9 @@ nav:
           - Besu:
               - Deployment: deployments/dlts/besu.md
               - Services: deployments/dlts/besu-services.md
+#          - Fabric:
+#              - Deployment: deployments/dlts/fabric.md
+#              - Services: deployments/dlts/fabric-services.md
           - Sawtooth:
               - Deployment: deployments/dlts/sawtooth.md
               - Services: deployments/dlts/sawtooth-services.md
