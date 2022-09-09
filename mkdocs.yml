@@ -1,7 +1,10 @@
 ---
 site_name: Sextant
 site_author: BTP
-theme: readthedocs
+theme:
+  name: material
+  palette:
+    scheme: default
 copyright: Copyright &copy; 2022 Blockchain Technology Partners
 markdown_extensions:
   - attr_list
