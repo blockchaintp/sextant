@@ -1,4 +1,60 @@
+---
 site_name: Sextant
 site_author: BTP
 theme: readthedocs
-copyright: Copyright &copy; 2021 Blockchain Technology Partners
+copyright: Copyright &copy; 2022 Blockchain Technology Partners
+markdown_extensions:
+  - attr_list
+  - admonition
+  - toc:
+      permalink: true
+nav:
+  - Overview: overview.md
+  - Editions: editions.md
+  - Installation:
+      - Overview: installation/overview.md
+      - Enterprise: installation/enterprise.md
+      - AWS Marketplace:
+          - Enterprise: installation/aws-enterprise.md
+          - Premium: installation/aws-premium.md
+          - Standard: installation/aws-standard.md
+      - Community: installation/community.md
+      - Access: installation/access.md
+  - Clusters:
+      - Overview: clusters/overview.md
+      - Management: clusters/management.md
+  - Deployments:
+      - Overview: deployments/overview.md
+      - Management: deployments/management.md
+      - Distributed Ledgers:
+          - Overview: deployments/dlts/overview.md
+          - Besu:
+              - Deployment: deployments/dlts/besu.md
+              - Services: deployments/dlts/besu-services.md
+          - Sawtooth:
+              - Deployment: deployments/dlts/sawtooth.md
+              - Services: deployments/dlts/sawtooth-services.md
+      - Smart Contracts:
+          - Overview: deployments/smart-contracts/overview.md
+          - Daml on Besu: deployments/smart-contracts/daml-on-besu.md
+          - Daml on Sawtooth: deployments/smart-contracts/daml-on-sawtooth.md
+          - Daml on QLDB: deployments/smart-contracts/daml-on-qldb.md
+          - Daml on Postgres: deployments/smart-contracts/daml-on-postgres.md
+          - Daml Ledger Admin: deployments/smart-contracts/daml-ledger-admin.md
+          - Daml Services: deployments/smart-contracts/daml-services.md
+      - Information Security:
+          - Overview: deployments/infosec/overview.md
+          - TFS on Sawtooth: deployments/infosec/tfs-on-sawtooth.md
+          - TFS Admin: deployments/infosec/tfs-admin.md
+  - Users:
+      - Overview: users/overview.md
+      - Operations: users/management.md
+  - Admin:
+      - Overview: admin/overview.md
+      - Operations: admin/operations.md
+  - Advanced Topics:
+      - Enabling Daml on QLDB: topics/eks-cluster-aws-services.md
+      - Utility Deployments: topics/utility-deployments.md
+      - Working with EKS Clusters: topics/eks-cluster-basics.md
+  - Security Updates:
+      - Log4Shell CVEs: updates/log4shell-cves.md
