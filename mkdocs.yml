@@ -9,6 +9,7 @@ markdown_extensions:
   - toc:
       permalink: true
 nav:
+  - Home: overview.md
   - Overview: overview.md
   - Editions: editions.md
   - Installation:
@@ -53,8 +54,6 @@ nav:
       - Overview: admin/overview.md
       - Operations: admin/operations.md
   - Advanced Topics:
-      - Enabling Daml on QLDB: topics/eks-cluster-aws-services.md
       - Utility Deployments: topics/utility-deployments.md
-      - Working with EKS Clusters: topics/eks-cluster-basics.md
   - Security Updates:
       - Log4Shell CVEs: updates/log4shell-cves.md
