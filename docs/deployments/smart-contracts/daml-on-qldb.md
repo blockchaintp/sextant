@@ -12,7 +12,7 @@ your target cluster then this step will already have been completed.
 
 -----
 
-Selecting `Daml on QLDB` in the deployments dropdown menu takes you to
+Selecting `Daml on QLDB` in the deployments marketplace takes you to
 its deployment form. Here you need to give your deployment a name, specify its
 namespace and provide a Daml Ledger ID.
 

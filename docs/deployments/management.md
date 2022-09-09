@@ -18,14 +18,14 @@ On the `Deployments` page select your target cluster in the top right drop down.
 
 ### Step 2
 
-Click `Add`. This will create a dropdown menu from which you can select your
-specific deployment.
+Click `Add`. This will take you to the deployments marketplace from which you
+can select your specific deployment.
 
-![Deployments Add Dropdown Menu](../images/sextant-deployments-add-menu.png){ .shadow}
+![Deployments Add Marketplace](../images/sextant-deployments-add-marketplace.png){ .shadow}
 
 ### Step 3
 
-Select your preferred deployment from the dropdown menu.
+Select your preferred deployment from the marketplace.
 
 The current _distributed ledger_ deployment options are -
 
@@ -43,7 +43,11 @@ The current _information security_ options are -
 
 - [TFS™ on Sawtooth](infosec/tfs-on-sawtooth.md)
 
-In addition to these core deployments the dropdown menu includes some utility
+The current _provenance_ options are -
+
+- [Chronicle on Sawtooth](provo/chronicle-on-sawtooth.md)
+
+In addition to these core deployments the marketplace includes some utility
 deployments. These are documented [here](../topics/utility-deployments.md).
 
 ## Interact with a Deployment

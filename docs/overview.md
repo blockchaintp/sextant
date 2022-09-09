@@ -28,6 +28,14 @@ Sextant simplifies the deployment and management of the Taekion File System™ a
 well as its underlying distributed ledger, Hyperledger Sawtooth, delivering
 military-grade protection for your business-critical information.
 
+### Provenance
+
+Sextant supports Chronicle, our blockchain-backed, domain-agnostic solution for
+immutably recording provenance data, and facilitates its integration with
+enterprise systems. Chronicle is available with Hyperledger Sawtooth as its
+default backing ledger, with support for other industry-leading distributed
+ledgers in the pipeline.
+
 ## Key Concepts
 
 Once you have logged into Sextant you can use the dropdown menu to select one of

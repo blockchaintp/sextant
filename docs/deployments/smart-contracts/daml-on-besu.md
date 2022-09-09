@@ -22,7 +22,7 @@ For more information on this command, see
 
 -----
 
-Selecting `Daml on Besu` in the deployments dropdown menu takes you to
+Selecting `Daml on Besu` in the deployments marketplace takes you to
 its deployment form. Here you need to give your deployment a name, specify its
 namespace using the one created above and decide whether you want to enable
 persistence or not. In this example we've opted to enable persistence and

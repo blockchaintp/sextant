@@ -1,6 +1,6 @@
 # Deploying Daml on Sawtooth
 
-Selecting `Daml on Sawtooth` in the deployments dropdown menu takes you to
+Selecting `Daml on Sawtooth` in the deployments marketplace takes you to
 its deployment form. Here all you need to do is give your deployment a name
 and specify its namespace:
 
