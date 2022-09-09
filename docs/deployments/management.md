@@ -41,7 +41,7 @@ The current _smart contract_ deployment options are -
 
 The current _information security_ options are -
 
-- [TFS on Sawtooth](infosec/tfs-on-sawtooth.md)
+- [TFS™ on Sawtooth](infosec/tfs-on-sawtooth.md)
 
 In addition to these core deployments the dropdown menu includes some utility
 deployments. These are documented [here](../topics/utility-deployments.md).
@@ -55,7 +55,7 @@ interact with it using the icons on the right.
   generic interactions are covered in the next section
 - In the case of the Daml deployments there is also a fourth `Settings` option
   (in the form of a _gear_ icon) which lets you interact with the Daml ledger
-- In the case of the TFS on Sawtooth deployment there is also a fourth
+- In the case of the TFS™ on Sawtooth deployment there is also a fourth
   `Settings` option that lets you interact with the Taekion File System™
 
 ## Generic Interactions

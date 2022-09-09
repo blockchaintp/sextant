@@ -1,8 +1,8 @@
-# Deploying TFS on Sawtooth
+# Deploying TFS™ on Sawtooth
 
 -----
 
-__IMPORTANT__ `TFS on Sawtooth` is still in beta so you will need to be granted
+__IMPORTANT__ `TFS™ on Sawtooth` is still in beta so you will need to be granted
 access to the appropriate private docker hub repository.
 
 Assuming you have been granted access using your docker hub credentials you will
@@ -19,22 +19,22 @@ kubectl create secret docker-registry dockerhub --docker-username=<username> \
 
 -----
 
-Selecting `TFS on Sawtooth` in the deployments dropdown menu takes you to
+Selecting `TFS™ on Sawtooth` in the deployments dropdown menu takes you to
 its deployment form. Here you need to give your deployment a name
 and specify its namespace using the one created above:
 
-![Sextant Deployments TFS on Sawtooth
+![Sextant Deployments TFS™ on Sawtooth
 Form](../../images/sextant-deployments-tfs-sawtooth-form.png){.shadow}
 
 Then you need to scroll down, enable image pull secrets and add the image pull
 secret `dockerhub` you created above:
 
-![Sextant Deployments TFS on Sawtooth
+![Sextant Deployments TFS™ on Sawtooth
 Deploy](../../images/sextant-deployments-tfs-sawtooth-deploy.png){.shadow}
 
 Click `Deploy` and the deployment will be created and added to the cluster:
 
-![Sextant Deployments TFS on Sawtooth
+![Sextant Deployments TFS™ on Sawtooth
 Added](../../images/sextant-deployments-tfs-sawtooth-added.png){.shadow}
 
 Note that this deployment includes a `Settings` option - the _gear_ icon - which
@@ -51,7 +51,7 @@ Once you deployment has been added you can view interact with it as described
 
 ## Sawtooth Services
 
-Once a `TFS on Sawtooth` deployment is running it is possible to expose various
+Once a `TFS™ on Sawtooth` deployment is running it is possible to expose various
 Sawtooth features using Kubernetes services. This is covered in depth
 [here](../dlts/sawtooth-services.md).
 
