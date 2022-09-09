@@ -1,7 +1,10 @@
 ---
 site_name: Sextant
 site_author: BTP
-theme: readthedocs
+theme:
+  name: material
+  palette:
+    scheme: default
 copyright: Copyright &copy; 2022 Blockchain Technology Partners
 markdown_extensions:
   - attr_list
@@ -44,8 +47,8 @@ nav:
           - Daml Services: deployments/smart-contracts/daml-services.md
       - Information Security:
           - Overview: deployments/infosec/overview.md
-          - TFS on Sawtooth: deployments/infosec/tfs-on-sawtooth.md
-          - TFS Admin: deployments/infosec/tfs-admin.md
+          - TFS™ on Sawtooth: deployments/infosec/tfs-on-sawtooth.md
+          - TFS™ Admin: deployments/infosec/tfs-admin.md
   - Users:
       - Overview: users/overview.md
       - Operations: users/management.md
@@ -53,8 +56,4 @@ nav:
       - Overview: admin/overview.md
       - Operations: admin/operations.md
   - Advanced Topics:
-      - Enabling Daml on QLDB: topics/eks-cluster-aws-services.md
       - Utility Deployments: topics/utility-deployments.md
-      - Working with EKS Clusters: topics/eks-cluster-basics.md
-  - Security Updates:
-      - Log4Shell CVEs: updates/log4shell-cves.md
