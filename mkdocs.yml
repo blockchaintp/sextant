@@ -34,6 +34,9 @@ nav:
           - Besu:
               - Deployment: deployments/dlts/besu.md
               - Services: deployments/dlts/besu-services.md
+#          - Fabric:
+#              - Deployment: deployments/dlts/fabric.md
+#              - Services: deployments/dlts/fabric-services.md
           - Sawtooth:
               - Deployment: deployments/dlts/sawtooth.md
               - Services: deployments/dlts/sawtooth-services.md
@@ -49,6 +52,10 @@ nav:
           - Overview: deployments/infosec/overview.md
           - TFS™ on Sawtooth: deployments/infosec/tfs-on-sawtooth.md
           - TFS™ Admin: deployments/infosec/tfs-admin.md
+      - Provenance:
+          - Overview: deployments/provo/overview.md
+          - Chronicle on Sawtooth: deployments/provo/chronicle-on-sawtooth.md
+#          - Chronicle Admin: deployments/provo/chronicle-admin.md
   - Users:
       - Overview: users/overview.md
       - Operations: users/management.md

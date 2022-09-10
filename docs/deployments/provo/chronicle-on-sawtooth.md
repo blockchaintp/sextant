@@ -1,44 +1,48 @@
-# Deploying TFS™ on Sawtooth
+# Deploying Chronicle on Sawtooth
 
 -----
 
-__IMPORTANT__ `TFS™ on Sawtooth` is still in beta so you will need to be granted
-access to the appropriate private docker hub repository.
-
-Assuming you have been granted access using your docker hub credentials you will
-need to create the target namespace for your deployment and create an image pull
-secret in that namespace that you can reference later. In this example the
-namespace is `tfs-namespace` and the image pull secret is `dockerhub`:
+__IMPORTANT__ `Chronicle on Sawtooth` cannot be deployed unless you have access
+to BTP's official docker image registry. Once you have acquired the credentials
+for this registry from BTP you will need to create the target namespace for your
+deployment and create an image pull secret in that namespace that you can
+reference later. In this example the
+namespace is `chronicle-namespace` and the image pull secret is `dockerhub`:
 
 ```bash
-kubectl create namespace tfs-namespace
-kubectl config set-context --current --namespace=tfs-namespace
+kubectl create namespace chronicle-namespace
+kubectl config set-context --current --namespace=chronicle-namespace
 kubectl create secret docker-registry dockerhub --docker-username=<username> \
 --docker-password='<password>' --docker-email=<email>
 ```
 
 -----
 
-Selecting `TFS™ on Sawtooth` in the deployments marketplace takes you to
+Selecting `Chronicle on Sawtooth` in the deployments marketplace takes you to
 its deployment form. Here you need to give your deployment a name
 and specify its namespace using the one created above:
 
-![Sextant Deployments TFS™ on Sawtooth
-Form](../../images/sextant-deployments-tfs-sawtooth-form.png){.shadow}
+<!--
+// TODO - ADD SCREEN CAPTURES USING CHROME FULL SCREEN ON MBP
+![Sextant Deployments Chronicle on Sawtooth
+Form](../../images/sextant-deployments-chronicle-sawtooth-form.png){.shadow}
 
 Then you need to scroll down, enable image pull secrets and add the image pull
 secret `dockerhub` you created above:
 
-![Sextant Deployments TFS™ on Sawtooth
-Deploy](../../images/sextant-deployments-tfs-sawtooth-deploy.png){.shadow}
+![Sextant Deployments Chronicle on Sawtooth
+Deploy](../../images/sextant-deployments-chronicle-sawtooth-deploy.png){.shadow}
 
 Click `Deploy` and the deployment will be created and added to the cluster:
 
-![Sextant Deployments TFS™ on Sawtooth
-Added](../../images/sextant-deployments-tfs-sawtooth-added.png){.shadow}
+![Sextant Deployments Chronicle on Sawtooth
+Added](../../images/sextant-deployments-chronicle-sawtooth-added.png){.shadow}
+
+// TODO - REINSTATE WHEN SETTINGS OPTION
 
 Note that this deployment includes a `Settings` option - the _gear_ icon - which
-is covered [here](tfs-admin.md).
+is covered [here](chronicle-admin.md).
+-->
 
 Once you deployment has been added you can view interact with it as described
 [here](../management.md#generic-interactions).
@@ -51,8 +55,8 @@ Once you deployment has been added you can view interact with it as described
 
 ## Sawtooth Services
 
-Once a `TFS™ on Sawtooth` deployment is running it is possible to expose various
-Sawtooth features using Kubernetes services. This is covered in depth
+Once a `Chronicle on Sawtooth` deployment is running it is possible to expose
+various Sawtooth features using Kubernetes services. This is covered in depth
 [here](../dlts/sawtooth-services.md).
 
 ## Deployment Options

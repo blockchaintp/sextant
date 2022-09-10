@@ -1,6 +1,6 @@
 # Deploying Sawtooth
 
-Selecting `Hyperledger Sawtooth` in the deployments dropdown menu takes you to
+Selecting `Hyperledger Sawtooth` in the deployments marketplace takes you to
 its deployment form. Here all you need to do is give your deployment a name
 and specify its namespace:
 

@@ -12,7 +12,7 @@ completed.
 
 -----
 
-Selecting `Daml on Postgres` in the deployments dropdown menu takes you to
+Selecting `Daml on Postgres` in the deployments marketplace takes you to
 its deployment form. Here you need to give your deployment a name, specify its
 namespace and decide whether you want Sextant to create a Postgres database
 (the `Local` option) or use a Postgres instance supplied by you (the `Remote`
