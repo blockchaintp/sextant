@@ -23,30 +23,34 @@ These examples assume that you have deployed a Besu network called
 You can view the services currently defined using this command substituting
 `test-namespace` for your Sawtooth namespace.
 
-```shell
-kubectl get svc --namespace=test-namespace
+```bash
+$ kubectl get svc --namespace=test-namespace
+NAME                  TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                                          AGE
+test-network-besu     ClusterIP   None         <none>        8545/TCP,8546/TCP,8547/TCP,30303/TCP,30303/UDP   38s
+test-network-besu-0   ClusterIP   None         <none>        8545/TCP,8546/TCP,8547/TCP,30303/TCP,30303/UDP   38s
+test-network-besu-1   ClusterIP   None         <none>        8545/TCP,8546/TCP,8547/TCP,30303/TCP,30303/UDP   38s
+test-network-besu-2   ClusterIP   None         <none>        8545/TCP,8546/TCP,8547/TCP,30303/TCP,30303/UDP   38s
+test-network-besu-3   ClusterIP   None         <none>        8545/TCP,8546/TCP,8547/TCP,30303/TCP,30303/UDP   38s
 ```
 
-* [Service 1](#service-1)
+* `test-network-besu` is a service which exposes the ports of all of the
+  available besu in a balanced fashion.
 
-* [Service 2](#service-2)
+* `test-network-besu-0` is a service which exposes the ports of besu node 0 (the
+  first node in this statefulset).
 
-* [Service 3](#service-3)
+* `test-network-besu-1` is a service which exposes the ports of besu node 1 (the
+  second node in this statefulset).
 
-## Service 1
+* `test-network-besu-2` is a service which exposes the ports of besu node 2 (the
+  third node in this statefulset).
 
-// TODO
+* `test-network-besu-3` is a service which exposes the ports of besu node 3 (the
+  fourth node in this statefulset).
 
-Return to [Overview](#overview)
+## Ports
 
-## Service 2
-
-// TODO
-
-Return to [Overview](#overview)
-
-## Service 3
-
-// TODO
-
-Return to [Overview](#overview)
+* JSON-RPC HTTP: `8545` the standard JSON-RPC HTTP port for besu.
+* WS HTTP: `8546` the standard WS HTTP port for besu.
+* GraphQL HTTP: `8547` the standard GraphQL HTTP port for besu.
+* `30303` the standard P2P port for besu.
