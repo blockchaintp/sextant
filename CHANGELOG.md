@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## Unreleased
+
+* docs: splits up user type explanations into paragraphs and moves user type segment to end of file [view commit](https://github.com/catenasys/sextant/commit/7d91719fb1acabf2b9e205e723e67d3b8cc0292d)
+* docs: adds explanations of user types and user actions [view commit](https://github.com/catenasys/sextant/commit/392a18055f5f7e8fe5bcd7a45a02a094a63a36ec)
+* docs: adds screenshots pertaining to users/management.md [view commit](https://github.com/catenasys/sextant/commit/ef09d4bb6b6153df7fe1ee234bd834888303de30)
+* docs: add TFS trademark [view commit](https://github.com/catenasys/sextant/commit/a08ef10ea7c35a45a4f504eb302d908ba6c05b00)
+* docs: update theme [view commit](https://github.com/catenasys/sextant/commit/11a9bed6fee33a5362e4d82a5df6d6688e11b83c)
+* docs: remove security updates section [view commit](https://github.com/catenasys/sextant/commit/18880fec4dcda1af55143a39e204f04ebd98ee14)
+* docs: remove Home link [view commit](https://github.com/catenasys/sextant/commit/a7b91fc3feedc6fb5f1de013f6f9db6bbd971e3d)
+* docs: remove images lifted up to docs.btp [view commit](https://github.com/catenasys/sextant/commit/2baff9f564cf1daa718fc2e0932518cc18601672)
+* docs: remove documents that are lifted up to docs.btp [view commit](https://github.com/catenasys/sextant/commit/8326c4ff141b7473b97518ed7a7fcda01137c941)
+* docs: move docs from docs.blockchaintp.com [view commit](https://github.com/catenasys/sextant/commit/8ecef4b230f3d91bdd0a18c5a35a50bc0665e278)
+
 ## v2.2.0
 
 * build(deps): bump terser from 5.12.0 to 5.14.2 [view commit](https://github.com/catenasys/sextant/commit/a0eb82f6949d61c3dde2b8367c2a68ef060a8c3b)
