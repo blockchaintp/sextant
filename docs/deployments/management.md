@@ -21,7 +21,7 @@ On the `Deployments` page select your target cluster in the top right drop down.
 Click `Add`. This will take you to the deployments marketplace from which you
 can select your specific deployment.
 
-![Deployments Add Marketplace](../images/sextant-deployments-add-marketplace.png){ .shadow}
+![Deployments Add Marketplace](../images/sextant-deployments-add-marketplace.png){.shadow}
 
 ### Step 3
 
@@ -30,9 +30,13 @@ Select your preferred deployment from the marketplace.
 The current _distributed ledger_ deployment options are -
 
 - [Hyperledger Besu](dlts/besu.md)
+
 <!-->
+
 - [Hyperledger Fabric](dlts/fabric.md)
+
 <-->
+
 - [Hyperledger Sawtooth](dlts/sawtooth.md)
 
 The current _smart contract_ deployment options are -

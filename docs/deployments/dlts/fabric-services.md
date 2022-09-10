@@ -12,7 +12,7 @@ where there is a nice [tutorial](https://kubernetes.io/docs/tutorials/kubernetes
 as well.
 
 Here we provide specific guidance on how to expose services of a Sextant
-managed Besu deployment, specifically on an AWS hosted Kubernetes cluster,
+managed Fabric deployment, specifically on an AWS hosted Kubernetes cluster,
 whether EKS based or not.
 
 ## Overview
@@ -26,6 +26,8 @@ You can view the services currently defined using this command substituting
 ```shell
 kubectl get svc --namespace=test-namespace
 ```
+
+<!-- TODO: fill these out
 
 * [Service 1](#service-1)
 
@@ -50,3 +52,4 @@ Return to [Overview](#overview)
 // TODO
 
 Return to [Overview](#overview)
+-->

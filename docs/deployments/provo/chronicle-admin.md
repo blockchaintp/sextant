@@ -1,9 +1,8 @@
 # Chronicle Admin
 
-<!-->
+<!--
 // TODO - WHEN THE SETTINGS ARE IMPLEMENTED FLESH OUT THIS FILE
 // TODO - UNCOMMENT LINE 52 in mkdocs.yml
-<-->
 When you select `Settings` on your Chronicle on Sawtooth deployment you are
 presented with this screen:
 
@@ -24,3 +23,4 @@ This tab lets you ...
 ## TAB 2
 
 This tab lets you ...
+-->

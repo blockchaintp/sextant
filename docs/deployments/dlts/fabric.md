@@ -2,7 +2,7 @@
 
 Selecting `Hyperledger Fabric` in the deployments marketplace takes you to
 its deployment form.
-<!-->
+<!--
 Here all you need to do is give your deployment a name,
 specify its namespace and decide whether you want to enable persistence or not.
 In this example we've opted to enable persistence and specified `gp2` as the
@@ -23,21 +23,22 @@ Added](../../images/sextant-deployments-besu-added.png){.shadow}
 
 Once you deployment has been added you can view interact with it as described
 [here](../management.md#generic-interactions).
-<-->
+-->
 !!!Warning
     Deployment is not instantaneous as under the covers Sextant uses the
     appropriate helm chart to create your deployment which may involve pulling
     the appropriate images if these aren't already cached by the Kubernetes
     cluster.
 
-<!-->
+<!--
 ## Fabric Services
 
 Once a `Hyperledger Fabric` deployment is running it is possible to expose
 various Fabric features using Kubernetes services. This is covered in depth
 [here](fabric-services.md).
 
-<-->
+-->
+
 ## Deployment Options
 
 Beyond specifying whether you want to enable persistence for your Besu
