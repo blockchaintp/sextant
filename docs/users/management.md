@@ -44,10 +44,10 @@ Be sure you want to delete the user as this action is not reversable.
 |userName|USER_TYPE|read|update|delete|
 |:-:|:-:|:-:|:-:|:-:|
 |Chris|user|FALSE|FALSE|FALSE|
-| Joseph|user|TRUE|FALSE|FALSE|
-|Ryan|user|TRUE|FALSE|FALSE|
-|Jimmy|admin|TRUE|TRUE|FALSE|
-|Ivo|admin|TRUE|TRUE|FALSE|
+|Joseph|user|TRUE|FALSE|FALSE|
+|Ryan|user|TRUE|TRUE|FALSE|
+|Jimmy|admin|FALSE|FALSE|FALSE|
+|Ivo|admin|TRUE|FALSE|FALSE|
 |Mikaela|admin|TRUE|TRUE|FALSE|
 |Alex|superuser|TRUE|TRUE|TRUE|
 
