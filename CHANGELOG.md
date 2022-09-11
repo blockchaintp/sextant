@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+* docs: hide todos and empty sections in comments for now [view commit](https://github.com/catenasys/sextant/commit/3bbb21b54152791f3f0f75b4405d7b9e789bfbf4)
+* docs: clear out TODOs on besu and daml services [view commit](https://github.com/catenasys/sextant/commit/ea28df3e7c0ef7cc4cb18feb7e373b5db0a14adb)
+* docs: add fabric stubs for when Fabric is deployment option [view commit](https://github.com/catenasys/sextant/commit/8c4d2ea08ff4fa2ec60ab4b1b295c7827b8eba13)
+* docs: comment out chronicle-admin until settings implemented; fix typos [view commit](https://github.com/catenasys/sextant/commit/59c4eb49caae1e9da0eb863943052cce5432e912)
+* docs: fix deploying besu typo [view commit](https://github.com/catenasys/sextant/commit/5d2f1ca1c3c508163cecd736d212b081ba650df5)
+* docs: add marketplace and provenance stub [view commit](https://github.com/catenasys/sextant/commit/d2253309bb51cd82781387b5ffa6029d82169033)
+* docs(mkdocs): lowercase site_name [view commit](https://github.com/catenasys/sextant/commit/7cbfa4e7dc269792ece931f741629924438e889c)
 * docs: splits up user type explanations into paragraphs and moves user type segment to end of file [view commit](https://github.com/catenasys/sextant/commit/7d91719fb1acabf2b9e205e723e67d3b8cc0292d)
 * docs: adds explanations of user types and user actions [view commit](https://github.com/catenasys/sextant/commit/392a18055f5f7e8fe5bcd7a45a02a094a63a36ec)
 * docs: adds screenshots pertaining to users/management.md [view commit](https://github.com/catenasys/sextant/commit/ef09d4bb6b6153df7fe1ee234bd834888303de30)
