@@ -17,7 +17,7 @@ client that lets you interact with your deployment using the TFS™ CLI.
 CLI](../../images/sextant-deployments-tfs-sawtooth-settings-tfs-cli.png){.shadow}
 
 !!!Warning
-    Note that the docker command only works correctly if you connect to Sextant
+    Note that the docker command works correctly only if you connect to Sextant
     via a load balancer otherwise the TFS_URL is malformed.
 
 ## TFS™ Keys
@@ -54,7 +54,7 @@ Clicking `Edit` lets you change the name of a volume:
 Vol](../../images/sextant-deployments-tfs-sawtooth-settings-edit-vol.png){.shadow}
 
 Clicking `Create a Snapshot` switches the context to the `TFS™ Snapshots` pane
-and let's you create a snapshot of your volume.
+and lets you create a snapshot of your volume.
 
 ## TFS™ Snapshots
 
@@ -70,7 +70,7 @@ List](../../images/sextant-deployments-tfs-sawtooth-settings-snap-list.png){.sha
 
 ## TFS™ Explorer
 
-Before taking a closer look at the explorer lets run a TFS™ CLI session using
+Before taking a closer look at the explorer, let's run a TFS™ CLI session using
 our docker command to spin up a tfs-client container:
 
 ```bash
@@ -90,8 +90,8 @@ hello-world.txt
 user@c03b78df5774:/mnt/tfs$
 ```
 
-The explorer lets you drilldown on individual volumes such as `vol002` and as
-you can see this lists the file `hello-world.txt` created in that session:
+The explorer lets you drill down on individual volumes such as `vol002` and, as
+you can see, this lists the file `hello-world.txt` created in that session:
 
 ![Sextant Deployment TFS™ on Sawtooth Settings
 Explorer](../../images/sextant-deployments-tfs-sawtooth-settings-explorer.png){.shadow}
@@ -113,7 +113,7 @@ in the explorer:
 ![Sextant Deployment TFS™ on Sawtooth Settings Explorer
 Snap001](../../images/sextant-deployments-tfs-sawtooth-settings-explorer-snap001.png){.shadow}
 
-Next we return to our TFS™ CLI session where we can lst the snapshot then
+Next we return to our TFS™ CLI session where we can list the snapshot then
 create a second file `descartes.txt`:
 
 ```bash
@@ -134,7 +134,7 @@ Returning to the explorer and looking at `latest` we can see the new file:
 Latest](../../images/sextant-deployments-tfs-sawtooth-settings-explorer-latest.png){.shadow}
 
 !!!Note
-    The snapshots are stored in a hidden readonly directory `.snapshots` as
+    The snapshots are stored in a hidden read-only directory `.snapshots` as
     you can see if you switch back to the TFS™ CLI session:
 
 ```bash

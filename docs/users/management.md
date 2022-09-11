@@ -29,17 +29,17 @@ to change. Make the desired changes and click `SAVE`
 
 ## Delete a User
 
-On the row for the user you would like to delete, click the trash can icon in
+On the row for the user you would like to delete, click the trashcan icon in
 the `Actions` column.
 
 ![Sextant Edit Icon](../images/sextant-users-delete-icon.png){ .shadow}
 
 This will prompt you to *confirm* that you do want to delete the selected user.
-Be sure you want to delete the user as this action is not reversable.
+Be sure you want to delete the user as this action is not reversible.
 
 ![Sextant Delete User](../images/sextant-delete-user.png){ .shadow}
 
-## An explanation of different role based access for Cluster Routes
+## An explanation of different role-based access for Cluster Routes
 
 |userName|USER_TYPE|read|update|delete|
 |:-:|:-:|:-:|:-:|:-:|
@@ -60,7 +60,7 @@ He may see information about users permissioned on the specified resource.
 **Ryan** is a basic user with write permissions on a specific resource. He may see
 and update information about the users permissioned on the specified resource.
 
-**Jimmy** is an admin user with no permisions on any resource. He may add
+**Jimmy** is an admin user with no permissions on any resource. He may add
 and update user information.
 
 **Ivo** is an admin user with read permissions on a specific resource. He

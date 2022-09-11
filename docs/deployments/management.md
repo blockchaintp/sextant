@@ -12,7 +12,7 @@ basic management operations that apply to all deployments.
 
 ### Step 1
 
-On the `Deployments` page select your target cluster in the top right drop down.
+On the `Deployments` page select your target cluster in the top-right drop down.
 
 ![Select Target Cluster](../images/sextant-deployments-select-target.png){ .shadow}
 
@@ -63,11 +63,11 @@ Once a deployment has been successfully added to your target cluster you can
 interact with it using the icons on the right.
 
 - In all cases you can `Undeploy`, `Edit` and `View` a deployment. These
-  generic interactions are covered in the next section
+  generic interactions are covered in the next section.
 - In the case of the Daml deployments there is also a fourth `Settings` option
-  (in the form of a _gear_ icon) which lets you interact with the Daml ledger
+  (in the form of a _gear_ icon) which lets you interact with the Daml ledger.
 - In the case of the TFS™ on Sawtooth deployment there is also a fourth
-  `Settings` option that lets you interact with the Taekion File System™
+  `Settings` option that lets you interact with the Taekion File System™.
 
 ## Generic Interactions
 
@@ -163,7 +163,7 @@ At this point you can make whatever modifications are appropriate to your
 deployment, for example, in the case of a Sawtooth deployment this could be
 adding or upgrading a custom transaction processor.
 
-Once you have made your changed scroll down to the bottom of the form then hit
+Once you have made your changes, scroll down to the bottom of the form then hit
 the `Re-deploy` button:
 
 ![Deployment Edit Redeploy](../images/sextant-deployments-edit-redeploy.png){ .shadow}

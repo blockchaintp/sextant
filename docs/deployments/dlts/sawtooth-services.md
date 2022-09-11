@@ -11,9 +11,9 @@ the [Kubernetes documentation](https://kubernetes.io/docs/tasks/access-applicati
 where there is a nice [tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/)
 as well.
 
-Here we provide specific guidance on how to expose services of a Sextant
-managed Sawtooth deployment, specifically on an AWS hosted Kubernetes cluster,
-whether EKS based or not.
+Here we provide specific guidance on how to expose services of a Sextant-managed
+Sawtooth deployment, specifically on an AWS-hosted Kubernetes cluster,
+whether EKS-based or not.
 
 ## Overview
 
@@ -35,7 +35,7 @@ kubectl get svc --namespace=test-namespace
 
 ## Sawtooth REST API
 
-Conveniently a Sextant deployed Sawtooth network already contains a basic
+Conveniently a Sextant-deployed Sawtooth network already contains a basic
 service for the Sawtooth Rest API. Since this API is conventional HTTP, a
 traditional load balancer will do. Therefore you can use this command.
 
@@ -83,13 +83,13 @@ Return to [Overview](#overview)
 ## Sawtooth Validator Network
 
 The Sawtooth validator network itself is a somewhat different than the other
-servicces and protocols.  Validators must connect to each other directly and not
-be mediated via any loadbalancing.  In order to prepare for this a Sextant
-deployed Sawtooth network uses the direct hostPort `8800` on each of the nodes
+services and protocols.  Validators must connect to each other directly and not
+be mediated via any load balancing.  In order to prepare for this, a Sextant-deployed
+Sawtooth network uses the direct hostPort `8800` on each of the nodes
 (similar to a
 [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport)).
 
-In addition due to some limitations in Sawtooth 1.1 each validator must address
+In addition, due to some limitations in Sawtooth 1.1, each validator must address
 other validators using the same name that the target validator uses to refer to
 itself (the value of its `--endpoint` argument).  Doing otherwise can create
 some instability in the network.  On AWS each validator refers to itself via its
@@ -102,7 +102,7 @@ normally. Two mechanisms are available to resolve this.
 ### Option 1
 
 If one part of the network is outside of AWS, then effectively the network is
-passing through NAT.  The best soluton in this case is to synch up the hostnames
+passing through NAT.  In this case, the best solution is to sync up the hostnames
 on the connecting side to how the receiving side sees itself.  In order to
 address this `/etc/hosts` entries or equivalent must be made for each of the
 target hosts on the source network mapping the target host's name to

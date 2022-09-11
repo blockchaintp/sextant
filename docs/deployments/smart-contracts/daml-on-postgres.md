@@ -24,7 +24,7 @@ specified `gp2` as the storage class as we are using AWS:
 ![Sextant Deployments Daml on Postgres
 Form](../../images/sextant-deployments-daml-postgres-form.png){.shadow}
 
-Then you need to scroll down,supply you Postgres credentials. Here we've opted
+Then you need to scroll down and supply your Postgres credentials. Here we've opted
 to supply a password but you can also provide a secret containing the field
 `password` and your preferred password:
 
@@ -39,7 +39,7 @@ Added](../../images/sextant-deployments-daml-postgres-added.png){.shadow}
 Note that this deployment includes a `Settings` option - the _gear_ icon - which
 is covered [here](daml-ledger-admin.md).
 
-Once you deployment has been added you can view interact with it as described
+Once your deployment has been added, you can view and interact with it as described
 [here](../management.md#generic-interactions).
 
 !!!Warning
@@ -60,7 +60,7 @@ Daml features using Kubernetes services. This is covered in depth
 ## Deployment Options
 
 Beyond specifying whether you want to enable persistence for your deployment
-these are the options supported by Sextant.
+these are the options supported by Sextant:
 
 ### Image Pull Secrets
 

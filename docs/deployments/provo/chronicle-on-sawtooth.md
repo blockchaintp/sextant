@@ -44,7 +44,7 @@ Note that this deployment includes a `Settings` option - the _gear_ icon - which
 is covered [here](chronicle-admin.md).
 -->
 
-Once you deployment has been added you can view interact with it as described
+Once your deployment has been added, you can view and interact with it as described
 [here](../management.md#generic-interactions).
 
 !!!Warning

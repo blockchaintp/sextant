@@ -1,17 +1,17 @@
 # AWS Standard Installation
 
-Sextant is Kubernetes native. In other words, one installs Sextant into a
+Sextant is Kubernetes-native. In other words, one installs Sextant into a
 Kubernetes cluster.
 
 ## AWS Subscription
 
 These instructions assume that you have successfully subscribed to the
-[Sextant Standard Edition](https://aws.amazon.com/marketplace/pp/prodview-ym3pozdhddgmy).
+[Sextant Standard Edition](https://aws.amazon.com/marketplace/pp/prodview-ym3pozdhddgmy)
 on the AWS Marketplace.
 
 ## Tools
 
-You will need the up to date versions of the following tools installed -
+You will need the up-to-date versions of the following tools installed:
 
 * [aws](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 * [eksctl](https://eksctl.io/introduction/#installation)
@@ -120,7 +120,7 @@ helm repo add btp-stable https://btp-charts-stable.s3.amazonaws.com/charts/
 ```
 
 Note that if you have done this previously you should make sure you have the
-most uptodate BTP helm charts repo using this command:
+most up-to-date BTP helm charts repo using this command:
 
 ```bash
 helm repo update
@@ -159,26 +159,26 @@ Obtain the initial Sextant application username and password by running this
 command:
 
 ```bash
-kubectl describe pod/sextant-0|grep INITIAL_
+kubectl describe pod/sextant-0 | grep INITIAL_
 ```
 
 Make a note of the username and password for admin access to Sextant. You will
-need these to log into Sextant.
+need these to log in to Sextant.
 
 !!!Note
    These details will persist even if you restart or delete/reinstall Sextant
    with the same name in the same namespace since we enabled postgres
    persistence.
 
-## Setup Access to Sextant
+## Set up Access to Sextant
 
 Follow these [instructions](access.md) to set up access to Sextant either via
 `portforward` or a more permanent solution such as a load balancer or an
 ingress controller.
 
-## Login to Sextant
+## Log in to Sextant
 
-Once you have done set up access to Sextant you can login using your saved
+Once you have set up access to Sextant then you can log in using your saved
 username and password and start using it yourself or set up user access for
 members of your team.
 
