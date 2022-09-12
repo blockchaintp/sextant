@@ -4,7 +4,7 @@
 
 __IMPORTANT__ If you intend to use AWS Aurora then you will need to prepare your
 target EKS Cluster by following the instructions
-[here](/docs/topics/eks-cluster-aws-services.md).
+[here](../../../../cloud-providers/aws/aws/eks-cluster-aws-services//).
 
 Note that you only have to do this once and if you have already deployed
 Daml on QLDB using your target cluster then this step will already have been
@@ -37,10 +37,10 @@ Click `Deploy` and the deployment will be created and added to the cluster:
 Added](../../images/sextant-deployments-daml-postgres-added.png){.shadow}
 
 Note that this deployment includes a `Settings` option - the _gear_ icon - which
-is covered [here](daml-ledger-admin.md).
+is covered [here](daml-ledger-admin).
 
 Once your deployment has been added, you can view and interact with it as described
-[here](../management.md#generic-interactions).
+[here](../management#generic-interactions).
 
 !!!Warning
     Deployment is not instantaneous as under the covers Sextant uses the
@@ -55,7 +55,7 @@ of a Postgres database.
 
 Once a `Daml on Postgres` deployment is running it is possible to expose various
 Daml features using Kubernetes services. This is covered in depth
-[here](daml-services.md).
+[here](daml-services).
 
 ## Deployment Options
 
