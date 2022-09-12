@@ -42,7 +42,7 @@ Click `Deploy` and the deployment will be created and added to the cluster:
 Note that this deployment includes a `Settings` option - the _gear_ icon - which
 is covered [here](daml-ledger-admin.md).
 
-Once your deployment has been added you can view interact with it as described
+Once your deployment has been added you can view and interact with it as described
 [here](../management.md#generic-interactions).
 
 !!!Warning
@@ -66,7 +66,7 @@ Daml features using Kubernetes services. This is covered in depth
 ## Deployment Options
 
 Beyond specifying whether you want to enable persistence for your deployment
-these are the options supported by Sextant.
+these are the options supported by Sextant:
 
 ### Image Pull Secrets
 

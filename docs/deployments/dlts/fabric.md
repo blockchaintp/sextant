@@ -21,7 +21,7 @@ Then added to the cluster:
 ![Sextant Deployments Besu
 Added](../../images/sextant-deployments-besu-added.png){.shadow}
 
-Once you deployment has been added you can view interact with it as described
+Once your deployment has been added, you can view and interact with it as described
 [here](../management.md#generic-interactions).
 -->
 !!!Warning

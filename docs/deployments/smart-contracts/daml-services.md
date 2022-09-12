@@ -11,9 +11,9 @@ the [Kubernetes documentation](https://kubernetes.io/docs/tasks/access-applicati
 where there is a nice [tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/)
 as well.
 
-Here we provide specific guidance on how to expose services of a Sextant
-managed Daml deployment, specifically on an AWS hosted Kubernetes cluster,
-whether EKS based or not.
+Here we provide specific guidance on how to expose services of a Sextant-managed
+Daml deployment, specifically on an AWS-hosted Kubernetes cluster,
+whether EKS-based or not.
 
 ## Overview
 
@@ -40,20 +40,20 @@ test-network-daml-sawtooth-3                  ClusterIP   172.20.85.250    <none
 ## gRPC API
 
 The gRPC in our Daml installation is exposed on port 39000. In our example this
-is made available vi the `test-network-daml-daml-on-sawtooth`
+is made available via the `test-network-daml-daml-on-sawtooth`.
 
 ```text
 test-network-daml-daml-on-sawtooth            ClusterIP   None             <none>        39000/TCP                    22s
 ```
 
 This service may further be exposed outside the cluster via an ingress by
-setting the `ingress.*` settings in the deployment.  Although this is not
-recommended
+setting the `ingress.*` settings in the deployment, although this is not
+recommended.
 
 ## JSON API
 
 The Daml JSON-API is exposed on port 8080. In our example this is made available
-vi the `test-network-daml-daml-on-sawtooth-jsonapi`.
+via the `test-network-daml-daml-on-sawtooth-jsonapi`.
 
 ```text
 test-network-daml-daml-on-sawtooth-jsonapi    ClusterIP   None             <none>        8080/TCP                     22s

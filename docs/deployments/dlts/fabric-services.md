@@ -11,9 +11,9 @@ the [Kubernetes documentation](https://kubernetes.io/docs/tasks/access-applicati
 where there is a nice [tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/)
 as well.
 
-Here we provide specific guidance on how to expose services of a Sextant
-managed Fabric deployment, specifically on an AWS hosted Kubernetes cluster,
-whether EKS based or not.
+Here we provide specific guidance on how to expose services of a Sextant-managed
+Fabric deployment, specifically on an AWS-hosted Kubernetes cluster,
+whether EKS-based or not.
 
 ## Overview
 

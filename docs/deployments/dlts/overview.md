@@ -41,8 +41,8 @@ Hyperledger Sawtooth 1.1.5 and Sawtooth PBFT 1.0.1. BTP is committed to
 contributing any BTP Paralos enhancements or refinements to these upstream
 projects.
 
-The code is hosted on Github and freely available, prebuilt Docker images are
+The code is hosted on GitHub and freely available, prebuilt Docker images are
 published periodically on Docker Hub.
 
-* [BTP Paralos Github](https://github.com/blockchaintp)
+* [BTP Paralos GitHub](https://github.com/blockchaintp)
 * [BTP Paralos Docker](https://hub.docker.com/orgs/blockchaintp)

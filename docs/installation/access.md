@@ -22,7 +22,7 @@ doing this is to create a load balancer.
 
 !!!Note
     While this is acceptable in the short term, we recommend setting up an
-    ingress controller for long term access as described
+    ingress controller for long-term access as described
     [below](#option-3---using-ingress-controller).
 
 ```bash
@@ -31,7 +31,7 @@ kubectl expose pod/sextant-0 --type=LoadBalancer \
 ```
 
 To obtain the external IP of the LoadBalancer you just created, use the
-following command
+following command:
 
 ```bash
 kubectl get all -o wide | grep LoadBalancer | awk '{print $4}'

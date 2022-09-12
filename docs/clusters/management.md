@@ -23,7 +23,7 @@ Then run the `get-values.sh` script:
 
 ### Step 3
 
-Complete the form chosing a meaningful name and copying the results of Step 2.
+Complete the form choosing a meaningful name and copying the results of Step 2.
 In this case we are using `doc-demo-cluster`:
 
 ![Sextant Activate Cluster](../images/sextant-clusters-activate.png){.shadow}

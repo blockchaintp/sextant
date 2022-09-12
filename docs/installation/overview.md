@@ -1,7 +1,7 @@
 # Sextant Installation
 
 !!!Note
-    Sextant only needs to be installed on one of your clusters unless you
+    Sextant needs to be installed on only one of your clusters unless you
     are running multiple environments such as development, QA, staging and
     production.
 
@@ -20,9 +20,9 @@ select the instructions for your particular edition:
 * [Sextant Premium Edition](aws-premium.md)
 * [Sextant Standard Edition](aws-standard.md)
 
-## Login to Sextant
+## Log in to Sextant
 
-Once you have installed Sextant then it is straight forward to login. For
+Once you have installed Sextant then it is straightforward to log in. For
 example, using `port-forward` and the admin/password combination saved:
 
 ![Sextant Login Screen](../images/sextant-login-screen.png){ .shadow}

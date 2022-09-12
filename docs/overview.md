@@ -44,7 +44,7 @@ four options:
 ![Sextant Navigation Dropdown
 Options](./images/sextant-navigation-dropdown-options.png){ .shadow}
 
-To find out more about each of these options please chose one of the following:
+To find out more about each of these options, please choose one of the following:
 
 - [Manage Clusters](clusters/overview.md)
 - [Manage Deployments](deployments/overview.md)
