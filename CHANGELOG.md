@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+* fix: replaces users select image so that the browsers match throughout the document [view commit](https://github.com/catenasys/sextant/commit/4720cc6bf553d11e81054cc8a1ad518ccf41e04c)
+* docs: correct links [view commit](https://github.com/catenasys/sextant/commit/3e58d07afe7f704c590ee89e9c50888f8c2e30f5)
+* docs: correct references to up-tree documents [view commit](https://github.com/catenasys/sextant/commit/462c064c017d2fa590eeb80d913b82a20b1c30c0)
+* docs: bump Utitlity deployments up to deployments [view commit](https://github.com/catenasys/sextant/commit/c53de60f068c2f77d99ff8c361bca9230f7d8c15)
+* docs(docs): minor changes to docs [view commit](https://github.com/catenasys/sextant/commit/64a4096ff39cdb81577d757b1ac8b2e1466810db)
+* docs(management): fix resource permission options for role-based access table [view commit](https://github.com/catenasys/sextant/commit/019e6c0ce384d17ec1e998aca91847886794c845)
+* docs(community): fix eksctl command-line option typo [view commit](https://github.com/catenasys/sextant/commit/a0db13f3ec1f496c32ce7a56947851e88345fbe7)
 * docs: hide todos and empty sections in comments for now [view commit](https://github.com/catenasys/sextant/commit/3bbb21b54152791f3f0f75b4405d7b9e789bfbf4)
 * docs: clear out TODOs on besu and daml services [view commit](https://github.com/catenasys/sextant/commit/ea28df3e7c0ef7cc4cb18feb7e373b5db0a14adb)
 * docs: add fabric stubs for when Fabric is deployment option [view commit](https://github.com/catenasys/sextant/commit/8c4d2ea08ff4fa2ec60ab4b1b295c7827b8eba13)
