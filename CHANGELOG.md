@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v2.2.1
 
 * fix: replaces users select image so that the browsers match throughout the document [view commit](https://github.com/catenasys/sextant/commit/4720cc6bf553d11e81054cc8a1ad518ccf41e04c)
 * docs: correct links [view commit](https://github.com/catenasys/sextant/commit/3e58d07afe7f704c590ee89e9c50888f8c2e30f5)
