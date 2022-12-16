@@ -125,7 +125,6 @@ branches:
         contexts:
           - DCO
           - pre-commit
-          - Commit Message Lint
           - continuous-integration/jenkins/pr-head
           - License Compliance
           - docs/readthedocs.com:btp-sextant
