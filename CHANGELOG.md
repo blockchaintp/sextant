@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Unreleased
+
+* build(mkdocs): rename requirments.txt to versions.txt [view commit](https://github.com/catenasys/sextant/commit/577fc25c27ad9a458614e4b1722fe1a9dcf5885c)
+* feat(github): remove commit message lint as a required check [view commit](https://github.com/catenasys/sextant/commit/6690dc3620d8d1fd512f200b79f692399b5476e9)
+
 ## v2.2.1
 
 * fix: replaces users select image so that the browsers match throughout the document [view commit](https://github.com/catenasys/sextant/commit/4720cc6bf553d11e81054cc8a1ad518ccf41e04c)
