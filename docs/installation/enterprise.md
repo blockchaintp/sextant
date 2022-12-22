@@ -7,7 +7,7 @@ Kubernetes cluster.
 
 Use of Sextant is governed by a Subscription Agreement or an
 Evaluation Agreement. If you aren't a subscriber then you can sign up for an
-evaluation [here](https://www.blockchaintp.com/sextant/evaluation).
+evaluation [here](https://btp.works/sextant/evaluation).
 
 ## Tools
 
@@ -22,7 +22,7 @@ You will need the up-to-date versions of the following tools installed:
     These instructions focus on Amazon EKS and use the official EKS CLI `eksctl`
     but Sextant can be deployed just as easily on a Kubernetes cluster on-prem
     or provisioned in Azure, GCP or a specialist cloud provider such as
-    [Equinix Metal](https://docs.blockchaintp.com/projects/cookbooks/en/latest/equinix/).
+    [Equinix Metal](https://docs.btp.works/cookbooks/equinix/).
 
 ## Create Cluster
 
