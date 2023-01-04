@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* docs: update to btp.works url [view commit](https://github.com/catenasys/sextant/commit/5dd84cbcb13190fef39a053f5b3e5233431c72fb)
 * build(mkdocs): rename requirments.txt to versions.txt [view commit](https://github.com/catenasys/sextant/commit/577fc25c27ad9a458614e4b1722fe1a9dcf5885c)
 * feat(github): remove commit message lint as a required check [view commit](https://github.com/catenasys/sextant/commit/6690dc3620d8d1fd512f200b79f692399b5476e9)
 
