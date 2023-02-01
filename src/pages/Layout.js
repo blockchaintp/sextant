@@ -147,7 +147,7 @@ class Layout extends React.Component {
           <div className={classnames('main-layout-footer')}>
             <Toolbar className={classes.footer}>
               <Typography variant="caption" color="textSecondary">
-                &copy; 2018-2022
+                &copy; 2018-2023
                 {' '}
                 <a href="https://blockchaintp.com/" target="_blank" rel="noreferrer">Blockchain Technology Partners</a>
                 {' '}
