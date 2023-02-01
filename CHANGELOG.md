@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+* build(deps): bump loader-utils from 1.4.0 to 1.4.2 [view commit](https://github.com/catenasys/sextant/commit/69682bcbac86c388f9ef575c2ef8630d4bea83f3)
+* build(deps): bump ua-parser-js from 0.7.31 to 0.7.33 [view commit](https://github.com/catenasys/sextant/commit/5fe84da563e3a59e323715f722fd424280fe0d11)
+* build(deps): bump minimatch and recursive-readdir [view commit](https://github.com/catenasys/sextant/commit/61d2c83258bae1ffb0c599a38e5b779805124cd3)
+* build(deps): bump decode-uri-component from 0.2.0 to 0.2.2 [view commit](https://github.com/catenasys/sextant/commit/5058389635f574cf6c2ffa715ebb0d7110ea4ada)
+* build(deps): bump json5 from 1.0.1 to 1.0.2 [view commit](https://github.com/catenasys/sextant/commit/99d00b34837b2cef670b6f7e9687645080d098b4)
 * docs: update to btp.works url [view commit](https://github.com/catenasys/sextant/commit/5dd84cbcb13190fef39a053f5b3e5233431c72fb)
 * build(mkdocs): rename requirments.txt to versions.txt [view commit](https://github.com/catenasys/sextant/commit/577fc25c27ad9a458614e4b1722fe1a9dcf5885c)
 * feat(github): remove commit message lint as a required check [view commit](https://github.com/catenasys/sextant/commit/6690dc3620d8d1fd512f200b79f692399b5476e9)
