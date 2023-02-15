@@ -4,6 +4,7 @@ import RadioField from './Radio'
 import CheckboxField from './Checkbox'
 import MultipleCheckboxField from './MultipleCheckbox'
 import SelectField from './Select'
+import FormDialog from './FormDialog'
 
 const fields = {
   text: TextField,
@@ -12,6 +13,7 @@ const fields = {
   checkbox: CheckboxField,
   multipleCheckbox: MultipleCheckboxField,
   select: SelectField,
+  formdialog: FormDialog,
 }
 
 export const defaultValues = {
@@ -21,6 +23,7 @@ export const defaultValues = {
   checkbox: false,
   multipleCheckbox: {},
   select: '',
+  formdialog: {},
 }
 
 export default fields
