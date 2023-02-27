@@ -15,12 +15,16 @@ const styles = (theme) => ({
 })
 
 class FormDialog extends React.Component {
-  render() {
-    // const [open, setOpen] = React.useState(false);
+  constructor(props) {
+    super(props)
+    this.state = {
+      dialog: false,
+    }
+  }
 
+  render() {
     const {
       field: {
-        name,
         value,
         onChange,
         onBlur,
@@ -29,53 +33,76 @@ class FormDialog extends React.Component {
       touched,
       item,
       disabled,
+      submitForm,
     } = this.props
 
-    console.log('field', item)
+    const { dialog } = this.state
 
-    const inputProps = item.inputProps || {}
+    console.log('Props:', this.props)
+
+    const handleClickOpen = () => {
+      this.setState({ dialog: true })
+    };
+
+    const clearAndClose = () => {
+      this.setState({ dialog: false })
+    }
+
+    // const confirmAndClose = () => {
+    //   this.setState({ dialog: false })
+    // }
+
+    // const inputProps = item.inputProps || {}
     const extraProps = item.extraProps || {}
 
-    // const handleClickOpen = () => {
-    //   setOpen(true);
-    // };
-
-    // const handleClose = () => {
-    //   setOpen(false);
-    // };
+    console.log('FormDialog', item)
 
     return (
-      <div>
-        <Button variant="outlined">
-          Change Password
+      <>
+        <Button variant="outlined" onClick={handleClickOpen}>
+          { item.title || '' }
         </Button>
-        <Dialog open>
-          <DialogTitle>Change Password</DialogTitle>
+        <Dialog open={dialog}>
+          <DialogTitle>{ item.title || '' }</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To update this users password enter your new password and confirm then save.
+              { item.helperText || '' }
             </DialogContentText>
-            <TextField
-              fullWidth
-              id={name}
-              name={name}
-              label={item.title || item.id}
-              helperText={touched && error ? error : item.helperText}
-              error={touched && Boolean(error)}
-              value={value}
-              onChange={onChange}
-              onBlur={onBlur}
-              disabled={disabled}
-              {...inputProps}
-              {...extraProps}
-            />
+            {
+              (item.options || []).map((option, i) => {
+                const {
+                  id, helperText, optionInputProps, title, validate,
+                } = option
+                console.log('option', option)
+                console.log('validate', validate)
+                console.log('optionInputProps', optionInputProps)
+                return (
+                  <TextField
+                    key={i}
+                    fullWidth
+                    id={id}
+                    name={title}
+                    label={title || id}
+                    helperText={helperText}
+                    error={touched && Boolean(error)}
+                    value={value}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    disabled={disabled}
+                    validate={validate}
+                    {...optionInputProps}
+                    {...extraProps}
+                  />
+                )
+              })
+            }
           </DialogContent>
           <DialogActions>
-            <Button>Cancel</Button>
-            <Button>Subscribe</Button>
+            <Button onClick={clearAndClose}>Cancel</Button>
+            <Button onClick={submitForm}>Save</Button>
           </DialogActions>
         </Dialog>
-      </div>
+      </>
     )
   }
 }
