@@ -169,4 +169,4 @@ Once you have set up access to Sextant then you can log in using your saved
 username and password and start using it yourself or set up user access for
 members of your team.
 
-Instructions on how to do this can be found [here](../overview.md).
+Instructions on how to do this can be found [here](../index.md).

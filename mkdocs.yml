@@ -5,14 +5,14 @@ theme:
   name: material
   palette:
     scheme: default
-copyright: Copyright &copy; 2022 Blockchain Technology Partners
+copyright: Copyright &copy; 2022-23 Blockchain Technology Partners
 markdown_extensions:
   - attr_list
   - admonition
   - toc:
       permalink: true
 nav:
-  - Overview: overview.md
+  - Overview: index.md
   - Editions: editions.md
   - Installation:
       - Overview: installation/overview.md
