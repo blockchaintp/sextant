@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* docs(mkdocs): update nav links to use index.md rather than overview.md for consistency [view commit](https://github.com/catenasys/sextant/commit/7c15536f0dacd7b3572af0879274fb66f1f31af6)
 * fix(layout): updates copyright date [view commit](https://github.com/catenasys/sextant/commit/f4d7fcffd6c90a34cc3629fcab987cc1d6b35400)
 * build(deps): bump loader-utils from 1.4.0 to 1.4.2 [view commit](https://github.com/catenasys/sextant/commit/69682bcbac86c388f9ef575c2ef8630d4bea83f3)
 * build(deps): bump ua-parser-js from 0.7.31 to 0.7.33 [view commit](https://github.com/catenasys/sextant/commit/5fe84da563e3a59e323715f722fd424280fe0d11)
