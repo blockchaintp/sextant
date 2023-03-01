@@ -149,11 +149,11 @@ class Layout extends React.Component {
               <Typography variant="caption" color="textSecondary">
                 &copy; 2018-2023
                 {' '}
-                <a href="https://blockchaintp.com/" target="_blank" rel="noreferrer">Blockchain Technology Partners</a>
+                <a href="https://btp.works/" target="_blank" rel="noreferrer">BTP Works</a>
                 {' '}
                 All rights reserved :
                 {' '}
-                <a href="https://blockchaintp.com/sextant/support" target="_blank" rel="noreferrer">Support page</a>
+                <a href="https://btp.works/support" target="_blank" rel="noreferrer">Support page</a>
               </Typography>
             </Toolbar>
           </div>
