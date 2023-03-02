@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* fix(layout): updates footer links to correct URLs [view commit](https://github.com/catenasys/sextant/commit/76807bb8469151d9615a2d07be4d2a9610b6cc41)
+* fix(eslint): sets prefer-stateless-function to false [view commit](https://github.com/catenasys/sextant/commit/1f489694e5c906c05ae10ceba2f23a751fd047ed)
 * docs(mkdocs): update nav links to use index.md rather than overview.md for consistency [view commit](https://github.com/catenasys/sextant/commit/7c15536f0dacd7b3572af0879274fb66f1f31af6)
 * fix(layout): updates copyright date [view commit](https://github.com/catenasys/sextant/commit/f4d7fcffd6c90a34cc3629fcab987cc1d6b35400)
 * build(deps): bump loader-utils from 1.4.0 to 1.4.2 [view commit](https://github.com/catenasys/sextant/commit/69682bcbac86c388f9ef575c2ef8630d4bea83f3)
