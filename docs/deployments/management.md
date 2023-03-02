@@ -39,6 +39,10 @@ The current _distributed ledger_ deployment options are -
 
 - [Hyperledger Sawtooth](dlts/sawtooth.md)
 
+The current _provenance_ options are -
+
+- [Chronicle on Sawtooth](provo/chronicle-on-sawtooth.md)
+
 The current _smart contract_ deployment options are -
 
 - [Daml on Besu](smart-contracts/daml-on-besu.md)
@@ -46,13 +50,13 @@ The current _smart contract_ deployment options are -
 - [Daml on QLDB](smart-contracts/daml-on-qldb.md)
 - [Daml on Postgres](smart-contracts/daml-on-postgres.md)
 
+<!-->
+
 The current _information security_ options are -
 
 - [TFS™ on Sawtooth](infosec/tfs-on-sawtooth.md)
 
-The current _provenance_ options are -
-
-- [Chronicle on Sawtooth](provo/chronicle-on-sawtooth.md)
+<-->
 
 In addition to these core deployments the marketplace includes some utility
 deployments. These are documented [here](../topics/utility-deployments.md).

@@ -1,4 +1,4 @@
-# Information Security
+# Provenance
 
 Sextant supports Chronicle, our blockchain-backed, domain-agnostic solution for
 immutably recording provenance data, and facilitates its integration with

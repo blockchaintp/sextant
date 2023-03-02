@@ -40,6 +40,9 @@ nav:
           - Sawtooth:
               - Deployment: deployments/dlts/sawtooth.md
               - Services: deployments/dlts/sawtooth-services.md
+      - Provenance:
+          - Overview: deployments/provo/overview.md
+          - Chronicle on Sawtooth: deployments/provo/chronicle-on-sawtooth.md
       - Smart Contracts:
           - Overview: deployments/smart-contracts/overview.md
           - Daml on Besu: deployments/smart-contracts/daml-on-besu.md
@@ -48,13 +51,10 @@ nav:
           - Daml on Postgres: deployments/smart-contracts/daml-on-postgres.md
           - Daml Ledger Admin: deployments/smart-contracts/daml-ledger-admin.md
           - Daml Services: deployments/smart-contracts/daml-services.md
-      - Information Security:
-          - Overview: deployments/infosec/overview.md
-          - TFS™ on Sawtooth: deployments/infosec/tfs-on-sawtooth.md
-          - TFS™ Admin: deployments/infosec/tfs-admin.md
-      - Provenance:
-          - Overview: deployments/provo/overview.md
-          - Chronicle on Sawtooth: deployments/provo/chronicle-on-sawtooth.md
+#      - Information Security:
+#          - Overview: deployments/infosec/overview.md
+#          - TFS™ on Sawtooth: deployments/infosec/tfs-on-sawtooth.md
+#          - TFS™ Admin: deployments/infosec/tfs-admin.md
       - Utility:
           - Overview: topics/utility-deployments.md
   - Users:
