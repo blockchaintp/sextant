@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* docs: fixed hidden text [view commit](https://github.com/catenasys/sextant/commit/abac46a1487d050dea7e4bb190113a24d1893535)
+* docs: fixed provo heading; removed TFS; reordered deployment list/index [view commit](https://github.com/catenasys/sextant/commit/227102a6820ef1b0cb3f51b65b44c8f9cf00e02e)
 * fix(layout): updates footer links to correct URLs [view commit](https://github.com/catenasys/sextant/commit/76807bb8469151d9615a2d07be4d2a9610b6cc41)
 * fix(eslint): sets prefer-stateless-function to false [view commit](https://github.com/catenasys/sextant/commit/1f489694e5c906c05ae10ceba2f23a751fd047ed)
 * docs(mkdocs): update nav links to use index.md rather than overview.md for consistency [view commit](https://github.com/catenasys/sextant/commit/7c15536f0dacd7b3572af0879274fb66f1f31af6)
