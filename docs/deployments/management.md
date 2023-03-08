@@ -48,7 +48,7 @@ The current _smart contract_ deployment options are -
 - [Daml on Besu](smart-contracts/daml-on-besu.md)
 - [Daml on Sawtooth](smart-contracts/daml-on-sawtooth.md)
 - [Daml on QLDB](smart-contracts/daml-on-qldb.md)
-- [Daml on Postgres](smart-contracts/daml-on-postgres.md)
+- [Daml on Postgres](smart-contracts/daml-on-postgres/deploying.md)
 
 <!--
 The current _information security_ options are -
