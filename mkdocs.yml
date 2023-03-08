@@ -48,7 +48,9 @@ nav:
           - Daml on Besu: deployments/smart-contracts/daml-on-besu.md
           - Daml on Sawtooth: deployments/smart-contracts/daml-on-sawtooth.md
           - Daml on QLDB: deployments/smart-contracts/daml-on-qldb.md
-          - Daml on Postgres: deployments/smart-contracts/daml-on-postgres.md
+          - Daml on Postgres:
+              - Deploying: deployments/smart-contracts/daml-on-postgres/deploying.md
+              - Resetting: deployments/smart-contracts/daml-on-postgres/resetting.md
           - Daml Ledger Admin: deployments/smart-contracts/daml-ledger-admin.md
           - Daml Services: deployments/smart-contracts/daml-services.md
 #      - Information Security:

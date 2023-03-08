@@ -4,7 +4,7 @@
 
 __IMPORTANT__ If you intend to use AWS Aurora then you will need to prepare your
 target EKS Cluster by following the instructions
-[here](../../../../cloud-providers/aws/eks-cluster-aws-services//).
+[here](../../../../../cloud-providers/aws/eks-cluster-aws-services).
 
 Note that you only have to do this once and if you have already deployed
 Daml on QLDB using your target cluster then this step will already have been
@@ -22,25 +22,25 @@ In this example we've opted for the local option and to enable persistence and
 specified `gp2` as the storage class as we are using AWS:
 
 ![Sextant Deployments Daml on Postgres
-Form](../../images/sextant-deployments-daml-postgres-form.png){.shadow}
+Form](../../../images/sextant-deployments-daml-postgres-form.png){.shadow}
 
 Then you need to scroll down and supply your Postgres credentials. Here we've opted
 to supply a password but you can also provide a secret containing the field
 `password` and your preferred password:
 
 ![Sextant Deployments Daml on Postgres
-Deploy](../../images/sextant-deployments-daml-postgres-deploy.png){.shadow}
+Deploy](../../../images/sextant-deployments-daml-postgres-deploy.png){.shadow}
 
 Click `Deploy` and the deployment will be created and added to the cluster:
 
 ![Sextant Deployments Daml on Postgres
-Added](../../images/sextant-deployments-daml-postgres-added.png){.shadow}
+Added](../../../images/sextant-deployments-daml-postgres-added.png){.shadow}
 
 Note that this deployment includes a `Settings` option - the _gear_ icon - which
-is covered [here](daml-ledger-admin).
+is covered [here](../../daml-ledger-admin).
 
 Once your deployment has been added, you can view and interact with it as described
-[here](../management#generic-interactions).
+[here](../../../../clusters/management#generic-interactions).
 
 !!!Warning
     Deployment is not instantaneous as under the covers Sextant uses the
@@ -55,7 +55,7 @@ of a Postgres database.
 
 Once a `Daml on Postgres` deployment is running it is possible to expose various
 Daml features using Kubernetes services. This is covered in depth
-[here](daml-services).
+[here](../../daml-services).
 
 ## Deployment Options
 
