@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* feat(daml-on-postgres): add resetting instructions [view commit](https://github.com/catenasys/sextant/commit/9dbaa846cf8c7d1097cb41bf003833025a276e8e)
 * docs: fixed hidden text [view commit](https://github.com/catenasys/sextant/commit/abac46a1487d050dea7e4bb190113a24d1893535)
 * docs: fixed provo heading; removed TFS; reordered deployment list/index [view commit](https://github.com/catenasys/sextant/commit/227102a6820ef1b0cb3f51b65b44c8f9cf00e02e)
 * fix(layout): updates footer links to correct URLs [view commit](https://github.com/catenasys/sextant/commit/76807bb8469151d9615a2d07be4d2a9610b6cc41)
