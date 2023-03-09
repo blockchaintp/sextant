@@ -2,6 +2,14 @@
 import dotty from 'dotty'
 import fields from './fields'
 
+const formatSchema = (schema) => {
+  let formattedSchema = schema
+  if (!Array.isArray(schema)) {
+    formattedSchema = [schema]
+  }
+  return formattedSchema
+}
+
 const flattenSchema = (schema) => schema
   .filter((item) => typeof item !== 'string')
   .reduce((all, row) => (row.constructor === Array ? all.concat(row) : all.concat([row])), [])
@@ -102,6 +110,7 @@ const processValues = (schema, values) => {
 }
 
 const utils = {
+  formatSchema,
   flattenSchema,
   flattenErrors,
   getComponent,
