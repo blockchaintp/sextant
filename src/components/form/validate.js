@@ -1,10 +1,5 @@
 import {
-  array,
-  object,
-  string,
-  number,
-  boolean,
-  ref,
+  array, object, string, number, boolean, ref,
 } from 'yup'
 import dotty from 'dotty'
 import utils from './utils'
@@ -26,7 +21,7 @@ const validateArgsMappers = {
         if (i === 0) {
           // if given '^\w+\d' assume a regexp with no flags
           // if given ['^\w+\d', 'i'] then we have some flags
-          if (typeof (arg) === 'string') {
+          if (typeof arg === 'string') {
             return new RegExp(arg)
           }
 
@@ -86,8 +81,7 @@ const validateHandlers = {
   function to call methods on the existing validate object
 
 */
-const reduceValidateMethods = (validateType,
-  baseType, validateMethods) => (validateMethods || []).reduce((validateObject, validateArgs) => {
+const reduceValidateMethods = (validateType, baseType, validateMethods) => (validateMethods || []).reduce((validateObject, validateArgs) => {
   const methodName = validateArgs[0]
   const methodArgs = validateArgs.slice(1)
   const argsMapper = validateArgsMappers[validateType]
@@ -103,27 +97,29 @@ const reduceValidateMethods = (validateType,
   return validateObject[methodName].apply(validateObject, applyMethodArgs)
 }, baseType)
 
-const getFlatValidationSchema = (schema) => schema.reduce((all, item) => {
-  const retVal = all
-  if (!item.validate) return retVal
+const getFlatValidationSchema = (schema) => {
+  const formattedSchema = utils.formatSchema(schema)
+  return formattedSchema.reduce((all, item) => {
+    const retVal = all
+    if (!item.validate) return retVal
 
-  if (item.list) {
-    // TODO: mutually defined functions are bad in general
-    // eslint-disable-next-line no-use-before-define
-    const subSchema = getValidationSchema(item.list)
-    const baseType = array().of(subSchema)
-    const validateMethods = item.validate && item.validate.methods
-    retVal[item.id] = reduceValidateMethods('array', baseType, validateMethods)
+    if (item.list) {
+      // TODO: mutually defined functions are bad in general
+      // eslint-disable-next-line no-use-before-define
+      const subSchema = getValidationSchema(item.list)
+      const baseType = array().of(subSchema)
+      const validateMethods = item.validate && item.validate.methods
+      retVal[item.id] = reduceValidateMethods('array', baseType, validateMethods)
+      return retVal
+    }
+
+    const validateType = item.validate.type
+    const validateTypeFunction = validators[validateType]
+    if (!validateTypeFunction) throw new Error(`unknown validate type for field: ${item.id}: ${validateType}`)
+    retVal[item.id] = reduceValidateMethods(validateType, validateTypeFunction(), item.validate.methods)
     return retVal
-  }
-
-  const validateType = item.validate.type
-  const validateTypeFunction = validators[validateType]
-  if (!validateTypeFunction) throw new Error(`unknown validate type for field: ${item.id}: ${validateType}`)
-  retVal[item.id] = reduceValidateMethods(validateType,
-    validateTypeFunction(), item.validate.methods)
-  return retVal
-}, {})
+  }, {})
+}
 
 /*
 
@@ -146,8 +142,10 @@ const processValidationObject = (obj) => {
   into a nested yup object structure
 
 */
+
 const getValidationSchema = (schema) => {
-  const flatValidationSchema = getFlatValidationSchema(utils.flattenSchema(schema))
+  const formattedSchema = utils.formatSchema(schema)
+  const flatValidationSchema = getFlatValidationSchema(utils.flattenSchema(formattedSchema))
 
   const nestedSchema = Object.keys(flatValidationSchema).reduce((all, key) => {
     const validator = flatValidationSchema[key]
