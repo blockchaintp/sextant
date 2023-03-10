@@ -21,6 +21,7 @@ import Divider from '@mui/material/Divider'
 import AddIcon from '@mui/icons-material/Add'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import KeyIcon from '@mui/icons-material/Key'
 
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
@@ -216,7 +217,7 @@ class FormListInner extends React.Component {
       deleteConfirmItem,
     } = this.state
 
-    const value = dotty.get(formProps.values, item.id)
+    const value = typeof formProps.value === 'undefined' ? [] : formProps.value
 
     const fields = item.list.table
     const { mainField } = item.list
@@ -275,6 +276,20 @@ class FormListInner extends React.Component {
       </div>
     )
 
+    const changePasswordButton = (
+      <div>
+        <Button
+          className={classes.button}
+          variant="text"
+          onClick={this.onAdd}
+          size="medium"
+          endIcon={<KeyIcon />}
+        >
+          Change Password
+        </Button>
+      </div>
+    )
+
     const actions = [{
       title: 'Delete',
       icon: DeleteIcon,
@@ -285,6 +300,21 @@ class FormListInner extends React.Component {
       handler: (currentData) => this.onEdit(currentData._item),
     }]
 
+    if (item.id === 'changePassword') {
+      return (
+        <>
+          <FormListDialog
+            title={item.title || item.id}
+            schema={item.list.schema}
+            open={editOpen}
+            initialValues={editItem || {}}
+            onCancel={this.onCancel}
+            onSave={this.onSave}
+          />
+          { changePasswordButton }
+        </>
+      )
+    }
     return (
       <div className={classes.listTable}>
         <SimpleTableHeader
@@ -310,7 +340,9 @@ class FormListInner extends React.Component {
           }}
           hideHeaderIfEmpty
         />
+
         { disabled ? null : addButton }
+
         <SimpleTableDeleteDialog
           resourceType=""
           resource={deleteConfirmItem}
