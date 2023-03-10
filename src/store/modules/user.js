@@ -195,7 +195,7 @@ const sideEffects = {
         dispatch,
         loader: () => loaders.update(userData.id, {
           username: payload.username,
-          password: payload.password,
+          password: payload.changePassword[0].password,
         }),
         prefix,
         name: 'form',
