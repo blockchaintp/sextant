@@ -679,8 +679,8 @@ class FormWrapperInner extends React.Component {
                       </Typography>
                       <ul className={classes.errorText}>
                         {
-                          Object.keys(flatErrors).map((key, i) => (
-                            <li key={i}>
+                          Object.keys(flatErrors).map((key) => (
+                            <li key={key.id}>
                               <Typography className={classes.errorText}>
                                 { key }
                                 :
