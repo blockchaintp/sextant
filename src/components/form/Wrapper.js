@@ -217,7 +217,7 @@ class FormListInner extends React.Component {
       deleteConfirmItem,
     } = this.state
 
-    const value = typeof formProps.value === 'undefined' ? [] : formProps.value
+    const value = formProps.value || []
 
     const fields = item.list.table
     const { mainField } = item.list
@@ -300,12 +300,16 @@ class FormListInner extends React.Component {
       handler: (currentData) => this.onEdit(currentData._item),
     }]
 
+    const {
+      title, skip, helperText, list,
+    } = item
+
     if (item.id === 'changePassword') {
       return (
         <>
           <FormListDialog
-            title={item.title || item.id}
-            schema={item.list.schema}
+            title={title}
+            schema={list.schema}
             open={editOpen}
             initialValues={editItem || {}}
             onCancel={this.onCancel}
@@ -321,8 +325,8 @@ class FormListInner extends React.Component {
           className={classes.listTableHeader}
           getTitle={() => (
             <React.Fragment>
-              <Typography noWrap className={classes.listTableTitle} variant="subtitle1">{ item.skip ? null : (item.title || item.id) }</Typography>
-              <Typography className={classes.listTableTitle} variant="caption">{ item.helperText }</Typography>
+              <Typography noWrap className={classes.listTableTitle} variant="subtitle1">{ skip ? null : title }</Typography>
+              <Typography className={classes.listTableTitle} variant="caption">{ helperText }</Typography>
             </React.Fragment>
           )}
         />
