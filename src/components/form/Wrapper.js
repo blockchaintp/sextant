@@ -21,6 +21,7 @@ import Divider from '@mui/material/Divider'
 import AddIcon from '@mui/icons-material/Add'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import KeyIcon from '@mui/icons-material/Key'
 
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
@@ -216,7 +217,7 @@ class FormListInner extends React.Component {
       deleteConfirmItem,
     } = this.state
 
-    const value = dotty.get(formProps.values, item.id)
+    const value = formProps.value || []
 
     const fields = item.list.table
     const { mainField } = item.list
@@ -275,6 +276,20 @@ class FormListInner extends React.Component {
       </div>
     )
 
+    const changePasswordButton = (
+      <div>
+        <Button
+          className={classes.button}
+          variant="text"
+          onClick={this.onAdd}
+          size="medium"
+          endIcon={<KeyIcon />}
+        >
+          Change Password
+        </Button>
+      </div>
+    )
+
     const actions = [{
       title: 'Delete',
       icon: DeleteIcon,
@@ -285,14 +300,33 @@ class FormListInner extends React.Component {
       handler: (currentData) => this.onEdit(currentData._item),
     }]
 
+    const {
+      title, skip, helperText, list,
+    } = item
+
+    if (item.id === 'changePassword') {
+      return (
+        <>
+          <FormListDialog
+            title={title}
+            schema={list.schema}
+            open={editOpen}
+            initialValues={editItem || {}}
+            onCancel={this.onCancel}
+            onSave={this.onSave}
+          />
+          { changePasswordButton }
+        </>
+      )
+    }
     return (
       <div className={classes.listTable}>
         <SimpleTableHeader
           className={classes.listTableHeader}
           getTitle={() => (
             <React.Fragment>
-              <Typography noWrap className={classes.listTableTitle} variant="subtitle1">{ item.skip ? null : (item.title || item.id) }</Typography>
-              <Typography className={classes.listTableTitle} variant="caption">{ item.helperText }</Typography>
+              <Typography noWrap className={classes.listTableTitle} variant="subtitle1">{ skip ? null : title }</Typography>
+              <Typography className={classes.listTableTitle} variant="caption">{ helperText }</Typography>
             </React.Fragment>
           )}
         />
@@ -310,7 +344,9 @@ class FormListInner extends React.Component {
           }}
           hideHeaderIfEmpty
         />
+
         { disabled ? null : addButton }
+
         <SimpleTableDeleteDialog
           resourceType=""
           resource={deleteConfirmItem}
@@ -647,8 +683,8 @@ class FormWrapperInner extends React.Component {
                       </Typography>
                       <ul className={classes.errorText}>
                         {
-                          Object.keys(flatErrors).map((key, i) => (
-                            <li key={i}>
+                          Object.keys(flatErrors).map((key) => (
+                            <li key={key.id}>
                               <Typography className={classes.errorText}>
                                 { key }
                                 :

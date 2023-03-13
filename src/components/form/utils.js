@@ -2,8 +2,16 @@
 import dotty from 'dotty'
 import fields from './fields'
 
+const formatSchema = (schema) => {
+  let formattedSchema = schema
+  if (!Array.isArray(schema)) {
+    formattedSchema = [schema]
+  }
+  return formattedSchema
+}
+
 const flattenSchema = (schema) => schema
-  .filter((item) => (typeof item !== 'string'))
+  .filter((item) => typeof item !== 'string')
   .reduce((all, row) => (row.constructor === Array ? all.concat(row) : all.concat([row])), [])
 
 const flattenErrors = (errors, schema, baseKeys = []) => {
@@ -13,7 +21,7 @@ const flattenErrors = (errors, schema, baseKeys = []) => {
 
     const fullKey = baseKeys.concat(key).join('.')
 
-    if (typeof (value) === 'string') {
+    if (typeof value === 'string') {
       const field = schema.find((currentField) => currentField.id === fullKey)
       const errorKey = field ? field.title : fullKey
       flatErrors[errorKey] = value
@@ -25,9 +33,7 @@ const flattenErrors = (errors, schema, baseKeys = []) => {
 }
 
 const getComponent = (component) => {
-  let Component = typeof component === 'string'
-    ? fields[component]
-    : component
+  let Component = typeof component === 'string' ? fields[component] : component
 
   if (!Component) Component = fields.text
 
@@ -36,42 +42,48 @@ const getComponent = (component) => {
 
 const getInitialValues = (schema, initialValues) => {
   const flatSchema = flattenSchema(schema)
-  return flatSchema.reduce((all, field) => {
-    const existing = dotty.get(all, field.id)
-    if (!existing) {
-      if (field.list) {
-        dotty.put(all, field.id, field.default || [])
-      } else if (typeof (field.default) !== 'undefined') {
-        dotty.put(all, field.id, field.default)
+  return flatSchema.reduce(
+    (all, field) => {
+      const existing = dotty.get(all, field.id)
+      if (!existing) {
+        if (field.list) {
+          dotty.put(all, field.id, field.default || [])
+        } else if (typeof field.default !== 'undefined') {
+          dotty.put(all, field.id, field.default)
+        }
+      } else if (field.list && field.list.extractField) {
+        // explode a list of strings back into an array of objects
+        // with the value set on the "extractField" prop of the list
+        // this is so we can still use the form list editor
+        // for a list of strings rather than list of objects
+        const valueArray = existing.map((primitiveValue) => ({
+          [field.list.extractField]: primitiveValue,
+        }))
+        dotty.put(all, field.id, valueArray)
+        return all
       }
-    } else if (field.list && field.list.extractField) {
-      // explode a list of strings back into an array of objects
-      // with the value set on the "extractField" prop of the list
-      // this is so we can still use the form list editor
-      // for a list of strings rather than list of objects
-      const valueArray = existing.map((primitiveValue) => ({
-        [field.list.extractField]: primitiveValue,
-      }))
-      dotty.put(all, field.id, valueArray)
       return all
-    }
-    return all
-  }, { ...initialValues })
+    },
+    { ...initialValues },
+  )
 }
 
 const processInitialValues = (schema, initialValues) => {
   const flatSchema = flattenSchema(schema)
-  return flatSchema.reduce((all, field) => {
-    const existing = dotty.get(all, field.id)
-    if (field.list && field.list.extractField) {
-      const valueArray = existing.map((primitiveValue) => ({
-        [field.list.extractField]: primitiveValue,
-      }))
-      dotty.put(all, field.id, valueArray)
+  return flatSchema.reduce(
+    (all, field) => {
+      const existing = dotty.get(all, field.id)
+      if (field.list && field.list.extractField) {
+        const valueArray = existing.map((primitiveValue) => ({
+          [field.list.extractField]: primitiveValue,
+        }))
+        dotty.put(all, field.id, valueArray)
+        return all
+      }
       return all
-    }
-    return all
-  }, { ...initialValues })
+    },
+    { ...initialValues },
+  )
 }
 
 const processValues = (schema, values) => {
@@ -81,7 +93,7 @@ const processValues = (schema, values) => {
     if (field.dataType) {
       let value = dotty.get(all, field.id)
       if (field.dataType === 'boolean') {
-        value = (value === 'true' || value === true)
+        value = value === 'true' || value === true
       }
       dotty.put(all, field.id, value)
       return all
@@ -98,6 +110,7 @@ const processValues = (schema, values) => {
 }
 
 const utils = {
+  formatSchema,
   flattenSchema,
   flattenErrors,
   getComponent,
