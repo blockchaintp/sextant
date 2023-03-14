@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+* fix(form-wrapper): reduces cognitive complexity [view commit](https://github.com/catenasys/sextant/commit/bcf087e2fce7aeabc2d2ea62e79d5742c1e39d6f)
+* fix(form-wrapper): uses key.id instead of index in generated list [view commit](https://github.com/catenasys/sextant/commit/45ec082f8791d4170d498f1b008fe7f7a4aae52d)
+* fix(store-user): sends correct password payload to api in saveAccountDetails [view commit](https://github.com/catenasys/sextant/commit/cad1d68d871fa02d73d2c0dd0c939829ba539983)
+* fix(form-wrapper): adds logic to handle when the form is for resetting a user's password and sends back a simplified form dialog when resetting a password [view commit](https://github.com/catenasys/sextant/commit/781fb025433fb55294db5ff1e501952470888068)
+* fix(user-store): passes the correct password data to api [view commit](https://github.com/catenasys/sextant/commit/c63df722c5cc6d0b8bcdb012c44b27df09f8d24d)
+* fix(form-validate): uses formatSchema utility to feed properly shape schema data into validation functions [view commit](https://github.com/catenasys/sextant/commit/c369684a2af19ae8d232e4f0d7aafbd6f26ef42c)
+* feat(form-utils): adds formatSchema to utils which makes sure schema is always an array [view commit](https://github.com/catenasys/sextant/commit/65163db63c501e0c3979b9acb3df485696203b3a)
+* fix(form-utils): linting [view commit](https://github.com/catenasys/sextant/commit/660647b870288c151e01aa0af450e627927c07f0)
 * feat(daml-on-postgres): add resetting instructions [view commit](https://github.com/catenasys/sextant/commit/9dbaa846cf8c7d1097cb41bf003833025a276e8e)
 * docs: fixed hidden text [view commit](https://github.com/catenasys/sextant/commit/abac46a1487d050dea7e4bb190113a24d1893535)
 * docs: fixed provo heading; removed TFS; reordered deployment list/index [view commit](https://github.com/catenasys/sextant/commit/227102a6820ef1b0cb3f51b65b44c8f9cf00e02e)
