@@ -14,10 +14,9 @@ plugins:
   - '@typescript-eslint'
 parser: '@typescript-eslint/parser'
 parserOptions:
-  ecmaFeatures:
-    jsx: true
+  project: true
+  tsconfigRootDir: './'
   ecmaVersion: 11
-  sourceType: module
 rules:
   camelcase: 1
   no-underscore-dangle: 1
