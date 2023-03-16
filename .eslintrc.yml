@@ -29,26 +29,7 @@ rules:
   max-len:
     - 2
     - code: 120
-  react/jsx-filename-extension: 0
-  react/prefer-stateless-function: 0
-  react/prop-types: 0
-  react/no-array-index-key: 1
-  react/forbid-prop-types: 1
-  react/jsx-props-no-spreading: 1
-  react/state-in-constructor: 0
-  no-use-before-define: 1
-  no-await-in-loop: 1
-  import/no-cycle: 1
-  import/no-unresolved: 1
-  no-restricted-syntax: 0
   "require-await":
     - "error"
   "@typescript-eslint/no-floating-promises":
     - "error"
-  "@typescript-eslint/member-ordering":
-    - warn
-settings:
-  import/resolver:
-    node:
-      paths:
-        - src
