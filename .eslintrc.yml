@@ -1,17 +1,35 @@
 env:
   browser: true
+  commonjs: true
   es2020: true
   jest: true
+  node: true
 extends:
-  - airbnb
-parser: babel-eslint
+  - 'eslint:recommended'
+  - prettier
+  - 'plugin:@typescript-eslint/recommended'
+  - "plugin:@typescript-eslint/recommended-requiring-type-checking"
+plugins:
+  - prettier
+  - '@typescript-eslint'
+parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaFeatures:
     jsx: true
   ecmaVersion: 11
   sourceType: module
 rules:
-  semi: 0
+  camelcase: 1
+  no-underscore-dangle: 1
+  no-param-reassign: 1
+  global-require: 1
+  prettier/prettier:
+    - error
+    - semi: false
+    - printWidth: 120
+  max-len:
+    - 2
+    - code: 120
   react/jsx-filename-extension: 0
   react/prefer-stateless-function: 0
   react/prop-types: 0
@@ -19,13 +37,17 @@ rules:
   react/forbid-prop-types: 1
   react/jsx-props-no-spreading: 1
   react/state-in-constructor: 0
-  no-param-reassign: 0
   no-use-before-define: 1
   no-await-in-loop: 1
   import/no-cycle: 1
   import/no-unresolved: 1
-  max-len: 0
   no-restricted-syntax: 0
+  "require-await":
+    - "error"
+  "@typescript-eslint/no-floating-promises":
+    - "error"
+  "@typescript-eslint/member-ordering":
+    - warn
 settings:
   import/resolver:
     node:
