@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* build(deps): bump webpack from 5.70.0 to 5.76.0 [view commit](https://github.com/catenasys/sextant/commit/7fceb444b11347186b171df91639cec350c7b0f3)
 * fix(form-wrapper): reduces cognitive complexity [view commit](https://github.com/catenasys/sextant/commit/bcf087e2fce7aeabc2d2ea62e79d5742c1e39d6f)
 * fix(form-wrapper): uses key.id instead of index in generated list [view commit](https://github.com/catenasys/sextant/commit/45ec082f8791d4170d498f1b008fe7f7a4aae52d)
 * fix(store-user): sends correct password payload to api in saveAccountDetails [view commit](https://github.com/catenasys/sextant/commit/cad1d68d871fa02d73d2c0dd0c939829ba539983)
