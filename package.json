@@ -91,7 +91,7 @@
     "router5-transition-path": "^8.0.1",
     "style-loader": "^2.0.0",
     "timeago.js": "^4.0.2",
-    "webpack": "^5.38.1",
+    "webpack": "^5.76.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^4.7.4",
