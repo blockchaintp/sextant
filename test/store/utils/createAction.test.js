@@ -1,4 +1,4 @@
-import createAction from './createAction'
+import createAction from '../../../src/store/utils/createAction'
 
 test('createAction -> standard', () => {
   const actionFactory = createAction('toggleOpen')

@@ -1,4 +1,4 @@
-import createReducer from './createReducer'
+import createReducer from '../../../src/store/utils/createReducer'
 
 const initialState = {
   open: false,

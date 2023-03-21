@@ -1,4 +1,4 @@
-import createActions from './createActions'
+import createActions from '../../../src/store/utils/createActions'
 
 test('createActions -> standard', () => {
   const actions = createActions({

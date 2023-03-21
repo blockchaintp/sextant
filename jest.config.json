@@ -1,0 +1,18 @@
+{
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+  "testRegex": "/test/.*\\.(test|spec)?\\.(js|jsx|ts|tsx)$",
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.jsx?$": "babel-jest"
+  },
+  "reporters": [
+    "default",
+    [
+      "jest-tap-reporter",
+      {
+        "filePath": "build/results.tap"
+      }
+    ]
+  ],
+  "verbose": true
+}
