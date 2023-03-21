@@ -6,8 +6,8 @@
 __webpack_public_path__ = window.SEXTANT_ROOT_BASE_PATH // NOSONAR
 
 import './assets/index.css'
-import React from 'react'
-import ReactDOM from 'react-dom'
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 
 import Store from './store'
 import Router from './router'
