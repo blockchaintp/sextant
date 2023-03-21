@@ -6,20 +6,15 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: ['./src/index.js'],
-  output: {
-    path: path.resolve(__dirname, '..', 'dist'),
-    filename: '[name].[hash].bundle.js',
-    chunkFilename: '[name].[hash].bundle.js',
-    publicPath: '/',
-  },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
+        test: /\.(ts|tsx)$/,
         use: {
           loader: 'babel-loader',
         },
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/i,
@@ -32,7 +27,8 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: [path.resolve(__dirname, '..', 'src'), 'node_modules'],
+    // modules: [path.resolve(__dirname, '..', 'src'), 'node_modules'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
   plugins: [
     new webpack.ProgressPlugin(),
@@ -132,5 +128,11 @@ module.exports = {
     splitChunks: {
       chunks: 'all',
     },
+  },
+  output: {
+    path: path.resolve(__dirname, '..', 'dist'),
+    filename: '[name].[hash].bundle.js',
+    chunkFilename: '[name].[hash].bundle.js',
+    publicPath: '/',
   },
 }
