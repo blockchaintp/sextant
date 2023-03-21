@@ -38,8 +38,3 @@ clean_docker:
 .PHONY: clean_npm
 clean_npm:
 	rm -rf node_modules
-
-$(MARKERS)/test_npm:
-	$(TOOLCHAIN) npm ci
-	$(TOOLCHAIN) npm test
-	touch $@
