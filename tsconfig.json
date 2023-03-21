@@ -2,6 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "allowJs": true,
+    "experimentalDecorators": false,
     "target": "es6",
     "inlineSourceMap": true,
     "esModuleInterop": true,
