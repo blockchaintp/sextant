@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  entry: ['./src/index.js'],
+  entry: ['./src/index.tsx'],
   output: {
     path: path.resolve(__dirname, '..', 'dist'),
     filename: '[name].[hash].bundle.js',
@@ -14,6 +14,11 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -32,6 +37,7 @@ module.exports = {
     ],
   },
   resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
     modules: [path.resolve(__dirname, '..', 'src'), 'node_modules'],
   },
   plugins: [

@@ -1,4 +1,4 @@
-import findRoute from './findRoute'
+import findRoute from '../../../src/router/utils/findRoute'
 
 const layer3 = {
   name: 'layer3',
