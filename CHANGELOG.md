@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+* test: reorganize jest tests [view commit](https://github.com/catenasys/sextant/commit/c4ac063ed00b7735aca7d6adad673eae829ec269)
+* build(eslint): switch babel eslint parser [view commit](https://github.com/catenasys/sextant/commit/e60d5c3b546761d5a6d48e0963d67e43961815c6)
+* refactor: convert index.js to index.tsx [view commit](https://github.com/catenasys/sextant/commit/b975ef7820251e5fe3c66cf67fff4d8ef4c0d3d7)
+* build(deps): add react related @types libraries [view commit](https://github.com/catenasys/sextant/commit/cb0a5212ff46ae9435d4e188b20766e93cd20646)
+* refactor: convert forms to ts [view commit](https://github.com/catenasys/sextant/commit/afb228f5a568e4733cbe089d83f1cf5b09dc5f1f)
+* fix: remove useless files [view commit](https://github.com/catenasys/sextant/commit/c06f15043c420bb2ce7626af7ac83583f0889750)
+* refactor: add TS capability and clean up build [view commit](https://github.com/catenasys/sextant/commit/d079ea6a8c24797ea4763383099345ad00253cc0)
+* build(gitignore): track package-lock.json [view commit](https://github.com/catenasys/sextant/commit/d843a2f19b23a05819fae187d44267c59f2309b8)
+* docs(github): add PR template with checklist [view commit](https://github.com/catenasys/sextant/commit/1bdcf9cc71dc43f138fc46eeb532f89c90b4c608)
 * build(deps): bump webpack from 5.70.0 to 5.76.0 [view commit](https://github.com/catenasys/sextant/commit/7fceb444b11347186b171df91639cec350c7b0f3)
 * fix(form-wrapper): reduces cognitive complexity [view commit](https://github.com/catenasys/sextant/commit/bcf087e2fce7aeabc2d2ea62e79d5742c1e39d6f)
 * fix(form-wrapper): uses key.id instead of index in generated list [view commit](https://github.com/catenasys/sextant/commit/45ec082f8791d4170d498f1b008fe7f7a4aae52d)
