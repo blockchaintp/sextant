@@ -43,7 +43,14 @@ const styles = (theme) => ({
     height: theme.spacing(6),
   },
 })
+// this is here to prevent the bug sxt-985
+function handleDocumentKeyDown(event) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+  }
+}
 
+document.addEventListener('keydown', handleDocumentKeyDown);
 class DeploymentForm extends React.Component {
   constructor(props) {
     super(props);
