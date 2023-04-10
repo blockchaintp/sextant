@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
-import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import * as React from 'react'
+import withStyles from '@mui/styles/withStyles'
+import createStyles from '@mui/styles/createStyles'
 
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -12,12 +12,51 @@ import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import Tooltip from '@mui/material/Tooltip'
 
-const styles = () => ({
+import { TableCellProps } from '@mui/material/TableCell'
+import { TableRowProps } from '@mui/material/TableRow'
+
+export type TableProps = {
+  classes: {
+    [key: string]: string,
+  },
+  data: any[],
+  fields: any[],
+  getActions: Function,
+  onRowClick: Function,
+  pagination: boolean,
+  hideHeader: boolean,
+  hideHeaderIfEmpty: boolean,
+  withSorting: boolean,
+  [key: string]: unknown,
+}
+
+export type TableState = {
+  page: number,
+  rowsPerPage: number,
+  order: "asc" | "desc",
+  orderBy: string,
+}
+
+interface CustomTableCellProps extends TableCellProps {
+  _ci?: string
+  hover?: boolean
+}
+
+interface CustomTableRowProps extends TableRowProps {
+  _ci?: string
+}
+
+const CustomTableCell = ({ _ci, ...rest }: CustomTableCellProps) => {
+  return <TableCell {...rest} />;
+}
+
+const CustomTableRow = ({ _ci, ...rest }: CustomTableRowProps) => {
+  return <TableRow {...rest} />;
+}
+
+const styles = createStyles({
   root: {
     width: '100%',
-  },
-  table: {
-
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -27,7 +66,7 @@ const styles = () => ({
   },
 })
 
-function desc(a, b, orderBy) {
+function desc<T>(a: T, b: T, orderBy: keyof T): number {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -37,7 +76,7 @@ function desc(a, b, orderBy) {
   return 0;
 }
 
-function stableSort(array, compareFunc) {
+function stableSort(array: any[], compareFunc: Function) {
   const stabilizedThis = array.map((element, index) => [element, index]);
   stabilizedThis.sort((a, b) => {
     const order = compareFunc(a[0], b[0]);
@@ -47,12 +86,12 @@ function stableSort(array, compareFunc) {
   return stabilizedThis.map((element) => element[0]);
 }
 
-function getCompareFunc(order, orderBy) {
-  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
+function getCompareFunc<T>(order: string, orderBy: keyof T) {
+  return order === 'desc' ? (a: T, b: T) => desc(a, b, orderBy) : (a: T, b: T) => -desc(a, b, orderBy);
 }
 
-class SimpleTable extends React.Component {
-  constructor(props, context) {
+class SimpleTable extends React.Component<TableProps, TableState> {
+  constructor(props: TableProps, context: unknown) {
     super(props, context);
     this.state = {
       page: 0,
@@ -62,17 +101,18 @@ class SimpleTable extends React.Component {
     };
   }
 
-  handleChangePage = (event, page) => {
+  handleChangePage = (event: unknown, page: number) => {
     this.setState({ page })
   }
 
-  handleChangeRowsPerPage = (event) => {
-    this.setState({ rowsPerPage: event.target.value })
+  handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
+    const rowsPerPage = parseInt(event.target.value)
+    this.setState({ rowsPerPage })
   }
 
-  handleRequestSort = (event, property) => {
+  handleRequestSort = (event: React.MouseEvent<HTMLTextAreaElement | HTMLInputElement>, property: string) => {
     const orderBy = property;
-    let order = 'desc';
+    let order: "asc" | "desc" = 'desc';
     // eslint-disable-next-line react/destructuring-assignment
     if (this.state.orderBy === property && this.state.order === 'desc') {
       order = 'asc';
@@ -80,7 +120,7 @@ class SimpleTable extends React.Component {
     this.setState({ order, orderBy });
   };
 
-  createSortHandler = (property) => (event) => {
+  createSortHandler = (property: string) => (event: React.MouseEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     this.handleRequestSort(event, property);
   };
 
@@ -97,12 +137,12 @@ class SimpleTable extends React.Component {
       withSorting = true,
     } = this.props
 
+
     const {
       rowsPerPage,
       page,
       order,
       orderBy,
-
     } = this.state
 
     return (
@@ -110,7 +150,7 @@ class SimpleTable extends React.Component {
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             {
-              (!hideHeader && (!hideHeaderIfEmpty || data.length > 0)) && (
+              (!hideHeader && (!hideHeaderIfEmpty || Object.keys(data).length > 0)) && (
                 <TableHead>
                   <TableRow>
                     {
@@ -158,7 +198,7 @@ class SimpleTable extends React.Component {
             <TableBody id="tableBody">
               { stableSort(data, getCompareFunc(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((dataRow) => (
-                  <TableRow
+                  <CustomTableRow
                     hover
                     onClick={(event) => {
                       if (!onRowClick) return
@@ -171,7 +211,7 @@ class SimpleTable extends React.Component {
                   >
                     {
                       fields.map((field, i) => (
-                        <TableCell
+                        <CustomTableCell
                           _ci={`${dataRow.username || dataRow.name}${dataRow[field.name]}`}
                           id={`tableCell_${dataRow.username || dataRow.name}${dataRow[field.name]}`}
                           key={i}
@@ -179,17 +219,17 @@ class SimpleTable extends React.Component {
                           className={classes.autoCell}
                         >
                           {dataRow[field.name] || (dataRow.deploymentData ? dataRow.deploymentData[field.name] : null)}
-                        </TableCell>
+                        </CustomTableCell>
                       ))
                     }
                     {
                       getActions ? (
-                        <TableCell align="right">
+                        <CustomTableCell align="right">
                           { getActions(dataRow) }
-                        </TableCell>
+                        </CustomTableCell>
                       ) : null
                     }
-                  </TableRow>
+                  </CustomTableRow>
                 ))}
             </TableBody>
           </Table>
@@ -216,9 +256,4 @@ class SimpleTable extends React.Component {
     );
   }
 }
-
-SimpleTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(SimpleTable)
+export default withStyles(styles)(SimpleTable as React.ComponentType<TableProps>);
