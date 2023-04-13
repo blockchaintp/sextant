@@ -1,9 +1,11 @@
+import Settings from '../settings'
+
 // Functions that help make the UI more reflective of user action instead of code functionality
 
 // accepts a string as an argument, matches it and returns a sucess message to be rendered as a pop-up Message
 // if there is no match, the default is used.
-export const successMessageGenerator = (action) => {
-  let message
+export const successMessageGenerator = (action: string) => {
+  let message: string
   switch (action) {
     case 'cluster.create':
       message = 'The cluster was added successfully.'
@@ -31,8 +33,8 @@ export const successMessageGenerator = (action) => {
 
 // accepts a string as an argument, matches it and returns an error message to be rendered as a pop-up Message
 // if there is no match, the default is used.
-export const errorMessageGenerator = (action) => {
-  let message
+export const errorMessageGenerator = (action: string) => {
+  let message: string
   switch (action) {
     case 'cluster.create':
       message = 'The add cluster task failed.'
@@ -60,8 +62,8 @@ export const errorMessageGenerator = (action) => {
 
 // accepts a string as an argument, matches it and returns an friendly version of the string to be rendered in a table
 // if there is no match, the default is used.
-export const actionNameTranslator = (action) => {
-  let name
+export const actionNameTranslator = (action: string) => {
+  let name: string
   switch (action) {
     case 'cluster.create':
       name = 'add'
@@ -88,7 +90,7 @@ export const actionNameTranslator = (action) => {
 }
 
 // accepts the status from the db and translates it to a more descriptive status for the UI
-export const deploymentStatusTranslator = (status) => {
+export const deploymentStatusTranslator = (status: string) => {
   let translation = status
   if (status === 'provisioned') { translation = 'deployed' }
 
@@ -98,7 +100,7 @@ export const deploymentStatusTranslator = (status) => {
 }
 
 // gets the correct icon depending on the status of the deployment
-export const getDeploymentIcon = (status, settings) => {
+export const getDeploymentIcon = (status: string, settings: typeof Settings) => {
   let icon = settings.icons.delete
 
   if (status === 'deployed') icon = settings.icons.remove
@@ -107,7 +109,7 @@ export const getDeploymentIcon = (status, settings) => {
 }
 
 // gets the correct icon hover text depending on the status of the deployment
-export const getDeploymentIconTitle = (status) => {
+export const getDeploymentIconTitle = (status: string) => {
   let iconTitle = 'Delete'
 
   if (status === 'deployed') iconTitle = 'Undeploy'
@@ -116,7 +118,7 @@ export const getDeploymentIconTitle = (status) => {
 }
 
 // gets the correct icon depending on the status of the deployment
-export const getTaskIcon = (status, settings) => {
+export const getTaskIcon = (status: string, settings: typeof Settings) => {
   let icon = settings.icons.delete
 
   if (status === 'deployed') icon = settings.icons.remove
@@ -125,7 +127,7 @@ export const getTaskIcon = (status, settings) => {
 }
 
 // accepts the status from the db and translates it to a more descriptive status for the UI
-export const clusterStatusTranslator = (status) => {
+export const clusterStatusTranslator = (status: string) => {
   let translation = status
   if (status === 'provisioned') { translation = 'active' }
 
@@ -135,7 +137,7 @@ export const clusterStatusTranslator = (status) => {
 }
 
 // gets the correct icon depending on the status of the cluster
-export const getClusterIcon = (status, settings) => {
+export const getClusterIcon = (status: string, settings: typeof Settings) => {
   let icon = settings.icons.delete
 
   if (status === 'active') icon = settings.icons.remove
@@ -144,7 +146,7 @@ export const getClusterIcon = (status, settings) => {
 }
 
 // gets the correct icon depending on the status of the cluster
-export const getClusterIconTitle = (status) => {
+export const getClusterIconTitle = (status: string) => {
   let iconTitle = 'Delete'
 
   if (status === 'active') iconTitle = 'Deactivate'
@@ -153,7 +155,7 @@ export const getClusterIconTitle = (status) => {
 }
 
 // returns an object for unique text in the delete dialog depending on the status of the resource
-export const getDialogDeleteText = (status) => {
+export const getDialogDeleteText = (status: string) => {
   const text = {
     title: 'Delete',
     subtext: 'delete',
