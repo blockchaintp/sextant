@@ -24,9 +24,26 @@ import ViewArchiveIcon from '@mui/icons-material/ViewModule'
 import CreateArchiveIcon from '@mui/icons-material/AddAPhoto'
 import AdministrationIcon from '@mui/icons-material/BusinessCenter'
 
-import edition from './edition'
+import edition, { Edition } from './edition'
 
-const icons = {
+import {
+  FunctionComponent,
+  ComponentType,
+  ReactElement,
+} from 'react';
+import {
+  SvgIconProps,
+} from '@mui/material';
+
+// Type for an icon component
+type IconComponent = ComponentType<SvgIconProps>;
+
+// Type for an object of icons
+type Icons = {
+  [key: string]: IconComponent | null;
+};
+
+const icons: Icons = {
   home: HomeIcon,
   users: PeopleIcon,
   user: AccountCircleIcon,
@@ -54,7 +71,139 @@ const icons = {
   administration: AdministrationIcon,
 }
 
-const settings = {
+type SideMenuProps = {
+  loggedIn: boolean
+  isSuperuser: boolean
+  isAdmin: boolean
+  handlers: {
+    logout: () => void
+  }
+}
+
+type Page = {
+  title: string
+  handler: string | (() => void)
+  icon: IconComponent
+  params?: {
+    [key: string]: string
+  }
+}
+
+type SideMenuPage = Page;
+
+const separator: Page = { title: '-', handler: () => {}, icon: null };
+
+const sideMenu = ({
+  loggedIn,
+  isSuperuser,
+  isAdmin,
+  handlers,
+}: SideMenuProps): SideMenuPage[] => {
+  if (loggedIn) {
+    const pages: Page[] = [
+      {
+        title: 'Clusters',
+        handler: 'clusters',
+        icon: icons.cluster,
+      },
+      {
+        title: 'Deployments',
+        handler: 'deployments',
+        params: {
+          cluster: 'all',
+        },
+        icon: icons.deployment,
+      },
+    ];
+
+    if (isSuperuser || isAdmin) {
+      pages.push({
+        title: 'Users',
+        handler: 'users',
+        icon: icons.users,
+      });
+    }
+
+    if (isSuperuser) {
+      pages.push({
+        title: 'Administration',
+        handler: 'administration',
+        icon: icons.administration,
+      });
+    }
+
+    return pages.concat([
+      {
+        title: 'Logout',
+        handler: handlers.logout,
+        icon: icons.logout,
+      },
+    ]);
+  }
+
+  return [
+    {
+      title: 'Login',
+      handler: 'login',
+      icon: icons.login,
+    },
+  ];
+};
+
+type AppbarMenuProps = {
+  loggedIn: boolean;
+  handlers: {
+    logout: () => void;
+  };
+};
+
+type AppbarMenuItem = Page;
+
+const appbarMenu = ({
+  loggedIn,
+  handlers,
+}: AppbarMenuProps): AppbarMenuItem[] => {
+  if (loggedIn) {
+    return [
+      {
+        title: 'Account Details',
+        handler: 'accountdetails',
+        icon: icons.user,
+      },
+      {
+        title: 'Access Token',
+        handler: 'accesstoken',
+        icon: icons.key,
+      },
+      {
+        title: 'Logout',
+        handler: handlers.logout,
+        icon: icons.logout,
+      },
+    ];
+  }
+  return [
+    {
+      title: 'Login',
+      handler: 'login',
+      icon: icons.login,
+    },
+  ];
+};
+
+export type Settings = {
+  edition: Edition;
+  title: string;
+  api: string;
+  devMode: boolean;
+  snackbarAutoHide: number;
+  sideMenuWidth: number;
+  icons: Icons;
+  sideMenu: (props: SideMenuProps) => SideMenuPage[];
+  appbarMenu: (props: AppbarMenuProps) => AppbarMenuItem[];
+};
+
+const settings: Settings = {
   edition,
   title: 'Sextant',
   api: '/api/v1',
@@ -62,83 +211,8 @@ const settings = {
   snackbarAutoHide: 5000,
   sideMenuWidth: 250,
   icons,
-  sideMenu: ({
-    loggedIn,
-    isSuperuser,
-    isAdmin,
-    handlers,
-  }) => {
-    if (loggedIn) {
-      const pages = [{
-        title: 'Clusters',
-        handler: 'clusters',
-        icon: icons.cluster,
-      }, {
-        title: 'Deployments',
-        handler: 'deployments',
-        params: {
-          cluster: 'all',
-        },
-        icon: icons.deployment,
-      }]
+  sideMenu,
+  appbarMenu,
+};
 
-      if (isSuperuser || isAdmin) {
-        pages.push({
-          title: 'Users',
-          handler: 'users',
-          icon: icons.users,
-        })
-      }
-
-      if (isSuperuser) {
-        pages.push({
-          title: 'Administration',
-          handler: 'administration',
-          icon: icons.administration,
-        })
-      }
-
-      return pages.concat([
-        '-',
-        {
-          title: 'Logout',
-          handler: handlers.logout,
-          icon: icons.logout,
-        },
-      ])
-    }
-
-    return [{
-      title: 'Login',
-      handler: 'login',
-      icon: icons.login,
-    }]
-  },
-  appbarMenu: ({
-    loggedIn,
-    handlers,
-  }) => {
-    if (loggedIn) {
-      return [{
-        title: 'Account Details',
-        handler: 'accountdetails',
-        icon: icons.user,
-      }, {
-        title: 'Access Token',
-        handler: 'accesstoken',
-        icon: icons.key,
-      }, '-', {
-        title: 'Logout',
-        handler: handlers.logout,
-        icon: icons.logout,
-      }]
-    }
-    return [{
-      title: 'Login',
-      handler: 'login',
-      icon: icons.login,
-    }]
-  },
-}
-
-export default settings
+export default settings;
