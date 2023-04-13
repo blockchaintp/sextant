@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 import * as React from 'react'
-import withStyles from '@mui/styles/withStyles'
-import createStyles from '@mui/styles/createStyles'
+import { createStyles, withStyles } from '@mui/styles'
 
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'

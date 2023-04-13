@@ -50,8 +50,6 @@ const SimpleTableTripleDeleteDialog: React.FC<SimpleTableTripleDeleteDialogProps
   const text = resource ? getDialogDeleteText(resource.status) : { title: 'Delete', subtext: 'delete' };
   const resourceName = resource ? resource.name : null;
 
-  console.log(props)
-
   const handleChange = (resourceName: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
     if (value === resourceName) {

@@ -21,7 +21,7 @@ type Action = {
   wrapButton?: (button: React.ReactNode, item: any) => React.ReactNode;
 }
 
-interface Props extends WithStyles<typeof styles> {
+interface SimpleTableActionsProps extends WithStyles<typeof styles> {
   item: any;
   actions: Action[];
 }
@@ -34,7 +34,7 @@ const CIIconButton = ({ _ci, ...rest }: CIIconButtonProps) => {
   return <IconButton {...rest} />;
 }
 
-const SimpleTableActions: React.FC<Props> = ({ classes, item, actions }) => {
+const SimpleTableActions: React.FC<SimpleTableActionsProps> = ({ classes, item, actions }) => {
   return (
     <div className={classes.root}>
       {actions
