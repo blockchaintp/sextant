@@ -1,24 +1,40 @@
-import React from 'react'
-import withStyles from '@mui/styles/withStyles';
+import * as React from 'react'
+import { withStyles, createStyles } from '@mui/styles';
 
+import Button, { ButtonProps } from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import Button from '@mui/material/Button'
 
 import { getDialogDeleteText } from '../../utils/translators'
 
-const styles = () => ({
+const styles = createStyles({
 })
 
-class SimpleTableDeleteDialog extends React.Component {
-  render() {
-    const {
-      open, onCancel, onConfirm, title, resource,
-    } = this.props
-    const text = resource ? getDialogDeleteText(resource.status) : ''
+type SimpleTableDeleteDialogProps = {
+    open: boolean,
+    onCancel: () => void,
+    onConfirm: () => void,
+    title: string,
+    resource: {
+      title: string,
+      status: string,
+    } | null,
+    resourceType: string,
+}
+
+interface CIButtonProps extends ButtonProps {
+  _ci?: string
+}
+
+const CIButton = ({ _ci, ...rest }: CIButtonProps) => {
+  return <Button {...rest} />;
+}
+
+const SimpleTableDeleteDialog: React.FC<SimpleTableDeleteDialogProps> = ({open, onCancel, onConfirm, resource, title }) => {
+    const text = getDialogDeleteText(resource.status)
 
     return (
       <Dialog
@@ -37,13 +53,12 @@ class SimpleTableDeleteDialog extends React.Component {
           <Button onClick={onCancel}>
             Cancel
           </Button>
-          <Button _ci="confirm" id="simpleTableDeleteConfirm" onClick={onConfirm} variant="contained" color="primary" autoFocus>
+          <CIButton _ci="confirm" id="simpleTableDeleteConfirm" onClick={onConfirm} variant="contained" color="primary" autoFocus>
             Confirm
-          </Button>
+          </CIButton>
         </DialogActions>
       </Dialog>
     )
   }
-}
 
 export default withStyles(styles)(SimpleTableDeleteDialog)
