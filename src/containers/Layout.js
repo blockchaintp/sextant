@@ -5,7 +5,7 @@ import selectors from 'store/selectors'
 import routerActions from 'store/modules/router'
 import authActions from 'store/modules/auth'
 
-import settings from 'settings'
+import settings from 'settings.ts'
 
 import Layout from 'pages/Layout'
 
