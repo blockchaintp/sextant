@@ -127,7 +127,6 @@ branches:
           - pre-commit
           - continuous-integration/jenkins/pr-head
           - License Compliance
-          - docs/readthedocs.com:btp-sextant
           - SonarCloud Code Analysis
       # Required. Enforce all configured restrictions for administrators. Set
       # to true to enforce required status checks for repository administrators.
