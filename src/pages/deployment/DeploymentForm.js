@@ -185,6 +185,7 @@ class DeploymentForm extends React.Component {
                       {
                         onCancel && (
                           <Button
+                            _ci="cancelBttn"
                             className={classes.button}
                             type="button"
                             variant="contained"
@@ -195,6 +196,7 @@ class DeploymentForm extends React.Component {
                         )
                       }
                       <Button
+                        _ci="deployBttn"
                         className={classes.button}
                         type="button"
                         variant="contained"
