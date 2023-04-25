@@ -247,6 +247,7 @@ class ClusterForm extends React.Component {
         </Typography>
         <div className={classes.spacer} />
         <Button
+          _ci="downloadcreateserviceaccount"
           className={classes.button}
           type="button"
           variant="contained"
@@ -288,6 +289,7 @@ class ClusterForm extends React.Component {
         </Typography>
         <div className={classes.spacer} />
         <Button
+          _ci="downloadgetvalues"
           className={classes.button}
           type="button"
           variant="contained"
@@ -350,6 +352,7 @@ class ClusterForm extends React.Component {
                             type="button"
                             variant="contained"
                             onClick={onCancel}
+                            _ci="cancelButton"
                           >
                             Cancel
                           </Button>
