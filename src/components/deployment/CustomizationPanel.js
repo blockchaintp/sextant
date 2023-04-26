@@ -34,7 +34,7 @@ class CustomizationPanel extends React.Component {
 
     return (
       <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} _ci="advancedaccordion">
           <Typography>Advanced Deployment Customization</Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>

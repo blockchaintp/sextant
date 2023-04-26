@@ -84,7 +84,7 @@ class FormListDialogInner extends React.Component {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{ title }</DialogTitle>
+        <DialogTitle id={title.replace(/\s+/g, '')}>{ title }</DialogTitle>
         <DialogContent>
           <FormWrapper
             schema={schema}
@@ -96,6 +96,7 @@ class FormListDialogInner extends React.Component {
               }) => (
                 <React.Fragment>
                   <Button
+                    _ci={`${title.replace(/\s+/g, '')}cancelBttn`}
                     className={classes.button}
                     type="button"
                     variant="contained"
@@ -104,6 +105,7 @@ class FormListDialogInner extends React.Component {
                     Cancel
                   </Button>
                   <Button
+                    _ci={`${title.replace(/\s+/g, '')}saveBttn`}
                     className={classes.button}
                     type="button"
                     variant="contained"
@@ -323,6 +325,7 @@ class FormListInner extends React.Component {
       <div className={classes.listTable}>
         <SimpleTableHeader
           className={classes.listTableHeader}
+          // eslint-disable-next-line react/no-unstable-nested-components
           getTitle={() => (
             <React.Fragment>
               <Typography noWrap className={classes.listTableTitle} variant="subtitle1">{ skip ? null : title }</Typography>
@@ -333,6 +336,7 @@ class FormListInner extends React.Component {
         <SimpleTable
           data={data}
           fields={fields}
+          // eslint-disable-next-line react/no-unstable-nested-components
           getActions={(currentItem) => {
             if (disabled) return null
             return (
@@ -638,7 +642,6 @@ class FormWrapperInner extends React.Component {
 
             const content = (
               <form
-                _ci="form"
                 id="form"
                 onSubmit={submitWrapper}
               >

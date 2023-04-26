@@ -52,6 +52,7 @@ class EditorButton extends React.Component {
     return (
       <div>
         <Button
+          _ci="additionalyamlBttn"
           size="small"
           onClick={this.handleClickOpen}
           className={classes.button}

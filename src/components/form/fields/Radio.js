@@ -42,6 +42,7 @@ class RadioField extends React.Component {
           value={value}
           onChange={onChange}
           row={!!item.row}
+          _ci={`${name}radio`}
         >
           {
             (item.options || []).map((option, i) => {
