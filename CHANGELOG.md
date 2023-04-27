@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* feat(adding-id-tags): additions of id tags for use in integration testing [view commit](https://github.com/catenasys/sextant/commit/b4683465c40982341218f1616c419f4c9be6f2b5)
 * test: reorganize jest tests [view commit](https://github.com/catenasys/sextant/commit/c4ac063ed00b7735aca7d6adad673eae829ec269)
 * build(eslint): switch babel eslint parser [view commit](https://github.com/catenasys/sextant/commit/e60d5c3b546761d5a6d48e0963d67e43961815c6)
 * refactor: convert index.js to index.tsx [view commit](https://github.com/catenasys/sextant/commit/b975ef7820251e5fe3c66cf67fff4d8ef4c0d3d7)
