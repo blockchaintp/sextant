@@ -1,9 +1,6 @@
 import React from 'react'
-import withStyles from '@mui/styles/withStyles';
 
 import SimpleTable from 'components/table/SimpleTable'
-
-const styles = () => ({})
 
 const fields = [{
   title: 'Name',
@@ -48,4 +45,4 @@ class NodeTable extends React.Component {
   }
 }
 
-export default withStyles(styles)(NodeTable)
+export default NodeTable
