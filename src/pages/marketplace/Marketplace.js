@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import React from 'react'
-import withStyles from '@mui/styles/withStyles'
 
 import MarketplaceGrid from 'components/layout/MarketplaceGrid'
 
@@ -77,4 +76,4 @@ class MarketplacePage extends React.Component {
   }
 }
 
-export default withStyles()(MarketplacePage)
+export default MarketplacePage

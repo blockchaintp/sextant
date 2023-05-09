@@ -1,10 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
 import Button from '@mui/material/Button'
-
-const styles = () => ({
-})
 
 class NotFound extends React.Component {
   constructor(props) {
@@ -32,4 +28,4 @@ NotFound.propTypes = {
   navigateTo: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(NotFound)
+export default NotFound

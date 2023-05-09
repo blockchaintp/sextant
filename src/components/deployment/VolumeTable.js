@@ -1,9 +1,6 @@
 import React from 'react'
-import withStyles from '@mui/styles/withStyles';
 
 import SimpleTable from 'components/table/SimpleTable'
-
-const styles = () => ({})
 
 const fields = [{
   title: 'Name',
@@ -43,4 +40,4 @@ class VolumeTable extends React.Component {
   }
 }
 
-export default withStyles(styles)(VolumeTable)
+export default VolumeTable

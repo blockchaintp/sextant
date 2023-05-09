@@ -1,5 +1,4 @@
 import React from 'react'
-import withStyles from '@mui/styles/withStyles';
 
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -8,9 +7,6 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-
-const styles = () => ({
-})
 
 class DeletePodDialog extends React.Component {
   state = {
@@ -82,4 +78,4 @@ class DeletePodDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(DeletePodDialog)
+export default DeletePodDialog

@@ -1,5 +1,4 @@
 import React from 'react'
-import withStyles from '@mui/styles/withStyles';
 
 import SimpleTable from 'components/table/SimpleTable'
 import DeletePodDialog from 'components/table/DeletePodDialog'
@@ -8,8 +7,6 @@ import SimpleTableActions from 'components/table/SimpleTableActions'
 import settings from 'settings'
 
 const DeleteIcon = settings.icons.delete
-
-const styles = () => ({})
 
 const fields = [{
   title: 'Name',
@@ -130,4 +127,4 @@ class PodTable extends React.Component {
   }
 }
 
-export default withStyles(styles)(PodTable)
+export default PodTable

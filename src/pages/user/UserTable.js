@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
 
 import Button from '@mui/material/Button'
 import SimpleTable from 'components/table/SimpleTable'
@@ -13,10 +12,6 @@ import settings from 'settings'
 const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
-
-const styles = () => ({
-
-})
 
 class UserTable extends React.Component {
   state = {
@@ -135,4 +130,4 @@ UserTable.propTypes = {
   onDelete: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(UserTable)
+export default UserTable

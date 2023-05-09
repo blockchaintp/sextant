@@ -1,5 +1,4 @@
 import React from 'react'
-import withStyles from '@mui/styles/withStyles';
 
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -10,9 +9,6 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 
 import { getDialogDeleteText } from '../../utils/translators'
-
-const styles = () => ({
-})
 
 class SimpleTableTripleDeleteDialog extends React.Component {
   state = {
@@ -93,4 +89,4 @@ class SimpleTableTripleDeleteDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(SimpleTableTripleDeleteDialog)
+export default SimpleTableTripleDeleteDialog

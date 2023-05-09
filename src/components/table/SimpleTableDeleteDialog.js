@@ -1,6 +1,4 @@
 import React from 'react'
-import withStyles from '@mui/styles/withStyles';
-
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
@@ -9,9 +7,6 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Button from '@mui/material/Button'
 
 import { getDialogDeleteText } from '../../utils/translators'
-
-const styles = () => ({
-})
 
 class SimpleTableDeleteDialog extends React.Component {
   render() {
@@ -46,4 +41,4 @@ class SimpleTableDeleteDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(SimpleTableDeleteDialog)
+export default SimpleTableDeleteDialog

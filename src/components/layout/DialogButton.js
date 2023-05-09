@@ -1,16 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-
-import withStyles from '@mui/styles/withStyles';
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 
 import HorizontalCard from 'components/layout/HorizontalCard'
-
-const styles = () => ({
-
-})
 
 class DialogButton extends React.Component {
   state = {
@@ -124,4 +118,4 @@ DialogButton.propTypes = {
   items: PropTypes.array.isRequired,
 }
 
-export default withStyles(styles)(DialogButton)
+export default DialogButton

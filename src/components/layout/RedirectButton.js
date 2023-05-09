@@ -1,11 +1,6 @@
 import React from 'react';
 
-import withStyles from '@mui/styles/withStyles';
 import Button from '@mui/material/Button'
-
-const styles = () => ({
-
-})
 
 class RedirectButton extends React.Component {
   state = {}
@@ -39,4 +34,4 @@ class RedirectButton extends React.Component {
   }
 }
 
-export default withStyles(styles)(RedirectButton)
+export default RedirectButton
