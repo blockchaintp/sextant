@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-shadow */
 import React from 'react'
-import withStyles from '@mui/styles/withStyles';
+import { styled } from '@mui/system'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Collapse from '@mui/material/Collapse'
@@ -13,25 +14,17 @@ import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import CircularProgress from '@mui/material/CircularProgress'
 
-const styles = (theme) => ({
-  root: {
-    width: '100%',
-    fontSize: '0.7em',
-  },
-  rootListIten: {
+const StyledList = styled(List)(({
+  width: '100%',
+  fontSize: '0.7em',
+}))
 
-  },
-  nestedListItem: {
-    paddingLeft: theme.spacing(4),
-  },
-})
-
-const ExplorerFolderTreeItem = ({
+function ExplorerFolderTreeItem({
   classes,
   explorer,
   entry,
   depth = 0,
-}) => {
+}) {
   const {
     inode_id,
     expanded,
@@ -83,10 +76,10 @@ const ExplorerFolderTreeItem = ({
   )
 }
 
-const ExplorerFolderTree = ({
+function ExplorerFolderTree({
   classes,
   explorer,
-}) => {
+}) {
   const {
     inode_id,
     volume,
@@ -95,13 +88,12 @@ const ExplorerFolderTree = ({
   } = explorer
 
   return (
-    <List
+    <StyledList
       dense
       component="nav"
       aria-labelledby="nested-list-subheader"
-      className={classes.root}
     >
-      <ListItem selected={inode_id === 'root'} button onClick={() => openFolder('root')} className={classes.rootListItem}>
+      <ListItemButton selected={inode_id === 'root'} onClick={() => openFolder('root')}>
         <ListItemIcon>
           <StorageIcon />
         </ListItemIcon>
@@ -110,7 +102,7 @@ const ExplorerFolderTree = ({
             <ListItemText primary={volume.name} />
           )
         }
-      </ListItem>
+      </ListItemButton>
       <List dense component="div" disablePadding>
         {
           folderTree.map((child, i) => (
@@ -124,8 +116,8 @@ const ExplorerFolderTree = ({
           ))
         }
       </List>
-    </List>
+    </StyledList>
   )
 }
 
-export default withStyles(styles)(ExplorerFolderTree)
+export default ExplorerFolderTree
