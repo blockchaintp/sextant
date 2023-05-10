@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
-import withStyles from '@mui/styles/withStyles';
+import { styled } from '@mui/system';
 import AceEditor from 'react-ace'
 import Button from '@mui/material/Button'
 
@@ -20,14 +20,13 @@ require('ace-builds/src-noconflict/snippets/yaml');
 
 require('ace-builds/src-noconflict/theme-monokai')
 
-const styles = (theme) => ({
-  button: {
-    marginRight: theme.spacing(2),
-  },
-  editor: {
-    margin: theme.spacing(3),
-  },
-})
+const StyledButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(2),
+}));
+
+const EditorWrapper = styled('div')(({ theme }) => ({
+  margin: theme.spacing(3),
+}))
 
 class TextEditor extends Component {
   constructor(props) {
@@ -48,14 +47,13 @@ class TextEditor extends Component {
     const {
       cancel,
       save,
-      classes,
     } = this.props
 
     return (
       <div>
-        <div className={classes.editor}>
+        <EditorWrapper>
           <AceEditor
-            width="90%"
+            width="100%"
             placeholder="Enter custom YAML here."
             mode="yaml"
             theme="monokai"
@@ -76,17 +74,15 @@ class TextEditor extends Component {
               tabSize: 2,
             }}
           />
-        </div>
-        <Button
-          className={classes.button}
+        </EditorWrapper>
+        <StyledButton
           type="button"
           variant="contained"
           onClick={cancel}
         >
           Cancel
-        </Button>
-        <Button
-          className={classes.button}
+        </StyledButton>
+        <StyledButton
           type="button"
           variant="contained"
           color="primary"
@@ -94,10 +90,10 @@ class TextEditor extends Component {
           onClick={() => { save(this.state.value) }}
         >
           Save
-        </Button>
+        </StyledButton>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(TextEditor)
+export default TextEditor
