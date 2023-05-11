@@ -262,7 +262,7 @@ class DeploymentTable extends React.Component {
     ) : (
       <div className={classes.headerActions}>
         <div className={classes.clusterSelect}>
-          <FormControl variant="standard" className={classes.formControl}>
+          <FormControl variant="standard" className={classes.formControl} _ci="formControl">
             <InputLabel htmlFor="name-readonly">Cluster</InputLabel>
             <Select
               value={clusterId}
@@ -378,6 +378,7 @@ class DeploymentTable extends React.Component {
           pagination
           data={data}
           fields={fields}
+          // eslint-disable-next-line react/no-unstable-nested-components
           getActions={(item) => {
             if (
               item.deploymentData.task

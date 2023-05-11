@@ -57,10 +57,12 @@ class RadioField extends React.Component {
                   label={option.title}
                   control={(
                     <Radio
+                      _ci={`${option.value}radio`}
                       checked={option.value.toString() === value.toString()}
                       value={option.value}
                       disabled={disabled}
                       {...extraProps}
+
                     />
                   )}
                 />

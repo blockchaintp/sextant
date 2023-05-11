@@ -35,8 +35,9 @@ function MarketplaceCard(props) {
   } = props;
 
   return (
-    <Card className={classes.card} variant="outlined" _ci={optionTitle.replace(/\s+/g, '')}>
+    <Card className={classes.card} variant="outlined">
       <CardActionArea
+        _ci={optionTitle.replace(/\s+/g, '')}
         className={classes.cardActionArea}
         onClick={() => onClick(optionVersion)}
       >
