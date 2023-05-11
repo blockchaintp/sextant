@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import withStyles from '@mui/styles/withStyles';
 import Button from '@mui/material/Button'
 
 import Menu from '@mui/material/Menu'
@@ -13,16 +12,6 @@ import UserAvatar from 'components/user/Avatar'
 import settings from 'settings'
 
 const MoreIcon = settings.icons.more
-
-const styles = (theme) => ({
-  avatarWrapper: {
-    display: 'flex',
-  },
-  avatarName: {
-    flex: 1,
-    margin: theme.spacing(1),
-  },
-})
 
 class AppBarMenu extends React.Component {
   state = {
@@ -88,7 +77,6 @@ class AppBarMenu extends React.Component {
 
   render() {
     const {
-      classes,
       user,
     } = this.props
 
@@ -99,7 +87,7 @@ class AppBarMenu extends React.Component {
     const open = Boolean(anchorEl)
 
     return (
-      <div className={classes.root}>
+      <div>
         <Button
           aria-owns={open ? 'appbar-menu' : null}
           aria-haspopup="true"
@@ -141,7 +129,6 @@ class AppBarMenu extends React.Component {
 }
 
 AppBarMenu.propTypes = {
-  classes: PropTypes.object.isRequired,
   user: PropTypes.object,
   openPage: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
@@ -151,4 +138,4 @@ AppBarMenu.defaultProps = {
   user: PropTypes.object,
 }
 
-export default withStyles(styles)(AppBarMenu)
+export default AppBarMenu
