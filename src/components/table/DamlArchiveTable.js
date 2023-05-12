@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import { styled } from '@mui/system';
 
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -10,19 +9,24 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 
-const styles = () => ({
-  root: {
-    width: '100%',
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-    height: '68vh',
-    overflow: 'auto',
-  },
-  autoCell: {
-    width: 'auto',
-    wordWrap: 'break-word',
-  },
+const Wrapper = styled('div')({
+  width: '100%',
+})
+
+const TableWrapper = styled('div')({
+  overflowX: 'auto',
+  height: '68vh',
+  overflow: 'auto',
+})
+
+const AutoTableCell = styled(TableCell)({
+  width: 'auto',
+  wordWrap: 'break-word',
+})
+
+const AutoTypography = styled(Typography)({
+  width: 'auto',
+  wordWrap: 'break-word',
 })
 
 class DamlArchiveTable extends React.Component {
@@ -44,7 +48,6 @@ class DamlArchiveTable extends React.Component {
 
   render() {
     const {
-      classes,
       data,
       fields,
       getActions,
@@ -60,9 +63,9 @@ class DamlArchiveTable extends React.Component {
     } = this.state
 
     return (
-      <div className={classes.root}>
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table}>
+      <Wrapper>
+        <TableWrapper>
+          <Table>
             {
               (!hideHeader && (!hideHeaderIfEmpty || data.length > 0)) && (
                 <TableHead>
@@ -100,22 +103,22 @@ class DamlArchiveTable extends React.Component {
                       fields.map((field, i) => {
                         if (typeof (dataRow[field.name]) === 'string') {
                           return (
-                            <TableCell key={i} align={field.numeric ? 'right' : 'left'} className={classes.autoCell}>
+                            <AutoTableCell key={i} align={field.numeric ? 'right' : 'left'}>
                               {dataRow[field.name]}
-                            </TableCell>
+                            </AutoTableCell>
                           )
                         }
                         dataRow[field.name].sort()
                         return (
-                          <TableCell key={i} align={field.numeric ? 'right' : 'left'} className={classes.autoCell}>
+                          <AutoTableCell key={i} align={field.numeric ? 'right' : 'left'}>
                             {
                               dataRow[field.name].map((item) => (
-                                <Typography key={item} variant="inherit" className={classes.autoCell}>
+                                <AutoTypography key={item} variant="inherit">
                                   {item}
-                                </Typography>
+                                </AutoTypography>
                               ))
                             }
-                          </TableCell>
+                          </AutoTableCell>
                         )
                       })
                     }
@@ -130,7 +133,7 @@ class DamlArchiveTable extends React.Component {
               ))}
             </TableBody>
           </Table>
-        </div>
+        </TableWrapper>
         {
           pagination && (
             <TablePagination
@@ -149,13 +152,8 @@ class DamlArchiveTable extends React.Component {
             />
           )
         }
-      </div>
+      </Wrapper>
     );
   }
 }
-
-DamlArchiveTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(DamlArchiveTable)
+export default DamlArchiveTable
