@@ -14,7 +14,6 @@ class MarketplacePage extends React.Component {
 
   render() {
     const {
-      classes,
       onAdd,
       clusterId,
       deploymentForms,
@@ -61,7 +60,6 @@ class MarketplacePage extends React.Component {
     return (
       <div>
         <MarketplaceGrid
-          className={classes.button}
           title="Add"
           icon={AddIcon}
           buttonProps={{
