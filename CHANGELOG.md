@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* feat(chages-to-checkbox-radio-and-deployment-table-js): additions of ci tags to enable easier testing [view commit](https://github.com/catenasys/sextant/commit/f7ee3189ddd58326f46da12f7c160caf5144de3d)
+* fix(change-to-marketplacecard.js): moved the ci tag to the correctpart of the marketplace tag to make testing easier [view commit](https://github.com/catenasys/sextant/commit/35af2583504d9a6420100e3ccb33379dd110f324)
 * feat(adding-id-tags): additions of id tags for use in integration testing [view commit](https://github.com/catenasys/sextant/commit/b4683465c40982341218f1616c419f4c9be6f2b5)
 * test: reorganize jest tests [view commit](https://github.com/catenasys/sextant/commit/c4ac063ed00b7735aca7d6adad673eae829ec269)
 * build(eslint): switch babel eslint parser [view commit](https://github.com/catenasys/sextant/commit/e60d5c3b546761d5a6d48e0963d67e43961815c6)
