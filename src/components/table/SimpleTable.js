@@ -1,30 +1,27 @@
 /* eslint-disable max-len */
 import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import { styled } from '@mui/system';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+  Tooltip,
+} from '@mui/material'
 
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
-import TablePagination from '@mui/material/TablePagination'
-import TableRow from '@mui/material/TableRow'
-import TableSortLabel from '@mui/material/TableSortLabel'
-import Tooltip from '@mui/material/Tooltip'
+const Root = styled('div')({
+  width: '100%',
+})
 
-const styles = () => ({
-  root: {
-    width: '100%',
-  },
-  table: {
+const Wrapper = styled('div')({
+  overflowX: 'auto',
+})
 
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
-  autoCell: {
-    width: 'auto',
-  },
+const StyledTableCell = styled(TableCell)({
+  width: 'auto',
 })
 
 function desc(a, b, orderBy) {
@@ -86,7 +83,6 @@ class SimpleTable extends React.Component {
 
   render() {
     const {
-      classes,
       data,
       fields,
       getActions,
@@ -106,15 +102,15 @@ class SimpleTable extends React.Component {
     } = this.state
 
     return (
-      <div className={classes.root}>
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table}>
+      <Root>
+        <Wrapper>
+          <Table>
             {
               (!hideHeader && (!hideHeaderIfEmpty || data.length > 0)) && (
                 <TableHead>
                   <TableRow>
                     {
-                      fields.map((field, i) => {
+                      fields.map((field) => {
                         const tooltipPlacement = field.numeric ? 'bottom-end' : 'bottom-start'
                         const content = withSorting ? (
                           <Tooltip
@@ -135,7 +131,7 @@ class SimpleTable extends React.Component {
                         )
                         return (
                           <TableCell
-                            key={i}
+                            key={field.title}
                             align={field.numeric ? 'right' : 'left'}
                             sortDirection={orderBy === field.name ? order : false}
                           >
@@ -170,16 +166,15 @@ class SimpleTable extends React.Component {
                     id={`tableRow_${dataRow.username || dataRow.name}`}
                   >
                     {
-                      fields.map((field, i) => (
-                        <TableCell
+                      fields.map((field) => (
+                        <StyledTableCell
                           _ci={`${dataRow.username || dataRow.name}${dataRow[field.name]}`}
                           id={`tableCell_${dataRow.username || dataRow.name}${dataRow[field.name]}`}
-                          key={i}
+                          key={`${dataRow.username || dataRow.name}${dataRow[field.name]}`}
                           align={field.numeric ? 'right' : 'left'}
-                          className={classes.autoCell}
                         >
                           {dataRow[field.name] || (dataRow.deploymentData ? dataRow.deploymentData[field.name] : null)}
-                        </TableCell>
+                        </StyledTableCell>
                       ))
                     }
                     {
@@ -193,7 +188,7 @@ class SimpleTable extends React.Component {
                 ))}
             </TableBody>
           </Table>
-        </div>
+        </Wrapper>
         {
           pagination && (data.length >= rowsPerPage) && (
             <TablePagination
@@ -212,13 +207,9 @@ class SimpleTable extends React.Component {
             />
           )
         }
-      </div>
+      </Root>
     );
   }
 }
 
-SimpleTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(SimpleTable)
+export default SimpleTable
