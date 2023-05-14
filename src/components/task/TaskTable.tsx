@@ -34,8 +34,6 @@ interface TaskTableProps {
 
 const TaskTable: React.FC<TaskTableProps> = ({ data }) => {
 
-  console.log("data", data)
-
   const tableData = data.map((task) => ({
     id: task.id,
     started_at: (

@@ -39,8 +39,6 @@ class DeletePodDialog extends React.Component {
       this.setState({ error: true })
     }
 
-    console.log('title: ', title);
-
     return (
       <Dialog
         open={open}
