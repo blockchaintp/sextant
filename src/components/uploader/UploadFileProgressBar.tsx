@@ -17,7 +17,7 @@ interface UploadFileProgressBarProps {
   size: number
   uploadedBytes: number
   percentDone: number
-  remainingTime: number
+  remainingTime?: number
 }
 
 const UploadFileProgressBar: React.FC<UploadFileProgressBarProps> = ({
