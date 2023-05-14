@@ -5,7 +5,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { styled } from '@mui/system';
 
-type Action = 'create' | 'update' | 'delete';
+export type Action = 'create' | 'update' | 'delete';
 
 interface TaskActionIconProps {
   action: Action;

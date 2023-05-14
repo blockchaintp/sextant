@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { styled } from '@mui/system'
 import Chip from '@mui/material/Chip'
 import Tooltip from '@mui/material/Tooltip'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -10,13 +11,18 @@ interface TaskStatusIconProps {
   status: 'created' | 'running' | 'finished' | 'error';
 }
 
+const StyledChip = styled(Chip)({
+  height: '38px',
+  borderRadius: '36px',
+});
+
 const TaskStatusIcon: React.FC<TaskStatusIconProps> = ({
   error = null,
   status,
 }) => {
   if (status === 'running' || status === 'created') {
     return (
-      <Chip
+      <StyledChip
         icon={<CircularProgress size={18} />}
         sx={{ paddingLeft: '6px' }}
         label={status}
@@ -26,7 +32,7 @@ const TaskStatusIcon: React.FC<TaskStatusIconProps> = ({
   if (status === 'error') {
     return (
       <Tooltip title={error}>
-        <Chip
+        <StyledChip
           icon={<ErrorIcon />}
           label="error"
           color="error"
@@ -36,7 +42,7 @@ const TaskStatusIcon: React.FC<TaskStatusIconProps> = ({
   }
   if (status === 'finished') {
     return (
-      <Chip
+      <StyledChip
         icon={<CheckCircleIcon />}
         label={status}
       />
