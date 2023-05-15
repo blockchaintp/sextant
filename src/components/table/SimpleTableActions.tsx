@@ -13,13 +13,8 @@ const Root = styled('div')({
 
 interface SimpleTableActionsProps {
   item: {
-    username: string
-    created: string
-    externalIP: string
-    id: string
-    name: string
-    ready: string
-    status: string
+    username?: string
+    name?: string
   }
   actions: {
     icon: React.ReactElement<any, any> | React.ComponentType<any>;
@@ -30,7 +25,7 @@ interface SimpleTableActionsProps {
     getTitle?: (item: any) => string
     disabled?: boolean
     wrapButton?: (button: any, item: any) => any
-    style: { [key: string]: string }
+    style?: { [key: string]: string }
   }[]
 }
 

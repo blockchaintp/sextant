@@ -23,10 +23,10 @@ const Actions = styled('div')({
 
 interface SimpleTableHeaderProps {
   title: string
-  getTitle: () => React.ReactNode
+  getTitle?: () => React.ReactNode
   getActions: () => React.ReactNode
-  titleVariant: string
-  titleClassname: string
+  titleVariant?: string
+  titleClassname?: string
 }
 
 const SimpleTableHeader: React.FC<SimpleTableHeaderProps> = ({
