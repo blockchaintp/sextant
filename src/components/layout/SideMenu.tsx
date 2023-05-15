@@ -23,14 +23,14 @@ const StyledListWrapper = styled(List)({
   width: settings.sideMenuWidth,
 })
 
-interface SideMenuItem {
+export interface SideMenuItem {
   title: string
   icon?: React.ComponentType
   handler: string | (() => void)
   params?: object;
 }
 
-interface SideMenuProps {
+export interface SideMenuProps {
   items: (SideMenuItem | '-')[]
   openPage: (handler: string, params: object) => void
 }
