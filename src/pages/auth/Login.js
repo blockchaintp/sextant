@@ -1,26 +1,24 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
-import Paper from '@mui/material/Paper'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
+import { styled } from '@mui/system';
+import {
+  Paper,
+  Grid,
+  Typography,
+  Button,
+} from '@mui/material'
 
 import FormWrapper from 'components/form/Wrapper'
 
-const styles = (theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-  paper: {
-    padding: theme.spacing(5),
-  },
-})
+const Root = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+}))
 
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(2),
+}))
 class Login extends React.Component {
   render() {
     const {
-      classes,
       login,
       error,
       loading,
@@ -29,10 +27,10 @@ class Login extends React.Component {
     } = this.props
 
     return (
-      <div className={classes.root}>
+      <Root>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <StyledPaper>
               <Typography variant="h6" gutterBottom>
                 Login
               </Typography>
@@ -59,17 +57,12 @@ class Login extends React.Component {
                   )
                 }
               />
-            </Paper>
+            </StyledPaper>
           </Grid>
         </Grid>
-      </div>
+      </Root>
     )
   }
 }
 
-Login.propTypes = {
-  classes: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired,
-}
-
-export default withStyles(styles)(Login)
+export default Login
