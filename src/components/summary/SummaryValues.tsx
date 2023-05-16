@@ -13,7 +13,7 @@ const RightAlignedTypography = styled(Typography)(({ theme }) => ({
 const formatSummaryValues = (value: string | string[]) => {
   if (Array.isArray(value)) {
     return value.map((item) => (
-      <Tooltip title={item}>
+      <Tooltip title={item} key={item}>
         <Typography noWrap={true}>
           {item}
         </Typography>
@@ -21,7 +21,7 @@ const formatSummaryValues = (value: string | string[]) => {
     ))
   }
   return ([
-    <Typography>
+    <Typography key={value}>
       {value}
     </Typography>,
   ])
