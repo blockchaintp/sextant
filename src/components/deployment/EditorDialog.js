@@ -17,6 +17,13 @@ const styles = (theme) => ({
 })
 
 class EditorDialog extends React.Component {
+  // eslint-disable-next-line class-methods-use-this
+  handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      e.stopPropagation(); // this is to allow the use of the enter key in the text editor as it is disabled on the page
+    }
+  }
+
   render() {
     const {
       cancel,
@@ -28,7 +35,8 @@ class EditorDialog extends React.Component {
       customYaml,
     } = this.props
     return (
-      <div>
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+      <div onKeyDown={this.handleKeyDown}>
         <Dialog
           open={open}
           onClose={cancel}
