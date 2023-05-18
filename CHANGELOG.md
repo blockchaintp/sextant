@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* fix(pages): disabled the enter key expt for the custom yaml editor [view commit](https://github.com/catenasys/sextant/commit/7ba78d421ca55db426f3ff4dc8c384a8661033d6)
 * feat(chages-to-checkbox-radio-and-deployment-table-js): additions of ci tags to enable easier testing [view commit](https://github.com/catenasys/sextant/commit/f7ee3189ddd58326f46da12f7c160caf5144de3d)
 * fix(change-to-marketplacecard.js): moved the ci tag to the correctpart of the marketplace tag to make testing easier [view commit](https://github.com/catenasys/sextant/commit/35af2583504d9a6420100e3ccb33379dd110f324)
 * feat(adding-id-tags): additions of id tags for use in integration testing [view commit](https://github.com/catenasys/sextant/commit/b4683465c40982341218f1616c419f4c9be6f2b5)
