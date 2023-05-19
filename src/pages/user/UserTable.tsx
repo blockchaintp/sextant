@@ -107,7 +107,6 @@ const UserTable: React.FC<UserTableProps> = ({ users, onAdd, onEdit, onDelete, i
         getActions={getActions}
       />
       <SimpleTableDeleteDialog
-        resource={deleteConfirmItem || null}
         title={deleteConfirmItem ? `the ${deleteConfirmItem.username} user` : null}
         open={deleteConfirmOpen}
         onCancel={closeDeleteDialog}
