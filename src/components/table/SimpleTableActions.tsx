@@ -48,7 +48,7 @@ const SimpleTableActions: React.FC<SimpleTableActionsProps> = ({ item, actions }
             if (action.shouldDisplay) return action.shouldDisplay(item)
             return true
           })
-          .map((action, i) => {
+          .map((action) => {
             const IconClass = action.getIcon ? action.getIcon(item) : action.icon
             const DynamicIcon = IconClass as React.ComponentType<any>;
             const title = action.getTitle ? action.getTitle(item) : action.title
@@ -74,7 +74,7 @@ const SimpleTableActions: React.FC<SimpleTableActionsProps> = ({ item, actions }
 
             const renderButton = action.wrapButton ? action.wrapButton(button, item) : button
             return (
-              <Tooltip disableFocusListener key={i} title={title}>
+              <Tooltip disableFocusListener key={title} title={title}>
                 { renderButton }
               </Tooltip>
             )
