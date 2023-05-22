@@ -185,7 +185,10 @@ const DeploymentSettingsDamlArchives: React.FC<DeploymentSettingsDamlArchivesPro
   );
 
   const Packages: React.FC<{
-    data: any[], // Replace with the actual type of `data`
+    data: {
+      [key: string]: string | string[];
+        id: string;
+      }[]
     setUploadArchiveWindowOpen: (isOpen: boolean) => void,
   }> = ({
     data,
