@@ -26,7 +26,7 @@ interface RenderSuggestionParams {
 }
 
 
-interface User {
+export interface User {
   id: number
   permission: string
   username: string
