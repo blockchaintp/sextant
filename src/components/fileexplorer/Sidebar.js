@@ -49,7 +49,6 @@ const VolumeSelectControl = styled(Select)({
 })
 
 function ExplorerSidebar({
-  classes,
   explorer,
 }) {
   const {
@@ -86,7 +85,6 @@ function ExplorerSidebar({
       </StyledFormControl>
     </VolumeSelect>
   ) : null), [
-    classes,
     volume,
     volumes,
   ])
@@ -94,13 +92,12 @@ function ExplorerSidebar({
   const changeSnapshotSelect = useMemo(() => {
     if (!snapshots || snapshots.length <= 0) return null
     return (
-      <div className={classes.volumeSelect}>
-        <div className={classes.volumeSelectTitle}>
+      <VolumeSelect>
+        <VolumeSelectTitle>
           <Typography variant="caption">snapshot:</Typography>
-        </div>
-        <FormControl className={classes.formControl}>
-          <Select
-            className={classes.volumeSelectControl}
+        </VolumeSelectTitle>
+        <StyledFormControl>
+          <VolumeSelectControl
             value={snapshot ? snapshot.block : 'head'}
             onChange={(ev) => onChangeSnapshot(ev.target.value)}
           >
@@ -120,12 +117,11 @@ function ExplorerSidebar({
                   </MenuItem>
                 ))
             }
-          </Select>
-        </FormControl>
-      </div>
+          </VolumeSelectControl>
+        </StyledFormControl>
+      </VolumeSelect>
     )
   }, [
-    classes,
     snapshots,
     snapshot,
   ])
