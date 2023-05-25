@@ -12,9 +12,12 @@ const Root = styled('div')({
 })
 
 interface SimpleTableActionsProps {
+  // item: {
+  //   username?: string
+  //   name?: string
+  // }
   item: {
-    username?: string
-    name?: string
+    [key: string]: string | number | object
   }
   actions: {
     icon: React.ReactElement<any, any> | React.ComponentType<any>;
@@ -31,7 +34,6 @@ interface SimpleTableActionsProps {
 
 export interface CIIconButtonProps extends IconButtonProps {
   _ci?: string
-  hover?: boolean
 }
 
 
@@ -72,10 +74,9 @@ const SimpleTableActions: React.FC<SimpleTableActionsProps> = ({ item, actions }
               </CIIconButton>
             )
 
-            const renderButton = action.wrapButton ? action.wrapButton(button, item) : button
             return (
-              <Tooltip disableFocusListener key={title} title={title}>
-                { renderButton }
+              <Tooltip key={title} title={title}>
+                { button }
               </Tooltip>
             )
           })
