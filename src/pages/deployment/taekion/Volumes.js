@@ -1,16 +1,16 @@
 /* eslint-disable no-useless-constructor */
-import React from 'react'
-import withStyles from '@mui/styles/withStyles';
+import * as React from 'react'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '@mui/material'
 
-import Button from '@mui/material/Button'
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
-
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
 
 import FormWrapper from 'components/form/Wrapper'
 
@@ -20,12 +20,6 @@ const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const ViewArchiveIcon = settings.icons.viewArchive
 const CreateArchiveIcon = settings.icons.createArchive
-
-const styles = (theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-})
 
 const TABLE_FIELDS = [{
   title: 'Name',
@@ -107,6 +101,7 @@ const FORM_INITIAL_VALUES = {
 }
 
 class TaekionVolumes extends React.Component {
+  // const [editVolume, setEditVolume] = React.useState(null);
   state = {
     editVolume: null,
   }
@@ -351,4 +346,4 @@ class TaekionVolumes extends React.Component {
   }
 }
 
-export default withStyles(styles)(TaekionVolumes)
+export default TaekionVolumes
