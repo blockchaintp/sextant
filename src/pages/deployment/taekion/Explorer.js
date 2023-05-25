@@ -1,9 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-shadow */
 import React, { useState, useMemo } from 'react'
-import withStyles from '@mui/styles/withStyles';
+import { styled, GlobalStyles } from '@mui/system';
 import { FileIcon, defaultStyles } from 'react-file-icon'
-import useFileExplorer from 'hooks/useFileExplorer'
 import prettyBytes from 'pretty-bytes'
 import ExplorerSidebar from 'components/fileexplorer/Sidebar'
 import Dialog from '@mui/material/Dialog'
@@ -18,84 +17,48 @@ import FolderIcon from '@mui/icons-material/Folder'
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser'
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload'
 import InfoIcon from '@mui/icons-material/Info'
+import useFileExplorer from './hooks/useFileExplorer'
 
-const styles = (theme) => ({
+const Root = styled('div')({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+  height: '100%',
+  minHeight: '100%',
+})
 
-  // adjust the global layout so we can have full height file explorer
-  // even if there is not much content
-  '@global': {
-    '.main-layout-root': {
-      height: '100%',
-      minHeight: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    '.main-layout-appbar': {
-      flexGrow: 0,
-    },
-    '.main-layout-box': {
-      flexGrow: 1,
-      height: 'calc(100% - 180px)',
-      minHeight: 'calc(100% - 180px)',
-      maxHeight: 'calc(100% - 180px)',
-      paddingBottom: '0px',
-    },
-    '.main-layout-content': {
-      height: '100%',
-      minHeight: '100%',
-    },
-    '.deployment-settings-root': {
-      height: '100%',
-      minHeight: '100%',
-    },
-  },
-  root: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    height: '100%',
-    minHeight: '100%',
-  },
-  sidebar: {
-    width: '300px',
-    borderRight: '1px solid #ccc',
-    flexGrow: 0,
-    height: '100%',
-    minHeight: '100%',
-    overflowY: 'auto',
-  },
-  content: {
-    flexGrow: 1,
-    paddingLeft: '20px',
-    height: '100%',
-    minHeight: '100%',
-    overflowY: 'auto',
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 200,
-  },
-  smalltext: {
-    fontSize: '0.8em',
-    color: '#999',
-  },
-  fileicon: {
-    width: '30px',
-    marginRight: theme.spacing(2),
-  },
-  filename: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  folderIcon: {
-    '& svg': {
-      width: '140px',
-      height: '140px',
-    },
+const Sidebar = styled('div')({
+  width: '300px',
+  borderRight: '1px solid #ccc',
+  flexGrow: 0,
+  height: '100%',
+  minHeight: '100%',
+  overflowY: 'auto',
+})
 
-  },
+const Content = styled('div')({
+  flexGrow: 1,
+  paddingLeft: '20px',
+  height: '100%',
+  minHeight: '100%',
+  overflowY: 'auto',
+})
+
+const Smalltext = styled('div')({
+  fontSize: '0.8em',
+  color: '#999',
+})
+
+const FileIconWrapper = styled('div')(({ theme }) => ({
+  width: '30px',
+  marginRight: theme.spacing(2),
+}))
+
+const FileNameWrapper = styled('div')({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
 })
 
 const TABLE_FIELDS = [{
@@ -119,9 +82,7 @@ const sortByFilename = (a, b) => {
   return 0
 }
 
-const TaekionExplorer = ({
-  classes,
-}) => {
+function TaekionExplorer() {
   const explorer = useFileExplorer()
   const [viewingEntry, setViewingEntry] = useState(null)
 
@@ -189,8 +150,8 @@ const TaekionExplorer = ({
     const ret = {
       id: entry.inodeid,
       name: (
-        <div className={classes.filename}>
-          <div className={classes.fileicon}>
+        <FileNameWrapper>
+          <FileIconWrapper>
             {
               entry.isDirectory ? (
                 <FolderIcon
@@ -207,59 +168,87 @@ const TaekionExplorer = ({
               )
             }
 
-          </div>
+          </FileIconWrapper>
           <div>
             <button type="button" onClick={(e) => clickEntryTitle(e, entry)}>
               { entry.filename }
             </button>
           </div>
-        </div>
+        </FileNameWrapper>
       ),
       entry,
       created: (
-        <span className={classes.smalltext}>
+        <Smalltext>
           { new Date(entry.inode.ctime).toLocaleString() }
-        </span>
+        </Smalltext>
       ),
       modified: (
-        <span className={classes.smalltext}>
+        <Smalltext>
           { new Date(entry.inode.mtime).toLocaleString() }
-        </span>
+        </Smalltext>
       ),
     }
 
     if (!entry.isDirectory) {
       ret.size = (
-        <span className={classes.smalltext}>
+        <Smalltext>
           { prettyBytes(entry.inode.size) }
-        </span>
+        </Smalltext>
       )
     }
     return ret
   })
 
   return (
-    <div className={classes.root}>
-      <div className={classes.sidebar}>
-        <ExplorerSidebar
-          explorer={explorer}
-        />
-      </div>
-      <div className={classes.content}>
-        <SimpleTable
-          withSorting={false}
-          pagination
-          data={data}
-          fields={TABLE_FIELDS}
-          getActions={(item) => (
-            <SimpleTableActions
-              item={item}
-              actions={getActions(item)}
-            />
-          )}
-        />
-      </div>
-      {
+    <>
+      <GlobalStyles styles={{
+        '.main-layout-root': {
+          height: '100%',
+          minHeight: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        },
+        '.main-layout-appbar': {
+          flexGrow: 0,
+        },
+        '.main-layout-box': {
+          flexGrow: 1,
+          height: 'calc(100% - 180px)',
+          minHeight: 'calc(100% - 180px)',
+          maxHeight: 'calc(100% - 180px)',
+          paddingBottom: '0px',
+        },
+        '.main-layout-content': {
+          height: '100%',
+          minHeight: '100%',
+        },
+        '.deployment-settings-root': {
+          height: '100%',
+          minHeight: '100%',
+        },
+      }}
+      />
+      <Root>
+        <Sidebar>
+          <ExplorerSidebar
+            explorer={explorer}
+          />
+        </Sidebar>
+        <Content>
+          <SimpleTable
+            withSorting={false}
+            pagination
+            data={data}
+            fields={TABLE_FIELDS}
+            getActions={(item) => (
+              <SimpleTableActions
+                item={item}
+                actions={getActions(item)}
+              />
+            )}
+          />
+        </Content>
+        {
         viewingEntry && (
           <Dialog
             open
@@ -286,8 +275,9 @@ const TaekionExplorer = ({
           </Dialog>
         )
       }
-    </div>
+      </Root>
+    </>
   )
 }
 
-export default withStyles(styles)(TaekionExplorer)
+export default TaekionExplorer
