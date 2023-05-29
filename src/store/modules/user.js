@@ -171,12 +171,13 @@ const sideEffects = {
   },
   save: (id, payload) => async (dispatch) => {
     try {
+      console.log(payload);
       await api.loaderSideEffect({
         dispatch,
         loader: () => loaders.update(id, {
           username: payload.username,
-          password: payload.changePassword[0].password,
           permission: payload.permission,
+          // got to pass change password if it has changed
         }),
         prefix,
         name: 'form',
@@ -186,6 +187,24 @@ const sideEffects = {
       dispatch(routerActions.navigateTo('users'))
     } catch (e) {
       dispatch(snackbarActions.setError(`error saving user: ${e.toString()}`))
+    }
+  },
+  saveChangePassword: (id, payload) => async (dispatch) => {
+    try {
+      console.log(payload.changePassword);
+      console.log(payload);
+      await api.loaderSideEffect({
+        dispatch,
+        loader: () => loaders.update(id, {
+          password: payload.changePassword[0].password,
+        }),
+        prefix,
+        name: 'form',
+        returnError: true,
+      })
+      dispatch(snackbarActions.setSuccess(' Password has been changed'))
+    } catch (e) {
+      dispatch(snackbarActions.setError(`error Updating Password: ${e.toString()}`))
     }
   },
   saveAccountDetails: (payload) => async (dispatch, getState) => {
