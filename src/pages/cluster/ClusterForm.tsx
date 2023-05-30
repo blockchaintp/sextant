@@ -1,22 +1,18 @@
-/* eslint-disable quotes */
-/* eslint-disable space-infix-ops */
-/* eslint-disable no-undef */
-/* eslint-disable camelcase */
-/* eslint-disable react/jsx-fragments */
-import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
-import Paper from '@mui/material/Paper'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-
-import TaskTable from 'components/task/TaskTable'
-
-import RoleTable from 'pages/role/RoleTable'
-
-import FormWrapper from 'components/form/Wrapper'
-import CodeBlock from 'components/code/CodeBlock'
+import * as React from 'react'
+import { styled } from '@mui/system'
+import {
+  Paper,
+  Grid,
+  Typography,
+  Button,
+} from '@mui/material'
+import { ButtonProps } from '@mui/material/Button'
+import { TypographyProps } from '@mui/material/Typography'
+import { User } from '../role/RoleForm'
+import RoleTable from '../role/RoleTable'
+import TaskTable from '../../components/task/TaskTable'
+import CodeBlock from '../../components/code/CodeBlock'
+import FormWrapper from '../../components/form/Wrapper'
 
 import saveAs from 'file-saver'
 
@@ -119,82 +115,175 @@ echo -n $BASE64_CA_FILE | base64 --decode
 echo
 `
 
-const styles = (theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-  paper: {
-    padding: theme.spacing(5),
-  },
-  dateTime: {
-    whiteSpace: 'nowrap',
-  },
-  button: {
-    marginRight: theme.spacing(2),
-  },
-  text: {
-    fontFamily: 'Roboto',
-  },
-  codeblock: {
-    width: '100%',
-    overflowX: 'auto',
-  },
-  roleTableHeader: {
-    paddingLeft: '0px',
-  },
-  spacer: {
-    height: theme.spacing(2),
-  },
-  child: {
-    flexGrow: 1,
-    flexBasis: '50%',
-  },
-  box: {
-    display: 'flex',
-    maxHeight: '800px',
-  },
+const Root = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+}))
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(5),
+}))
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  marginRight: theme.spacing(2),
+}))
+
+const StyledUl = styled('ul')({
+  fontFamily: 'Roboto',
 })
 
-class ClusterForm extends React.Component {
-  getTaskTable() {
-    const {
-      tasks,
-      classes,
-    } = this.props
+const Spacer = styled('div')(({ theme }) => ({
+  height: theme.spacing(2),
+}))
+
+export interface CIButtonProps extends ButtonProps {
+  _ci?: string
+}
+
+const CIButton = ({ _ci, ...rest }: CIButtonProps) => {
+  return <StyledButton {...rest} />;
+}
+
+export interface CITypographyProps extends TypographyProps {
+  _ci?: string
+}
+
+const CITypography = ({ _ci, ...rest }: CITypographyProps) => {
+  return <Typography {...rest} />
+}
+
+type Field = {
+  component: string
+  helperText: string
+  id: string
+  title: string
+  validate: {
+    methods: [string, string] | [string, string, string] | [string, number, string]
+  }[]
+}
+
+type Role = {
+  id: number
+  permission: string
+  resource_id: number
+  resource_type: string
+  user: number
+  userRecord: {
+    id: number
+    username: string
+    permission: string
+  }
+}
+
+type ActionData = {
+  id: string
+  started_at: string
+  action: any
+  status: "created" | "running" | "finished" | "error"
+  error: string
+}
+
+type Task = {
+  started_at: string
+  action: string
+  error: string
+  id: string
+  resource_id: number
+  resource_status: {
+    completed: string
+    error: string
+  }
+  resource_type: string
+  status: "created" | "running" | "finished" | "error"
+  user: number
+}
+
+type ClusterFormProps = {
+  tasks: Task[]
+  roles: Role[]
+  userList: User[]
+  accessControlFormOpen: boolean
+  accessControlSearch: string
+  accessControlLevel: string
+  accessControlUsers: []
+  setAccessControlFormOpen: () => void
+  setAccessControlLevel: () => void
+  setAccessControlSearch: () => void
+  loadAccessControlResults: () => void
+  clearAccessControlResults: () => void
+  addRole:() => void
+  editRole:() => void
+  deleteRole:() => void
+  onCancelRoleForm:() => void
+  snackbarMessage:() => void
+  initialValues: {
+    provision_type: string
+    [key: string]: string | number | boolean
+  }
+  id: string | number
+  title: string
+  submitForm:() => void
+  schema: Field[]
+  error: string | undefined
+  submitting: undefined | boolean
+  onCancel:() => void
+  validate: unknown
+}
+
+const ClusterForm: React.FC<ClusterFormProps> = ({
+  tasks,
+  roles,
+  userList,
+  accessControlFormOpen,
+  accessControlSearch,
+  accessControlLevel,
+  accessControlUsers,
+  setAccessControlFormOpen,
+  setAccessControlLevel,
+  setAccessControlSearch,
+  loadAccessControlResults,
+  clearAccessControlResults,
+  addRole,
+  editRole,
+  deleteRole,
+  onCancelRoleForm,
+  snackbarMessage,
+  initialValues,
+  id,
+  title='Cluster Details',
+  submitForm,
+  schema,
+  error,
+  submitting,
+  onCancel,
+  validate,
+}) => {
+  const getTaskTable = () => {
+    const tableData: ActionData[] = tasks.map((task) => {
+      const taskId = task.id.toString()
+      return (
+        {
+          id: taskId,
+          started_at: task.started_at,
+          action: task.action,
+          status: task.status,
+          error: task.error,
+        }
+      )})
     return (
-      <Paper className={classes.paper}>
+      <StyledPaper>
         <Typography variant="h6" gutterBottom>
           Tasks
         </Typography>
         <TaskTable
-          data={tasks}
+          data={tableData}
         />
-      </Paper>
+      </StyledPaper>
     )
   }
 
-  getRoleTable() {
-    const {
-      roles,
-      userList,
-      accessControlFormOpen,
-      accessControlSearch,
-      accessControlLevel,
-      accessControlUsers,
-      setAccessControlFormOpen,
-      setAccessControlLevel,
-      setAccessControlSearch,
-      loadAccessControlResults,
-      clearAccessControlResults,
-      addRole,
-      editRole,
-      deleteRole,
-      onCancelRoleForm,
-      classes,
-    } = this.props
-
+  const getRoleTable = () => {
     return (
-      <Paper className={classes.paper}>
+      <StyledPaper>
         <RoleTable
           roles={roles}
           onAdd={addRole}
@@ -202,7 +291,6 @@ class ClusterForm extends React.Component {
           onDelete={deleteRole}
           onCancel={onCancelRoleForm}
           title="Access Control"
-          headerClassname={classes.roleTableHeader}
           open={accessControlFormOpen}
           search={accessControlSearch}
           level={accessControlLevel}
@@ -214,21 +302,15 @@ class ClusterForm extends React.Component {
           loadUsers={loadAccessControlResults}
           clearUsers={clearAccessControlResults}
         />
-      </Paper>
+      </StyledPaper>
     )
   }
 
-  getCreateInstructions() {
-    const {
-      classes,
-      snackbarMessage,
-      initialValues,
-    } = this.props
-
+  const getCreateInstructions = () => {
     if (initialValues.provision_type !== 'remote') return null
 
     return (
-      <Paper className={classes.paper} style={{ maxHeight: '792px', overflow: 'auto' }}>
+      <StyledPaper style={{ maxHeight: '792px', overflow: 'auto' }}>
         <Typography variant="h6" gutterBottom>
           Obtain Cluster Details
         </Typography>
@@ -244,11 +326,11 @@ class ClusterForm extends React.Component {
           {' '}
           these values:
         </Typography>
-        <ul className={classes.text}>
+        <StyledUl>
           <li>API Server Address</li>
           <li>Access Token</li>
           <li>Certificate Authority</li>
-        </ul>
+        </StyledUl>
         <Typography gutterBottom>
           To help you obtain these values, please follow the following steps:
         </Typography>
@@ -279,10 +361,9 @@ class ClusterForm extends React.Component {
           containing the scripts shown above.
           Run the script after downloading.
         </Typography>
-        <div className={classes.spacer} />
-        <Button
+        <Spacer />
+        <CIButton
           _ci="downloadcreateserviceaccount"
-          className={classes.button}
           type="button"
           variant="contained"
           onClick={() => {
@@ -291,8 +372,8 @@ class ClusterForm extends React.Component {
           }}
         >
           Download file
-        </Button>
-        <div className={classes.spacer} />
+        </CIButton>
+        <Spacer />
         <Typography variant="subtitle1" gutterBottom>
           Step 2. Get credentials
         </Typography>
@@ -321,10 +402,9 @@ class ClusterForm extends React.Component {
           containing the scripts shown above.
           Run the script after downloading.
         </Typography>
-        <div className={classes.spacer} />
-        <Button
+        <Spacer />
+        <CIButton
           _ci="downloadgetvalues"
-          className={classes.button}
           type="button"
           variant="contained"
           onClick={() => {
@@ -333,116 +413,85 @@ class ClusterForm extends React.Component {
           }}
         >
           Download file
-        </Button>
-        <div className={classes.spacer} />
+        </CIButton>
+        <Spacer />
         <Typography variant="subtitle1" gutterBottom>
           Step 3. Paste credentials
         </Typography>
         <Typography gutterBottom>
           Copy the output of the script above and paste them into the form.
         </Typography>
-      </Paper>
+      </StyledPaper>
     )
   }
 
-  render() {
-    const {
-      id,
-      classes,
-      title,
-      submitForm,
-      schema,
-      initialValues,
-      error,
-      submitting,
-      onCancel,
-      validate,
-    } = this.props
-
-    return (
-      <div className={classes.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={id === 'new' ? 6 : 12}>
-            <Paper className={classes.paper}>
-              <Typography _ci="formheader" id="formheader" variant="h6" gutterBottom>
-                { title }
-              </Typography>
-              <FormWrapper
-                addSpaces
-                schema={schema}
-                initialValues={initialValues}
-                error={error}
-                onSubmit={submitForm}
-                validate={validate}
-                renderButtons={
-                  ({
-                    handleSubmit,
-                  }) => (
-                    <React.Fragment>
-                      {
-                        onCancel && (
-                          <Button
-                            className={classes.button}
-                            type="button"
-                            variant="contained"
-                            onClick={onCancel}
-                            _ci="cancelButton"
-                          >
-                            Cancel
-                          </Button>
-                        )
-                      }
-                      <Button
-                        _ci="submitButton"
-                        id="submitButton"
-                        className={classes.button}
-                        type="button"
-                        variant="contained"
-                        color="primary"
-                        disabled={submitting}
-                        onClick={handleSubmit}
-                      >
-                        {id === 'new' ? 'Activate' : 'Save'}
-                      </Button>
-                    </React.Fragment>
-
-                  )
-                }
-              />
-            </Paper>
-          </Grid>
-          <Grid item xs={id === 'new' ? 6 : 12}>
-            {
-              id === 'new'
-                ? this.getCreateInstructions()
-                : (
-                  <div>
+  return (
+    <Root>
+      <Grid container spacing={3}>
+        <Grid item xs={id === 'new' ? 6 : 12}>
+          <StyledPaper>
+            <CITypography _ci="formheader" id="formheader" variant="h6" gutterBottom>
+              { title }
+            </CITypography>
+            <FormWrapper
+              addSpaces
+              schema={schema}
+              initialValues={initialValues}
+              error={error}
+              onSubmit={submitForm}
+              validate={validate}
+              renderButtons={
+                ({ handleSubmit }: { handleSubmit: () => void }) => (
+                  <>
                     {
-                      this.getRoleTable()
+                      onCancel && (
+                        <CIButton
+                          type="button"
+                          variant="contained"
+                          onClick={onCancel}
+                          _ci="cancelButton"
+                        >
+                          Cancel
+                        </CIButton>
+                      )
                     }
-                    <div className={classes.spacer} />
-                    {
-                      this.getTaskTable()
-                    }
-                  </div>
+                    <CIButton
+                      _ci="submitButton"
+                      id="submitButton"
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={submitting}
+                      onClick={handleSubmit}
+                    >
+                      {id === 'new' ? 'Activate' : 'Save'}
+                    </CIButton>
+                  </>
                 )
-            }
-          </Grid>
+              }
+            />
+          </StyledPaper>
         </Grid>
-      </div>
-    )
-  }
+        <Grid item xs={id === 'new' ? 6 : 12}>
+          {
+            id === 'new'
+              ? getCreateInstructions()
+              : (
+                <div>
+                  {
+                    getRoleTable()
+                  }
+                  <Spacer />
+                  {
+                    getTaskTable()
+                  }
+                </div>
+              )
+          }
+        </Grid>
+      </Grid>
+    </Root>
+  )
 }
 
-ClusterForm.propTypes = {
-  classes: PropTypes.object.isRequired,
-  submitForm: PropTypes.func.isRequired,
-  initialValues: PropTypes.object.isRequired,
-  title: PropTypes.string,
-}
-
-ClusterForm.defaultProps = {
-  title: 'Cluster Details',
-}
-
-export default withStyles(styles)(ClusterForm)
+export default ClusterForm
