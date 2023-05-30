@@ -24,7 +24,7 @@ const Actions = styled('div')({
 interface SimpleTableHeaderProps {
   title: string
   getTitle?: () => React.ReactNode
-  getActions: () => React.ReactNode
+  getActions?: () => React.ReactNode
   titleVariant?: string
   titleClassname?: string
 }
