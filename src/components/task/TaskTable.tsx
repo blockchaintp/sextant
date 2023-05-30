@@ -22,7 +22,7 @@ const fields = [{
   name: 'status',
 }]
 
-interface TaskTableProps {
+export interface TaskTableProps {
   data: {
     id: string
     started_at: string
