@@ -12,7 +12,14 @@ const AddIcon = settings.icons.add
 const EditIcon = settings.icons.edit
 const DeleteIcon = settings.icons.delete
 
-interface User {
+type UserData = {
+  id: string
+  username: string
+  permission: string
+  created: string
+}
+
+type User = {
   id: string
   username: string
   permission: string
@@ -87,7 +94,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, onAdd, onEdit, onDelete, i
     name: 'created',
   }]
 
-  const data = users.map((user) => ({
+  const data: UserData[] = users.map((user) => ({
     id: user.id,
     username: user.username,
     permission: user.permission,
