@@ -1,3 +1,7 @@
+/* eslint-disable quotes */
+/* eslint-disable space-infix-ops */
+/* eslint-disable no-undef */
+/* eslint-disable camelcase */
 /* eslint-disable react/jsx-fragments */
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -23,6 +27,12 @@ set -e
 SERVICEACCOUNT="sextant"
 NAMESPACE="default"
 
+# Determine kubernetes server version
+minor_version=$(kubectl version --output=yaml | awk '/serverVersion:/ { getline; while ($0 ~ /^[[:blank:]]/) { if ($0 ~ /minor:/) { split($0, a, ":"); gsub(/^[[:blank:]]+/, "", a[2]); print a[2]; exit } getline } }')
+
+# Remove '+' from the minor version
+minor_version=${minor_version%"+"}
+
 # create the service account:
 echo "creating serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
 kubectl create -n $NAMESPACE serviceaccount $SERVICEACCOUNT
@@ -35,6 +45,19 @@ if [ -n "$RBAC_API_VERSIONS" ]; then
   echo "creating clusterrolebinding: $SERVICEACCOUNT in namespace $NAMESPACE"
   kubectl create -n $NAMESPACE clusterrolebinding $SERVICEACCOUNT --clusterrole=cluster-admin --serviceaccount=$NAMESPACE:$SERVICEACCOUNT
 fi
+
+if (( minor_version > 23 )); then
+  kubectl -n $NAMESPACE create -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sextant-token
+  annotations:
+    kubernetes.io/service-account.name: sextant
+type: kubernetes.io/service-account-token
+EOF
+
+fi
 `
 
 const HELP_GET_VALUES = `#!/bin/bash -e
@@ -44,13 +67,24 @@ set -e
 SERVICEACCOUNT="sextant"
 NAMESPACE="default"
 
-# get the secret name for the service account:
-echo "getting the secret name for serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
-SECRETNAME=$(kubectl get -n $NAMESPACE serviceaccounts sextant -o "jsonpath={..secrets[0].name}")
+# Determine kubernetes server version
+minor_version=$(kubectl version --output=yaml | awk '/serverVersion:/ { getline; while ($0 ~ /^[[:blank:]]/) { if ($0 ~ /minor:/) { split($0, a, ":"); gsub(/^[[:blank:]]+/, "", a[2]); print a[2]; exit } getline } }')
+
+# Remove '+' from the minor version
+minor_version=${minor_version%"+"}
+
+if (( minor_version <= 23 )); then
+  # get the secret name for the service account:
+  echo "getting the secret name for serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
+  SECRETNAME=$(kubectl get -n $NAMESPACE serviceaccounts sextant -o "jsonpath={..secrets[0].name}")
+else
+  SECRETNAME="sextant-token"
+fi
 
 # get the base64 bearer token:
 echo "getting the bearer token for serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
 BASE64_BEARER_TOKEN=$(kubectl get secret -n $NAMESPACE $SECRETNAME -o "jsonpath={..data.token}")
+
 
 # get the base64 CA:
 echo "getting the certificate authority for serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
