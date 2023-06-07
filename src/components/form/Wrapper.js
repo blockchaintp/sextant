@@ -5,7 +5,7 @@
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable max-classes-per-file */
 import React from 'react'
-import withStyles from '@mui/styles/withStyles';
+import { styled } from '@mui/system'
 import { Formik, Field, FieldArray } from 'formik'
 import dotty from 'dotty'
 
@@ -28,42 +28,52 @@ import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
+// import FormListDialog from 'components/form/FormListDialog'
+
 import Sortable from 'components/dragdrop/Sortable'
 import Draggable from 'components/dragdrop/Draggable'
 
 import utils from './utils'
 import Validate from './validate'
 
-const styles = (theme) => ({
-  errorContainer: {
-    marginTop: theme.spacing(2),
-  },
-  errorText: {
-    color: theme.palette.error.main,
-  },
-  button: {
-    marginRight: theme.spacing(2),
-  },
-  listTableTitle: {
-    color: theme.palette.text.secondary,
-    flex: 'flexGrow',
-  },
-  listTable: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  divider: {
-    marginTop: '20px',
-    marginBottom: '20px',
-  },
-  addButtonContainer: {
-    marginTop: theme.spacing(2),
-  },
-  listTableHeader: {
-    paddingLeft: '0px',
-    display: 'flex',
-  },
+const ErrorContainer = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(2),
+}))
+
+const ErrorText = styled(Typography)(({ theme }) => ({
+  color: theme.palette.error.main,
+}))
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  marginRight: theme.spacing(2),
+}))
+
+const ListTableTitle = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  flex: 'flexGrow',
+}))
+
+const ListTable = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+}))
+
+const DividerStyled = styled(Divider)({
+  marginTop: '20px',
+  marginBottom: '20px',
 })
+
+const AddButtonContainer = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(2),
+}))
+
+// export interface CIButtonProps extends ButtonProps {
+//   _ci?: string
+// }
+
+// const CIButton = ({ _ci, ...rest }: CIButtonProps) => {
+//   return <Button {...rest} />;
+// }
 
 class FormListDialogInner extends React.Component {
   render() {
@@ -74,7 +84,6 @@ class FormListDialogInner extends React.Component {
       schema,
       initialValues,
       title,
-      classes,
     } = this.props
 
     return (
@@ -95,18 +104,16 @@ class FormListDialogInner extends React.Component {
                 handleSubmit,
               }) => (
                 <React.Fragment>
-                  <Button
+                  <StyledButton
                     _ci={`${title.replace(/\s+/g, '')}cancelBttn`}
-                    className={classes.button}
                     type="button"
                     variant="contained"
                     onClick={onCancel}
                   >
                     Cancel
-                  </Button>
-                  <Button
+                  </StyledButton>
+                  <StyledButton
                     _ci={`${title.replace(/\s+/g, '')}saveBttn`}
-                    className={classes.button}
                     type="button"
                     variant="contained"
                     color="primary"
@@ -114,7 +121,7 @@ class FormListDialogInner extends React.Component {
                     onClick={handleSubmit}
                   >
                     Save
-                  </Button>
+                  </StyledButton>
                 </React.Fragment>
               )
             }
@@ -125,7 +132,7 @@ class FormListDialogInner extends React.Component {
   }
 }
 
-const FormListDialog = withStyles(styles)(FormListDialogInner)
+const FormListDialog = FormListDialogInner
 
 class FormListInner extends React.Component {
   state = {
@@ -208,7 +215,6 @@ class FormListInner extends React.Component {
     const {
       item,
       formProps,
-      classes,
       disabled,
     } = this.props
 
@@ -265,30 +271,28 @@ class FormListInner extends React.Component {
     })
 
     const addButton = (
-      <div className={classes.addButtonContainer}>
-        <Button
-          className={classes.button}
+      <AddButtonContainer>
+        <StyledButton
           variant="contained"
           onClick={this.onAdd}
           size="small"
         >
           Add
           <AddIcon />
-        </Button>
-      </div>
+        </StyledButton>
+      </AddButtonContainer>
     )
 
     const changePasswordButton = (
       <div>
-        <Button
-          className={classes.button}
+        <StyledButton
           variant="text"
           onClick={this.onAdd}
           size="medium"
           endIcon={<KeyIcon />}
         >
           Change Password
-        </Button>
+        </StyledButton>
       </div>
     )
 
@@ -306,6 +310,8 @@ class FormListInner extends React.Component {
       title, skip, helperText, list,
     } = item
 
+    console.log('formlistinner: ', this.props)
+
     if (item.id === 'changePassword') {
       return (
         <>
@@ -322,14 +328,14 @@ class FormListInner extends React.Component {
       )
     }
     return (
-      <div className={classes.listTable}>
+      <ListTable>
         <SimpleTableHeader
-          className={classes.listTableHeader}
+          sx={{ paddingLeft: '0px', display: 'flex' }}
           // eslint-disable-next-line react/no-unstable-nested-components
           getTitle={() => (
             <React.Fragment>
-              <Typography noWrap className={classes.listTableTitle} variant="subtitle1">{ skip ? null : title }</Typography>
-              <Typography className={classes.listTableTitle} variant="caption">{ helperText }</Typography>
+              <ListTableTitle noWrap variant="subtitle1">{ skip ? null : title }</ListTableTitle>
+              <ListTableTitle variant="caption">{ helperText }</ListTableTitle>
             </React.Fragment>
           )}
         />
@@ -371,12 +377,12 @@ class FormListInner extends React.Component {
           onCancel={this.onCancel}
           onSave={this.onSave}
         />
-      </div>
+      </ListTable>
     )
   }
 }
 
-const FormList = withStyles(styles)(FormListInner)
+const FormList = FormListInner
 
 class FormWrapperInner extends React.Component {
   state = {
@@ -397,6 +403,8 @@ class FormWrapperInner extends React.Component {
     const {
       exists,
     } = this.props
+
+    console.log('getItem: ', this.props)
 
     const isNew = this.props.dbId
     const hooks = formProps.hooks || {}
@@ -539,14 +547,10 @@ class FormWrapperInner extends React.Component {
   // leave up to the user to put fields into columns
   // that divide nicely into 12
   getRow(row, formProps, i) {
-    const {
-      classes,
-    } = this.props
-
     if (typeof (row) === 'string') {
       return ([
         <Grid item xs={12} key={i}>
-          <Divider className={classes.divider} />
+          <DividerStyled />
 
           {
             row !== '-' && (
@@ -592,7 +596,6 @@ class FormWrapperInner extends React.Component {
       renderForm,
       onSubmit,
       error,
-      classes,
       validate,
       hooks = {},
     } = this.props
@@ -606,6 +609,8 @@ class FormWrapperInner extends React.Component {
     } catch (e) {
       console.error(e)
     }
+
+    console.log('whoa', this.props)
 
     return (
       <Formik
@@ -680,25 +685,25 @@ class FormWrapperInner extends React.Component {
                 </Grid>
                 {
                   this.state.hasSubmitted && Object.keys(errors).length > 0 && (
-                    <div className={classes.errorContainer}>
-                      <Typography className={classes.errorText}>
+                    <ErrorContainer>
+                      <ErrorText>
                         There are errors in the form:
-                      </Typography>
-                      <ul className={classes.errorText}>
+                      </ErrorText>
+                      <ul>
                         {
                           Object.keys(flatErrors).map((key) => (
                             <li key={key.id}>
-                              <Typography className={classes.errorText}>
+                              <ErrorText>
                                 { key }
                                 :
                                 {' '}
                                 { flatErrors[key] }
-                              </Typography>
+                              </ErrorText>
                             </li>
                           ))
                         }
                       </ul>
-                    </div>
+                    </ErrorContainer>
                   )
                 }
               </form>
@@ -720,6 +725,6 @@ class FormWrapperInner extends React.Component {
   }
 }
 
-const FormWrapper = withStyles(styles)(FormWrapperInner)
+const FormWrapper = FormWrapperInner
 
 export default FormWrapper
