@@ -17,7 +17,7 @@ interface SimpleTableActionsProps {
   //   name?: string
   // }
   item: {
-    [key: string]: string | number | object
+    [key: string]: string | number | object | boolean
   }
   actions: {
     icon: React.ReactElement<any, any> | React.ComponentType<any>;
