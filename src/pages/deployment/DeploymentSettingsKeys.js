@@ -1,18 +1,17 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
-import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
+import { styled } from '@mui/system'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import IconButton from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
-
-import Button from '@mui/material/Button'
-
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
+import {
+  Grid,
+  Paper,
+  IconButton,
+  Tooltip,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '@mui/material'
 
 import TextField from '@mui/material/TextField'
 
@@ -24,22 +23,52 @@ import settings from 'settings'
 const AddIcon = settings.icons.add
 const ClipboardIcon = settings.icons.clipboard
 
-const styles = (theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    margin: theme.spacing(2),
-  },
-  formTextContainer: {
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-  },
-  smallText: {
-    fontSize: '0.7em',
-  },
+const Root = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+}))
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(2),
+  margin: theme.spacing(2),
+}))
+
+const FormTextContainer = styled('div')(({ theme }) => ({
+  paddingLeft: theme.spacing(1),
+  paddingRight: theme.spacing(1),
+}))
+
+const SmallText = styled('span')({
+  fontSize: '0.7em',
 })
+
+const simpleTableActions = (item, snackbarMessage) => {
+  const copyToClipboard = () => {
+    snackbarMessage('Copied to clipboard')
+  }
+
+  return (
+    <div>
+      <CopyToClipboard text={item.publicKey} onCopy={copyToClipboard}>
+        <Tooltip title="Copy to clipboard" placement="top">
+          <IconButton size="large">
+            <ClipboardIcon />
+          </IconButton>
+        </Tooltip>
+      </CopyToClipboard>
+    </div>
+  )
+}
+
+const simpleTableHeaderActions = () => (
+  <Button
+    variant="contained"
+    color="primary"
+    onClick={() => this.setFormOpen(true)}
+  >
+    Add
+    <AddIcon />
+  </Button>
+)
 
 class DeploymentSettingsKeys extends React.Component {
   setFormOpen(value) {
@@ -53,7 +82,6 @@ class DeploymentSettingsKeys extends React.Component {
 
   getAddRemoteKeyDialog() {
     const {
-      classes,
       addEnrolledKeyDialogOpen,
       addEnrolledKeyValue,
       setAddEnrolledKeyValue,
@@ -69,7 +97,7 @@ class DeploymentSettingsKeys extends React.Component {
       >
         <DialogTitle id="alert-dialog-title">Add Enrolled Key</DialogTitle>
         <DialogContent>
-          <div className={classes.formTextContainer}>
+          <FormTextContainer>
             <TextField
               id="remote-key-add"
               label="Remote Key"
@@ -81,7 +109,7 @@ class DeploymentSettingsKeys extends React.Component {
               value={addEnrolledKeyValue}
               onChange={(e) => setAddEnrolledKeyValue(e.target.value)}
             />
-          </div>
+          </FormTextContainer>
 
         </DialogContent>
         <DialogActions>
@@ -98,9 +126,7 @@ class DeploymentSettingsKeys extends React.Component {
 
   getKeyManagerTable() {
     const {
-      classes,
       keyManagerKeys,
-      snackbarMessage,
     } = this.props
 
     const fields = [{
@@ -116,9 +142,9 @@ class DeploymentSettingsKeys extends React.Component {
       publicKey: entry.publicKey,
       name: entry.name,
       key: (
-        <span className={classes.smallText}>
+        <SmallText>
           { entry.publicKey }
-        </span>
+        </SmallText>
       ),
     }))
 
@@ -130,22 +156,7 @@ class DeploymentSettingsKeys extends React.Component {
         <SimpleTable
           data={data}
           fields={fields}
-          getActions={(item) => (
-            <div>
-              <CopyToClipboard
-                text={item.publicKey}
-                onCopy={() => {
-                  snackbarMessage('Copied to clipboard')
-                }}
-              >
-                <Tooltip title="Copy to clipboard" placement="top">
-                  <IconButton size="large">
-                    <ClipboardIcon />
-                  </IconButton>
-                </Tooltip>
-              </CopyToClipboard>
-            </div>
-          )}
+          getActions={simpleTableActions}
         />
       </div>
     );
@@ -153,7 +164,6 @@ class DeploymentSettingsKeys extends React.Component {
 
   getEnrolledKeysTable() {
     const {
-      classes,
       enrolledKeys,
     } = this.props
 
@@ -166,9 +176,9 @@ class DeploymentSettingsKeys extends React.Component {
       id: entry.publicKey,
       publicKey: entry.publicKey,
       key: (
-        <span className={classes.smallText}>
+        <SmallText>
           { entry.publicKey }
-        </span>
+        </SmallText>
       ),
     }))
 
@@ -176,16 +186,7 @@ class DeploymentSettingsKeys extends React.Component {
       <div>
         <SimpleTableHeader
           title="Allowed Keys"
-          getActions={() => (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => this.setFormOpen(true)}
-            >
-              Add
-              <AddIcon />
-            </Button>
-          )}
+          getActions={simpleTableHeaderActions}
         />
         <SimpleTable
           data={data}
@@ -210,32 +211,24 @@ class DeploymentSettingsKeys extends React.Component {
   }
 
   render() {
-    const {
-      classes,
-    } = this.props
-
     return (
-      <div className={classes.root}>
+      <Root>
         <Grid container spacing={3}>
           <Grid item xs={6}>
-            <Paper className={classes.paper}>
+            <StyledPaper>
               { this.getKeyManagerTable() }
-            </Paper>
+            </StyledPaper>
           </Grid>
           <Grid item xs={6}>
-            <Paper className={classes.paper}>
+            <StyledPaper>
               { this.getEnrolledKeysTable() }
-            </Paper>
+            </StyledPaper>
           </Grid>
         </Grid>
         { this.getAddRemoteKeyDialog() }
-      </div>
+      </Root>
     )
   }
 }
 
-DeploymentSettingsKeys.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(DeploymentSettingsKeys)
+export default DeploymentSettingsKeys
