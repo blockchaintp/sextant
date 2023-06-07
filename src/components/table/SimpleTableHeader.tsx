@@ -5,7 +5,17 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material'
+import {  ToolbarProps } from '@mui/material/Toolbar'
 import {  TypographyProps } from '@mui/material/Typography'
+
+type SimpleTableHeaderProps = ToolbarProps & {
+  getTitle?: () => React.ReactNode
+  getActions?: () => React.ReactNode
+  title?: string
+  titleVariant?: string
+  titleClassname?: string
+  sx?: React.CSSProperties
+}
 
 const ToolbarRoot = styled(Toolbar)(({ theme }) => ({
   paddingRight: theme.spacing(1),
@@ -20,14 +30,6 @@ const Actions = styled('div')({
   justifyContent: 'right',
   alignItems: 'flex-end',
 })
-
-interface SimpleTableHeaderProps {
-  title: string
-  getTitle?: () => React.ReactNode
-  getActions?: () => React.ReactNode
-  titleVariant?: string
-  titleClassname?: string
-}
 
 const SimpleTableHeader: React.FC<SimpleTableHeaderProps> = ({
   title,
