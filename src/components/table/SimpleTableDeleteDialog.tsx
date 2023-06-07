@@ -10,10 +10,11 @@ import {
 import { ButtonProps } from '@mui/material/Button'
 
 type SimpleTableDeleteDialogProps = {
-    open: boolean,
-    onCancel: () => void,
-    onConfirm: () => void,
-    title: string,
+    open: boolean
+    onCancel: () => void
+    onConfirm: () => void
+    title: string
+    resourceType?: string
 }
 
 interface CIButtonProps extends ButtonProps {
