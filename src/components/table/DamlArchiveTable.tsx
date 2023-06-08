@@ -10,6 +10,23 @@ import {
   Typography,
 } from '@mui/material'
 
+type DamlArchiveTableProps = {
+  data: {
+    id: string
+    [key: string]: string | string[]
+  }[]
+  fields: {
+    name: string
+    title: string
+    numeric?: boolean
+  }[]
+  getActions?: (dataRow: any) => React.ReactNode
+  onRowClick?: (event: React.MouseEvent<HTMLTableRowElement, MouseEvent>, id: string) => void
+  pagination?: boolean
+  hideHeader?: boolean
+  hideHeaderIfEmpty?: []
+}
+
 const Wrapper = styled('div')({
   width: '100%',
 })
@@ -29,23 +46,6 @@ const AutoTypography = styled(Typography)({
   width: 'auto',
   wordWrap: 'break-word',
 })
-
-interface DamlArchiveTableProps{
-  data: {
-    id: string
-    [key: string]: string | string[]
-  }[]
-  fields: {
-    name: string
-    title: string
-    numeric?: boolean
-  }[]
-  getActions?: (dataRow: any) => React.ReactNode
-  onRowClick?: (event: React.MouseEvent<HTMLTableRowElement, MouseEvent>, id: string) => void
-  pagination?: boolean
-  hideHeader?: boolean
-  hideHeaderIfEmpty?: []
-}
 
 const DamlArchiveTable: React.FC<DamlArchiveTableProps> = ({
   data,
@@ -114,7 +114,7 @@ const DamlArchiveTable: React.FC<DamlArchiveTableProps> = ({
                         )
                       }
                       if (Array.isArray(dataRow[field.name])) {
-                        (dataRow[field.name] as string[]).sort();
+                        (dataRow[field.name] as string[]).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
                       }
                       return (
                         <AutoTableCell key={field.name} align={field.numeric ? 'right' : 'left'}>
