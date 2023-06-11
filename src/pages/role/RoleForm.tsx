@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { styled } from '@mui/system';
+import { styled } from '@mui/system'
 import {
   Button,
   Dialog,
@@ -19,10 +18,10 @@ import {
 import AutoComplete from '../../components/autocomplete/AutoComplete'
 
 interface RenderSuggestionParams {
-  suggestion: User;
-  query: string;
-  getHighlightedText: (text: string, query: string) => string;
-  isHighlighted: boolean;
+  suggestion: User
+  query: string
+  getHighlightedText: (text: string, query: string) => string
+  isHighlighted: boolean
 }
 
 
@@ -37,7 +36,7 @@ interface RoleFormProps {
   title: string
   open: boolean
   level: string
-  search: string | ""
+  search: string
   userList: User[]
   setSearch: (search: string) => void
   setLevel: (level: string) => void
@@ -80,7 +79,7 @@ const RoleForm: React.FC<RoleFormProps> = ({
       aria-describedby="alert-dialog-description"
       onKeyPress={(event) => {
         if (event.key === '13' || event.key === 'Enter') {
-          event.preventDefault();
+          event.preventDefault()
         }
       }}
     >

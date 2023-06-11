@@ -40,7 +40,7 @@ export type RoleTableProps = {
   onEdit: (value: string) => void
   onCancel: () => void
   open: boolean
-  search: string | ""
+  search: string
   level: string
   users: User[]
   userList: User[]
