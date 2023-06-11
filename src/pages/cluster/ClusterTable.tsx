@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useCallback } from 'react'
 import settings from '../../settings'
 import rbac from '../../utils/rbac'
 import { styled } from '@mui/material/styles'
@@ -27,7 +27,7 @@ type ActionData = {
   // action: 'create' | 'update' | 'delete'
   provision_type: string
   status: string
-  task: JSX.Element
+  task: React.JSX.Element
 }
 
 type User = {
@@ -121,7 +121,7 @@ const [deleteConfirmOpen, setDeleteConfirmOpen] = React.useState(false)
   }]
 
   function isAction(action: string): action is Action {
-    return ['create', 'update', 'delete'].includes(action);
+    return ['create', 'update', 'delete'].includes(action)
   }
 
   const data: ActionData[] = clusters.map((cluster) => {
@@ -162,63 +162,73 @@ const [deleteConfirmOpen, setDeleteConfirmOpen] = React.useState(false)
 
   const addCluster = () => onAdd('remote')
 
-  const headerActions = (
-    <HeaderActions>
-      <div>
-        <CIButton
-          _ci="addbutton"
-          id="addButton"
-          variant="contained"
-          color="primary"
-          onClick={addCluster}
-          disabled={!canCreateCluster}
-        >
-          Add
-          <AddIcon />
-        </CIButton>
-      </div>
-    </HeaderActions>
-  )
+  const getActions = useCallback((cluster: ActionData) => {
+      const buttons = []
 
-  const getActions = (cluster: ActionData) => {
-    const buttons = []
+      if (rbac({
+        user,
+        action: {
+          resource_type: 'cluster',
+          resource_id: cluster.id,
+          method: 'write',
+        },
+      })) {
+        buttons.push({
+          title: getClusterIconTitle(cluster.status),
+          icon: getClusterIcon(cluster.status, settings),
+          handler: (item: ActionData) => openDeleteDialog(item),
+        })
+        buttons.push({
+          title: 'Edit',
+          icon: EditIcon,
+          handler: (item: ActionData) => onEdit(item.id),
+        })
+      }
 
-    if (rbac({
-      user,
-      action: {
-        resource_type: 'cluster',
-        resource_id: cluster.id,
-        method: 'write',
-      },
-    })) {
       buttons.push({
-        title: getClusterIconTitle(cluster.status),
-        icon: getClusterIcon(cluster.status, settings),
-        handler: (item: ActionData) => openDeleteDialog(item),
+        title: 'View',
+        icon: ViewIcon,
+        disabled: (cluster.status === 'inactive' || cluster.status === 'error'),
+        handler: (item: ActionData) => onViewStatus(item.id),
       })
+
       buttons.push({
-        title: 'Edit',
-        icon: EditIcon,
-        handler: (item: ActionData) => onEdit(item.id),
+        title: 'Deployments',
+        icon: DeploymentIcon,
+        disabled: cluster.status === 'inactive',
+        handler: (item: ActionData) => viewDeployments(item.id),
       })
+
+      return buttons
+    }, [onEdit, onViewStatus, viewDeployments, user])
+
+    const headerActions = () =>
+        <HeaderActions>
+          <div>
+            <CIButton
+              _ci="addbutton"
+              id="addButton"
+              variant="contained"
+              color="primary"
+              onClick={addCluster}
+              disabled={!canCreateCluster}
+            >
+              Add
+              <AddIcon />
+            </CIButton>
+          </div>
+        </HeaderActions>
+
+
+    const simpleTableActions = (item: ActionData) => {
+      if (item.clusterData.task && item.clusterData.task.status === 'running') return null
+      return (
+        <SimpleTableActions
+          item={item}
+          actions={getActions(item)}
+        />
+      )
     }
-
-    buttons.push({
-      title: 'View',
-      icon: ViewIcon,
-      disabled: (cluster.status === 'inactive' || cluster.status === 'error'),
-      handler: (item: ActionData) => onViewStatus(item.id),
-    })
-
-    buttons.push({
-      title: 'Deployments',
-      icon: DeploymentIcon,
-      disabled: cluster.status === 'inactive',
-      handler: (item: ActionData) => viewDeployments(item.id),
-    })
-
-    return buttons
-  }
 
   const getItemStatus = (item: ActionData) => (item.status === 'inactive' ? ' permanently' : '')
 
@@ -226,21 +236,13 @@ const [deleteConfirmOpen, setDeleteConfirmOpen] = React.useState(false)
     <div id="tableHeader_Clusters">
       <SimpleTableHeader
         title="Clusters"
-        getActions={() => headerActions}
+        getActions={headerActions}
       />
       <SimpleTable
         pagination
         data={data}
         fields={fields}
-        getActions={(item: ActionData) => {
-          if (item.clusterData.task && item.clusterData.task.status === 'running') return null
-          return (
-            <SimpleTableActions
-              item={item}
-              actions={getActions(item)}
-            />
-          )
-        }}
+        getActions={simpleTableActions}
       />
       <SimpleTableTripleDeleteDialog
         resource={deleteConfirmItem}
