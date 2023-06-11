@@ -21,7 +21,7 @@ import Draggable from '../dragdrop/Draggable'
 import FormListDialog from './FormListDialog'
 
 type RenderFunctionProps = {
-  isDragging: boolean;
+  isDragging: boolean
 }
 
 type Table = {
@@ -32,7 +32,7 @@ type Table = {
   id?: number
   index?: string
   _item?: unknown
-  [key: string]: any; // Add an index signature to allow any string key
+  [key: string]: any
 }
 
 type Item = {
@@ -232,6 +232,23 @@ const FormListInner: React.FC<FormListProps> = ({
         handler: (currentData: Table & { id?: number, index?: string, _item?: any }) => onEdit(currentData._item),
       }]
 
+      const simpleTableHeaderTitle = () => (
+        <>
+          <ListTableTitle noWrap variant="subtitle1">{ skip ? null : title }</ListTableTitle>
+          <ListTableTitle variant="caption">{ helperText }</ListTableTitle>
+        </>
+      )
+
+      const simpleTableActions = (currentItem: Item) => {
+        if (disabled) return null
+        return (
+          <SimpleTableActions
+            item={currentItem}
+            actions={actions}
+          />
+        )
+      }
+
       const {
         title, skip, helperText, list,
       } = item
@@ -256,27 +273,12 @@ const FormListInner: React.FC<FormListProps> = ({
       <ListTable>
         <SimpleTableHeader
           sx={{ paddingLeft: '0px', display: 'flex' }}
-          // eslint-disable-next-line react/no-unstable-nested-components
-          getTitle={() => (
-            <>
-              <ListTableTitle noWrap variant="subtitle1">{ skip ? null : title }</ListTableTitle>
-              <ListTableTitle variant="caption">{ helperText }</ListTableTitle>
-            </>
-          )}
+          getTitle={simpleTableHeaderTitle}
         />
         <SimpleTable
           data={data}
           fields={fields}
-          // eslint-disable-next-line react/no-unstable-nested-components
-          getActions={(currentItem: Item) => {
-            if (disabled) return null
-            return (
-              <SimpleTableActions
-                item={currentItem}
-                actions={actions}
-              />
-            )
-          }}
+          getActions={simpleTableActions}
           hideHeaderIfEmpty
         />
 

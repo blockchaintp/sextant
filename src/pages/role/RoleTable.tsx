@@ -117,7 +117,7 @@ const RoleTable: React.FC<RoleTableProps> = ({
     role: role.permission,
   }))
 
-  const headerActions = (
+  const simpleTableHeaderActions = () =>
     <HeaderActionsWrapper>
       <Button
         onClick={() => setOpen(true)}
@@ -128,7 +128,15 @@ const RoleTable: React.FC<RoleTableProps> = ({
         <AddIcon />
       </Button>
     </HeaderActionsWrapper>
-  )
+
+  const simpleTableActions = (item: ActionData) => {
+    return(
+      <SimpleTableActions
+        item={item}
+        actions={getActions()}
+      />
+    )
+  }
 
   const getActions = () => ([
       {
@@ -147,19 +155,12 @@ const RoleTable: React.FC<RoleTableProps> = ({
     <div>
       <SimpleTableHeader
         title={title || 'Roles'}
-        getActions={() => headerActions}
+        getActions={simpleTableHeaderActions}
       />
       <SimpleTable
         data={data}
         fields={fields}
-        getActions={(item: ActionData) => {
-          return(
-            <SimpleTableActions
-              item={item}
-              actions={getActions()}
-            />
-          )
-        }}
+        getActions={simpleTableActions}
       />
       <RoleForm
         title={title || 'Role'}
