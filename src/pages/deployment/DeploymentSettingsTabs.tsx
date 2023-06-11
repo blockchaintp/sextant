@@ -69,7 +69,7 @@ const DeploymentSettings: React.FC<DeploymentSettingsProps> = ({
         >
           {
             pages.map((page, i) => (
-              <Tab label={page.title} key={i} />
+              <Tab label={page.title} key={page.id} />
             ))
           }
         </Tabs>

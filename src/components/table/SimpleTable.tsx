@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { styled } from '@mui/system';
+import * as React from 'react'
+import { styled } from '@mui/system'
 import {
   Table,
   TableBody,
@@ -10,8 +10,8 @@ import {
   TableSortLabel,
   Tooltip,
 } from '@mui/material'
-import { TableCellProps } from '@mui/material/TableCell';
-import { TableRowProps } from '@mui/material/TableRow';
+import { TableCellProps } from '@mui/material/TableCell'
+import { TableRowProps } from '@mui/material/TableRow'
 
 export type SimpleTableProps = {
   data: any[],
@@ -34,44 +34,44 @@ export interface CustomTableRowProps extends TableRowProps {
 }
 
 const CustomTableCell = ({ _ci, ...rest }: CustomTableCellProps) => {
-  return <TableCell {...rest} />;
+  return <TableCell {...rest} />
 }
 
 const CustomTableRow = ({ _ci, ...rest }: CustomTableRowProps) => {
-  return <TableRow {...rest} />;
+  return <TableRow {...rest} />
 }
 
 const TableWrapper = styled('div')({
   width: '100%',
   overflowX: 'auto',
-});
+})
 
 const AutoCell = styled(TableCell)({
   width: 'auto',
-});
+})
 
 function desc<T>(a: T, b: T, orderBy: keyof T): number {
     if (b[orderBy] < a[orderBy]) {
-      return -1;
+      return -1
     }
     if (b[orderBy] > a[orderBy]) {
-      return 1;
+      return 1
     }
-    return 0;
+    return 0
   }
 
 function stableSort(array: any[], compareFunc: Function) {
-    const stabilizedThis = array.map((element, index) => [element, index]);
+    const stabilizedThis = array.map((element, index) => [element, index])
     stabilizedThis.sort((a, b) => {
-      const order = compareFunc(a[0], b[0]);
-      if (order !== 0) return order;
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((element) => element[0]);
+      const order = compareFunc(a[0], b[0])
+      if (order !== 0) return order
+      return a[1] - b[1]
+    })
+    return stabilizedThis.map((element) => element[0])
   }
 
   function getCompareFunc<T>(order: string, orderBy: keyof T) {
-    return order === 'desc' ? (a: T, b: T) => desc(a, b, orderBy) : (a: T, b: T) => -desc(a, b, orderBy);
+    return order === 'desc' ? (a: T, b: T) => desc(a, b, orderBy) : (a: T, b: T) => -desc(a, b, orderBy)
   }
 
 const SimpleTable: React.FC<SimpleTableProps> = (props) => {
@@ -84,35 +84,35 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
     hideHeader,
     hideHeaderIfEmpty,
     withSorting = true,
-  } = props;
+  } = props
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(25);
-  const [order, setOrder] = React.useState<"asc" | "desc">('asc');
-  const [orderBy, setOrderBy] = React.useState('name');
+  const [page, setPage] = React.useState(0)
+  const [rowsPerPage, setRowsPerPage] = React.useState(25)
+  const [order, setOrder] = React.useState<"asc" | "desc">('asc')
+  const [orderBy, setOrderBy] = React.useState('name')
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
+    setPage(newPage)
   }
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
-    const newRowsPerPage = parseInt(event.target.value);
-    setRowsPerPage(newRowsPerPage);
+    const newRowsPerPage = parseInt(event.target.value)
+    setRowsPerPage(newRowsPerPage)
   }
 
   const handleRequestSort = (event: React.MouseEvent<HTMLTextAreaElement | HTMLInputElement>, property: string) => {
-    const newOrderBy = property;
-    let newOrder: "asc" | "desc" = 'desc';
+    const newOrderBy = property
+    let newOrder: "asc" | "desc" = 'desc'
     if (orderBy === property && order === 'desc') {
-      newOrder = 'asc';
+      newOrder = 'asc'
     }
-    setOrder(newOrder);
-    setOrderBy(newOrderBy);
-  };
+    setOrder(newOrder)
+    setOrderBy(newOrderBy)
+  }
 
   const createSortHandler = (property: string) => (event: React.MouseEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    handleRequestSort(event, property);
-  };
+    handleRequestSort(event, property)
+  }
 
   return (
     <div>
@@ -123,8 +123,8 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
               <TableHead>
                 <TableRow>
                   {
-                    fields.map((field, i) => {
-                      const tooltipPlacement = field.numeric ? 'bottom-end' : 'bottom-start';
+                    fields.map((field) => {
+                      const tooltipPlacement = field.numeric ? 'bottom-end' : 'bottom-start'
                       const content = withSorting ? (
                         <Tooltip
                           title="Sort"
@@ -141,16 +141,16 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
                         </Tooltip>
                       ) : (
                         <div>{field.title}</div>
-                      );
+                      )
                       return (
                         <TableCell
-                          key={i}
+                          key={field.name}
                           align={field.numeric ? 'right' : 'left'}
                           sortDirection={orderBy === field.name ? order : false}
                         >
                           {content}
                         </TableCell>
-                      );
+                      )
                     })
                   }
                   {
@@ -170,8 +170,8 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
                 <CustomTableRow
                   hover
                   onClick={(event) => {
-                    if (!onRowClick) return;
-                    onRowClick(event, dataRow.id);
+                    if (!onRowClick) return
+                    onRowClick(event, dataRow.id)
                   }}
                   tabIndex={-1}
                   key={dataRow.id}
@@ -183,7 +183,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
                       <CustomTableCell
                         _ci={`${dataRow.username || dataRow.name}${dataRow[field.name]}`}
                         id={`tableCell_${dataRow.username || dataRow.name}${dataRow[field.name]}`}
-                        key={i}
+                        key={`${dataRow.username || dataRow.name}${dataRow[field.name]}`}
                         align={field.numeric ? 'right' : 'left'}
                       >
                         {dataRow[field.name] || (dataRow.deploymentData ? dataRow.deploymentData[field.name] : null)}
@@ -221,7 +221,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
         )
       }
     </div>
-    );
+    )
 }
 
-export default SimpleTable;
+export default SimpleTable

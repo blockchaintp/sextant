@@ -85,7 +85,7 @@ const RadioField: React.FC<RadioFieldProps> = ({
         row={!!item.row}
       >
         {
-          (item.options || []).map((option, i) => {
+          (item.options || []).map((option) => {
             option = typeof (option) === 'string' ? {
               title: option,
               value: option,
@@ -93,7 +93,7 @@ const RadioField: React.FC<RadioFieldProps> = ({
 
             return (
               <FormControlLabel
-                key={i}
+                key={option.title}
                 label={option.title}
                 control={(
                   <CIRadio

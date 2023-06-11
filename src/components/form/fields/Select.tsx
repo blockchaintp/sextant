@@ -1,32 +1,16 @@
 import * as React from 'react'
-import { styled } from '@mui/system';
-import Select from '@mui/material/Select'
-import FormControl from '@mui/material/FormControl'
-import MenuItem from '@mui/material/MenuItem'
-import FormLabel from '@mui/material/FormLabel';
+import { styled } from '@mui/system'
+import {
+  Select,
+  FormControl,
+  MenuItem,
+  FormLabel,
+} from '@mui/material'
+import { SelectProps } from '@mui/material/Select'
 
 import HelperText from './HelperText'
 
-const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  display: 'flex',
-  marginTop: theme.spacing(2),
-}))
-
-interface Option {
-  title: string
-  value: string
-  blurb?: string
-}
-
-interface Item {
-  alternateText: string
-  helperText: string
-  title: string
-  options: Option[]
-  extraProps?: object
-}
-
-interface SelectFieldProps {
+type SelectFieldProps = {
   field: {
     name: string
     value: string
@@ -54,6 +38,33 @@ interface SelectFieldProps {
       }
     }
   }
+}
+
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  display: 'flex',
+  marginTop: theme.spacing(2),
+}))
+
+interface Option {
+  title: string
+  value: string
+  blurb?: string
+}
+
+interface Item {
+  alternateText: string
+  helperText: string
+  title: string
+  options: Option[]
+  extraProps?: object
+}
+
+export interface CISelectProps extends SelectProps {
+  _ci?: string
+}
+
+const CISelect = ({ _ci, ...rest }: CISelectProps) => {
+  return <Select {...rest} />;
 }
 
 const SelectField: React.FC<SelectFieldProps> = ({
@@ -85,8 +96,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
     return (
       <StyledFormControl error={!!(touched && error)}>
         <FormLabel htmlFor={name}>{ title }</FormLabel>
-        <Select
-          // @ts-ignore
+        <CISelect
           _ci={name}
           id={`select_${name}`}
           value={value || ''}
@@ -99,7 +109,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
           {...extraProps}
         >
           {
-            (item.options || []).map((option, i) => {
+            (item.options || []).map((option) => {
               option = typeof (option) === 'string' ? {
                 title: option,
                 value: option,
@@ -107,7 +117,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
 
               return (
                 <MenuItem
-                  key={i}
+                  key={option.value}
                   value={option.value}
                 >
                   { option.title }
@@ -115,7 +125,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
               )
             })
           }
-        </Select>
+        </CISelect>
         <HelperText
           helperText={error || (item.alternateText ? blurbText(formProps.values.sawtooth.consensus) : item.helperText)}
           error={!!error}

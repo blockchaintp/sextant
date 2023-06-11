@@ -56,7 +56,7 @@ const MultipleCheckboxField: React.FC<MultipleCheckboxFieldProps> = ({
     <StyledFormControl>
       <FormLabel component="legend">{title}</FormLabel>
       <FormGroup row={!!item.row}>
-        {(item.options || []).map((option, i) => {
+        {(item.options || []).map((option) => {
           if (typeof option === 'string') {
             option = {
               title: option,
@@ -68,10 +68,10 @@ const MultipleCheckboxField: React.FC<MultipleCheckboxFieldProps> = ({
 
           return (
             <FormControlLabel
-              key={i}
+              key={`${name}`}
               control={
                 <Checkbox
-                  name={`${name}-${i}`}
+                  name={`${name}`}
                   checked={checked}
                   disabled={disabled}
                   onChange={() => {
@@ -83,7 +83,7 @@ const MultipleCheckboxField: React.FC<MultipleCheckboxFieldProps> = ({
                     }
                     setFieldValue(name, newValue);
                   }}
-                  value={`${name}-${i}`}
+                  value={`${name}`}
                   {...extraProps}
                 />
               }

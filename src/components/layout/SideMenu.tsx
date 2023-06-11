@@ -60,10 +60,10 @@ const SideMenu: React.FC<SideMenuProps> = ({ items, openPage }) => {
   }
 
   const getMenu = () => {
-    return items.map((item: SideMenuItem, i) => {
+    return items.map((item: SideMenuItem) => {
       if (!item.title) {
         return (
-          <Divider key={i} />
+          <Divider />
         )
       }
 
