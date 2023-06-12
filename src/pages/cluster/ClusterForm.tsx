@@ -27,7 +27,7 @@ NAMESPACE="default"
 minor_version=$(kubectl version --output=yaml | awk '/serverVersion:/ { getline; while ($0 ~ /^[[:blank:]]/) { if ($0 ~ /minor:/) { split($0, a, ":"); gsub(/^[[:blank:]]+/, "", a[2]); print a[2]; exit } getline } }')
 
 # Remove '+' from the minor version
-minor_version=${minor_version%"+"}
+minor_version=\${minor_version%"+"}
 
 # create the service account:
 echo "creating serviceaccount: $SERVICEACCOUNT in namespace $NAMESPACE"
@@ -67,7 +67,7 @@ NAMESPACE="default"
 minor_version=$(kubectl version --output=yaml | awk '/serverVersion:/ { getline; while ($0 ~ /^[[:blank:]]/) { if ($0 ~ /minor:/) { split($0, a, ":"); gsub(/^[[:blank:]]+/, "", a[2]); print a[2]; exit } getline } }')
 
 # Remove '+' from the minor version
-minor_version=${minor_version%"+"}
+minor_version=\${minor_version%"+"}
 
 if (( minor_version <= 23 )); then
   # get the secret name for the service account:
