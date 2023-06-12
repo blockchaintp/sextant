@@ -89,13 +89,13 @@ const CITypography = ({ _ci, ...rest }: CITypographyProps) => {
 }
 
 // this is here to prevent the bug sxt-985
-function handleDocumentKeyDown(event) {
-  if (event.key === 'Enter') {
-    event.preventDefault();
+const handleDocumentKeyDown = (e: React.KeyboardEvent<Element>): void => {
+  if (e.key === 'Enter') {
+    e.preventDefault()
   }
 }
 
-document.addEventListener('keydown', handleDocumentKeyDown);
+document.addEventListener('keydown', handleDocumentKeyDown as unknown as (e: KeyboardEvent) => void)
 
 const DeploymentForm: React.FC<DeploymentFormProps> = ({
   roles,
