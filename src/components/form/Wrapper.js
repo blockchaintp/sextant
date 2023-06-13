@@ -28,8 +28,6 @@ import SimpleTableDeleteDialog from 'components/table/SimpleTableDeleteDialog'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
-// import FormListDialog from 'components/form/FormListDialog'
-
 import Sortable from 'components/dragdrop/Sortable'
 import Draggable from 'components/dragdrop/Draggable'
 
@@ -66,14 +64,6 @@ const DividerStyled = styled(Divider)({
 const AddButtonContainer = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(2),
 }))
-
-// export interface CIButtonProps extends ButtonProps {
-//   _ci?: string
-// }
-
-// const CIButton = ({ _ci, ...rest }: CIButtonProps) => {
-//   return <Button {...rest} />;
-// }
 
 class FormListDialogInner extends React.Component {
   render() {
