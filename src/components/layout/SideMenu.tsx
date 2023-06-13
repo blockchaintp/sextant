@@ -63,7 +63,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ items, openPage }) => {
     return items.map((item: SideMenuItem) => {
       if (!item.title) {
         return (
-          <Divider />
+          <Divider key={item.title} />
         )
       }
 
