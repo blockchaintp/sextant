@@ -328,8 +328,8 @@ const DeploymentTable: React.FC<DeploymentTableProps> = ({
               },
             ]
               .concat(clusters)
-              .map((eachCluster, i) => (
-                <MenuItem key={i} value={eachCluster.id}>
+              .map((eachCluster) => (
+                <MenuItem key={eachCluster.id} value={eachCluster.id}>
                   {eachCluster.name}
                 </MenuItem>
               ))}
