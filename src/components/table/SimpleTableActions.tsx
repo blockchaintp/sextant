@@ -12,10 +12,6 @@ const Root = styled('div')({
 })
 
 interface SimpleTableActionsProps {
-  // item: {
-  //   username?: string
-  //   name?: string
-  // }
   item: {
     [key: string]: string | number | object | boolean
   }

@@ -300,8 +300,6 @@ class FormListInner extends React.Component {
       title, skip, helperText, list,
     } = item
 
-    console.log('formlistinner: ', this.props)
-
     if (item.id === 'changePassword') {
       return (
         <>
@@ -393,8 +391,6 @@ class FormWrapperInner extends React.Component {
     const {
       exists,
     } = this.props
-
-    console.log('getItem: ', this.props)
 
     const isNew = this.props.dbId
     const hooks = formProps.hooks || {}
@@ -599,8 +595,6 @@ class FormWrapperInner extends React.Component {
     } catch (e) {
       console.error(e)
     }
-
-    console.log('whoa', this.props)
 
     return (
       <Formik
