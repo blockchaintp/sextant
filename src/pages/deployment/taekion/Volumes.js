@@ -101,7 +101,6 @@ const FORM_INITIAL_VALUES = {
 }
 
 class TaekionVolumes extends React.Component {
-  // const [editVolume, setEditVolume] = React.useState(null);
   state = {
     editVolume: null,
   }
@@ -244,22 +243,26 @@ class TaekionVolumes extends React.Component {
       }) => (item.id !== 'name' && values.id ? true : false),
     }
 
+    const simpleTableHeaderActions = () => headerActions
+
+    const simpleTableActions = (item) => (
+      <SimpleTableActions
+        item={item}
+        actions={getActions(item)}
+      />
+    )
+
     return (
       <div>
         <SimpleTableHeader
           title="Volumes"
-          getActions={() => headerActions}
+          getActions={simpleTableHeaderActions}
         />
         <SimpleTable
           pagination
           data={data}
           fields={TABLE_FIELDS}
-          getActions={(item) => (
-            <SimpleTableActions
-              item={item}
-              actions={getActions(item)}
-            />
-          )}
+          getActions={simpleTableActions}
         />
         {
           addVolumeWindowOpen && (
