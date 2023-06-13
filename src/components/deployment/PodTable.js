@@ -101,17 +101,19 @@ class PodTable extends React.Component {
       },
     ]
 
+    const simpleTableActions = (item) => (
+      <SimpleTableActions
+        item={item}
+        actions={getActions()}
+      />
+    )
+
     return (
       <div>
         <SimpleTable
           data={tableData}
           fields={fields}
-          getActions={(item) => (
-            <SimpleTableActions
-              item={item}
-              actions={getActions()}
-            />
-          )}
+          getActions={simpleTableActions}
         />
         <DeletePodDialog
           open={deleteConfirmOpen}
