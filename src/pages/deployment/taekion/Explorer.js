@@ -199,6 +199,13 @@ function TaekionExplorer() {
     return ret
   })
 
+  const simpleTableActions = (item) => (
+    <SimpleTableActions
+      item={item}
+      actions={getActions(item)}
+    />
+  )
+
   return (
     <>
       <GlobalStyles styles={{
@@ -240,12 +247,7 @@ function TaekionExplorer() {
             pagination
             data={data}
             fields={TABLE_FIELDS}
-            getActions={(item) => (
-              <SimpleTableActions
-                item={item}
-                actions={getActions(item)}
-              />
-            )}
+            getActions={simpleTableActions}
           />
         </Content>
         {
