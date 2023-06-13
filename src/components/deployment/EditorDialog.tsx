@@ -24,7 +24,7 @@ interface EditorDialogProps {
 const EditorDialog: React.FC<EditorDialogProps> = ({cancel, save, open, yamlInput, inputToState, customYaml}) => {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.keyCode === 13) {
+    if (e.code === 'Enter') {
       e.stopPropagation()
     }
   }
