@@ -107,22 +107,26 @@ class TaekionKeys extends React.Component {
       },
     }
 
+    const simpleTableHeaderActions = () => headerActions
+
+    const simpleTableActions = (item) => (
+      <SimpleTableActions
+        item={item}
+        actions={getActions()}
+      />
+    )
+
     return (
       <div>
         <SimpleTableHeader
           title="Keys"
-          getActions={() => headerActions}
+          getActions={simpleTableHeaderActions}
         />
         <SimpleTable
           pagination
           data={data}
           fields={TABLE_FIELDS}
-          getActions={(item) => (
-            <SimpleTableActions
-              item={item}
-              actions={getActions()}
-            />
-          )}
+          getActions={simpleTableActions}
         />
         {
           addKeyWindowOpen && (

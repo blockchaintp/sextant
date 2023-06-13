@@ -224,21 +224,25 @@ class TaekionSnapshots extends React.Component {
 
     const useInitialValues = { ...FORM_INITIAL_VALUES, volume }
 
+    const simpleTableHeaderActions = () => headerActions
+
+    const simpleTableActions = () => (
+      <SimpleTableActions
+        actions={getActions()}
+      />
+    )
+
     return (
       <div>
         <SimpleTableHeader
           title="Snapshots"
-          getActions={() => headerActions}
+          getActions={simpleTableHeaderActions}
         />
         <SimpleTable
           pagination
           data={data}
           fields={TABLE_FIELDS}
-          getActions={(item) => (
-            <SimpleTableActions
-              actions={getActions()}
-            />
-          )}
+          getActions={simpleTableActions}
         />
         {
           addSnapshotWindowOpen && (
