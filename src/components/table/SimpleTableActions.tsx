@@ -22,13 +22,13 @@ interface SimpleTableActionsProps {
   actions: {
     icon: React.ReactElement<any, any> | React.ComponentType<any>;
     title: string
-    handler: (item: any) => void
+    handler?: (item: any) => void
     shouldDisplay?: (item: any) => boolean
     getIcon?: (item: any) => Symbol
     getTitle?: (item: any) => string
     disabled?: boolean
     wrapButton?: (button: any, item: any) => any
-    style?: { [key: string]: string }
+    style?: { [key: string]: string | number }
   }[]
 }
 

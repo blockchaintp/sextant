@@ -24,7 +24,6 @@ type ActionData = {
   id: number
   clusterData: Cluster
   name: string
-  // action: 'create' | 'update' | 'delete'
   provision_type: string
   status: string
   task: React.JSX.Element
@@ -94,7 +93,7 @@ const ClusterTable: React.FC<ClusterTableProps> = ({
   onViewStatus,
   user,
 }) => {
-const [deleteConfirmOpen, setDeleteConfirmOpen] = React.useState(false)
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = React.useState(false)
   const [deleteConfirmItem, setDeleteConfirmItem] = React.useState<ActionData | null>(null)
 
   const openDeleteDialog = (item: ActionData) => {
