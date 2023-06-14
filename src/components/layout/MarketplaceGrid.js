@@ -1,15 +1,11 @@
 import React from 'react';
 
-import withStyles from '@mui/styles/withStyles';
-
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography';
 
 import MarketplaceCard from 'components/layout/MarketplaceCard';
-
-const styles = () => ({});
 
 class MarketplaceGrid extends React.Component {
   state = {};
@@ -81,4 +77,4 @@ class MarketplaceGrid extends React.Component {
   }
 }
 
-export default withStyles(styles)(MarketplaceGrid);
+export default MarketplaceGrid;

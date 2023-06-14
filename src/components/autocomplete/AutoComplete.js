@@ -4,11 +4,9 @@ import PropTypes from 'prop-types'
 import Autosuggest from 'react-autosuggest'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
-
-import withStyles from '@mui/styles/withStyles';
 import TextField from '@mui/material/TextField'
 import Paper from '@mui/material/Paper'
-import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 
 const renderInputComponent = ({
@@ -24,63 +22,54 @@ const renderInputComponent = ({
         ref(node)
         inputRef(node)
       },
-      classes: {
-        input: classes.input,
-      },
     }}
     {...other}
   />
 )
 
-const styles = (theme) => ({
-  container: {
-    flexGrow: 1,
-    position: 'relative',
-  },
-  suggestionsContainerOpen: {
-    position: 'absolute',
-    zIndex: 2,
-    marginTop: theme.spacing(1),
-    left: 0,
-    right: 0,
-  },
-  suggestion: {
-    display: 'block',
-  },
-  suggestionsList: {
-    margin: 0,
-    padding: 0,
-    listStyleType: 'none',
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  listItem: {
-    cursor: 'pointer',
-  },
-  highlightText: {
-    fontWeight: 500,
-    color: '#880000',
-  },
-  normalText: {
-    fontWeight: 300,
-  },
-})
+const containerStyles = {
+  flexGrow: 1,
+  position: 'relative',
+}
+const suggestionsContainerOpenStyles = {
+  position: 'absolute',
+  zIndex: 2,
+  marginTop: 1,
+  left: 0,
+  right: 0,
+}
+const suggestionStyles = {
+  display: 'block',
+}
+const suggestionsListStyles = {
+  margin: 0,
+  padding: 0,
+  listStyleType: 'none',
+}
+const listItemStyles = {
+  cursor: 'pointer',
+}
+const highlightTextStyles = {
+  fontWeight: 500,
+  color: '#880000',
+}
+const normalTextStyles = {
+  fontWeight: 300,
+}
 
 class AutoComplete extends React.Component {
   getHighlightedText = (value, query) => {
     const {
-      classes,
       highlightClasses,
     } = this.props
 
     const highlightClass = highlightClasses && highlightClasses.highlight
       ? highlightClasses.highlight
-      : classes.highlightText
+      : highlightTextStyles
 
     const normalClass = highlightClasses && highlightClasses.normal
       ? highlightClasses.normal
-      : classes.normalText
+      : normalTextStyles
 
     const parts = parse(value, match(value, query))
 
@@ -103,7 +92,6 @@ class AutoComplete extends React.Component {
 
   renderSuggestion = (suggestion, { query, isHighlighted }) => {
     const {
-      classes,
       renderSuggestion,
       getSuggestionValue,
     } = this.props
@@ -115,13 +103,12 @@ class AutoComplete extends React.Component {
         getHighlightedText: this.getHighlightedText,
         isHighlighted,
       }) : (
-        <ListItem
-          selected={isHighlighted}
+        <ListItemButton
           component="div"
-          className={classes.listItem}
+          className={listItemStyles}
         >
           <ListItemText primary={this.getHighlightedText(getSuggestionValue(suggestion), query)} />
-        </ListItem>
+        </ListItemButton>
       )
   }
 
@@ -139,7 +126,6 @@ class AutoComplete extends React.Component {
 
   render() {
     const {
-      classes,
       suggestions,
       inputProps,
       getSuggestionValue,
@@ -160,16 +146,15 @@ class AutoComplete extends React.Component {
       <Autosuggest
         {...autosuggestProps}
         inputProps={{
-          classes,
           value,
           onChange: this.changeHandler,
           ...inputProps,
         }}
         theme={{
-          container: classes.container,
-          suggestionsContainerOpen: classes.suggestionsContainerOpen,
-          suggestionsList: classes.suggestionsList,
-          suggestion: classes.suggestion,
+          container: containerStyles,
+          suggestionsContainerOpen: suggestionsContainerOpenStyles,
+          suggestionsList: suggestionsListStyles,
+          suggestion: suggestionStyles,
         }}
         renderSuggestionsContainer={(options) => (
           <Paper {...options.containerProps} square>
@@ -182,7 +167,6 @@ class AutoComplete extends React.Component {
 }
 
 AutoComplete.propTypes = {
-  classes: PropTypes.object.isRequired,
   suggestions: PropTypes.array.isRequired,
   renderSuggestion: PropTypes.func,
   getSuggestionValue: PropTypes.func.isRequired,
@@ -198,4 +182,4 @@ AutoComplete.defaultProps = {
   highlightClasses: PropTypes.object,
 }
 
-export default withStyles(styles)(AutoComplete)
+export default AutoComplete

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import withStyles from '@mui/styles/withStyles';
 import Button from '@mui/material/Button'
 
 import Menu from '@mui/material/Menu'
@@ -9,10 +8,6 @@ import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
-
-const styles = () => ({
-
-})
 
 class MenuButton extends React.Component {
   state = {
@@ -169,4 +164,4 @@ MenuButton.propTypes = {
   items: PropTypes.array.isRequired,
 }
 
-export default withStyles(styles)(MenuButton)
+export default MenuButton

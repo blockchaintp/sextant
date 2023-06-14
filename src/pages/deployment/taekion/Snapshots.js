@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import React from 'react'
-import withStyles from '@mui/styles/withStyles';
+import { styled } from '@mui/system'
 import Button from '@mui/material/Button'
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
@@ -20,25 +20,22 @@ import settings from 'settings'
 
 const AddIcon = settings.icons.add
 
-const styles = (theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-  headerActions: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'right',
-    alignItems: 'center',
-    paddingTop: '1.5rem !important',
-  },
-  volumeSelect: {
-    marginRight: theme.spacing(2),
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 200,
-  },
+const HeaderActions = styled('div')({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'right',
+  alignItems: 'center',
+  paddingTop: '1.5rem !important',
 })
+
+const VolumeSelect = styled('div')(({ theme }) => ({
+  marginRight: theme.spacing(2),
+}))
+
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  margin: theme.spacing(1),
+  minWidth: 200,
+}))
 
 const TABLE_FIELDS = [{
   title: 'Volume',
@@ -162,9 +159,9 @@ class TaekionSnapshots extends React.Component {
     })))
 
     const headerActions = (
-      <div className={classes.headerActions}>
-        <div className={classes.volumeSelect}>
-          <FormControl className={classes.formControl}>
+      <HeaderActions>
+        <VolumeSelect>
+          <StyledFormControl>
             <InputLabel htmlFor="name-readonly">Volume</InputLabel>
             <Select
               value={volume}
@@ -183,8 +180,8 @@ class TaekionSnapshots extends React.Component {
                   ))
               }
             </Select>
-          </FormControl>
-        </div>
+          </StyledFormControl>
+        </VolumeSelect>
         <div className={classes.addButton}>
           <Button
             _ci="addbutton"
@@ -198,7 +195,7 @@ class TaekionSnapshots extends React.Component {
             <AddIcon />
           </Button>
         </div>
-      </div>
+      </HeaderActions>
     )
 
     const getActions = () => []
@@ -227,22 +224,25 @@ class TaekionSnapshots extends React.Component {
 
     const useInitialValues = { ...FORM_INITIAL_VALUES, volume }
 
+    const simpleTableHeaderActions = () => headerActions
+
+    const simpleTableActions = () => (
+      <SimpleTableActions
+        actions={getActions()}
+      />
+    )
+
     return (
       <div>
         <SimpleTableHeader
           title="Snapshots"
-          getActions={() => headerActions}
+          getActions={simpleTableHeaderActions}
         />
         <SimpleTable
           pagination
           data={data}
           fields={TABLE_FIELDS}
-          getActions={(item) => (
-            <SimpleTableActions
-              item={item}
-              actions={getActions()}
-            />
-          )}
+          getActions={simpleTableActions}
         />
         {
           addSnapshotWindowOpen && (
@@ -289,4 +289,4 @@ class TaekionSnapshots extends React.Component {
   }
 }
 
-export default withStyles(styles)(TaekionSnapshots)
+export default TaekionSnapshots

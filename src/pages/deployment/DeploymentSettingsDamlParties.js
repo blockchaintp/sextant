@@ -8,8 +8,7 @@
  */
 
 import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import { styled, GlobalStyles } from '@mui/system';
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
@@ -32,60 +31,29 @@ const AddIcon = settings.icons.add
 const DownArrowIcon = settings.icons.downArrow
 const KeyIcon = settings.icons.key
 
-const styles = (theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-  paper: {
-    padding: theme.spacing(4),
-    margin: theme.spacing(2),
-  },
-  denseTable: {
-    '& th,td': {
-      padding: ['3px', '!important'],
-    },
-    '& tr': {
-      height: ['30px', '!important'],
-    },
-  },
-  spacing: {
-    marginTop: theme.spacing(2),
-  },
-  doubleSpacing: {
-    marginTop: theme.spacing(4),
-  },
-  smallButton: {
-    fontSize: ['9px', '!important'],
-  },
-  smallText: {
-    fontSize: '0.7em',
-  },
-  alignRight: {
-    textAlign: 'right',
-  },
-  iconSmall: {
-    marginLeft: theme.spacing(1),
-    fontSize: 20,
-  },
-  partyButtons: {
-    marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(2),
-  },
-  buttonMargin: {
-    marginRight: theme.spacing(1),
-  },
-  buttonBottomMargin: {
-    marginBottom: theme.spacing(1),
-  },
-  partyContainer: {
-    marginTop: theme.spacing(2),
-    padding: theme.spacing(2),
-    border: '1px dashed #e5e5e5',
-  },
-  warningText: {
-    color: '#cc0000',
-  },
-})
+const Root = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+}))
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(4),
+  margin: theme.spacing(2),
+}))
+
+const Spacing = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(2),
+}))
+
+const PartyButtonWrapper = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginLeft: theme.spacing(2),
+}))
+
+const PartyContainer = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  padding: theme.spacing(2),
+  border: '1px dashed #e5e5e5',
+}))
 
 class DeploymentSettingsDamlParties extends React.Component {
   state = {
@@ -411,7 +379,7 @@ class DeploymentSettingsDamlParties extends React.Component {
           >
             Create Token
             {' '}
-            <KeyIcon className={classes.iconSmall} />
+            <KeyIcon sx={{ marginLeft: 1, fontSize: 20 }} />
           </Button>
         </DialogActions>
       </Dialog>
@@ -420,7 +388,6 @@ class DeploymentSettingsDamlParties extends React.Component {
 
   getTokenDialog() {
     const {
-      classes,
       tokenWindowOpen,
       tokenValue,
       snackbarMessage,
@@ -439,7 +406,7 @@ class DeploymentSettingsDamlParties extends React.Component {
           <Typography gutterBottom>
             Your Access Token is shown below.
           </Typography>
-          <Typography gutterBottom className={classes.warningText}>
+          <Typography gutterBottom sx={{ color: '#cc0000' }}>
             <strong>Warning: </strong>
             {' '}
             you will not see this token again - make sure you keep it safe.
@@ -469,20 +436,16 @@ class DeploymentSettingsDamlParties extends React.Component {
   }
 
   getLocalParticipantActions(entry) {
-    const {
-      classes,
-    } = this.props
-
     const { publicKey } = entry
 
     const toggleButton = (
       <Button
-        className={`${classes.smallButton} ${classes.buttonMargin}`}
+        sx={{ marginRight: 1, fontSize: '9px !important' }}
         size="small"
         variant="outlined"
         onClick={() => this.setVisibleParticipant(publicKey)}
       >
-        <DownArrowIcon className={classes.iconSmall} />
+        <DownArrowIcon sx={{ marginLeft: 1, fontSize: 20 }} />
 
       </Button>
     )
@@ -496,7 +459,6 @@ class DeploymentSettingsDamlParties extends React.Component {
 
   getLocalParties(entry) {
     const {
-      classes,
       setTokenSettingsWindowParticipant,
     } = this.props
 
@@ -508,7 +470,7 @@ class DeploymentSettingsDamlParties extends React.Component {
     return (
       <Grid container spacing={0}>
         <Grid item xs={6}>
-          <div className={classes.partyContainer}>
+          <PartyContainer>
             {
               parties.map((party, j) => (
                 <div key={j}>
@@ -516,23 +478,23 @@ class DeploymentSettingsDamlParties extends React.Component {
                 </div>
               ))
             }
-          </div>
+          </PartyContainer>
         </Grid>
         <Grid item xs={6}>
-          <div className={classes.partyButtons}>
+          <PartyButtonWrapper>
             <Button
-              className={`${classes.smallButton} ${classes.buttonBottomMargin}`}
+              sx={{ marginRight: 1, fontSize: '9px !important' }}
               size="small"
               variant="outlined"
               onClick={() => this.setAddFormOpen(true, publicKey)}
             >
               Add Party
               {' '}
-              <AddIcon className={classes.iconSmall} />
+              <AddIcon sx={{ marginLeft: 1, fontSize: 20 }} />
             </Button>
             <br />
             <Button
-              className={`${classes.smallButton} ${classes.buttonBottomMargin}`}
+              sx={{ marginRight: 1, fontSize: '9px !important' }}
               size="small"
               variant="outlined"
               onClick={() => {
@@ -541,9 +503,9 @@ class DeploymentSettingsDamlParties extends React.Component {
             >
               Generate Tokens
               {' '}
-              <KeyIcon className={classes.iconSmall} />
+              <KeyIcon sx={{ marginLeft: 1, fontSize: 20 }} />
             </Button>
-          </div>
+          </PartyButtonWrapper>
         </Grid>
       </Grid>
     )
@@ -551,7 +513,6 @@ class DeploymentSettingsDamlParties extends React.Component {
 
   getLocalParticipants() {
     const {
-      classes,
       participants,
       visibleParticipant,
     } = this.props
@@ -571,16 +532,16 @@ class DeploymentSettingsDamlParties extends React.Component {
                       { entry.participantId }
                     </Typography>
                   </Grid>
-                  <Grid item xs={6} className={classes.alignRight}>
+                  <Grid item xs={6} sx={{ textAlign: 'right' }}>
                     {this.getLocalParticipantActions(entry) }
                   </Grid>
                 </Grid>
                 {
                   partiesVisible ? this.getLocalParties(entry) : null
                 }
-                <div className={classes.spacing} />
+                <Spacing />
                 <Divider />
-                <div className={classes.spacing} />
+                <Spacing />
               </div>
             )
           })
@@ -602,7 +563,17 @@ class DeploymentSettingsDamlParties extends React.Component {
 
     const allParticipants = participants
     return (
-      <React.Fragment>
+      <>
+        <GlobalStyles
+          styles={{
+            '.denseTable th, .denseTable td': {
+              padding: '3px !important',
+            },
+            '.denseTable tr': {
+              height: '30px !important',
+            },
+          }}
+        />
         {
           allParticipants.map((participant, i) => {
             const parties = participant ? participant.parties : []
@@ -612,19 +583,19 @@ class DeploymentSettingsDamlParties extends React.Component {
             }))
             return (
               <div key={i} className={classes.denseTable}>
-                <div className={classes.spacing} />
-                <div className={classes.partyContainer}>
+                <Spacing />
+                <PartyContainer>
                   <SimpleTable
                     // hideHeader
                     data={data}
                     fields={fields}
                   />
-                </div>
+                </PartyContainer>
               </div>
             )
           })
         }
-      </React.Fragment>
+      </>
     )
   }
 
@@ -670,41 +641,40 @@ class DeploymentSettingsDamlParties extends React.Component {
 
   render() {
     const {
-      classes,
       setTokenSettingsWindowParticipant,
     } = this.props
 
     return (
-      <div className={classes.root}>
+      <Root>
         <Grid container spacing={3}>
           <Grid item xs={4}>
-            <Paper className={classes.paper}>
+            <StyledPaper>
               <Typography variant="h6">
                 Local Participants
               </Typography>
-              <div className={classes.spacing} />
+              <Spacing />
               {
                 this.getLocalParticipants()
               }
-            </Paper>
+            </StyledPaper>
           </Grid>
           <Grid item xs={4}>
-            <Paper className={classes.paper}>
+            <StyledPaper>
               <Typography variant="h6">
                 All Parties
               </Typography>
               {
                 this.getPartiesByParticipant()
               }
-            </Paper>
+            </StyledPaper>
           </Grid>
           <Grid item xs={4}>
-            <Paper className={classes.paper}>
+            <StyledPaper>
               <Typography variant="h6">
                 Admin
               </Typography>
               <Button
-                className={`${classes.smallButton} ${classes.buttonBottomMargin}`}
+                sx={{ marginRight: 1, fontSize: '9px !important' }}
                 size="small"
                 variant="outlined"
                 onClick={() => {
@@ -716,21 +686,17 @@ class DeploymentSettingsDamlParties extends React.Component {
               >
                 Generate Admin Token
                 {' '}
-                <KeyIcon className={classes.iconSmall} />
+                <KeyIcon sx={{ marginLeft: 1, fontSize: 20 }} />
               </Button>
-            </Paper>
+            </StyledPaper>
           </Grid>
         </Grid>
         { this.getAddPartyDialog() }
         { this.getTokenSettingsDialog() }
         { this.getTokenDialog() }
-      </div>
+      </Root>
     )
   }
 }
 
-DeploymentSettingsDamlParties.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(DeploymentSettingsDamlParties)
+export default DeploymentSettingsDamlParties

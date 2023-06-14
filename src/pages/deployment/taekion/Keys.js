@@ -1,16 +1,17 @@
 import React from 'react'
-import withStyles from '@mui/styles/withStyles';
 
 import Button from '@mui/material/Button'
 import SimpleTable from 'components/table/SimpleTable'
 import SimpleTableHeader from 'components/table/SimpleTableHeader'
 import SimpleTableActions from 'components/table/SimpleTableActions'
 
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material'
 
 import CodeBlock from 'components/code/CodeBlock'
 import FormWrapper from 'components/form/Wrapper'
@@ -18,12 +19,6 @@ import FormWrapper from 'components/form/Wrapper'
 import settings from 'settings'
 
 const AddIcon = settings.icons.add
-
-const styles = (theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-})
 
 const TABLE_FIELDS = [{
   title: 'Name',
@@ -112,22 +107,26 @@ class TaekionKeys extends React.Component {
       },
     }
 
+    const simpleTableHeaderActions = () => headerActions
+
+    const simpleTableActions = (item) => (
+      <SimpleTableActions
+        item={item}
+        actions={getActions()}
+      />
+    )
+
     return (
       <div>
         <SimpleTableHeader
           title="Keys"
-          getActions={() => headerActions}
+          getActions={simpleTableHeaderActions}
         />
         <SimpleTable
           pagination
           data={data}
           fields={TABLE_FIELDS}
-          getActions={(item) => (
-            <SimpleTableActions
-              item={item}
-              actions={getActions()}
-            />
-          )}
+          getActions={simpleTableActions}
         />
         {
           addKeyWindowOpen && (
@@ -211,4 +210,4 @@ class TaekionKeys extends React.Component {
   }
 }
 
-export default withStyles(styles)(TaekionKeys)
+export default TaekionKeys

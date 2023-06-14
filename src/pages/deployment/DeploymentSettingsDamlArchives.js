@@ -1,7 +1,6 @@
 /* eslint-disable no-else-return */
 import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import { styled } from '@mui/system'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
@@ -24,44 +23,39 @@ import settings from 'settings'
 
 const UploadIcon = settings.icons.upload
 
-const styles = (theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    margin: theme.spacing(2),
-  },
-  formTextContainer: {
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-  },
-  buttonIcon: {
-    marginLeft: theme.spacing(1),
-  },
-  errorText: {
-    color: '#cc0000',
-  },
-  dropzoneContent: {
-    padding: theme.spacing(4),
-    border: '1px dashed #ccc',
-    textAlign: 'center',
-    cursor: 'pointer',
-  },
-  clickMe: {
-    fontWeight: 'bold',
-    color: theme.palette.primary.main,
-    margin: theme.spacing(1),
-  },
-  centerAlign: {
-    textAlign: 'center',
-  },
+const Root = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+}))
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(2),
+  margin: theme.spacing(2),
+}))
+
+const ErrorText = styled(DialogContentText)({
+  color: '#cc0000',
+})
+
+const DropZoneContent = styled('div')(({ theme }) => ({
+  padding: theme.spacing(4),
+  border: '1px dashed #ccc',
+  textAlign: 'center',
+  cursor: 'pointer',
+}))
+
+const ClickMe = styled('span')(({ theme }) => ({
+  fontWeight: 'bold',
+  color: theme.palette.primary.main,
+  margin: theme.spacing(1),
+}))
+
+const CenterAlign = styled('div')({
+  textAlign: 'center',
 })
 
 class DeploymentSettingsDamlArchives extends React.Component {
   getUploaderContent() {
     const {
-      classes,
       cluster,
       id,
       inProgress,
@@ -72,7 +66,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
 
     if (error) {
       return (
-        <DialogContentText className={classes.errorText}>{ error }</DialogContentText>
+        <ErrorText>{ error }</ErrorText>
       )
     } else if (inProgress) {
       // we have limited the dropzone to single files so we are only dealing with
@@ -82,12 +76,12 @@ class DeploymentSettingsDamlArchives extends React.Component {
 
       if (uploadInfo.percentDone >= 100) {
         return (
-          <div className={classes.centerAlign}>
+          <CenterAlign>
             <Loading />
             <DialogContentText>
               We are now packaging and uploading your archive to the DAML api server
             </DialogContentText>
-          </div>
+          </CenterAlign>
         )
       } else {
         return (
@@ -111,15 +105,15 @@ class DeploymentSettingsDamlArchives extends React.Component {
             files,
           })}
         >
-          <div className={classes.dropzoneContent}>
+          <DropZoneContent>
             <Typography>
               Drag files here or
-              <span className={classes.clickMe}>
+              <ClickMe>
                 click
-              </span>
+              </ClickMe>
               to select file
             </Typography>
-          </div>
+          </DropZoneContent>
         </DropZone>
       )
     }
@@ -169,11 +163,24 @@ class DeploymentSettingsDamlArchives extends React.Component {
     )
   }
 
+  getUploadButton() {
+    const { setUploadArchiveWindowOpen } = this.props
+    return (
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={() => setUploadArchiveWindowOpen(true)}
+        disabled={false}
+      >
+        Upload
+        <UploadIcon sx={{ marginLeft: 1 }} />
+      </Button>
+    );
+  }
+
   getPackages() {
     const {
-      classes,
       archives,
-      setUploadArchiveWindowOpen,
     } = this.props
 
     const fields = [{
@@ -181,8 +188,8 @@ class DeploymentSettingsDamlArchives extends React.Component {
       name: 'packageId',
     }]
 
-    const integers = new Uint32Array(10);
-    const randomNumbers = window.crypto.getRandomValues(integers);
+    const integers = new Uint32Array(10)
+    const randomNumbers = window.crypto.getRandomValues(integers)
     const randomNumber = randomNumbers[0]
 
     const data = archives.map((archive) => ({
@@ -196,17 +203,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
       <div>
         <SimpleTableHeader
           title="Packages"
-          getActions={() => (
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => setUploadArchiveWindowOpen(true)}
-              disabled={false}
-            >
-              Upload
-              <UploadIcon className={classes.buttonIcon} />
-            </Button>
-          )}
+          getActions={this.getUploadButton}
         />
         <DamlArchiveTable
           data={data}
@@ -217,27 +214,19 @@ class DeploymentSettingsDamlArchives extends React.Component {
   }
 
   render() {
-    const {
-      classes,
-    } = this.props
-
     return (
-      <div className={classes.root}>
+      <Root>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <StyledPaper>
               { this.getPackages() }
-            </Paper>
+            </StyledPaper>
           </Grid>
         </Grid>
         { this.getUploader() }
-      </div>
+      </Root>
     )
   }
 }
 
-DeploymentSettingsDamlArchives.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(DeploymentSettingsDamlArchives)
+export default DeploymentSettingsDamlArchives
