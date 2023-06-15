@@ -7,6 +7,7 @@ import {
   FormControl,
   InputLabel,
   Checkbox,
+  Divider,
   Select,
   MenuItem,
   Step,
@@ -321,18 +322,17 @@ const DeploymentTable: React.FC<DeploymentTableProps> = ({
             value={clusterId}
             onChange={(e) => updateClusterId(e.target.value)}
           >
-            {[
-              {
-                id: 'all',
-                name: 'all',
-              },
-            ]
-              .concat(clusters)
+            <MenuItem key='all' value='all'>
+              all
+            </MenuItem>
+            <Divider />
+            {clusters
+              .sort((a, b) => (a.name.localeCompare(b.name)))
               .map((eachCluster) => (
                 <MenuItem key={eachCluster.id} value={eachCluster.id}>
                   {eachCluster.name}
                 </MenuItem>
-              ))}
+            ))}
           </Select>
         </CIFormControl>
       </ClusterSelect>
