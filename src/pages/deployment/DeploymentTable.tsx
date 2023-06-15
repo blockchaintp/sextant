@@ -210,7 +210,7 @@ const DeploymentTable: React.FC<DeploymentTableProps> = ({
   }
 
   const data: ActionData[] = deployments.map((deployment) => {
-    const action = deployment.task.action.split('.')[1]
+    const action = deployment.task?.action.split('.')[1]
     return {
       id: deployment.id,
       cluster: deployment.cluster,
