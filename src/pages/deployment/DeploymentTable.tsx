@@ -294,6 +294,14 @@ const DeploymentTable: React.FC<DeploymentTableProps> = ({
     </div>
   )
 
+  const sortedClusters = [...clusters].sort((a, b) => (a.name.localeCompare(b.name)))
+
+  const mappedClusters = sortedClusters.map((eachCluster) => (
+      <MenuItem key={eachCluster.id} value={eachCluster.id}>
+        {eachCluster.name}
+      </MenuItem>
+  ))
+
   const headerActions = embedded ? (
     <HeaderActions>
       <HideDeletedCheckbox>
@@ -326,13 +334,7 @@ const DeploymentTable: React.FC<DeploymentTableProps> = ({
               all
             </MenuItem>
             <Divider />
-            {clusters
-              .sort((a, b) => (a.name.localeCompare(b.name)))
-              .map((eachCluster) => (
-                <MenuItem key={eachCluster.id} value={eachCluster.id}>
-                  {eachCluster.name}
-                </MenuItem>
-            ))}
+            { mappedClusters }
           </Select>
         </CIFormControl>
       </ClusterSelect>
