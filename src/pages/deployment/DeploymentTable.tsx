@@ -7,6 +7,7 @@ import {
   FormControl,
   InputLabel,
   Checkbox,
+  Divider,
   Select,
   MenuItem,
   Step,
@@ -293,6 +294,14 @@ const DeploymentTable: React.FC<DeploymentTableProps> = ({
     </div>
   )
 
+  const sortedClusters = [...clusters].sort((a, b) => (a.name.localeCompare(b.name)))
+
+  const mappedClusters = sortedClusters.map((eachCluster) => (
+      <MenuItem key={eachCluster.id} value={eachCluster.id}>
+        {eachCluster.name}
+      </MenuItem>
+  ))
+
   const headerActions = embedded ? (
     <HeaderActions>
       <HideDeletedCheckbox>
@@ -321,18 +330,11 @@ const DeploymentTable: React.FC<DeploymentTableProps> = ({
             value={clusterId}
             onChange={(e) => updateClusterId(e.target.value)}
           >
-            {[
-              {
-                id: 'all',
-                name: 'all',
-              },
-            ]
-              .concat(clusters)
-              .map((eachCluster) => (
-                <MenuItem key={eachCluster.id} value={eachCluster.id}>
-                  {eachCluster.name}
-                </MenuItem>
-              ))}
+            <MenuItem key='all' value='all'>
+              all
+            </MenuItem>
+            <Divider />
+            { mappedClusters }
           </Select>
         </CIFormControl>
       </ClusterSelect>

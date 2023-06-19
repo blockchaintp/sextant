@@ -37,10 +37,11 @@ const SimpleTableHeader: React.FC<SimpleTableHeaderProps> = ({
   getActions,
   titleVariant,
   titleClassname,
+  sx,
 }) => {
 
   return (
-    <ToolbarRoot>
+    <ToolbarRoot sx={{ ...sx }}>
       <div>
         {
           getTitle ? (
