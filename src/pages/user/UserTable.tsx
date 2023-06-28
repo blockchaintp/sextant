@@ -35,10 +35,10 @@ interface UserTableProps {
 }
 
 export interface CIButtonProps extends ButtonProps {
-  _ci?: string
+  id?: string
 }
 
-const CIButton = ({ _ci, ...rest }: CIButtonProps) => {
+const CIButton = ({ id, ...rest }: CIButtonProps) => {
   return <Button {...rest} />;
 }
 
@@ -57,7 +57,6 @@ const UserTable: React.FC<UserTableProps> = ({ users, onAdd, onEdit, onDelete, i
 
   const addButton = () => (
     <CIButton
-      _ci="addbutton"
       id="addButton"
       variant="contained"
       color="primary"

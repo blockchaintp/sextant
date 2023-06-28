@@ -55,18 +55,18 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }))
 
 export interface CITypographyProps extends TypographyProps {
-  _ci?: string
+  id?: string
 }
 
-const CITypography = ({ _ci, ...rest }: CITypographyProps) => {
+const CITypography = ({ id, ...rest }: CITypographyProps) => {
   return <Typography {...rest} />
 }
 
 export interface CIButtonProps extends ButtonProps {
-  _ci?: string
+  id?: string
 }
 
-const CIButton = ({ _ci, ...rest }: CIButtonProps) => {
+const CIButton = ({ id, ...rest }: CIButtonProps) => {
   return <StyledButton {...rest} />
 }
 
@@ -87,7 +87,7 @@ const UserForm: React.FC<UserFormProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <StyledPaper>
-            <CITypography _ci="formheader" id="formheader" variant="h6" gutterBottom>
+            <CITypography id="formheader" variant="h6" gutterBottom>
               { title }
             </CITypography>
             <FormWrapper
@@ -104,6 +104,7 @@ const UserForm: React.FC<UserFormProps> = ({
                     {
                       onCancel && (
                         <StyledButton
+                          id="cancelButton"
                           type="button"
                           variant="contained"
                           onClick={onCancel}
@@ -113,7 +114,6 @@ const UserForm: React.FC<UserFormProps> = ({
                       )
                     }
                     <CIButton
-                      _ci="submitButton"
                       id="submitButton"
                       type="button"
                       variant="contained"

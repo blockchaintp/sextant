@@ -48,6 +48,7 @@ const AccessTokenPage: React.FC<AccessTokenPageProps> = ({
               snackbarMessage={snackbarMessage}
             />
             <StyledButton
+              id="refreshtoken"
               type="button"
               variant="contained"
               color="primary"
