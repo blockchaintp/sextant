@@ -77,7 +77,7 @@ const RadioField: React.FC<RadioFieldProps> = ({
     <StyledFormControl>
       <FormLabel component="legend">{ title }</FormLabel>
       <CIRadioGroup
-        _ci={`${name}radio`}
+        id={`${name}radio`}
         aria-label={title}
         name={name}
         value={value}
@@ -97,7 +97,7 @@ const RadioField: React.FC<RadioFieldProps> = ({
                 label={option.title}
                 control={(
                   <CIRadio
-                    _ci={`${option.value}radio`}
+                    id={`${option.value}radio`}
                     checked={option.value.toString() === value.toString()}
                     value={option.value}
                     disabled={disabled}

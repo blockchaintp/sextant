@@ -363,7 +363,7 @@ const ClusterForm: React.FC<ClusterFormProps> = ({
         </Typography>
         <Spacer />
         <CIButton
-          _ci="downloadcreateserviceaccount"
+          id="downloadcreateserviceaccount"
           type="button"
           variant="contained"
           onClick={() => {
@@ -404,7 +404,7 @@ const ClusterForm: React.FC<ClusterFormProps> = ({
         </Typography>
         <Spacer />
         <CIButton
-          _ci="downloadgetvalues"
+          id="downloadgetvalues"
           type="button"
           variant="contained"
           onClick={() => {
@@ -449,7 +449,7 @@ const ClusterForm: React.FC<ClusterFormProps> = ({
                           type="button"
                           variant="contained"
                           onClick={onCancel}
-                          _ci="cancelButton"
+                          id="cancelButton"
                         >
                           Cancel
                         </CIButton>

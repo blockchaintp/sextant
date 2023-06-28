@@ -229,7 +229,7 @@ const DeploymentForm: React.FC<DeploymentFormProps> = ({
                       {
                         onCancel && (
                           <CIButton
-                            _ci="cancelBttn"
+                            id="cancelBttn"
                             type="button"
                             variant="contained"
                             onClick={() => onCancel()}
@@ -239,7 +239,7 @@ const DeploymentForm: React.FC<DeploymentFormProps> = ({
                         )
                       }
                       <CIButton
-                        _ci="deployBttn"
+                        id="deployBttn"
                         type="button"
                         variant="contained"
                         color="primary"

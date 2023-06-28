@@ -44,7 +44,7 @@ const EditorButton: React.FC<EditorButtonProps> = ({ yamlInput, saveYamlInput, i
   return (
     <div>
       <CIButton
-        _ci="additionalyamlBttn"
+        id="additionalyamlBttn"
         size="small"
         onClick={handleClickOpen}
         type="button"

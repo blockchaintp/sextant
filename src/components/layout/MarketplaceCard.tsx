@@ -51,7 +51,7 @@ const MarketplaceCard: React.FC<MarketplaceCardProps> = ({
   return (
     <Card variant="outlined">
       <CICardActionArea
-        _ci={optionTitle.replace(/\s+/g, '')}
+        id={optionTitle.replace(/\s+/g, '')}
         onClick={() => onClick(optionVersion)}
       >
         <StyledCardHeader

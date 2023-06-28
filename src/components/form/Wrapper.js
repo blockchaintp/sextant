@@ -95,7 +95,7 @@ class FormListDialogInner extends React.Component {
               }) => (
                 <React.Fragment>
                   <StyledButton
-                    _ci={`${title.replace(/\s+/g, '')}cancelBttn`}
+                    id={`${title.replace(/\s+/g, '')}cancelBttn`}
                     type="button"
                     variant="contained"
                     onClick={onCancel}
@@ -103,7 +103,7 @@ class FormListDialogInner extends React.Component {
                     Cancel
                   </StyledButton>
                   <StyledButton
-                    _ci={`${title.replace(/\s+/g, '')}saveBttn`}
+                    id={`${title.replace(/\s+/g, '')}saveBttn`}
                     type="button"
                     variant="contained"
                     color="primary"
