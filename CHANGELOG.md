@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* fix(change-to-marketplace-cards): change _ci to id [view commit](https://github.com/catenasys/sextant/commit/8233bdfa02d3ffcec96decbc88cdaa696b372782)
 * fix(deploymenttable): moves sorting logic for clusters to a separate statement [view commit](https://github.com/catenasys/sextant/commit/158cd6fdf1a8316971787b1e6e72374c27fd5961)
 * fix(simpletableheader): adds support for mui style object as a prop [view commit](https://github.com/catenasys/sextant/commit/e27bccd6359bd626a257a5fc0a5deee8a33a3ea5)
 * fix(deploymenttable): sorts clusters alphabetically and pins the all option to top of the list [view commit](https://github.com/catenasys/sextant/commit/9e018e166288231c26a53ed0a9d53141b7b73fe7)
