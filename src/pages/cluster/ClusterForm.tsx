@@ -24,7 +24,7 @@ SERVICEACCOUNT="sextant"
 NAMESPACE="default"
 
 # Determine kubernetes server version
-minor_version=$(kubectl version --output=yaml | awk '/serverVersion:/ { getline; while ($0 ~ /^[[:blank:]]/) { if ($0 ~ /minor:/) { split($0, a, ":"); gsub(/^[[:blank:]]+/, "", a[2]); print a[2]; exit } getline } }')
+minor_version=$(kubectl version --output=yaml | awk '/serverVersion:/ { getline; while ($0 ~ /^[[:blank:]]/) { if ($0 ~ /minor:/) { split($0, a, ":"); gsub(/^[[:blank:]]+/, "", a[2]); print a[2]; exit } getline } }' | tr -d '"')
 
 # Remove '+' from the minor version
 minor_version=\${minor_version%"+"}
@@ -64,7 +64,7 @@ SERVICEACCOUNT="sextant"
 NAMESPACE="default"
 
 # Determine kubernetes server version
-minor_version=$(kubectl version --output=yaml | awk '/serverVersion:/ { getline; while ($0 ~ /^[[:blank:]]/) { if ($0 ~ /minor:/) { split($0, a, ":"); gsub(/^[[:blank:]]+/, "", a[2]); print a[2]; exit } getline } }')
+minor_version=$(kubectl version --output=yaml | awk '/serverVersion:/ { getline; while ($0 ~ /^[[:blank:]]/) { if ($0 ~ /minor:/) { split($0, a, ":"); gsub(/^[[:blank:]]+/, "", a[2]); print a[2]; exit } getline } }' | tr -d '"')
 
 # Remove '+' from the minor version
 minor_version=\${minor_version%"+"}
