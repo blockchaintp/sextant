@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable react/jsx-fragments */
 import * as React from 'react'
+import { useEffect } from 'react';
 import { styled } from '@mui/system'
 import {
   Paper,
@@ -89,13 +90,21 @@ const CITypography = ({ _ci, ...rest }: CITypographyProps) => {
 }
 
 // this is here to prevent the bug sxt-985
-const handleDocumentKeyDown = (e: React.KeyboardEvent<Element>): void => {
-  if (e.key === 'Enter') {
-    e.preventDefault()
-  }
-}
+const DisableEnterPage = () => {
+  useEffect(() => {
+    const handleKeyPress = (event: { key: string; preventDefault: () => void }) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+      }
+    };
 
-document.addEventListener('keydown', handleDocumentKeyDown as unknown as (e: KeyboardEvent) => void)
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  },);
+}
 
 const DeploymentForm: React.FC<DeploymentFormProps> = ({
   roles,
@@ -129,6 +138,7 @@ const DeploymentForm: React.FC<DeploymentFormProps> = ({
   yamlInput,
   customYaml,
 }) => {
+  DisableEnterPage()
   const [_input, setInput] = React.useState('')
   const getTaskTable = () => {
     return (
