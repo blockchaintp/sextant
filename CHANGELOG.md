@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* fix(ClusterForm): strip double quotes from the minor_version value [view commit](https://github.com/catenasys/sextant/commit/f07486e51c65aeb0f712c2cc31b160912e1e5bdf)
 * fix(change-to-marketplace-cards): change _ci to id [view commit](https://github.com/catenasys/sextant/commit/8233bdfa02d3ffcec96decbc88cdaa696b372782)
 * fix(deploymenttable): moves sorting logic for clusters to a separate statement [view commit](https://github.com/catenasys/sextant/commit/158cd6fdf1a8316971787b1e6e72374c27fd5961)
 * fix(simpletableheader): adds support for mui style object as a prop [view commit](https://github.com/catenasys/sextant/commit/e27bccd6359bd626a257a5fc0a5deee8a33a3ea5)
