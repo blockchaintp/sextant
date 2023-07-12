@@ -171,34 +171,25 @@ const sideEffects = {
   },
   save: (id, payload) => async (dispatch) => {
     try {
-      if (
-        payload.changePassword === undefined
-        || payload.changePassword.length === 0
-        || payload.changePassword[0].password === null
-      ) {
-        await api.loaderSideEffect({
-          dispatch,
-          loader: () => loaders.update(id, {
-            username: payload.username,
-            permission: payload.permission,
-          }),
-          prefix,
-          name: 'form',
-          returnError: true,
-        });
-      } else {
-        await api.loaderSideEffect({
-          dispatch,
-          loader: () => loaders.update(id, {
-            username: payload.username,
-            permission: payload.permission,
-            password: payload.changePassword[0].password,
-          }),
-          prefix,
-          name: 'form',
-          returnError: true,
-        });
+      const updateData = {
+        username: payload.username,
+        permission: payload.permission,
       }
+      if (
+        payload.changePassword !== undefined
+        && payload.changePassword.length > 0
+        && payload.changePassword[0].password !== null
+      ) {
+        updateData.password = payload.changePassword[0].password;
+      }
+      const loaderOptions = {
+        dispatch,
+        loader: () => loaders.update(id, updateData),
+        prefix,
+        name: 'form',
+        returnError: true,
+      };
+      await api.loaderSideEffect(loaderOptions);
       dispatch(snackbarActions.setSuccess('user saved'));
       dispatch(routerActions.navigateTo('users'));
     } catch (e) {
