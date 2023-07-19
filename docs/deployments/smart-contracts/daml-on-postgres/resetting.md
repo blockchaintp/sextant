@@ -44,6 +44,7 @@
 
      ```bash
      drop table configuration_entries;
+     drop table flyway_schema_history;
      drop table package_entries;
      drop table packages  ;
      drop table parameters;
