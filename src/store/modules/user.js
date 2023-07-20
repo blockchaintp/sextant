@@ -171,21 +171,29 @@ const sideEffects = {
   },
   save: (id, payload) => async (dispatch) => {
     try {
-      await api.loaderSideEffect({
+      const updateData = {
+        username: payload.username,
+        permission: payload.permission,
+      }
+      if (
+        payload.changePassword !== undefined
+        && payload.changePassword.length > 0
+        && payload.changePassword[0].password !== null
+      ) {
+        updateData.password = payload.changePassword[0].password;
+      }
+      const loaderOptions = {
         dispatch,
-        loader: () => loaders.update(id, {
-          username: payload.username,
-          password: payload.changePassword[0].password,
-          permission: payload.permission,
-        }),
+        loader: () => loaders.update(id, updateData),
         prefix,
         name: 'form',
         returnError: true,
-      })
-      dispatch(snackbarActions.setSuccess('user saved'))
-      dispatch(routerActions.navigateTo('users'))
+      };
+      await api.loaderSideEffect(loaderOptions);
+      dispatch(snackbarActions.setSuccess('user saved'));
+      dispatch(routerActions.navigateTo('users'));
     } catch (e) {
-      dispatch(snackbarActions.setError(`error saving user: ${e.toString()}`))
+      dispatch(snackbarActions.setError(`error saving user: ${e.toString()}`));
     }
   },
   saveAccountDetails: (payload) => async (dispatch, getState) => {
