@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* build(deps): Bump semver from 5.7.1 to 5.7.2 [view commit](https://github.com/catenasys/sextant/commit/2a86c7794901abb32c875fbf22b35bb98611d94f)
+* build(deps-dev): Bump word-wrap from 1.2.3 to 1.2.4 [view commit](https://github.com/catenasys/sextant/commit/ba8d4c7df7a93819d73a236c77082c9f09160f1d)
+* docs(daml-on-postgres/resetting): add missing table [view commit](https://github.com/catenasys/sextant/commit/e82b834596980e6a0ca43ad40fafffd2447a688d)
+* fix(change-to-deploymentform-page): change to how the disable enter key was bing handles as to not affect other pages [view commit](https://github.com/catenasys/sextant/commit/d6c20bfd20616945c15dbf24ce612d89412e27ec)
 * fix(ClusterForm): strip double quotes from the minor_version value [view commit](https://github.com/catenasys/sextant/commit/f07486e51c65aeb0f712c2cc31b160912e1e5bdf)
 * fix(change-to-marketplace-cards): change _ci to id [view commit](https://github.com/catenasys/sextant/commit/8233bdfa02d3ffcec96decbc88cdaa696b372782)
 * fix(deploymenttable): moves sorting logic for clusters to a separate statement [view commit](https://github.com/catenasys/sextant/commit/158cd6fdf1a8316971787b1e6e72374c27fd5961)
