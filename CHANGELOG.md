@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+* fix(user-js): update sideEffects to fix sxt1010 wilst calling api sideloadereddeffects once [view commit](https://github.com/catenasys/sextant/commit/160a969b1568494d8ac75a69afe00d1e6f4b47c2)
+* fix(removed-duplicate-side-effects-call): removed duplicate side effects call and console logs [view commit](https://github.com/catenasys/sextant/commit/edccdaf3d76b6011a38200b8d5674317346641ca)
+* fix(changes-to-user-module): the addition of a null undef and 0 check to allow the permissions to be changed without a password change [view commit](https://github.com/catenasys/sextant/commit/6ecb71c852fef2df593e2a781a5f52b1eeaee791)
+* fix(changes-to-side-effects): changes to side effects to allow the changing permission and password independently without error [view commit](https://github.com/catenasys/sextant/commit/0c44659b256abf24c2fe96fbbfd8544f533d1412)
+* build(deps): Bump tough-cookie from 4.1.2 to 4.1.3 [view commit](https://github.com/catenasys/sextant/commit/d707b43b6d03fffe5d00b08fe700fe0a6ddbed01)
 * build(deps): Bump semver from 5.7.1 to 5.7.2 [view commit](https://github.com/catenasys/sextant/commit/2a86c7794901abb32c875fbf22b35bb98611d94f)
 * build(deps-dev): Bump word-wrap from 1.2.3 to 1.2.4 [view commit](https://github.com/catenasys/sextant/commit/ba8d4c7df7a93819d73a236c77082c9f09160f1d)
 * docs(daml-on-postgres/resetting): add missing table [view commit](https://github.com/catenasys/sextant/commit/e82b834596980e6a0ca43ad40fafffd2447a688d)
