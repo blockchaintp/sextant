@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import selectors from 'store/selectors'
 
-import DeploymentSettingsDamlTimeService from 'pages/deployment/DeploymentSettingsDamlTimeService'
+import DeploymentSettingsDamlTimeService from 'pages/deployment/daml/DeploymentSettingsDamlTimeService'
 
 @connect(
   (state) => {

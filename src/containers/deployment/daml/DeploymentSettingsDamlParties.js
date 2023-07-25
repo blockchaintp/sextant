@@ -6,7 +6,7 @@ import snackbarActions from 'store/modules/snackbar'
 import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import selectors from 'store/selectors'
 
-import DeploymentSettingsDamlParties from 'pages/deployment/DeploymentSettingsDamlParties'
+import DeploymentSettingsDamlParties from 'pages/deployment/daml/DeploymentSettingsDamlParties'
 
 @connect(
   (state) => {
