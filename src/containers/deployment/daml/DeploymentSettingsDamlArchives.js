@@ -5,7 +5,7 @@ import deploymentSettingsActions from 'store/modules/deploymentSettings'
 import selectors from 'store/selectors'
 import fileuploadActions from 'store/modules/fileupload'
 
-import DeploymentSettingsDamlArchives from 'pages/deployment/DeploymentSettingsDamlArchives'
+import DeploymentSettingsDamlArchives from 'pages/deployment/daml/DeploymentSettingsDamlArchives'
 
 @connect(
   (state) => {

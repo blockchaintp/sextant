@@ -146,19 +146,72 @@ class DeploymentSettingsDamlParties extends React.Component {
     )
   }
 
-  getTokenSettingsDialog() {
+  handleApplicationIdChange = (e) => {
+    const { setApplicationId } = this.props
+    setApplicationId(e.target.value)
+  }
+
+  handlePartySelectChange = (party, value) => {
+    const { setSelectedParty } = this.props
+    setSelectedParty({
+      party,
+      value,
+    })
+  }
+
+  handleSelectAllNone = (value) => {
+    const { tokenSettingsWindowParticipant } = this.props
+    tokenSettingsWindowParticipant.parties.forEach((party) => {
+      this.handlePartySelectChange(party.name, value)
+    })
+  }
+
+  handleCreateToken = () => {
     const {
-      classes,
+      admin,
       cluster,
       id,
+      applicationId,
+      selectedParties,
+      generateAdminToken,
+      generatePartyToken,
+    } = this.props
+
+    if (admin) {
+      this.closeTokenSettingsDialog()
+      generateAdminToken({
+        cluster,
+        id,
+        applicationId,
+      })
+    } else {
+      const readAs = []
+      const actAs = []
+      Object.keys(selectedParties).forEach((party) => {
+        if (selectedParties[party] === 'read') {
+          readAs.push(party)
+        } else if (selectedParties[party] === 'act') {
+          readAs.push(party)
+          actAs.push(party)
+        }
+      })
+      this.closeTokenSettingsDialog()
+      generatePartyToken({
+        cluster,
+        id,
+        applicationId,
+        readAs,
+        actAs,
+      })
+    }
+  }
+
+  getTokenSettingsDialog() {
+    const {
       tokenSettingsWindowParticipant,
       setTokenSettingsWindowParticipant,
       selectedParties,
       applicationId,
-      setApplicationId,
-      setSelectedParty,
-      generatePartyToken,
-      generateAdminToken,
     } = this.props
 
     if (!tokenSettingsWindowParticipant) return null
@@ -174,9 +227,8 @@ class DeploymentSettingsDamlParties extends React.Component {
 
     return (
       <Dialog
-        // eslint-disable-next-line no-unneeded-ternary
-        open={setTokenSettingsWindowParticipant ? true : false}
-        onClose={() => this.closeTokenSettingsDialog()}
+        open={!!setTokenSettingsWindowParticipant}
+        onClose={this.closeTokenSettingsDialog}
         fullWidth
         maxWidth="md"
         aria-labelledby="alert-dialog-title"
@@ -200,7 +252,7 @@ class DeploymentSettingsDamlParties extends React.Component {
                 fullWidth
                 margin="normal"
                 value={applicationId}
-                onChange={(e) => setApplicationId(e.target.value)}
+                onChange={this.handleApplicationIdChange}
               />
             </Grid>
             {
@@ -213,52 +265,10 @@ class DeploymentSettingsDamlParties extends React.Component {
                     <Typography variant="subtitle1">Act As</Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    {
-                      parties.map((party, j) => (
-                        <div key={j}>
-                          <FormControlLabel
-                            control={(
-                              <Checkbox
-                                className={classes.checkbox}
-                                checked={!!(selectedParties[party.name] === 'read' || selectedParties[party.name] === 'act')}
-                                onChange={(event) => {
-                                  setSelectedParty({
-                                    party: party.name,
-                                    value: event.target.checked ? 'read' : 'none',
-                                  })
-                                }}
-                                value={party.name}
-                              />
-                              )}
-                            label={party.name}
-                          />
-                        </div>
-                      ))
-                    }
+                    {parties.map((party) => this.renderPartyCheckbox(party, 'read'))}
                   </Grid>
                   <Grid item xs={6}>
-                    {
-                      parties.map((party, j) => (
-                        <div key={j}>
-                          <FormControlLabel
-                            control={(
-                              <Checkbox
-                                className={classes.checkbox}
-                                checked={selectedParties[party.name] === 'act'}
-                                onChange={(event) => {
-                                  setSelectedParty({
-                                    party: party.name,
-                                    value: event.target.checked ? 'act' : 'none',
-                                  })
-                                }}
-                                value={party.name}
-                              />
-                            )}
-                            label={party.name}
-                          />
-                        </div>
-                      ))
-                    }
+                    {parties.map((party) => this.renderPartyCheckbox(party, 'act'))}
                   </Grid>
                   <Grid item xs={6}>
                     <Typography variant="caption">
@@ -267,12 +277,7 @@ class DeploymentSettingsDamlParties extends React.Component {
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()
-                          parties.forEach((party) => {
-                            setSelectedParty({
-                              party: party.name,
-                              value: 'none',
-                            })
-                          })
+                          this.handleSelectAllNone('none')
                           return false
                         }}
                       >
@@ -284,12 +289,7 @@ class DeploymentSettingsDamlParties extends React.Component {
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()
-                          parties.forEach((party) => {
-                            setSelectedParty({
-                              party: party.name,
-                              value: 'read',
-                            })
-                          })
+                          this.handleSelectAllNone('read')
                           return false
                         }}
                       >
@@ -304,12 +304,7 @@ class DeploymentSettingsDamlParties extends React.Component {
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()
-                          parties.forEach((party) => {
-                            setSelectedParty({
-                              party: party.name,
-                              value: 'none',
-                            })
-                          })
+                          this.handleSelectAllNone('none')
                           return false
                         }}
                       >
@@ -321,12 +316,7 @@ class DeploymentSettingsDamlParties extends React.Component {
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()
-                          parties.forEach((party) => {
-                            setSelectedParty({
-                              party: party.name,
-                              value: 'act',
-                            })
-                          })
+                          this.handleSelectAllNone('act')
                           return false
                         }}
                       >
@@ -340,42 +330,14 @@ class DeploymentSettingsDamlParties extends React.Component {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => this.closeTokenSettingsDialog()}>
+          <Button onClick={this.closeTokenSettingsDialog}>
             Close
           </Button>
           <Button
             variant="contained"
             color="primary"
             disabled={!isValid}
-            onClick={() => {
-              if (admin) {
-                this.closeTokenSettingsDialog()
-                generateAdminToken({
-                  cluster,
-                  id,
-                  applicationId,
-                })
-              } else {
-                const readAs = []
-                const actAs = []
-                Object.keys(selectedParties).forEach((party) => {
-                  if (selectedParties[party] === 'read') {
-                    readAs.push(party)
-                  } else if (selectedParties[party] === 'act') {
-                    readAs.push(party)
-                    actAs.push(party)
-                  }
-                })
-                this.closeTokenSettingsDialog()
-                generatePartyToken({
-                  cluster,
-                  id,
-                  applicationId,
-                  readAs,
-                  actAs,
-                })
-              }
-            }}
+            onClick={this.handleCreateToken}
           >
             Create Token
             {' '}
@@ -472,8 +434,8 @@ class DeploymentSettingsDamlParties extends React.Component {
         <Grid item xs={6}>
           <PartyContainer>
             {
-              parties.map((party, j) => (
-                <div key={j}>
+              parties.map((party) => (
+                <div key={party.name}>
                   <Typography>{ party.name }</Typography>
                 </div>
               ))
@@ -520,12 +482,12 @@ class DeploymentSettingsDamlParties extends React.Component {
     return (
       <React.Fragment>
         {
-          participants.map((entry, i) => {
+          participants.map((entry) => {
             const { publicKey } = entry
             const partiesVisible = publicKey === visibleParticipant
 
             return (
-              <div key={i}>
+              <div key={entry.participantId}>
                 <Grid container spacing={3}>
                   <Grid item xs={6}>
                     <Typography variant="subtitle2">
@@ -575,14 +537,14 @@ class DeploymentSettingsDamlParties extends React.Component {
           }}
         />
         {
-          allParticipants.map((participant, i) => {
+          allParticipants.map((participant) => {
             const parties = participant ? participant.parties : []
             const data = parties.map((party, j) => ({
               id: j,
               name: party.name,
             }))
             return (
-              <div key={i} className={classes.denseTable}>
+              <div key={data.name} className={classes.denseTable}>
                 <Spacing />
                 <PartyContainer>
                   <SimpleTable
@@ -637,6 +599,27 @@ class DeploymentSettingsDamlParties extends React.Component {
       partyName: addPartyName,
       partyIdHInt: addPartyIdHint,
     })
+  }
+
+  renderPartyCheckbox(party, value) {
+    const { classes, selectedParties } = this.props
+    return (
+      <div key={party.name}>
+        <FormControlLabel
+          control={(
+            <Checkbox
+              className={classes.checkbox}
+              checked={!!(selectedParties[party.name] === 'read' || selectedParties[party.name] === 'act')}
+              onChange={(event) => {
+                this.handlePartySelectChange(party.name, event.target.checked ? value : 'none')
+              }}
+              value={party.name}
+            />
+      )}
+          label={party.name}
+        />
+      </div>
+    )
   }
 
   render() {

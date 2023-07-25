@@ -29,9 +29,9 @@ import DeploymentStatus from 'containers/deployment/DeploymentStatus'
 
 import DeploymentSettingsTabs from 'containers/deployment/DeploymentSettingsTabs'
 import DeploymentSettingsKeys from 'containers/deployment/DeploymentSettingsKeys'
-import DeploymentSettingsDamlParties from 'containers/deployment/DeploymentSettingsDamlParties'
-import DeploymentSettingsDamlArchives from 'containers/deployment/DeploymentSettingsDamlArchives'
-import DeploymentSettingsDamlTimeService from 'containers/deployment/DeploymentSettingsDamlTimeService'
+import DeploymentSettingsDamlParties from 'containers/deployment/daml/DeploymentSettingsDamlParties'
+import DeploymentSettingsDamlArchives from 'containers/deployment/daml/DeploymentSettingsDamlArchives'
+import DeploymentSettingsDamlTimeService from 'containers/deployment/daml/DeploymentSettingsDamlTimeService'
 
 import DeploymentSettingsTaekionCli from 'containers/deployment/taekion/Cli'
 import DeploymentSettingsTaekionKeys from 'containers/deployment/taekion/Keys'

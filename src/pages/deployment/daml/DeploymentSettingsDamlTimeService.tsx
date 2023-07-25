@@ -5,8 +5,8 @@ import {
   Paper,
 } from '@mui/material'
 
-import SimpleTable from '../../components/table/SimpleTable'
-import SimpleTableHeader from '../../components/table/SimpleTableHeader'
+import SimpleTable from '../../../components/table/SimpleTable'
+import SimpleTableHeader from '../../../components/table/SimpleTableHeader'
 
 type TimeServiceEntry = {
   publicKey: string;
