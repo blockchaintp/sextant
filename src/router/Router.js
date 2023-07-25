@@ -33,6 +33,8 @@ import DeploymentSettingsDamlParties from 'containers/deployment/daml/Deployment
 import DeploymentSettingsDamlArchives from 'containers/deployment/daml/DeploymentSettingsDamlArchives'
 import DeploymentSettingsDamlTimeService from 'containers/deployment/daml/DeploymentSettingsDamlTimeService'
 
+import DeploymentChronicle from 'containers/deployment/chronicle/Chronicle'
+
 import DeploymentSettingsTaekionCli from 'containers/deployment/taekion/Cli'
 import DeploymentSettingsTaekionKeys from 'containers/deployment/taekion/Keys'
 import DeploymentSettingsTaekionVolumes from 'containers/deployment/taekion/Volumes'
