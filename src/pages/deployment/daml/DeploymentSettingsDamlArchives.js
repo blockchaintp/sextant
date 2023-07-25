@@ -54,7 +54,7 @@ const CenterAlign = styled('div')({
 })
 
 class DeploymentSettingsDamlArchives extends React.Component {
-  getUploaderContent() {
+  getUploaderContent = () => {
     const {
       cluster,
       id,
@@ -119,7 +119,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
     }
   }
 
-  getUploader() {
+  getUploader = () => {
     const {
       uploadArchiveWindowOpen,
       setUploadArchiveWindowOpen,
@@ -163,7 +163,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
     )
   }
 
-  getUploadButton() {
+  getUploadButton = () => {
     const { setUploadArchiveWindowOpen } = this.props
     return (
       <Button
@@ -178,7 +178,7 @@ class DeploymentSettingsDamlArchives extends React.Component {
     );
   }
 
-  getPackages() {
+  getPackages = () => {
     const {
       archives,
     } = this.props
