@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+* fix(daml): extracts inline functions into methods to reduce cognitive complexity [view commit](https://github.com/catenasys/sextant/commit/0590ed99d771fb61fc280f178b80462aeab90fc2)
+* fix(router): corrects import paths for new daml settings file locations [view commit](https://github.com/catenasys/sextant/commit/39bca732bc83b9e9d705a7718d5f93b948b7b01e)
+* fix(deploymentsettingsdamlarchives): changes action functions to arrow function syntax to ensure proper binding [view commit](https://github.com/catenasys/sextant/commit/9d36b5a6f804666f106ee297206feab98ec05630)
+* refactor(pages): moves DAML related pages code to their own directory [view commit](https://github.com/catenasys/sextant/commit/0eff9cde9119498930856dc98ac225492fc80a29)
+* refactor(containers): moves DAML related container code to its own directory [view commit](https://github.com/catenasys/sextant/commit/7197b2f376283ba3166ac05d0d557ad55c9dc83b)
 * fix(user-js): update sideEffects to fix sxt1010 wilst calling api sideloadereddeffects once [view commit](https://github.com/catenasys/sextant/commit/160a969b1568494d8ac75a69afe00d1e6f4b47c2)
 * fix(removed-duplicate-side-effects-call): removed duplicate side effects call and console logs [view commit](https://github.com/catenasys/sextant/commit/edccdaf3d76b6011a38200b8d5674317346641ca)
 * fix(changes-to-user-module): the addition of a null undef and 0 check to allow the permissions to be changed without a password change [view commit](https://github.com/catenasys/sextant/commit/6ecb71c852fef2df593e2a781a5f52b1eeaee791)
