@@ -1,22 +1,6 @@
 import React, { useState } from 'react'
-import { palette, styled } from '@mui/system'
+import { styled } from '@mui/system'
 
-
-//CustomTextField
-
-import Autocomplete from "@mui/material/Autocomplete"
-// import Button from "@mui/material/Button"
-import { AutocompleteRenderOptionState } from '@mui/material/Autocomplete'
-import MenuItem from "@mui/material/MenuItem"
-import IconButton from "@mui/material/IconButton"
-import InputAdornment from "@mui/material/InputAdornment"
-import TextField from "@mui/material/TextField"
-import FormGroup from "@mui/material/FormGroup"
-
-import DeleteIcon from '@mui/icons-material/Delete'
-import PublicIcon from '@mui/icons-material/Public'
-
-//Explorer
 import Button from "@mui/material/Button"
 import Container from "@mui/material/Container"
 import Divider from "@mui/material/Divider"
@@ -26,14 +10,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import TreeItem from '@mui/lab/TreeItem'
 
-// CustomTextField types <- rename this to something more descriptive
-interface CustomTextFieldProps {
-  options: string[]
-  onOptionAdd: (newOption: string) => void
-  onOptionRemove: (optionToRemove: string) => void
-}
+import DomainInput from '../../../components/chronicle/DomainInput'
 
-// Explorer types
 interface RenderTree {
     id: string
     name: string
@@ -258,78 +236,6 @@ const data: RenderTree[] = [
       }
 ]
 
-const StyledTextField = styled(TextField)({
-    "& fieldset": {
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0
-    }
-  })
-
-  const StyledButton = styled(Button)({
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-  })
-
-const CustomTextField: React.FC<CustomTextFieldProps> = ({ options, onOptionAdd, onOptionRemove }) => {
-  const [inputValue, setInputValue] = useState<string | null>("")
-
-  const handleInputChange = (event: React.ChangeEvent<{}>, newInputValue: string | null) => {
-    setInputValue(newInputValue);
-  }
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
-    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (inputValue && urlRegex.test(inputValue)) {
-      onOptionAdd(inputValue)
-    }
-  }
-
-  const handleOptionRemove = (option: string) => {
-    onOptionRemove(option)
-  }
-
-  return (
-    <FormGroup row onSubmit={handleSubmit} sx={{}}>
-        <Autocomplete
-            freeSolo
-            options={options}
-            sx={{ flex: 1 }}
-            value={inputValue}
-            onInputChange={handleInputChange}
-            renderOption={(props, option, state: AutocompleteRenderOptionState) => (
-                <MenuItem {...props} sx={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    {option}
-                    <IconButton size="small" onClick={() => handleOptionRemove(option as string)}>
-                        <DeleteIcon fontSize="small" />
-                    </IconButton>
-                </MenuItem>
-            )}
-            renderInput={(params) => { return (
-                <StyledTextField
-                    {...params}
-                    label="URL"
-                    InputProps={{
-                        ...params.InputProps,
-                        startAdornment: (
-                            <>
-                                <InputAdornment sx={{ }} position="start">
-                                    <PublicIcon />
-                                </InputAdornment>
-                                {params.InputProps.startAdornment}
-                            </>
-                        )
-                    }}
-                />
-            )}}
-        />
-        <StyledButton type="submit" variant="contained">
-            Add
-        </StyledButton>
-    </FormGroup>
-  )
-}
-
 const Explorer: React.FC = () => {
     const [selectedMeta, setSelectedMeta] = useState(null)
     const [options, setOptions] = useState<string[]>([
@@ -394,7 +300,7 @@ const Explorer: React.FC = () => {
 
     return (
         <Container maxWidth={false} sx={{ padding: 2, flex: 1, display: 'flex', flexDirection: 'column' }}>
-            <CustomTextField options={options} onOptionAdd={handleOptionAdd} onOptionRemove={handleOptionRemove} />
+            <DomainInput options={options} onOptionAdd={handleOptionAdd} onOptionRemove={handleOptionRemove} />
             <Divider sx={{ my: 2 }} />
             <Grid container sx={{ my: 2, flex: 1 }}>
                 <Grid item xs={6} sx={{ p: 2 }}>
