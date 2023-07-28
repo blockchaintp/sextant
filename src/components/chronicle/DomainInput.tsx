@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import * as React from "react"
+import { useState } from "react"
 import { styled } from "@mui/system"
 
 import {
@@ -10,6 +11,7 @@ import {
     TextField,
     FormGroup,
 } from "@mui/material"
+
 import { AutocompleteRenderOptionState } from '@mui/material/Autocomplete'
 
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -78,7 +80,7 @@ const DomainInput: React.FC<DomainInputProps> = ({ options, onOptionAdd, onOptio
                             ...params.InputProps,
                             startAdornment: (
                                 <>
-                                    <InputAdornment sx={{ }} position="start">
+                                    <InputAdornment position="start">
                                         <PublicIcon />
                                     </InputAdornment>
                                     {params.InputProps.startAdornment}
