@@ -1,14 +1,17 @@
 import React, { useState } from "react"
 import { styled } from "@mui/system"
 
-import Autocomplete from "@mui/material/Autocomplete"
-import Button from "@mui/material/Button"
+import {
+    Autocomplete,
+    Button,
+    MenuItem,
+    IconButton,
+    InputAdornment,
+    TextField,
+    FormGroup,
+} from "@mui/material"
 import { AutocompleteRenderOptionState } from '@mui/material/Autocomplete'
-import MenuItem from "@mui/material/MenuItem"
-import IconButton from "@mui/material/IconButton"
-import InputAdornment from "@mui/material/InputAdornment"
-import TextField from "@mui/material/TextField"
-import FormGroup from "@mui/material/FormGroup"
+
 import DeleteIcon from '@mui/icons-material/Delete'
 import PublicIcon from '@mui/icons-material/Public'
 
@@ -42,7 +45,7 @@ const DomainInput: React.FC<DomainInputProps> = ({ options, onOptionAdd, onOptio
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
     if (inputValue && urlRegex.test(inputValue)) {
       onOptionAdd(inputValue)
-      setInputValue(inputValue)
+      setInputValue('')
     }
   }
 
@@ -51,42 +54,44 @@ const DomainInput: React.FC<DomainInputProps> = ({ options, onOptionAdd, onOptio
   }
 
   return (
-    <FormGroup row onSubmit={handleSubmit} sx={{}}>
-        <Autocomplete
-            freeSolo
-            options={options}
-            sx={{ flex: 1 }}
-            value={inputValue}
-            onInputChange={handleInputChange}
-            renderOption={(props, option, state: AutocompleteRenderOptionState) => (
-                <MenuItem {...props} sx={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    {option}
-                    <IconButton size="small" onClick={() => handleOptionRemove(option as string)}>
-                        <DeleteIcon fontSize="small" />
-                    </IconButton>
-                </MenuItem>
-            )}
-            renderInput={(params) => { return (
-                <StyledTextField
-                    {...params}
-                    label="URL"
-                    InputProps={{
-                        ...params.InputProps,
-                        startAdornment: (
-                            <>
-                                <InputAdornment sx={{ }} position="start">
-                                    <PublicIcon />
-                                </InputAdornment>
-                                {params.InputProps.startAdornment}
-                            </>
-                        )
-                    }}
-                />
-            )}}
-        />
-        <StyledButton type="submit" variant="contained">
-            Add
-        </StyledButton>
+    <FormGroup row sx={{}}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'row', flex: 1 }}>
+            <Autocomplete
+                freeSolo
+                options={options}
+                sx={{ flex: 1 }}
+                value={inputValue}
+                onInputChange={handleInputChange}
+                renderOption={(props, option, state: AutocompleteRenderOptionState) => (
+                    <MenuItem {...props} sx={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                        {option}
+                        <IconButton size="small" onClick={() => handleOptionRemove(option as string)}>
+                            <DeleteIcon fontSize="small" />
+                        </IconButton>
+                    </MenuItem>
+                )}
+                renderInput={(params) => { return (
+                    <StyledTextField
+                        {...params}
+                        label="URL"
+                        InputProps={{
+                            ...params.InputProps,
+                            startAdornment: (
+                                <>
+                                    <InputAdornment sx={{ }} position="start">
+                                        <PublicIcon />
+                                    </InputAdornment>
+                                    {params.InputProps.startAdornment}
+                                </>
+                            )
+                        }}
+                    />
+                )}}
+            />
+            <StyledButton type="submit" variant="contained">
+                Add
+            </StyledButton>
+        </form>
     </FormGroup>
   )
 }
