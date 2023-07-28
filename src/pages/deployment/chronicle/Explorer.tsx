@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
-import { styled } from '@mui/system'
 
-import Button from "@mui/material/Button"
-import Container from "@mui/material/Container"
-import Divider from "@mui/material/Divider"
-import Grid from "@mui/material/Grid"
-import TreeView from '@mui/lab/TreeView'
+import {
+    Container,
+    Divider,
+    Grid,
+} from "@mui/material"
+
+import {
+    TreeItem,
+    TreeView,
+} from '@mui/lab'
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import TreeItem from '@mui/lab/TreeItem'
 
 import DomainInput from '../../../components/chronicle/DomainInput'
 
@@ -98,50 +102,6 @@ const data: RenderTree[] = [
                   {
                     id: "Content",
                     name: "Content",
-                    meta: []
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "Evidence",
-            name: "Evidence",
-            children: [
-              {
-                id: "attribute6",
-                name: "Attributes",
-                children: [
-                  {
-                    id: "SearchParameter",
-                    name: "SearchParameter",
-                    meta: []
-                  },
-                  {
-                    id: "Reference",
-                    name: "Reference",
-                    meta: []
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "Guidance",
-            name: "Guidance",
-            children: [
-              {
-                id: "attribute7",
-                name: "Attributes",
-                children: [
-                  {
-                    id: "Title",
-                    name: "Title",
-                    meta: []
-                  },
-                  {
-                    id: "Version",
-                    name: "Version",
                     meta: []
                   }
                 ]
@@ -239,8 +199,7 @@ const data: RenderTree[] = [
 const Explorer: React.FC = () => {
     const [selectedMeta, setSelectedMeta] = useState(null)
     const [options, setOptions] = useState<string[]>([
-        'https://example.com',
-        // any other initial options
+        'https://chronicle.domain.example',
     ])
 
     const handleNodeSelect = (event: React.SyntheticEvent, nodeId: string) => {
