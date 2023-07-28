@@ -65,7 +65,7 @@ const DomainInput: React.FC<DomainInputProps> = ({ options, onOptionAdd, onOptio
                 renderOption={(props, option, state: AutocompleteRenderOptionState) => (
                     <MenuItem {...props} sx={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                         {option}
-                        <IconButton size="small" onClick={() => handleOptionRemove(option as string)}>
+                        <IconButton size="small" onClick={() => handleOptionRemove(option)}>
                             <DeleteIcon fontSize="small" />
                         </IconButton>
                     </MenuItem>
