@@ -336,7 +336,10 @@ const routes = [
         },
       },
     }],
-
+  },
+  {
+    name: 'chronicle',
+    path: '/clusters/:cluster/deployment/:id/chronicle',
   },
 ]
 
