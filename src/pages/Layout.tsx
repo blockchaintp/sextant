@@ -16,6 +16,8 @@ import Loading from '../components/system/Loading'
 const Root = styled('div')({
   position: 'relative',
   minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
 })
 
 const StyledAppBarWrapper = styled(AppBar)({
@@ -50,21 +52,19 @@ const StyledToolBar = styled(Toolbar)(({ theme }) => ({
 }))
 
 const ContentContainer = styled('div')({
-  height: 'calc(100% - 64px)',
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
   paddingTop: '80px',
 })
 
 const BoxWrapper = styled('div')({
-  // padding that is the height of the footer -
-  // ensures enough space for footer in shared container
-  paddingBottom: '4rem',
-  // minHeight: 'calc(100vh - 4rem)',
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
 })
 
 const FooterToolbar = styled(Toolbar)({
-  // absolute postion within the root container set to the bottom
-  position: 'absolute',
-  bottom: '0',
   width: '100%',
   height: '4rem',
 })
