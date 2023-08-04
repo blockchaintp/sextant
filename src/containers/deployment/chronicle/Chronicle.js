@@ -5,8 +5,7 @@ import routerActions from 'store/modules/router'
 import selectors from 'store/selectors'
 
 import Loading from 'components/system/Loading'
-// import ChronicleExplorer from 'pages/deployment/chronicle/Explorer'
-import Playground from 'pages/deployment/chronicle/Playground'
+import Chronicle from 'pages/deployment/chronicle'
 
 const onCancel = (cluster) => routerActions.navigateTo('deployments', { cluster })
 @connect(
@@ -43,7 +42,7 @@ class DeploymentChronicleContainer extends React.Component {
     }
 
     return (
-      <Playground
+      <Chronicle
         {...this.props}
       />
     )
