@@ -39,6 +39,8 @@ import DeploymentSettingsTaekionVolumes from 'containers/deployment/taekion/Volu
 import DeploymentSettingsTaekionSnapshots from 'containers/deployment/taekion/Snapshots'
 import DeploymentSettingsTaekionExplorer from 'pages/deployment/taekion/Explorer'
 
+import DeploymentChronicle from 'containers/deployment/chronicle/Chronicle'
+
 import Administration from '../containers/Administration'
 
 import Route from './Route'
@@ -138,6 +140,9 @@ class Router extends React.Component {
                   <DeploymentSettingsTaekionExplorer />
                 </Route>
               </DeploymentSettingsTabs>
+            </Route>
+            <Route segment="chronicle">
+              <DeploymentChronicle />
             </Route>
             <Route segment="administration" exact>
               <Administration />
