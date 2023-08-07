@@ -1,6 +1,6 @@
 import transitionPath from 'router5-transition-path'
 import routerActions from 'store/modules/router'
-import findRoutes from '../utils/findRoutes'
+import { findRoutes } from '../../utils/routerUtils'
 
 /*
 
@@ -23,14 +23,14 @@ const redirectRoute = (routes) => (router, dependencies) => (toState, fromState,
   let redirectTo = null
 
   // if the redirect is a string - redirect there
-  if (typeof (redirectInfo) === 'string') {
+  if (typeof redirectInfo === 'string') {
     redirectTo = redirectInfo
-  } else if (typeof (redirectInfo) === 'function') {
-  // if it's a function - run the function passing the redux state
-  // the function should return the redirect or falsey value for don't redirect
+  } else if (typeof redirectInfo === 'function') {
+    // if it's a function - run the function passing the redux state
+    // the function should return the redirect or falsey value for don't redirect
     redirectTo = redirectInfo(store.getState())
   } else {
-    return done(`unknown type of redirect info: ${typeof (redirectInfo)}`)
+    return done(`unknown type of redirect info: ${typeof redirectInfo}`)
   }
 
   if (redirectTo && redirectTo !== activeRoute.name) {

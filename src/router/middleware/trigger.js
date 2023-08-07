@@ -1,5 +1,5 @@
 import transitionPath from 'router5-transition-path'
-import findRoutes from '../utils/findRoutes'
+import { findRoutes } from '../../utils/routerUtils'
 
 const runTriggers = ({
   routes,

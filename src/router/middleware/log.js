@@ -1,6 +1,6 @@
 import transitionPath from 'router5-transition-path'
 import settings from 'settings'
-import findRoutes from '../utils/findRoutes'
+import { findRoutes } from '../../utils/routerUtils'
 
 // log each route transition in development
 const logRoute = (routes) => () => (toState, fromState, done) => {
