@@ -3,8 +3,7 @@ import transitionPath from 'router5-transition-path'
 
 import snackbarActions from 'store/modules/snackbar'
 import routerActions from 'store/modules/router'
-import findRoutes from '../utils/findRoutes'
-
+import { findRoutes } from '../../utils/routerUtils'
 /*
 
   run an authorize function on the route if present
@@ -46,3 +45,5 @@ const authorizeRoute = (routes) => (router, dependencies) => (toState, fromState
 }
 
 export default authorizeRoute
+// test past a mock router store contains something to dispatch too did i get done or not
+//

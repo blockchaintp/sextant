@@ -2,7 +2,7 @@
 /* eslint-disable import/no-cycle */
 import { createSelector } from 'reselect'
 import routes from 'router/routes'
-import findRoute from 'router/utils/findRoute'
+import { findRoute } from 'utils/routerUtils'
 
 // pluck a single prop from a previous selector
 const prop = (baseSelector, propName) => createSelector(

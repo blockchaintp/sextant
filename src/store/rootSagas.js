@@ -12,7 +12,7 @@ import userActions from './modules/user'
 import configActions from './modules/config'
 import networkActions from './modules/network'
 import { sagas as fileUploadSagas } from './modules/fileupload'
-import processRoutePath from '../router/utils/processRoutePath'
+import { processRoutePath } from '../utils/routerUtils'
 import selectors from './selectors'
 
 const errorFilter = (name) => (action) => {

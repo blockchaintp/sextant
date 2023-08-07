@@ -7,10 +7,9 @@ import logMiddleware from './middleware/log'
 import authorizeMiddleware from './middleware/authorize'
 import redirectMiddleware from './middleware/redirect'
 import triggerMiddleware from './middleware/trigger'
-import processRoutePath from './utils/processRoutePath'
+import { processRoutePath } from '../utils/routerUtils'
 
 const Router = () => {
-  // remap the top-level routes to include the sub-path
   const mappedRoutes = routes.map((route) => ({ ...route, path: processRoutePath(route.path) }))
 
   const router = createRouter(mappedRoutes, {
