@@ -5,7 +5,7 @@ theme:
   name: material
   palette:
     scheme: default
-copyright: Copyright &copy; 2022-23 Blockchain Technology Partners
+copyright: Copyright &copy; 2023 Paravela Limited
 markdown_extensions:
   - attr_list
   - admonition

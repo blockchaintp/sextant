@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
 /*
- * Copyright © 2020 Blockchain Technology Partners Limited All Rights Reserved
+ * Copyright © 2023 Paravela Limited All Rights Reserved
  *
  * License: Product
  */
